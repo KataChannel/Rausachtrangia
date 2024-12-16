@@ -1,5 +1,5 @@
 ### npx ng g c changepassword --skip-tests --standalone
-### npx ng g s taskupdatedialog --skip-tests
+### npx ng g s users --skip-tests
 ### npx ng g s taskupdatedialog --skip-tests
 ### npx ng g environments
 
