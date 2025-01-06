@@ -1,0 +1,355 @@
+<mat-drawer-container class="example-container w-full h-full " autosize>
+  <mat-drawer #drawer mode="side" class="!flex flex-col flex-auto min-w-0 relative h-full w-full" position="end">
+    <div class="relative flex flex-col h-full w-full overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="!flex flex-col flex-auto min-w-0 relative !h-[90vh]">
+    <!-- <button mat-raised-button (click)="UpdateAllSanpham()">text</button> -->
+    <div class="relative flex flex-col">
+      <div class="flex justify-between items-center space-x-2 m-2 bg-white p-3 rounded-lg">
+        <div class="flex flex-row space-x-3 justify-center items-center">
+          <div class="relative mt-1 lg:w-80">
+            <input #input (keyup)="applyFilter($event)" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+              placeholder="Tìm Kiếm">
+          </div>
+          <mat-menu #menu="matMenu" class="cursor-pointer">
+            <button mat-menu-item>
+              <div (click)="writeExcelFile()" class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_download</span>
+                <span class="text-xs">Download</span>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div (click)="uploadfile.click()" class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+                <span class="text-xs">Upload</span>
+                <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div (click)="LoadDrive()" class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Drive">cloud_download</span>
+                <span class="text-xs">Drive ({{SanphamsDrive.length}})</span> 
+              </div>
+            </button>
+            @if(SanphamsDrive.length>0)
+            {
+              <button mat-menu-item>
+                <div (click)="SyncDrive()"
+                class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+                <span class="material-symbols-outlined text-xl" matTooltip="Drive">cloud_sync</span>
+                <span class="text-xs">Sync ({{FilterLists.length||0}}/{{SanphamsDrive.length||0}})</span>
+              </div>
+              </button>
+            }
+          </mat-menu>
+          <div class="hidden lg:flex flex-row space-x-3 cursor-pointer">
+            <div (click)="writeExcelFile()"
+              class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_download</span>
+              <span class="text-xs">Download</span>
+            </div>
+            <div (click)="uploadfile.click()"
+              class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+              <span class="text-xs">Upload</span>
+              <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+            </div>
+            <div (click)="LoadDrive()"
+              class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Drive">cloud_download</span>
+              <span class="text-xs">Drive ({{SanphamsDrive.length||0}})</span>              
+            </div>
+            @if(SanphamsDrive.length>0)
+            {
+              <div (click)="SyncDrive()"
+              class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Drive">cloud_sync</span>
+              <span class="text-xs">Sync ({{FilterLists.length||0}}/{{SanphamsDrive.length||0}})</span>
+            </div>
+            }
+            <div (click)="openDialogDanhmuc(dialogDanhmuc,'','new')"
+              class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Drive">create_new_folder</span>
+              <span class="text-xs">Thêm Danh Mục</span>
+            </div>
+
+            <div (click)="openDialog(dialogTemplate)"
+              class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Drive">add_circle</span>
+              <span class="text-xs">Thêm Sản Phẩm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative flex flex-col h-full w-full overflow-auto">
+      <div class="grid grid-cols-4">
+        <div>
+          <mat-tree class="my-6 mx-4 p-4 rounded-lg shadow-xl shadow-gray-200" [dataSource]="treedataSource" [treeControl]="treeControl">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+            <div class="relative cursor-pointer group {{SelectDanhmuc.id==node.id?'bg-slate-200 border border-blue-500':''}} w-full flex flex-col space-y-2 p-2 hover:bg-slate-100 rounded-lg">
+              <div (click)="ChoosenDanhmuc(node)"  class="w-full flex flex-row space-x-2 items-center">
+                <span>
+                  @if(node && node.Image&&node.Image.Thumb)
+                  {
+                    <img loading="lazy" src="assets/images/sanpham/{{node.Image.Thumb}}" class="w-20 mx-auto">
+                  }
+                  @else if(node && node.Image&&node.Image.Hinhchinh&&node.Image.Hinhchinh.src){
+                    <img loading="lazy" src="{{node.Image.Hinhchinh.src}}" class="w-20 mx-auto">
+                  }
+                  @else {
+                    <img loading="lazy" src="assets/images/noimage.png" class="p-3 max-w-20 mx-auto rounded-lg">
+                  }
+                 </span>
+                 <span>{{node.Title}} </span>
+                 <span class="text-red-500">({{node.Soluong||0}})</span>
+              </div>
+                <div class="z-10 hidden group-hover:flex flex-row space-x-2">
+                  <span (click)="openDialogDanhmuc(dialogDanhmuc,node.item,'edit')" class="text-lg material-symbols-outlined p-1 border rounded-lg 
+                        bg-slate-200 text-blue-500 
+                        hover:bg-blue-500 hover:text-white">
+                        check_circle
+                  </span>
+                  <span (click)="openDialogDanhmuc(dialogDanhmuc,node.item,'edit')" class="text-lg material-symbols-outlined p-1 border rounded-lg 
+                        bg-slate-200 text-blue-500 
+                        hover:bg-blue-500 hover:text-white">
+                    edit_square
+                  </span>
+                  <span (click)="XoaDanhmucDialog(XoaTeamplate,node.item,'danhmuc')" class="text-lg material-symbols-outlined p-1 border rounded-lg 
+                        bg-slate-200 text-red-500 
+                        hover:bg-red-500 hover:text-white">
+                    delete
+                  </span>
+              </div>
+              </div>
+            </mat-tree-node>
+            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+              <div class="w-full group flex flex-row space-x-2 items-center justify-between">
+               <div class="flex flex-row space-x-2 items-center">
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                  <span class="material-symbols-outlined">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </span>
+                </button>
+                <a [href]="'admin/sanpham/'+node.id">
+                  {{node.Title}}
+                </a>
+              </div>
+                <div class="flex flex-row space-x-2 items-center">
+                  <span class="hidden group-hover:block material-symbols-outlined p-2 border rounded-full 
+                  bg-slate-200 text-blue-500 
+                  hover:bg-blue-500 hover:text-white">
+                    edit_square
+                  </span>
+                  <span class="hidden group-hover:block material-symbols-outlined p-2 border rounded-full 
+                  bg-slate-200 text-red-500 
+                  hover:bg-red-500 hover:text-white">
+                    delete
+                  </span>
+                </div>
+              </div>
+            </mat-tree-node>
+          </mat-tree>
+        </div>
+
+        <div class="col-span-3 flex flex-col my-6 mx-2 rounded-lg shadow-xl shadow-gray-200">
+          <div class="overflow-x-auto rounded-2xl">
+            <div class="border">
+              <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="Hinhanh">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  Hình ảnh </th>
+                  <td mat-cell *matCellDef="let item"> 
+                    <div class="text-base font-semibold text-gray-900">
+                      @if(item && item.Image&&item.Image.Thumb)
+                      {
+                        <img loading="lazy" src="assets/images/sanpham/{{item.Image.Thumb}}" class="w-20">
+                      }
+                      @else if(item && item.Image&&item.Image.Hinhchinh&&item.Image.Hinhchinh.src){
+                        <img loading="lazy" src="{{item.Image.Hinhchinh.src}}" class="w-20">
+                      }
+                      @else if(item && item.Image&&item.Image.Hinhchinh&&item.Image.Hinhchinh.src){
+                        <img loading="lazy" src="assets/images/noimage.png" class="p-3 max-w-32 mx-auto rounded-lg">
+                      }
+                    </div> </td>
+                </ng-container>
+                <ng-container matColumnDef="Title">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên Sản Phẩm </th>
+                  <td mat-cell *matCellDef="let item">                         
+                     <a routerLink="{{item.id}}" (click)="drawer.toggle()">
+                    <div class="text-base font-semibold text-gray-900">{{item.Title}}</div>
+                    <div class="italic text-xs font-normal text-gray-500">{{item.Slug}}</div>
+                    <div class="text-xs font-normal text-gray-500">
+                      Mã SP : <strong>{{item.MaSP}}</strong>
+                    </div>
+                  </a> </td>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  Trạng Thái </th>
+                  <td mat-cell *matCellDef="let item">                          
+                  <div (click)="ChangeStatus(item,'Status')">
+                    @if (item.Status==1) {
+                      <span class="material-symbols-outlined text-blue-500">check_circle</span>
+                     }
+                    @else { <span class="material-symbols-outlined text-red-500">cancel</span> }
+                  </div> 
+                </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Banchay">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Bán Chạy </th>
+                  <td mat-cell *matCellDef="let item"> 
+                    <div (click)="ChangeStatus(item,'Banchay')">
+                      @if (item.Banchay==1) {
+                        <span class="material-symbols-outlined text-blue-500">check_circle</span>
+                       }
+                      @else { <span class="material-symbols-outlined text-red-500">cancel</span> }
+                    </div>
+                     </td>
+                </ng-container>
+                <ng-container matColumnDef="Goiy">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Gợi Ý </th>
+                  <td mat-cell *matCellDef="let item"> 
+                    <div (click)="ChangeStatus(item,'Noibat')">
+                      @if (item.Noibat==1) {
+                        <span class="material-symbols-outlined text-blue-500">check_circle</span>
+                       }
+                      @else { <span class="material-symbols-outlined text-red-500">cancel</span> }
+                    </div>
+                     </td>
+                </ng-container>
+                <ng-container matColumnDef="Giare">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  Giá Rẻ </th>
+                  <td mat-cell *matCellDef="let item">
+                    <div (click)="ChangeStatus(item,'Moi')">
+                      @if (item.Moi==1) {
+                        <span class="material-symbols-outlined text-blue-500">check_circle</span>
+                       }
+                      @else { <span class="material-symbols-outlined text-red-500">cancel</span> }
+                    </div>
+                   </td>
+                </ng-container>
+                <ng-container matColumnDef="Hanhdong">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  Hành Động</th>
+                  <td mat-cell *matCellDef="let item"> 
+                    <div class="flex flex-row items-center space-x-2">
+                    <a routerLink="{{item.id}}" class="material-symbols-outlined p-2 border rounded-full 
+                          bg-slate-200 text-blue-500 
+                          hover:bg-blue-500 hover:text-white">
+                      edit_square
+                    </a>
+                    <span (click)="XoaDanhmucDialog(XoaTeamplate,item,'sanpham')" class="material-symbols-outlined p-2 border rounded-full 
+                          bg-slate-200 text-red-500 
+                          hover:bg-red-500 hover:text-white">
+                      delete
+                    </span>
+                  </div>
+                     </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell p-4 text-red-500" colspan="4">Chưa Có Sản Phẩm Nào</td>
+                </tr>
+              </table>
+              <mat-paginator [pageSize]="50"></mat-paginator>
+            </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="flex justify-between items-center mx-4 mt-4 mb-6 bg-white p-3 rounded-lg">
+          <mat-paginator class="w-full" [pageSizeOptions]="[10, 20, 50]"
+              [pageSize]="SearchParams.pageSize"
+              [length]="this.Lists.totalCount"
+              [pageSizeOptions]="pageSizeOptions"
+              [pageIndex]="SearchParams.pageNumber"
+              (page)="onPageChange($event)">
+             </mat-paginator>
+              </div> -->
+      </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+<ng-template #dialogTemplate>
+  <div class="lg:w-[40vw] p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Thêm Mới</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 lg:p-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Tiêu Đề</mat-label>
+          <input matInput [(ngModel)]="Detail.Title" [ngModelOptions]="{standalone: true}" placeholder="Tiêu Đề" (input)="FillSlug()">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Slug</mat-label>
+          <input matInput [(ngModel)]="Detail.Slug" [ngModelOptions]="{standalone: true}" placeholder="Slug">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Danh Mục</mat-label>
+            <mat-select [(ngModel)]="Detail.idDM" [ngModelOptions]="{standalone: true}">
+              <mat-option [value]="item.id" *ngFor="let item of ListDanhmuc">{{item.Title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #XoaTeamplate>
+  <div class="p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Xoá</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 lg:p-4">
+          Bạn chắc chắn muốn Xoá?
+      </div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #dialogDanhmuc>
+  <div class="lg:w-[40vw] p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Thêm Mới Danh Mục</div>
+    <div mat-dialog-content>
+      <div class="grid grid-cols-3">
+          <app-hinhanh class="h-full" [Image]="Danhmuc?.Image?.Hinhchinh"
+          (UploadEmit)="GetUpload($event)"></app-hinhanh>
+        
+        <div class="col-span-2 flex flex-col w-full space-y-4 lg:p-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Danh Mục Cha</mat-label>
+            <mat-select [(ngModel)]="Danhmuc.pid" [ngModelOptions]="{standalone: true}">
+              <mat-option [value]="item.id" *ngFor="let item of ListDanhmuc">{{item.Title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tiêu Đề</mat-label>
+            <input matInput [(ngModel)]="Danhmuc.Title" [ngModelOptions]="{standalone: true}" placeholder="Tiêu Đề"
+              (input)="FillSlugDanhmuc()">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Slug</mat-label>
+            <input matInput [(ngModel)]="Danhmuc.Slug" [ngModelOptions]="{standalone: true}" placeholder="Slug">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Thứ Tự</mat-label>
+            <input matInput [(ngModel)]="Danhmuc.Ordering" [ngModelOptions]="{standalone: true}" placeholder="Thứ Tự">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

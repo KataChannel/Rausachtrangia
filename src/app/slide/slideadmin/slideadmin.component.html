@@ -1,0 +1,331 @@
+<mat-drawer-container class="example-container w-full h-full " autosize>
+  <mat-drawer #drawer mode="side" class="!flex flex-col flex-auto min-w-0 relative h-full w-full" position="end">
+    <div class="relative flex flex-col h-full w-full overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="!flex flex-col flex-auto min-w-0 relative !h-[90vh]">
+    <div class="relative flex flex-col">
+      <div class="flex justify-between items-center space-x-2 bg-white p-2 rounded-lg">
+        <div class="flex flex-row space-x-3 justify-center items-center">
+          <div class="relative mt-1 lg:w-80">
+            <input (keyup)="applyFilter($event)" type="text" name="email" id="topbar-search"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+              placeholder="Tìm Kiếm">
+          </div>
+          <div class="hidden lg:flex flex-row space-x-3 cursor-pointer">
+            <div (click)="writeExcelFile()" class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_download</span>
+              <span class="text-xs">Download</span>
+            </div>
+            <div (click)="uploadfile.click()" class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+              <span class="text-xs">Upload</span>
+              <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+            </div>
+            <div (click)="LoadDrive()"
+              class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Drive">cloud_download</span>
+              <span class="text-xs">Drive ({{0}})</span>
+            </div>
+
+            <!-- @if(SanphamsDrive.length>0)
+                {
+                  <div (click)="SyncDrive()"
+                  class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+                  <span class="material-symbols-outlined text-xl" matTooltip="Drive">cloud_sync</span>
+                  <span class="text-xs">Sync ({{FilterLists.length||0}}/{{SanphamsDrive.length||0}})</span>
+                </div>
+                } -->
+
+            <div (click)="openDialogDanhmuc(dialogDanhmuc,'','new')"
+              class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Drive">create_new_folder</span>
+              <span class="text-xs">Thêm Danh Mục</span>
+            </div>
+
+            <div (click)="openDialog(dialogTemplate,'','new')"
+              class="flex flex-col items-center p-2 text-center justify-center hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Drive">post_add</span>
+              <span class="text-xs">Thêm Slide</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative grid grid-cols-4 h-full w-full overflow-auto">
+      <div>
+        <mat-tree class="my-6 mx-4 p-4 rounded-lg shadow-xl shadow-gray-200" [dataSource]="treedataSource" [treeControl]="treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <div (click)="ChoosenDanhmuc(node)" class="cursor-pointer group {{SelectDanhmuc.id==node.id?'bg-slate-200':''}} w-full flex flex-col items-center p-2 hover:bg-slate-100 rounded-lg">
+          <div class="w-full flex flex-row space-x-2 items-center">
+            <span>
+              @if(node && node.Image&&node.Image.Thumb)
+              {
+                <img loading="lazy" src="assets/images/sanpham/{{node.Image.Thumb}}" class="w-20 mx-auto">
+              }
+              @else if(node && node.Image&&node.Image.Hinhchinh&&node.Image.Hinhchinh.src){
+                <img loading="lazy" src="{{node.Image.Hinhchinh.src}}" class="w-20 mx-auto">
+              }
+              @else {
+                <img loading="lazy" src="assets/images/noimage.png" class="p-3 max-w-20 mx-auto rounded-lg">
+              }
+             </span>
+             <span>{{node.Title}} </span>
+             <span class="text-red-500">({{node.Soluong||0}})</span>
+          </div>
+          <div class="flex flex-row space-x-2 items-center">
+            <div class="z-10 hidden group-hover:flex flex-row space-x-2 items-center">
+              <span (click)="openDialogDanhmuc(dialogDanhmuc,node.item,'edit')" class="material-symbols-outlined p-2 border rounded-full 
+                    bg-slate-200 text-blue-500 
+                    hover:bg-blue-500 hover:text-white">
+                    check_circle
+              </span>
+              <span (click)="openDialogDanhmuc(dialogDanhmuc,node.item,'edit')" class="material-symbols-outlined p-2 border rounded-full 
+                    bg-slate-200 text-blue-500 
+                    hover:bg-blue-500 hover:text-white">
+                edit_square
+              </span>
+              <span class="material-symbols-outlined p-2 border rounded-full 
+                    bg-slate-200 text-red-500 
+                    hover:bg-red-500 hover:text-white">
+                delete
+              </span>
+          </div>
+            </div>
+          </div>
+          </mat-tree-node>
+          <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+            <div class="w-full group flex flex-row space-x-2 items-center justify-between">
+             <div class="flex flex-row space-x-2 items-center">
+              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                <span class="material-symbols-outlined">
+                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </span>
+              </button>
+              <a [href]="'admin/sanpham/'+node.id">
+                {{node.Title}}
+              </a>
+            </div>
+              <div class="flex flex-row space-x-2 items-center">
+                <span class="hidden group-hover:block material-symbols-outlined p-2 border rounded-full 
+                bg-slate-200 text-blue-500 
+                hover:bg-blue-500 hover:text-white">
+                  edit_square
+                </span>
+                <span class="hidden group-hover:block material-symbols-outlined p-2 border rounded-full 
+                bg-slate-200 text-red-500 
+                hover:bg-red-500 hover:text-white">
+                  delete
+                </span>
+              </div>
+            </div>
+          </mat-tree-node>
+        </mat-tree>
+      </div>
+      <div class="col-span-3 flex flex-col space-y-3">
+        <div class="flex flex-col my-6 mx-4 rounded-lg shadow-xl shadow-gray-200">
+          <div class="border rounded-lg">
+            <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="Hinhanh">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Hình Ảnh </th>
+                <td mat-cell *matCellDef="let item">
+                  <div class="text-base font-semibold text-gray-900">
+                    @if(item.Image.Hinhchinh)
+                    {
+                    <img loading="lazy" src="{{item.Image.Hinhchinh.src}}" class="p-3 max-w-32 mx-auto rounded-lg">
+                    }
+                    @else {
+                    <img loading="lazy" src="assets/images/noimage.png" class="p-3 max-w-32 mx-auto rounded-lg">
+                    }
+                  </div>
+              </ng-container>
+              <ng-container matColumnDef="Title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tiêu Đề </th>
+                <td mat-cell *matCellDef="let item">
+                  <span>
+                    <div class="text-base font-semibold text-gray-900">{{item.Title}}</div>
+                    <div class="text-sm font-normal text-gray-500">{{item.Slug}}
+                    </div>
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Ordering">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Thứ Tự </th>
+                <td mat-cell *matCellDef="let item">
+                    {{item.Ordering}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Noibat">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nổi Bật </th>
+                <td mat-cell *matCellDef="let item">
+                  @if (item.Noibat==0) {
+                  <span class="material-symbols-outlined text-blue-500">check_circle</span>
+                  }
+                  @else { <span class="material-symbols-outlined text-red-500">cancel</span> }
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Trangthai">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
+                <td mat-cell *matCellDef="let item">
+                  @if (item.Status==1) {
+                  <span class="material-symbols-outlined text-blue-500">check_circle</span>
+                  }
+                  @else { <span class="material-symbols-outlined text-red-500">cancel</span> }
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Hành Động </th>
+                <td mat-cell *matCellDef="let row">
+                  <div class="flex flex-row space-x-2 items-center">
+                    <span (click)="openDialog(dialogTemplate,row,'edit')" class="material-symbols-outlined p-2 border rounded-full 
+                    bg-slate-200 text-blue-500 
+                    hover:bg-blue-500 hover:text-white">
+                      edit_square
+                    </span>
+                    <span class="material-symbols-outlined p-2 border rounded-full 
+                    bg-slate-200 text-red-500 
+                    hover:bg-red-500 hover:text-white">
+                      delete
+                    </span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell p-4 text-red-500" colspan="4">Chưa Có Hình Ảnh Nào</td>
+              </tr>
+            </table>
+          </div>
+    </div>
+    </div>
+</div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<ng-template #dialogTemplate>
+  <div class="lg:w-[40vw] p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Thêm Mới</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 lg:p-4">
+        <app-hinhanh [Title]="'Hình Chính'" [height]="'h-60'" [width]="'w-60'" [Image]="Detail?.Image?.Hinhchinh"
+        (UploadEmit)="GetUpload($event)"></app-hinhanh>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Danh Mục</mat-label>
+          <mat-select [(ngModel)]="Detail.idDM" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]="item.id" *ngFor="let item of ListDanhmuc">{{item.Title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Tiêu Đề</mat-label>
+          <input matInput [(ngModel)]="Detail.Title" [ngModelOptions]="{standalone: true}" placeholder="Tiêu Đề"
+            (input)="FillSlug()">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Slug</mat-label>
+          <input matInput [(ngModel)]="Detail.Slug" [ngModelOptions]="{standalone: true}" placeholder="Slug">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Thứ Tự</mat-label>
+          <input matInput [(ngModel)]="Detail.Ordering" [ngModelOptions]="{standalone: true}" placeholder="Thứ Tự">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Trạng Thái</mat-label>
+          <input matInput [(ngModel)]="Detail.Status" [ngModelOptions]="{standalone: true}" placeholder="Trạng Thái">
+        </mat-form-field>
+      </div>
+    </div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+      </div>
+  </div>
+</ng-template>
+
+
+<ng-template #dialogDanhmuc>
+  <div class="w-[98vw] h-[95vw] p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Thêm Mới Danh Mục</div>
+    <div mat-dialog-content>
+      <div class="lg:p-8 grid lg:grid-cols-2 lg:gap-4 gap-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Danh Mục Cha</mat-label>
+          <mat-select [(ngModel)]="Danhmuc.pid" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]="item" *ngFor="let item of ListDanhmuc">{{item.Title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Tiêu Đề</mat-label>
+          <input matInput [(ngModel)]="Danhmuc.Title" [ngModelOptions]="{standalone: true}" placeholder="Tiêu Đề"
+            (input)="FillSlugDanhmuc()">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Slug</mat-label>
+          <input matInput [(ngModel)]="Danhmuc.Slug" [ngModelOptions]="{standalone: true}" placeholder="Slug">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Thứ Tự</mat-label>
+          <input matInput [(ngModel)]="Danhmuc.Ordering" [ngModelOptions]="{standalone: true}" placeholder="Thứ Tự">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Trạng Thái</mat-label>
+          <input type="number" matInput [(ngModel)]="Danhmuc.Status" [ngModelOptions]="{standalone: true}" placeholder="Trạng Thái">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Hiển Thị Mobile</mat-label>
+          <mat-select [(ngModel)]="Danhmuc.isShowMobile" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]="false">Tắt</mat-option>
+            <mat-option [value]="true">Bật</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="lg:p-8 grid lg:grid-cols-4 grid-cols-1 gap-2">
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="w-full">
+            <mat-label>Default</mat-label>
+            <input [(ngModel)]="Danhmuc.Config.default" [ngModelOptions]="{standalone: true}"
+             type="text" matInput class="w-full border border-gray-200 rounded"/>
+          </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="w-full">
+            <mat-label>XS</mat-label>
+            <input [(ngModel)]="Danhmuc.Config.xs" [ngModelOptions]="{standalone: true}"
+             type="text" matInput class="w-full border border-gray-200 rounded"/>
+          </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="w-full">
+            <mat-label>MD</mat-label>
+            <input [(ngModel)]="Danhmuc.Config.md" [ngModelOptions]="{standalone: true}"
+             type="text" matInput class="w-full border border-gray-200 rounded"/>
+          </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="w-full">
+            <mat-label>LG</mat-label>
+            <input [(ngModel)]="Danhmuc.Config.lg" [ngModelOptions]="{standalone: true}"
+             type="text" matInput class="w-full border border-gray-200 rounded"/>
+          </mat-form-field>
+      </div>
+    </div>
+    <div class="flex flex-row space-x-2 items-center justify-center">
+      <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+      <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #XoaTeamplate>
+  <div class="lg:w-[40vw] p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Xoá</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 lg:p-4">
+        Bạn chắc chắn muốn Xoá?
+      </div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

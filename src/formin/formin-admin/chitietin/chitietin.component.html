@@ -1,0 +1,117 @@
+<div #exportPDF #printArea class="p-4 text-xs bg-white rounded-lg w-[559px] h-[794px] mx-auto lg:scale-[90%] scale-[90%]">
+  <div class="h-full flex flex-col divide-y divide-dashed divide-black border-4 border-black">
+    <div class="grid grid-cols-3 gap-2 divide-x divide-black">
+      <div class="flex flex-col items-center p-2">
+        <img loading="lazy" src="/assets/images/logo.webp" class="mx-auto">
+        <span>
+          Mã ĐH : <strong>{{Donhang?.MaDonHang}}</strong>
+        </span>
+        <span class="italic text-[8px]">
+          (In lúc : {{GetTimePrint()| date:'HH:mm dd/MM/yyyy '}})
+        </span>
+      </div>
+      <div class="text-[10px] col-span-2 flex flex-col px-4 py-2">
+        <span class="text-[12px] font-bold">CTY TNHH NÔNG SẢN THỰC PHẨM TRẦN GIA</span>
+        <span>Địa chỉ: Tầng 3, Tòa nhà An Phú Plaza, 117-119 Lý Chính Thắng, Phường Võ Thị Sáu, Quận 3, TPHCM</span>
+        <span>Điện thoại: 0865770009</span>
+        <span>Email: rausachtrangia&#64;gmail.com</span>
+      </div>
+    </div>
+    <div class="grid grid-cols-6 gap-2 divide-x divide-dashed divide-black">
+      <div class="text-[10px] col-span-4 flex flex-col p-2">
+        <span class="text-xs font-bold">Thông Tin Khách Hàng </span>
+        <span>Tên : <strong>{{Donhang?.Khachhang?.Hoten}}</strong></span>
+        <span>Số Điện Thoại : <strong>{{Donhang?.Khachhang?.SDT}}</strong></span>
+        <span>Địa Chỉ : <strong>{{Donhang?.Giohangs?.Khachhang?.Diachi}}</strong></span>
+        <span class="italic">Ghi Chú : <strong>{{Donhang?.Ghichu}}</strong></span>
+      </div>
+
+      <div class="col-span-2 flex flex-col space-y-2 p-2">
+        <div class="w-full flex flex-col space-y-2 text-center text-[8px]">
+          <img loading="lazy" src="/assets/images/qrcode-oazalo.jpg" class="w-16 mx-auto">
+          <span class="px-4">Mua hàng nhanh chóng và đơn giản hơn với <strong> Zalo App </strong></span>
+        </div>
+      </div>
+
+    </div>
+    <div class="grid grid-cols-6 gap-2 divide-x divide-black divide-dashed items-center">
+      <span class="col-span-4 text-xs font-bold p-1">CHI TIẾT ĐƠN HÀNG:</span>
+      <span class="text-center font-bold text-[10px] p-1">Khối lượng (kg)</span>
+      <span class="text-center font-bold text-[10px] p-1">Đơn giá (vnđ)</span>
+    </div>
+    <div class="h-full py-2 flex flex-col space-y-1 text-[12px]">
+      @for (item of Donhang?.Giohangs?.Sanpham; track item.id) {
+      <div class="flex flex-row space-x-2 item-center w-full">
+        <div class="w-4/6 px-2">
+          {{$index+1}}/{{item.Title}}
+        </div>
+        <span class="text-center w-1/6 px-2">{{(item.Giachon.SLTT*1).toFixed(2)| number:'1.2-2'}}{{item.Giachon.dvt}}</span>
+        <span class="text-right w-1/6 px-2">{{((item.Giachon.SLTT*item.Giachon.GiaCoSo)| number:'1.0-0')||'0'}}đ</span>
+      </div>
+      }
+    </div>
+   <div class="grid grid-cols-6 gap-2 divide-x divide-black divide-dashed items-center">
+      <span class="col-span-4 font-bold p-2">Phí vận chuyển:</span>
+      <span class="text-center font-bold"> </span>
+      <span class="text-right font-bold p-2">{{Donhang?.Vanchuyen?.Phivanchuyen| number:'1.0-0'}}đ</span>
+    </div>
+    <div class="grid grid-cols-6 gap-2 divide-x divide-black divide-dashed items-center-2">
+      <span class="flex items-center justify-center p-2 col-span-4 text-[10px] italic">(Giá tiền được tính theo khối
+        lượng thực tế khi đóng gói).</span>
+      <div class="col-span-2 flex flex-row space-x-2 p-2 justify-between">
+        <span>Tổng: </span>
+        <!-- <span class="font-bold">{{Tongthucte| number:'1.0-0'}} VNĐ</span> -->
+        <span class="font-bold">{{Donhang.TotalTT??0 | number:'1.0-0'}} VNĐ</span>
+        <!-- @if(Type=="KHACHHANG"){
+          <span class="font-bold">{{Donhang.Total| number:'1.0-0'}} VNĐ</span>
+        }
+        @else {
+          <span class="font-bold">{{Donhang.TotalTT| number:'1.0-0'}} VNĐ</span>
+        } -->
+      
+      </div>
+    </div>
+    <div class="grid grid-cols-8 gap-2 divide-x divide-black divide-dashed items-center">
+      <div class="h-full col-span-3 flex flex-col space-y-1 p-2 divide-y divide-black divide-dashed">
+        <div class="flex flex-col text-center">
+          <span>Tiền Thu Người Nhận: </span>
+          {{Donhang?.Thanhtoan?.Hinhthuc}}
+          <span class="text-base font-bold">
+            @if(Donhang?.Thanhtoan?.Hinhthuc!="COD"){
+              0 VNĐ
+            }
+            @else{
+              <span class="font-bold">{{Donhang.TotalTT| number:'1.0-0'}} VNĐ</span>
+              <!-- @if(Type=="KHACHHANG"){
+                <span class="font-bold">{{Donhang.Total| number:'1.0-0'}} VNĐ</span>
+              }
+              @else {
+                <span class="font-bold">{{Donhang.TotalTT| number:'1.0-0'}} VNĐ</span>
+              } -->
+            }
+           
+          </span>
+        </div>
+        <div class="text-center">
+          <span>Khách hàng ký nhận: </span>
+        </div>
+      </div>
+
+      <div class="col-span-5 flex flex-col space-y-4 p-2 text-center">
+        <span class="text-[7px] italic">** Nếu khách hàng chuyển khoản, vui lòng ghi đúng nội dung bên dưới</span>
+        <div class="w-full">
+          <span class="border-2 border-black rounded-lg p-1">Nội dung chuyển khoản : <strong>
+              {{Donhang?.MaDonHang}}</strong></span>
+        </div>
+
+        <div class="flex flex-col space-y-2 w-full items-center text-[10px]">
+          <div class="flex flex-row space-x-2">
+            <span>STK : <strong>{{Taikhoan.STK}}</strong></span>
+            <span>Tên TK : <strong>{{Taikhoan.TenTK}}</strong></span>
+          </div>
+          <span class="col-span-2 text-center">{{Taikhoan.TenNH}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

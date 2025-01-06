@@ -1,0 +1,138 @@
+<div class="bg-gray-50 relative p-4 w-full h-full md:h-auto">
+  <div class="relative bg-white rounded-2xl  shadow-gray-700">
+    <div class="flex justify-between items-center p-5 rounded-t border-b">
+      <a [routerLink]="['../']" (click)="CloseDrawer()">
+        <span class="material-symbols-outlined ">
+          close
+        </span>
+      </a>
+      <span class="lg:text-xl text-xs font-semibold">
+        {{Detail.Title}}
+      </span>
+      <button mat-flat-button color="primary" (click)="UpdateSanpham()">Lưu</button>
+    </div>
+    <div class="p-4 grid lg:grid-cols-2 grid-cols-1 gap-4">
+      <div class="flex flex-col space-y-3">
+        <app-hinhanh [Title]="'Hình Chính'" [height]="'h-60'" [width]="'w-60'" [Image]="Detail?.Image?.Hinhchinh"
+          (UploadEmit)="GetUpload($event)"></app-hinhanh>
+        <div class="flex flex-col space-y-2 w-full overflow-auto p-3">
+          <div class="flex flex-nowrap space-x-2">
+            @for (item of Detail.ListImage; track item.id) {
+            <app-hinhanh [Title]="'Hình '+($index+1)" [height]="'h-40'" [width]="'w-40'" [Image]="item"
+              (UploadEmit)="GetUploadList($event,$index)"></app-hinhanh>
+            }
+          </div>
+        </div>
+        <div>
+          <button mat-flat-button color="primary">
+            <div class="flex flex-row space-x-2 items-center justify-center" (click)="Detail.ListImage.push({})">
+              <span class="material-symbols-outlined text-xl">add_circle</span>
+              <span class="text-sm">Thêm Hình</span>
+            </div>
+          </button>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <span class="font-bold"> Tags</span>
+          <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Tags" [ngModelOptions]="{standalone: true}"
+            [init]="configTiny"></editor>
+        </div>
+        
+      </div>
+      <div class="flex flex-col space-y-2">
+        <mat-form-field appearance="outline" class="w-full text-xs">
+          <mat-label>Tên Sản Phẩm</mat-label>
+          <input [(ngModel)]="Detail.Title" [ngModelOptions]="{standalone: true}" type="text" matInput
+            class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Tên Sản Phẩm'">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full text-xs">
+          <mat-label>Slug</mat-label>
+          <input [(ngModel)]="Detail.Slug" [ngModelOptions]="{standalone: true}" type="text" matInput
+            class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Slug'">
+        </mat-form-field>
+        <div class="flex lg:flex-row lg:space-x-2 flex-col xs:space-y-2">
+          <!-- <mat-form-field appearance="outline" class="w-full text-xs">
+            <mat-label>SKU</mat-label>
+            <input [(ngModel)]="Detail.SKU" [ngModelOptions]="{standalone: true}" type="text" matInput
+              class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'SKU'">
+          </mat-form-field> -->
+  
+          <mat-form-field appearance="outline" class="w-full text-xs">
+            <mat-label>Mã Sản Phẩm</mat-label>
+            <input [(ngModel)]="Detail.MaSP" [ngModelOptions]="{standalone: true}" type="text" matInput
+              class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Mã Sản Phẩm'">
+          </mat-form-field>
+
+        </div>
+
+
+        <mat-form-field appearance="outline" class="w-full text-xs">
+          <mat-label>Danh Mục</mat-label>
+          <mat-select [(ngModel)]="Detail.idDM" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]="item.id" *ngFor="let item of Danhmuc">{{item.Title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="grid lg:grid-cols-4 items-center gap-2 rounded-lg border p-2">
+          <div class="lg:col-span-2 font-bold">
+            Biến Thể
+          </div>
+          <div class="lg:col-span-2 font-bold">
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Giá Cơ Sở </mat-label>
+              <input (input)="UpdateGia()" [(ngModel)]="Detail.GiaCoSo" [ngModelOptions]="{standalone: true}" type="text" matInput
+                class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Giá Cơ Sở'">
+                <mat-hint class="text-red-500">{{Detail.GiaCoSo??0|number:'1.0-2'}}đ</mat-hint>
+            </mat-form-field>
+          </div>
+          @for (item of Detail.Giagoc; track item.id) {
+          <mat-form-field appearance="outline" class="w-full text-xs">
+            <mat-label>Mã Sản Phẩm</mat-label>
+            <input disabled [(ngModel)]="Detail.Giagoc[$index].MaSP" [ngModelOptions]="{standalone: true}" type="text" matInput
+              class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Mã Sản Phẩm'">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full text-xs">
+            <mat-label>Khối Lượng</mat-label>
+            <input (input)="Detail.Giagoc[$index].gia = Detail.Giagoc[$index].khoiluong*Detail.GiaCoSo" [(ngModel)]="Detail.Giagoc[$index].khoiluong" [ngModelOptions]="{standalone: true}" type="text" matInput
+              class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Khối Lượng'">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full text-xs">
+            <mat-label>Giá</mat-label>
+            <input disabled [(ngModel)]="Detail.Giagoc[$index].gia" [ngModelOptions]="{standalone: true}" type="text" matInput
+              class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Giá'">
+            <mat-hint class="text-red-500">{{Detail.Giagoc[$index].gia|number:'1.0-2'}}đ</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full text-xs">
+            <mat-label>Đơn Vị Tính</mat-label>
+            <input [(ngModel)]="Detail.Giagoc[$index].dvt" [ngModelOptions]="{standalone: true}" type="text" matInput
+              class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Đơn Vị Tính'">
+          </mat-form-field>
+          }
+          <div>
+            <button (click)="AddBienthe()" mat-flat-button color="primary">
+              <div class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl">add_circle</span>
+                <span class="text-sm">Biến Thể</span>
+              </div>
+          </button>
+        </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col space-y-2">
+        <span class="font-bold"> Mô Tả</span>
+        <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Mota" [ngModelOptions]="{standalone: true}"
+          [init]="configTiny"></editor>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <span class="font-bold">  Nội dung</span>
+        <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Noidung" [ngModelOptions]="{standalone: true}"
+          [init]="configTiny"></editor>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <span class="font-bold">  Footer</span>
+        <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Footer" [ngModelOptions]="{standalone: true}"
+          [init]="configTiny"></editor>
+      </div>
+
+    </div>
+  </div>
+</div>

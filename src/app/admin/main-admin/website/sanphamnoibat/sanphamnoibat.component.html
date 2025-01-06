@@ -1,0 +1,1128 @@
+<section class="lg:py-16 py-6">
+  <div class="container">
+      <div class="grid lg:grid-cols-4 lg:gap-10 gap-6">
+          <div>
+              <div>
+                  <span class="inline-flex py-2 px-4 text-sm text-primary rounded-full bg-primary/20 mb-6">Menu</span>
+                  <h2 class="text-3xl font-semibold text-default-900 mb-6">Special Menu for you...</h2>
+              </div>
+
+              <div class="flex flex-wrap w-full">
+                  <div class="lg:h-[30rem] h-auto lg:w-full w-screen custom-scroll overflow-auto lg:mx-0 -mx-4 px-2">
+                      <nav class="flex lg:flex-col gap-2" aria-label="Tabs" role="tablist" data-hs-tabs-vertical="true">
+                          <!-- Coffee Menu Tab Button -->
+                          <button type="button" class="flex p-1" id="coffee-menu-item" data-hs-tab="#coffee-menu" aria-controls="coffee-menu" role="tab">
+                              <span class="hs-tab-active:bg-primary text-default-900 flex items-center justify-start gap-4 p-2 pe-6 lg:w-2/3 w-full transition-all hover:text-primary rounded-full">
+                                  <span class="hs-tab-active:bg-white h-14 w-14 inline-flex items-center justify-center rounded-full">
+                                      <img loading="lazy" src="/assets/images/cup-3dff3c2f.svg" class="h-8 w-8">
+                                  </span>
+                                  <span class="hs-tab-active:text-white text-base font-medium">Coffee</span>
+                              </span>
+                          </button>
+
+                          <!-- Burger Menu Tab Button -->
+                          <button type="button" class="flex p-1" id="burger-menu-item" data-hs-tab="#burger-menu" aria-controls="burger-menu" role="tab">
+                              <span class="hs-tab-active:bg-primary text-default-900 flex items-center justify-start gap-4 p-2 pe-6 lg:w-2/3 w-full transition-all hover:text-primary rounded-full">
+                                  <span class="hs-tab-active:bg-white h-14 w-14 inline-flex items-center justify-center rounded-full">
+                                      <img loading="lazy" src="/assets/images/burger-1-0c3ba5a6.svg" class="h-8 w-8">
+                                  </span>
+                                  <span class="hs-tab-active:text-white text-base font-medium">Burger</span>
+                              </span>
+                          </button>
+
+                          <!-- Noodles Menu Tab Button -->
+                          <button type="button" class="flex p-1" id="noodles-menu-item" data-hs-tab="#noodles-menu" aria-controls="noodles-menu" role="tab">
+                              <span class="hs-tab-active:bg-primary text-default-900 flex items-center justify-start gap-4 p-2 pe-6 lg:w-2/3 w-full transition-all hover:text-primary rounded-full">
+                                  <span class="hs-tab-active:bg-white h-14 w-14 inline-flex items-center justify-center rounded-full">
+                                      <img loading="lazy" src="/assets/images/noodles-8ff3aeb9.svg" class="h-8 w-8">
+                                  </span>
+                                  <span class="hs-tab-active:text-white text-base font-medium">Noodles</span>
+                              </span>
+                          </button>
+
+                          <!-- Pizza Menu Tab Button -->
+                          <button type="button" class="flex p-1 active" id="pizza-menu-item" data-hs-tab="#pizza-menu" aria-controls="pizza-menu" role="tab">
+                              <span class="hs-tab-active:bg-primary text-default-900 flex items-center justify-start gap-4 p-2 pe-6 lg:w-2/3 w-full transition-all hover:text-primary rounded-full">
+                                  <span class="hs-tab-active:bg-white  p-4 h-14 w-14 inline-flex items-center justify-center rounded-full">
+                                      <img loading="lazy" src="/assets/images/pizza-slice 1-79554296.svg" class="h-8 w-8">
+                                  </span>
+                                  <span class="hs-tab-active:text-white text-base font-medium">Pizza</span>
+                              </span>
+                          </button>
+
+                          <!-- Wraps Menu Tab Button -->
+                          <button type="button" class="flex p-1" id="wraps-menu-item" data-hs-tab="#wraps-menu" aria-controls="wraps-menu" role="tab">
+                              <span class="hs-tab-active:bg-primary text-default-900 flex items-center justify-start gap-4 p-2 pe-6 lg:w-2/3 w-full transition-all hover:text-primary rounded-full">
+                                  <span class="hs-tab-active:bg-white h-14 w-14 inline-flex items-center justify-center rounded-full">
+                                      <img loading="lazy" src="/assets/images/taco-96e6ecf3.svg" class="h-8 w-8">
+                                  </span>
+                                  <span class="hs-tab-active:text-white text-base font-medium">Wraps</span>
+                              </span>
+                          </button>
+
+                          <!-- Appetizers Menu Tab Button -->
+                          <button type="button" class="flex p-1" id="appetizers-menu-item" data-hs-tab="#appetizers-menu" aria-controls="appetizers-menu" role="tab">
+                              <span class="hs-tab-active:bg-primary text-default-900 flex items-center justify-start gap-4 p-2 pe-6 lg:w-2/3 w-full transition-all hover:text-primary rounded-full">
+                                  <span class="hs-tab-active:bg-white h-14 w-14 inline-flex items-center justify-center rounded-full">
+                                      <img loading="lazy" src="/assets/images/skewer-86331503.svg" class="h-8 w-8">
+                                  </span>
+                                  <span class="hs-tab-active:text-white text-base font-medium">Appetizers</span>
+                              </span>
+                          </button>
+
+                          <!-- Desserts Menu Tab Button -->
+                          <button type="button" class="flex p-1" id="desserts-menu-item" data-hs-tab="#desserts-menu" aria-controls="desserts-menu" role="tab">
+                              <span class="hs-tab-active:bg-primary text-default-900 flex items-center justify-start gap-4 p-2 pe-6 lg:w-2/3 w-full transition-all hover:text-primary rounded-full">
+                                  <span class="hs-tab-active:bg-white h-14 w-14 inline-flex items-center justify-center rounded-full">
+                                      <img loading="lazy" src="/assets/images/dessert-97434bb7.svg" class="h-8 w-8">
+                                  </span>
+                                  <span class="hs-tab-active:text-white text-base font-medium">Desserts</span>
+                              </span>
+                          </button>
+                      </nav><!-- end tab -->
+                  </div>
+              </div>
+          </div>
+
+          <div class="lg:col-span-3">
+              <div class="relative lg:mt-24">
+                  <div class="bg-primary/10 rounded-lg lg:pb-16">
+                      <div class="lg:p-6 p-4">
+                          <div id="pizza-menu" role="tabpanel" aria-labelledby="pizza-menu-item">
+                              <div class="grid grid-cols-1">
+                                  <div class="swiper menu-swiper w-full h-full swiper-initialized swiper-horizontal swiper-pointer-events swiper-free-mode swiper-backface-hidden">
+                                      <div class="swiper-wrapper" style="transform: translate3d(-1087px, 0px, 0px); transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="1" style="width: 332.333px; margin-right: 30px;">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-2-3b9c935a.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Margarita Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 5.86</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2" style="width: 332.333px; margin-right: 30px;">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-3-c0ae558f.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Vegetarian Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 9.56</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-prev" style="width: 332.333px; margin-right: 30px;" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-4-50931b5d.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Turkish pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 8.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="swiper-slide swiper-slide-active" style="width: 332.333px; margin-right: 30px;" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-1-b135e62c.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Italian Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 8.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+
+                                          <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="1" style="width: 332.333px; margin-right: 30px;">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-2-3b9c935a.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Margarita Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 5.86</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+
+                                          <div class="swiper-slide" data-swiper-slide-index="2" style="width: 332.333px; margin-right: 30px;">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-3-c0ae558f.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Vegetarian Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 9.56</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+
+                                          <div class="swiper-slide swiper-slide-duplicate-prev" style="width: 332.333px; margin-right: 30px;" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-4-50931b5d.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Turkish pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 8.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                      <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" style="width: 332.333px; margin-right: 30px;" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-1-b135e62c.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Italian Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 8.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="1" style="width: 332.333px; margin-right: 30px;">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-2-3b9c935a.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Margarita Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 5.86</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2" style="width: 332.333px; margin-right: 30px;">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/pizza-3-c0ae558f.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Vegetarian Pizza</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 9.56</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div></div>
+                                  </div><!-- end pizza menu slider -->
+                              </div><!--end grid-->
+                          </div>
+                          <!-- end pizza-menu -->
+
+                          <div id="burger-menu" class="hidden" role="tabpanel" aria-labelledby="burger-menu-item">
+                              <div class="grid grid-cols-1">
+                                  <div class="swiper menu-swiper w-full h-full swiper-initialized swiper-horizontal swiper-pointer-events swiper-free-mode">
+                                      <div class="swiper-wrapper" style="transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-2-d7610231.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Fried Egg Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-3-6e7710e6.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 19.25</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-4-f1185701.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Gourmet cheeseburger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 16.52</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="swiper-slide" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-1-021e31a4.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Cheese Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 5.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-2-d7610231.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Fried Egg Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-3-6e7710e6.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 19.25</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-4-f1185701.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Gourmet cheeseburger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 16.52</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                      <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-1-021e31a4.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Cheese Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 5.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-2-d7610231.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Fried Egg Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/burger-3-6e7710e6.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat Burger</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 19.25</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div></div>
+                                  </div><!-- end pizza menu slider -->
+                              </div><!--end grid-->
+                          </div>
+                          <!-- end burger-menu -->
+
+                          <div id="coffee-menu" class="hidden" role="tabpanel" aria-labelledby="coffee-menu-item">
+                              <div class="grid grid-cols-1">
+                                  <div class="swiper menu-swiper w-full h-full swiper-initialized swiper-horizontal swiper-pointer-events swiper-free-mode">
+                                      <div class="swiper-wrapper" style="transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-2-dfb227c1.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Cappuccino</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.45</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-3-718baa54.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Iced Cold Coffee</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 25.14</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-4-45c54394.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Flat white</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 8.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="swiper-slide" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-1-612dd0f4.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Espresso Coffee</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 5.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-2-dfb227c1.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Cappuccino</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.45</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-3-718baa54.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Iced Cold Coffee</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 25.14</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-4-45c54394.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Flat white</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 8.75</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                      <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-1-612dd0f4.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Espresso Coffee</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 5.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-2-dfb227c1.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Cappuccino</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.45</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/coffee-3-718baa54.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Iced Cold Coffee</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 25.14</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div></div><!-- end pizza menu slider -->
+                                  </div>
+                              </div><!--end grid-->
+                          </div>
+                          <!-- end coffee-menu -->
+
+                          <div id="desserts-menu" class="hidden" role="tabpanel" aria-labelledby="desserts-menu-item">
+                              <div class="grid grid-cols-1">
+                                  <div class="swiper menu-swiper w-full h-full swiper-initialized swiper-horizontal swiper-pointer-events swiper-free-mode">
+                                      <div class="swiper-wrapper" style="transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-2-9211ac31.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Berry Cheesecake</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.25</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-3-6694deb8.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Chocolate Donuts</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 35.46</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-4-2c43086d.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Carrot Cake</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 19.62</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="swiper-slide" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-1-9d9540a5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Brownie Cake</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-2-9211ac31.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Berry Cheesecake</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.25</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-3-6694deb8.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Chocolate Donuts</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 35.46</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-4-2c43086d.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Carrot Cake</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 19.62</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                      <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-1-9d9540a5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Brownie Cake</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-2-9211ac31.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Berry Cheesecake</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.25</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/cake-3-6694deb8.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Chocolate Donuts</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 35.46</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div></div>
+                                  </div><!-- end pizza menu slider -->
+                              </div><!--end grid-->
+                          </div>
+                          <!-- end desserts-menu -->
+
+                          <div id="noodles-menu" class="hidden" role="tabpanel" aria-labelledby="noodles-menu-item">
+                              <div class="grid grid-cols-1">
+                                  <div class="swiper menu-swiper w-full h-full swiper-initialized swiper-horizontal swiper-pointer-events swiper-free-mode">
+                                      <div class="swiper-wrapper" style="transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-3-0ee0ebc5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-3-0ee0ebc5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-1-f7f891c2.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Italian Noodles Pasta</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.82</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="swiper-slide" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-1-f7f891c2.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Asian Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.78</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-3-0ee0ebc5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-3-0ee0ebc5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-1-f7f891c2.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Italian Noodles Pasta</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.82</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                      <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-1-f7f891c2.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Asian Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.78</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-3-0ee0ebc5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/noodles-3-0ee0ebc5.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg Noodles</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div></div>
+                                  </div><!-- end pizza menu slider -->
+                              </div><!--end grid-->
+                          </div>
+                          <!-- end noodles-menu -->
+
+                          <div id="wraps-menu" class="hidden" role="tabpanel" aria-labelledby="wraps-menu-item">
+                              <div class="grid grid-cols-1">
+                                  <div class="swiper menu-swiper w-full h-full swiper-initialized swiper-horizontal swiper-pointer-events swiper-free-mode">
+                                      <div class="swiper-wrapper" style="transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-2-133d7406.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-3-e3b1839b.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-4-c45dbf71.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Buritto wraps Pasta</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.82</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="swiper-slide" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-1-29f98d78.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Asian wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.78</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-2-133d7406.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-3-e3b1839b.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-4-c45dbf71.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Buritto wraps Pasta</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.82</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                      <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-1-29f98d78.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Asian wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.78</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-2-133d7406.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Meat wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/wraps-3-e3b1839b.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg wraps</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div></div>
+                                  </div><!-- end pizza menu slider -->
+                              </div><!--end grid-->
+                          </div>
+                          <!-- end wraps-menu -->
+
+                          <div id="appetizers-menu" class="hidden" role="tabpanel" aria-labelledby="appetizers-menu-item">
+                              <div class="grid grid-cols-1">
+                                  <div class="swiper menu-swiper w-full h-full swiper-initialized swiper-horizontal swiper-pointer-events swiper-free-mode">
+                                      <div class="swiper-wrapper" style="transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-2-1b1dbbda.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Chicken Skewers </h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-3-d7e86e6c.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Nachos Salsa Dip</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-4-03b1a990.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Paneer tikka Skewers</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.82</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="swiper-slide" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-1-c7c5179d.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg Salad</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.78</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-2-1b1dbbda.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Chicken Skewers </h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-3-d7e86e6c.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Nachos Salsa Dip</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                          <div class="swiper-slide" data-swiper-slide-index="3">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-4-03b1a990.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Paneer tikka Skewers</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 18.82</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><!-- end slide -->
+                                      <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-1-c7c5179d.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Veg Salad</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 12.78</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-2-1b1dbbda.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Chicken Skewers </h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 31.00</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2">
+                                              <div class="relative rounded-lg overflow-hidden cursor-pointer">
+                                                  <img loading="lazy" src="/assets/images/appetizer-3-d7e86e6c.png" class="h-full w-full">
+                                                  <div class="absolute inset-0 bg-default-950/20">
+                                                      <div class="inline-flex items-end h-full w-full">
+                                                          <div class="p-6">
+                                                              <h5 class="text-xl font-medium text-white mb-2">Nachos Salsa Dip</h5>
+                                                              <h5 class="text-xl font-semibold text-white mb-2"><span class="text-base font-medium text-yellow-400">$</span> 22.99</h5>
+                                                              <a href="product-grid.html" class="inline-flex items-center text-white border-b border-dashed border-white">Order Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-5 w-5"><path d="m9 18 6-6-6-6"></path></svg></a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div></div>
+                                  </div><!-- end pizza menu slider -->
+                              </div><!--end grid-->
+                          </div>
+                          <!-- end appetizers-menu -->
+                      </div>
+                  </div>
+
+                  <div class="lg:flex items-center gap-1 absolute !-top-10 !end-15 hidden">
+                      <div class="swiper-button-next after:content-[] h-12 w-12 flex justify-center items-center rounded-full text-white bg-primary transition-all">
+                          <i class="fa-solid fa-angle-left"></i>
+                      </div>
+                      <div class="swiper-button-prev after:content-[] h-12 w-12 flex justify-center items-center rounded-full text-white bg-primary transition-all">
+                          <i class="fa-solid fa-angle-right"></i>
+                      </div>
+                  </div>
+
+
+                  <div class="lg:flex hidden">
+                      <div class="swiper-pagination !bottom-12 !start-0"></div>
+
+                      <span class="absolute bottom-0 start-1/4 z-10">
+                          <img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAABACAMAAAD4WnOTAAAC+lBMVEUAAACtcY6qc4+TQGuydpbEiKGwfZS/dZHOhKGwbojBfJbJg6C6dZDBgZmgXHm5epOjVIO5fpXDe5bQiqazcY2dR3/PjKidWX7PjqiWSHegV4GVTXueVn63fZqRTnO8dpKZOHrMgZ2jTofHepetbYmeSoPblrDQkau9fZa/a4y2SpiqQY6iRoOXPHjOg6KORW/TiaWwTZSeW3u4d5OeOn+lYX6lQYqtUprr0c7bsLfqzszdvLvx3djXqLHs1dHlysjfw8Hbub7jxsPTp6zu2NTpysrIm6Ozcozrx8vWrLDv1tLoxsjkyMbnx8Xkw8Tlv8TkwcHTqLDNo6e8jJPpysjhxcHdv77On6nOkaa6h5WhO4Xz39ngtr/etbjXr7e3Rpm2iJDmzMnow8fiu8LbtLvavLrXtbXTsLXTo63DiZ29kZq+jpa6e5Lv2tXt0s/YubzXtLnYt7bbrrTSrq7Ilp2+hJW3dI+1fo6yhIysaoWgNoDz0dLuzc7sy83nzcvnw8PgwMLfuLrWrLTPp6rNnqXDk5/Gi5zFhZy/lpu/i5vHfpm/fJW6gpK3eY2paIHv0tPpv8bgwL7YurjXsLLMm6jMjaTIlKLJiKG9iJitcoexaIWsWYOULnDx2dXo0M3yyczfvMLiuL3Us7LPrq7HoqPMm6PHjaLCmJ/EjZ/Dj5m8eJC2hI+weoqrZIH12Njixsffur7fsbrQrbLRmqzNq6rHn6XGmaLKkKC6f5Wwf4myaoemN4OdMHr14dzy1dTzzdHuw8rgwsXnu8Pes7zksrzas7bOo6vLpqrToqrNlqjRm6bFnKDKgp3Dgpu/gJnBk5jCh5i1Q5OqPImlO4mteIalYnuTNW/11tXqtMXlvb/CTqrIj52+hZq+go+sP46aM4GWMniJLGHXm7DTl6rFk6TMlaDDlpu3boqyY4erdYKdPHv26OT05d/029jsu8TcvcHepbm8SqHFeJSxQJC4S5a4jJShVnjXn7GnToSiRIKZTXKNKme3QZy5dIJl/CJjAAAAOHRSTlMADQb+IDgV/vz+vamjenRcUkPz8ey8upSJhGJDOSgg+fjw7uHf29rOTf768evp3Lj91c/MxcO8gy2iQi8AAAm3SURBVFjD7ZfVdxQHFIcJgQYrLXV3d+/Murt71shKspvduLu7e0LcPcRdiLsRIykJBJdipVDvOR36B/ScDaFP+Z7m7Tv3zv3dO7Nrhx122GGHHXbYYYcd/jfM9hx56fDhw8+/ePilVx4z2/V/YPbqE4e+fib2dXJdXXZXtvf+d749/NruXY8WsyOPH3jqdfL+BIjlX5aXlxPIHh77n3n+tV2Pjt17X3j/6dnqLu9j5GP/ci3hmHfCcoKHh8c7L+96NOx+7PEDb2bOko+RO8IzMsLDLR+QFZ3lWXssgTzT8cyT26+EpEcOvR1TTY53z8qyjMuy9Ky9tnRtacmy8uLF6Oh1coK3h8cj8Jp9cOApi9j4WFvb6E7PGiuDwVBR0Wrw6rxWWxMdnpHleczb287unVe2udIPDrx+xSM20j0uztBG4o41Oep0TjpdU9PY1H2vzqW46OiOWsgb/9Vr2yndc3DflerIefe48DQu9gFOWmWI0snR0THIqamktc3Tc929o8PbI5b8+fYl+LEn3raYyTw9XxPOxRZqCpXcNoOVl1VnDX9UGeT4wK0LX/K0LbclL8fa/fHiduV374GnPCIl7pZi7O1CeQjJYGhrnRorKY0yRHl1hiudbg/c1rVa1kZXrtvtJ8/Wmb+8PaU+/mZ1rG1WhlgXxFJmGMNbQ52dbVKsU4pbXCF1p5WTY339bSxpKfrixfLZhFhv821p85GDd6sjIyxJ2qAGKomHd2JhMEIhBsI6xbmkZSzKyzJkYGCgcMzK8+LExLp3V5e5+UsPn5oXno5xj3QXO2kKeUYSloVhoOshsUgkwsBTnG2KXVuivGpA7G1sU0Vt5USz7f6urj9Wnn3Ycl99bnom/XQ0t5DNrcCPYFSMZGsbV97U5culvGLXYqjV1iUtpVb3m5ywTqOWWZCWnFD9y7lPHzK8T3wWE5sZx5UXhlzmweloBjx0bs44NTXHh8bYq5PvmgIXweElrV5tSixWaVmbkbEe7w1pV55/qLBCDZ6xjVayh8JabYRE2BovNBWeDMelpDi3tOCnoGkKtRFhRI66qJoQLVYXXptRadtRd+WPcyvvPvYQE3xwX2x6eZqWPe7migYCmKmkYBhAQKHy81EYa2tn55YoK36JaAAnKqmoETtpmyquzVeWd9Rlm59beePJh3mtdunzaRq2mxs8AMaiTilgefb2BMhLAxg4YTK8uDjUq8IxqF5k42oIV2J1FUvulbZ2dV3m53Kvb7nLe9+fjmw+Lcayw8KCYIyROSoOgUDYo2D5ASoVmoHG4XBCjGuUsQlbX+84dt+yARtqWKqFtMtXoWp/f3b3Fq3v7ZMg2+XqNRKIBphUBRr1QOoPTuqRLiAXqYAnMxmMlFIvEnagXqQzVLmMKKG9XDlPrrtq/mfu7++abdEak97cPkQJLHMJAFiuI3k37Qn+DZMRG+4b7nGeGxsbVSNQgm1KDVbY+gB0k9Xfk2CI2HO9fN0j++q53Nzrb+3ZolVyvl1OZ7uF+AMcfCABQfBDtl8ax6dS8aGhPHyom6cYjhFBGebr0IziUq9rbiCYVmtbPptt8cufuT1b0+55P+bCrxGjdLUYSYQpeEwEAqUpm0QWJXNwyRwhHA63cTVW6UQYYfKYFxdj7TxmZdQ7hWS5T0jssrtWcnN9fLaiNXtuX/qd9rRCtZjqAEsNYyEIMJdxUMMSoIkCFaBCo4VCeCtfZ43DwVusRh1FIhurNqWcGxcBLakrObmbmz7ST17dwpb4Iub8RJpGTSIxHWx4RIK9QI9fa6AT6QIBzAGACMDBbYx4SCt0vU+1hju31oi1mrR4KLXe2eZ/bp6VSj8xvdrH98VIJtrY7LRRpiAVDxAI/njkSJGLy2CSOhASQ9siH52cyoe0DPiUQSuyLjEaQ7TIuHhJul1dzkrups+i9F2TA/TB0zGS5iyQrQ8hwkBegD2ByAMbFC6Nt/oHG12K1IkoAMhHi1z5qRgGI5k0OoDGFfPD5FpxfKwk8sqV38729PhIpSbnds9n0BBbgmqk3t+hkKdCIGBccK1ouN/P1/dEQdLwr+ybKBSgwvHm4ESYSmHU5gPoUCNXq7wYLym3q7sqPQt5pdIXTR2ng9PTv1bqKQ3ceoDOpff2JoIK9dpwgW/f8eOnTpzoXx3soxEAXCqfylQxUqLaCvNVxfwMUA66dzRLyDm/nz0r7e7xeeNlU0/dvruSC9FyNZfiQMdTaTKaFqRwiiCrr+8D7a3BxDwETQUnkVgoFK7USkuEDUTxkdohfXyEJDI7ZzP3rM+iT8+nr5l4dZ67m3lhPoStRxL9XNZQCEBB5XAa+wtOFJyCvMeTkm7KZAhUMp4UlA8IW/g8jEpVXKMfGkqLm5eUk6/+tpnb070g7XnR5CmePn+aS5FPsmEKPE1GKEKqmYrBggLf472QlULp/fHHGzJOWFlQQIDQOYrfwGDAK0bl8tEsu0zb2bocqY+PT/fCoqk93vuUxYXmNDZFnJRIcQuSIYhhGjobLOj37e0lHO874XcTshI4JOgmOQQIS/g8Fhpqd7AGWRWfXj7blSOVLi52Q9pvzEybp0MWmXci5HRNeFJiERWwB5BhgYHy4aT+U7Kbp3z7+/JkP97IE3DFdAcaCkiZ4zWg0dTT1OCQjPh2SSQ557p08cyZhe6Fj0088kfevHtnImNI7aL38ysLptEC3VxYrKLVW7cKTp3op5+SyXpvyGCpYhZAsCcElOLpiX7Bl8JAUB83kx7psWy+KT3z88mfu7u/My20uw/ePb8agaRQysDEpDJ1IgCWcZiBgUXDwwW3Bv37ZDd6oe0cPE6nQVJMaEWDH5NqdAPlQ2nxmZke2b+tXF/8+ejRkwvdJha712J69cIltn9ju8afWkbsI16aDOYwiRSKvx8lkYZAyGQ0JjJMDT2hhKX8VBYrtaoK1MiRG9PpM9k51318Fo5CnDH1K/nQh3dW2xsp6nEx3Q/vQoQFXoJenIDo70DLgz4t7PNoDoHjZSzAXkbD8WqUQTjnuSqQrUFGzGZC1jMLZ6AWQ9qPXzExs2/HrA5HDCdpqgYT/d3wHAFTX+2m4DBh0AAh8vJQgEBRJubAAAdUcqiRSg+yucxHFiU1RsSmZ5Jz7v0FKSHtvY++N3VBfXhhVRLRmAReovRR2pEcgSAQWRUWLBQQ/WB5DjBYMN6NyoQBKqHzZXeQThyZMyKHGl0iqjPT7XLu/fATxElI/eUeE8/sIYvzd2aaB9n6Sb9EyunxNaYAzcJvjCuCOYEcZrBixG1SAZUKMJxJcY3+RM7lKiSo1M9XR0baXb33w7/8dPLoR//92/UPI16CrL2Sv88AAAAASUVORK5CYII=">
+                      </span>
+                      <span class="absolute -bottom-12 -end-0 z-10">
+                          <img loading="lazy" src="/assets/images/leaf-ed221ba8.png">
+                      </span>
+                  </div>
+              </div><!-- end menu-sliders -->
+          </div>
+      </div>
+  </div><!-- end container -->
+</section>

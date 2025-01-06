@@ -1,0 +1,147 @@
+<app-breadcrumbadmin [Breadcrumb]="breadcrumb"></app-breadcrumbadmin>
+<section class="bg-white py-6">
+    <div class="container flex lg:flex-row flex-col lg:space-x-3 space-y-3">
+        <div class="hidden lg:flex flex-col space-y-3">
+            <app-danhmucsanphamsite></app-danhmucsanphamsite>
+            <app-slide-sanpham Type="DOC" [Filter]="'Moi'" [Title]="'Sản Phẩm Giá Rẻ'"></app-slide-sanpham>
+        </div>
+        <div class="container flex flex-col space-y-4">
+            <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                <div class="flex flex-col space-y-2 p-5">
+                    <div class="w-full">
+                        <div>@if(Detail&&Detail.ListImage&&Detail.ListImage.length>0){
+                                @for (item of Detail?.ListImage; track item.id) {
+                                <div class="p-2 border rounded-lg">
+                                    @if(item && item.src){
+                                    <img loading="lazy" src="{{item.src}}" class="w-80 mx-auto"
+                                        (click)="ZoomImage(dialogZoom);SelectImage=item.src">
+                                    }
+                                    @else{
+                                    <img loading="lazy" src="assets/images/noimage.png"
+                                        class="p-3 max-w-32 mx-auto rounded-lg" (click)="ZoomImage(dialogZoom)">
+                                    }
+                                </div>
+                                }
+                                }
+                                @else if(Detail&&Detail.Image&&Detail.Image.Hinhchinh&&Detail.Image.Hinhchinh.src){
+                                <div class="p-2 border rounded-lg">
+                                    <img loading="lazy" src="{{Detail.Image.Hinhchinh.src}}" class="mx-auto rounded-lg"
+                                        (click)="ZoomImage(dialogZoom);SelectImage=Detail.Image.Hinhchinh.src">
+                                </div>
+                                }
+                                @else {
+                                <img loading="lazy" src="assets/images/noimage.png" class="mx-auto rounded-lg">
+                                }
+                        </div>
+                    </div>
+                    <!-- <div>
+                        <div>
+                            <div class="swiper-wrapper" class="mySwiper2" space-between="10" slides-per-view="4"
+                                watch-slides-progress="true">
+                                @if(Detail&&Detail.ListImage&&Detail.ListImage.length>0){
+                                @for (item of Detail?.ListImage; track item.id) {
+                                <div class="p-2 border rounded-lg">
+                                    @if(item && item.src){
+                                    <img loading="lazy" src="{{item.src}}" class="w-20"
+                                        (click)="ZoomImage(dialogZoom);SelectImage=item.src">
+                                    }
+                                    @else{
+                                    <img loading="lazy" src="assets/images/noimage.png"
+                                        class="p-3 max-w-32 mx-auto rounded-lg">
+                                    }
+                                </div>
+                                }
+                                }
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="flex flex-col space-y-5 p-4">
+                    <div class="text-xl">{{ Detail?.Title }}</div>
+                    <div [innerHTML]="sanitizeHtml(Detail?.Mota)"></div>
+                    <div class="text-3xl font-semiboldbold">
+                        {{ Giachon?.gia | number : '1.0-0' }} VNĐ
+                    </div>
+                    <div class="flex flex-row items-center gap-3">
+                        <div class="text-sm text-default-700">Khối Lượng :</div>
+                        @for (item of Detail?.Giagoc; track item.id) {
+                        <div (click)="Giachon=item">
+                            <label for="1" class="{{item.MaSP==Giachon.MaSP?'text-white bg-primary':''}} border p-3 flex justify-center items-center cursor-pointer select-none rounded-full text-sm text-center
+                            
+                            ">
+                                {{item.khoiluong}}{{item.dvt}} </label>
+                        </div>
+
+                        }
+                    </div>
+                    <!-- <div>Số Lượng Còn : <span class="font-bold">{{Tonkho?.Soluong | number:'1.0-0'||0}}</span></div> -->
+                    <div class="flex flex-row space-x-2">
+                        <div class="relative inline-flex justify-between border border-default-200 p-1 rounded-full">
+                            <button type="button" (click)="GiamSoluong()"
+                                class="minus flex-shrink-0 bg-default-200 text-default-800 rounded-full h-8 w-8 text-sm inline-flex items-center justify-center bg-slate-100 hover:bg-slate-300">
+                                –
+                            </button>
+                            <input type="text" [(ngModel)]="Soluong" [ngModelOptions]="{standalone: true}"
+                                class="w-8 border-0 text-sm text-center focus:ring-0 p-0 bg-transparent" value="1"
+                                min="0" max="100" readonly />
+                            <button type="button" (click)="Soluong=Soluong+1 "
+                                class="plus flex-shrink-0 bg-default-200 text-default-800 rounded-full h-8 w-8 text-sm inline-flex items-center justify-center bg-slate-100 hover:bg-slate-300">
+                                +
+                            </button>
+                        </div>
+                        <a (click)="AddtoCart(Detail)"
+                            class="cursor-pointer inline-flex items-center justify-center rounded-full border border-primary bg-primary px-6 py-3 text-center text-sm font-medium text-white shadow-sm transition-all duration-500 hover:bg-primary-500">
+                            Thêm Vào Giỏ Hàng
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2">
+                        <img src="assets/images/product_icon_1.svg">
+                        <img src="assets/images/product_icon_2.svg">
+                        <img src="assets/images/product_icon_3.svg">
+                        <img src="assets/images/product_icon_4.svg">
+                    </div>
+                </div>
+            </div>
+            <mat-tab-group>
+                <mat-tab label="Chi Tiết">
+                    <div class="detail-style relative mt-10px bg-white px-10px pb-[12px] ">
+                        <div class="pb-[20px] text-[#222b45] {{Loadmore?'h-full ':'h-[450px]'}} overflow-hidden">
+                            <div class="text-base p-4" [innerHTML]="sanitizeHtml(Detail?.Noidung)"></div>
+                        </div>
+                        <div class="absolute bottom-[30px] left-0 h-20 w-full bg-gradient-to-t from-white"></div>
+                        @if(!Loadmore){
+                        <div class="flex w-full text-center justify-center">
+                            <span class="cursor-pointer text-[#57A345] underline font-bold"
+                                (click)="Loadmore=!Loadmore">Xem thêm...</span>
+                        </div>
+                        }
+                    </div>
+                    <div [innerHTML]="sanitizeHtml(Detail?.Footer)"></div>
+                </mat-tab>
+                <mat-tab label="Đánh Giá Và Xếp Hạng">
+                    <div class="p-4">
+                        Đánh Giá
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>
+
+<section class="bg-white container py-6">
+    <app-slide-sanpham [Title]="'Sản Phẩm Giá Rẻ'" [Filter]="'Moi'" [Sohang]="1"></app-slide-sanpham>
+</section>
+
+
+<ng-template #dialogZoom>
+    <div class="!relative lg:h-[90vh] lg:w-[90vw]">
+        <div class="relative flex flex-col space-y-2 p-3">
+            <img loading="lazy" [src]="SelectImage" class="mx-auto p-4" />
+        </div>
+        <div mat-dialog-actions class="!absolute top-0 right-2">
+            <span class="material-symbols-outlined" mat-dialog-close="false">
+                cancel
+            </span>
+        </div>
+    </div>
+</ng-template>

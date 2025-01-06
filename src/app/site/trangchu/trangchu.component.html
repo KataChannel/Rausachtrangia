@@ -1,0 +1,94 @@
+<!-- <app-banner></app-banner> -->
+<div class="w-full bg-[#EAEAEA] -mt-4 pb-4">
+  <div class="grid grid-cols-1 gap-4">
+    @for (item of ListSlides; track item.id) {
+    @if (item?.Slides?.length>0) {
+    <app-slidesite class="w-full order-[{{item.Ordering}}]" [Detail]="item" [Config]="GetConfig(item)"></app-slidesite>
+    }
+    }
+    @for (item of ListsSanpham; track item.id) {
+    @if (item?.Sanphams?.length>0) {
+    <app-slide-sanpham class="container order-[{{item.Ordering}}]" [Danhmuc]="item" [Slug]="item.Slug"
+      [Title]="item.Title" [Ordering]="item.Ordering"></app-slide-sanpham>
+    }
+    }
+    <!-- <div class="order-3">
+      <img loading="lazy" src="/assets/images/tunongtraidenbanan.jpg" class="w-full">
+    </div>
+    <div class="order-7">
+      <img loading="lazy" src="/assets/images/camket.jpg" class="w-full">
+    </div> -->
+    <div class="container order-last">
+      <section class="grid lg:grid-cols-4 grid-cols-2 gap-4 relative py-8 bg-white rounded-lg">
+        <div class="grid lg:grid-cols-3 grid-cols-1 gap-2 items-center justify-center">
+          <img loading="lazy" src="https://timona.di4lsell.com/uploads/322/24/01/1704690573.webp"
+            class="w-14 h-14 mx-auto">
+          <div class="lg:col-span-2 flex flex-col space-y-3 items-center justify-center text-center">
+            <div class="text-base font-bold">NGUỒN GỐC RÕ RÀNG</div>
+            <div>100% An Toàn</div>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-3 grid-cols-1 gap-2 items-center justify-center">
+          <img loading="lazy" src="https://timona.di4lsell.com/uploads/322/22/05/1652517008.png"
+            class="w-14 h-14 mx-auto">
+          <div class="lg:col-span-2 flex flex-col space-y-3 items-center justify-center text-center">
+            <div class="text-base font-bold">ĐỔI TRẢ MIỄN PHÍ</div>
+            <div>Bất kỳ lý do gì</div>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-3 grid-cols-1 gap-2 items-center justify-center">
+          <img loading="lazy" src="https://timona.di4lsell.com/uploads/322/22/05/1652516990.png"
+            class="w-14 h-14 mx-auto">
+          <div class="lg:col-span-2 flex flex-col space-y-3 items-center justify-center text-center">
+            <div class="text-base font-bold">MIỄN PHÍ SHIP</div>
+            <div>Với đơn hàng trên 500k</div>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-3 grid-cols-1 gap-2 items-center justify-center">
+          <img loading="lazy" src="https://timona.di4lsell.com/uploads/322/22/05/1652517045.png"
+            class="w-14 h-14 mx-auto">
+          <div class="lg:col-span-2 flex flex-col space-y-3 items-center justify-center text-center">
+            <div class="text-base font-bold">HỖ TRỢ 24/7</div>
+            <div>Liên hệ ngay</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- <div class="hidden order-1">1</div>
+<div class="hidden order-2">2</div>
+<div class="hidden order-3">3</div>
+<div class="hidden order-4">4</div>
+<div class="hidden order-5">5</div>
+<div class="hidden order-6">6</div>
+<div class="hidden order-7">7</div>
+<div class="hidden order-8">8</div>
+<div class="hidden order-9">9</div>
+<div class="hidden order-10">10</div>
+<div class="hidden order-11">11</div>
+<div class="hidden order-12">12</div>
+<div class="hidden order-[1]">13</div>
+<div class="hidden order-[2]">14</div>
+<div class="hidden order-[3]">15</div>
+<div class="hidden order-[4]">16</div>
+<div class="hidden order-[5]">17</div>
+<div class="hidden order-[6]">18</div>
+<div class="hidden order-[7]">19</div>
+<div class="hidden order-[8]">20</div>
+<div class="hidden order-[9]">21</div>
+<div class="hidden order-[10]">20</div>
+<div class="hidden order-[11]">21</div>
+<div class="hidden order-[12]">21</div>
+<div class="hidden order-[13]">13</div>
+<div class="hidden order-[14]">14</div>
+<div class="hidden order-[15]">15</div>
+<div class="hidden order-[16]">16</div>
+<div class="hidden order-[17]">17</div>
+<div class="hidden order-[18]">18</div>
+<div class="hidden order-[19]">19</div>
+<div class="hidden order-[20]">20</div>
+<div class="hidden order-[21]">21</div> -->

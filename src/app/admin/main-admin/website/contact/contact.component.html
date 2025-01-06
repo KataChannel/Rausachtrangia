@@ -1,0 +1,93 @@
+<section class="w-screen lflex items-center bg-default-400/10 py-11">
+    <div class="container">
+        <div class="flex items-center justify-center">
+            <ol aria-label="Breadcrumb" class="flex items-center whitespace-nowrap min-w-0 gap-2">
+                <li class="text-sm">
+               <a class="flex items-center gap-2 align-middle text-default-800 transition-all leading-none hover:text-primary-500"
+                        href="/">
+                        <span class="material-symbols-outlined">home</span>
+                        Trang Chủ
+                        <span class="material-symbols-outlined">navigate_next</span>
+                    </a>
+                </li>
+                <li aria-current="page"
+                    class="text-sm font-medium text-primary truncate leading-none hover:text-primary-500">
+                    Liên Hệ
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="lg:py-16 py-6">
+    <div class="container space-y-4">
+        <div class="flex flex-col space-y-6 lg:p-6">
+            <!-- <img loading="lazy" src="assets/images/baiviet/{{Detail?.Image?.Main}}" class="rounded-xl lg:w-1/2 mx-auto"> -->
+            <div>{{Baiviet?.CreateAt|date:'yyyy-MM-dd'}}</div>
+            <div class="text-2xl font-semibold">{{Baiviet?.Title}}</div>
+            <div class="text-justify" [innerHTML]="Baiviet?.Noidung"></div>
+          </div>
+        <div class="text-xl font-bold">Thông Tin Liên Hệ</div>
+        <div class="grid lg:grid-cols-3 gap-4 grid-cols-1">
+            <div class="flex flex-col space-y-4  justify-center bg-gray-100 rounded-lg px-4 py-16 text-center">
+                <div><span class="material-symbols-outlined">
+                        location_on
+                    </span></div>
+                <div class="text-lg font-bold"> Địa Chỉ Của Chúng Tôi</div>
+                <div> Tầng 3, Tòa nhà An Phú Plaza, 117-119 Lý Chính Thắng, Phường Võ Thị Sáu, Quận 3, TPHCM</div>
+            </div>
+            <div class="flex flex-col space-y-4 justify-center bg-gray-100 rounded-lg px-4 py-16 text-center">
+                <div class="flex flex-row space-x-3 justify-center text-center">
+                    <span class="material-symbols-outlined">
+                        phone_iphone
+                    </span>
+                    <span>0865770009</span>
+                </div>
+                <div class="flex flex-row space-x-3 justify-center text-center">
+                    <span class="material-symbols-outlined"> mail</span>
+                    <span>rausachtrangia&#64;gmail.com</span>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-4  justify-center bg-gray-100 rounded-lg px-4 py-16 text-center">
+                <div><span class="material-symbols-outlined">
+                        schedule
+                    </span></div>
+                <div class="text-lg font-bold"> Giờ Mở Cửa</div>
+                <div> Thứ hai - Thứ sáu 8:00 AM - 5:00 PM</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="lg:py-16 py-6">
+    <div class="container space-y-4">
+        <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
+            <div class="flex flex-col space-y-4 bg-gray-100 rounded-lg px-4 py-16 text-center">
+                <div>Liên Hệ</div>
+                <div class="text-xl font-bold">Thông Tin Liên Lạc</div>
+                <div class="grid lg:grid-cols-2 grid-cols-1 gap-4 text-center">
+                    <input type="text" [(ngModel)]="Detail.Hoten" [ngModelOptions]="{standalone: true}"
+                    
+                        class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+                        placeholder="Họ Tên">
+                    <input type="text" [(ngModel)]="Detail.Email" [ngModelOptions]="{standalone: true}"
+                        class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+                        placeholder="Email">
+                    <input type="text" [(ngModel)]="Detail.Title" [ngModelOptions]="{standalone: true}"
+                        class="col-span-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+                        placeholder="Chủ Đề">
+                    <textarea rows="5" [(ngModel)]="Detail.Noidung" [ngModelOptions]="{standalone: true}"
+                        class="col-span-2 block p-4 w-full text-gray-900 rounded-lg border border-gray-300 sm:text-sm focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300"
+                        placeholder="Nội dung"></textarea>
+                </div>
+                <div class="flex flex-row space-x-3 justify-center text-center">
+                    <button (click)="CreateLienhe()" type="button" class="text-white bg-primary hover:bg-primary-500 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Gửi Thông Tin</button>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-4  justify-center bg-gray-100 rounded-lg px-4 py-16 text-center">
+                <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=10.766545,%20106.703516+(My%20Business%20Name)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+            </div>
+        </div>
+    </div>
+</section>

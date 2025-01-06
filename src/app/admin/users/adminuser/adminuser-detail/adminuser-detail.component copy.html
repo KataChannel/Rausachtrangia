@@ -1,0 +1,49 @@
+<div class="bg-gray-50 relative p-4 w-full h-full md:h-auto">
+  <div class="relative bg-white rounded-2xl  shadow-gray-700">
+    <div class="flex justify-between space-x-4 items-center p-5 rounded-t border-b">
+      <a [routerLink]="['../']" (click)="CloseDrawer()">
+        <span class="material-symbols-outlined ">
+          close
+          </span>
+        </a>
+      <span class="lg:text-xl text-xs font-semibold">
+        {{Detail?.Title}}
+      </span>
+      <button mat-flat-button color="primary" (click)="UpdateBaivietadmin()">Lưu</button>
+    </div>
+        <div class="p-4 grid lg:grid-cols-2 grid-cols-1 gap-4">
+          <div>
+            <app-hinhanh [height]="'h-40'" [Image]="{Main:Detail.Image.Main}" (UploadEmit)="GetUpload($event)"></app-hinhanh> 
+          </div>         
+          <div class="flex flex-col space-y-3">
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Tiêu đề</mat-label>
+              <input [(ngModel)]="Detail.Title" [ngModelOptions]="{standalone: true}" type="text" matInput 
+               class="w-full px-3 py-2 border border-gray-200 rounded"
+                [placeholder]="'Tiêu đề'">
+            </mat-form-field> 
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Slug</mat-label>
+              <input [(ngModel)]="Detail.Slug" [ngModelOptions]="{standalone: true}" type="text" matInput 
+               class="w-full px-3 py-2 border border-gray-200 rounded"
+                [placeholder]="'Slug'">
+            </mat-form-field>           
+            <!-- <mat-form-field appearance="outline" class="w-full text-xs">
+                <mat-label>Danh Mục</mat-label>
+                <mat-select [(ngModel)]="Detail.id_cat" [ngModelOptions]="{standalone: true}">
+                  <mat-option [value]="item.id_cat" *ngFor="let item of Danhmuc">{{item.Title}}</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+          </div>
+            <div>
+              Mô Tả
+              <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Mota" [ngModelOptions]="{standalone: true}" [init]="configTiny"></editor>
+            </div>
+            <div>
+             Nội dung
+              <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Noidung" [ngModelOptions]="{standalone: true}" [init]="configTiny"></editor>
+          
+            </div>
+        </div>
+  </div>
+</div> 

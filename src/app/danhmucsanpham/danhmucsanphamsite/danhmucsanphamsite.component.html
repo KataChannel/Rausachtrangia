@@ -1,0 +1,27 @@
+<div class="lg:w-72 w-full border rounded-xl">
+  <div class="p-2 rounded-lg bg-[#57A345] text-white text-center font-bold text-lg">DANH MỤC SẢN PHẨM</div>
+  <div class="grid grid-cols-1 place-content-center divide-y justify-center mx-8 py-4">
+  @for (item of Danhmucs.items; track item.id) {
+    <div class="flex flex-row space-x-2 items-center">
+      @if(item && item.Image&&item.Image.Thumb)
+      {
+      <img loading="lazy" src="assets/images/sanpham/{{item.Image.Thumb}}" class="h-10">
+      }
+      @else if(item && item.Image&&item.Image.Hinhchinh&&item.Image.Hinhchinh.src){
+      <img loading="lazy" src="{{item.Image.Hinhchinh.src}}" class="h-10">
+      }
+      @else {
+      <img loading="lazy" src="assets/images/noimage.png" class="p-3 max-h-10 rounded-lg">
+      }
+      <!-- <img loading="lazy" src="/assets/images/sanpham/rau-lang26385834.PNG" class="h-10"> -->
+      <a href="danh-muc/{{item.Slug}}">{{item.Title}}</a>
+  </div>
+  
+    <!-- <div class="py-2 flex flex-row space-x-2 items-center">
+      <img loading="lazy" src="" alt="">
+      <span>{{item.Title}}</span>  
+
+    </div> -->
+  }
+</div>
+</div>

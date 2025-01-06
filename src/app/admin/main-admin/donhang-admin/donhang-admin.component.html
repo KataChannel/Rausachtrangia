@@ -1,0 +1,314 @@
+<mat-drawer-container class="example-container w-full h-full" autosize>
+  <mat-drawer #drawer mode="side" class="!flex flex-col flex-auto min-w-0 relative h-full w-full" position="end">
+    <div class="relative flex flex-col h-full w-full overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="!flex flex-col flex-auto min-w-0 relative !h-[90vh]">
+    <div class="relative flex flex-col">
+      <div class="flex justify-between items-center space-x-2 m-2 bg-white p-3 rounded-lg">
+        <div class="flex flex-row space-x-3 justify-center items-center">
+          <div class="relative mt-1 lg:w-80">
+            <input (keyup)="applyFilter($event)" type="text" name="email" id="topbar-search"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+              placeholder="Tìm Kiếm">
+          </div>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <div class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Tùy Chỉnh">tune</span>
+                <span class="text-sm">Cấu Hình</span>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Lấy Mẫu">file_download</span>
+                <span class="text-sm">Download</span>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+                <span class="text-sm">Upload</span>
+              </div>
+            </button>
+          </mat-menu>
+          <div class="hidden lg:flex flex-row space-x-3">
+            <div 
+              class="flex flex-col items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Bộ Lọc">filter_alt</span>
+              <span class="text-xs">Bộ Lọc</span>
+            </div>
+            <div (click)="writeExcelFile()"
+              class="flex flex-col items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_download</span>
+              <span class="text-xs">Download</span>
+            </div>
+            <div (click)="uploadfile.click()"
+              class="flex flex-col items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+              <span class="text-xs">Upload</span>
+              <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="flex flex-row space-x-2 items-center">
+          <button mat-flat-button color="primary">
+            <div (click)="openDialog(dialogTemplate)" class="flex flex-row items-center">
+              <span class="material-symbols-outlined">add</span>
+              <span class="hidden lg:flex">Sản Phẩm</span>
+            </div>
+          </button>
+          <button class="lg:!hidden flex" mat-icon-button [matMenuTriggerFor]="menu">
+            <span class="material-symbols-outlined">more_vert</span>
+          </button>
+        </div> -->
+      </div>
+    </div>
+    <div class="relative flex flex-col h-full w-full overflow-auto">
+      <div class="flex flex-col my-6 mx-4 rounded-lg shadow-xl shadow-gray-200">
+        <div class="overflow-x-auto rounded-2xl">
+          <div class="inline-block min-w-full align-middle">
+            <div class="overflow-hidden">
+              <div>
+                <table class="rounded-lg" mat-table [dataSource]="dataSource" matSort>
+                  <ng-container matColumnDef="MaDonHang">
+                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header>                       
+                       Mã Đơn Hàng
+                    </th>
+                    <td mat-cell *matCellDef="let row" class="p-2"> 
+                      <a routerLink="{{row.id}}" (click)="drawer.toggle()">
+                        <div class="font-bold">{{row?.MaDonHang}}</div>
+                      </a>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Ngay">
+                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header>                       
+                     Ngày
+                    </th>
+                    <td mat-cell *matCellDef="let row" class="p-2"> 
+                      <div>
+                        <div class="text-xs italic text-gray-500">{{row.CreateAt|date:'HH:mm:ss dd/MM/YYYY'}}
+                        </div>
+                      </div>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Hoten">
+                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header sortData> Khách Hàng </th>
+                    <td mat-cell *matCellDef="let row" class="p-2"> 
+                      <div>{{row?.Giohangs?.Khachhang?.Hoten}}</div>
+                      <div>{{row?.Giohangs?.Khachhang?.Email}}</div>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="SDT">
+                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header> Điện Thoại </th>
+                    <td mat-cell *matCellDef="let row" class="p-2"> {{row?.Giohangs?.Khachhang?.SDT}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Total">
+                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header> Tổng Tiền </th>
+                    <td mat-cell *matCellDef="let row" class="p-2 !text-right"> 
+                      <span>{{(row?.TotalTT| number:'1.0-0')||'0'}}đ </span>
+                    </td>
+                  </ng-container>
+                  <!-- <ng-container matColumnDef="Diachi">
+                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header> Địa Chỉ </th>
+                    <td class="whitespace-nowrap" mat-cell *matCellDef="let row" class="p-2"> {{row?.Giohangs?.Khachhang?.Diachi}} </td>
+                  </ng-container> -->
+                  <ng-container matColumnDef="Hinhthuc">
+                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef>
+                      <div class="flex flex-row space-x-2 items-center">
+                        <span mat-sort-header> Thanh Toán </span> 
+                        <span class="material-symbols-outlined text-xl" matTooltip="Bộ Lọc">filter_alt</span>
+                      </div>
+                      </th>
+                    <td mat-cell *matCellDef="let row" class="p-2 whitespace-nowrap">
+                      <span class="p-2 rounded-lg 
+                      {{GetHinhthucthanhtoan(row?.Thanhtoan?.Hinhthuc,'Class')}}">
+                      {{GetHinhthucthanhtoan(row?.Thanhtoan?.Hinhthuc,'Title')||'Chọn Hình Thức'}}
+                    </span>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
+                    <td mat-cell *matCellDef="let row" class="p-2" class="whitespace-nowrap space-x-2">                     
+                     <span class="p-2 rounded-lg {{GetStatus(row?.Status,'Class')}}">
+                      {{GetStatus(row?.Status,'Title')}}
+                    </span>    
+                   </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Hành Động </th>
+                    <td mat-cell *matCellDef="let row" class="p-2" class="whitespace-nowrap space-x-2">
+                      <a routerLink="{{row.id}}">
+                        <span class="material-symbols-outlined p-2 border rounded-full 
+                        bg-slate-200 text-blue-500 
+                        hover:bg-blue-500 hover:text-white">
+                          edit_square
+                        </span>
+                      </a>
+                      <span (click)="XoaDialog(XoaTeamplate);SelectItem=row" class="material-symbols-outlined p-2 border rounded-full 
+                      bg-slate-200 text-red-500 
+                      hover:bg-red-500 hover:text-white">
+                         delete
+                      </span> 
+                     </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4" class="justify-center p-4">Chưa có dữ liệu</td>
+                  </tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
+              </div>
+              
+              
+
+              <!-- <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                <thead class="bg-white font-bold">
+                  <tr>
+                    <th scope="col" class="p-4 lg:p-5">
+                      <div class="flex items-center">
+                        <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
+                          class="w-5 h-5 rounded border-gray-300 focus:ring-0 checked:bg-dark-900">
+                        <label for="checkbox-all" class="sr-only">checkbox</label>
+                      </div>
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                      Mã Đơn Hàng
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                      Họ Tên
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                      Số Điện Thoại
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                      Tổng Tiền
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                      Địa Chỉ
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                     HT Thanh Toán
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                      Trạng Thái
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-bold text-left text-gray-500 uppercase lg:p-5">
+                      Hành Động
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  @for (item of FilterLists; track item.id) {
+                  <tr class="hover:bg-gray-100">
+                    <td class="p-4 w-4 lg:p-5">
+                      <div class="flex items-center">
+                        <input id="checkbox-194556" aria-describedby="checkbox-1" type="checkbox"
+                          class="w-5 h-5 rounded border-gray-300 focus:ring-0 checked:bg-dark-900">
+                        <label for="checkbox-194556" class="sr-only">checkbox</label>
+                      </div>
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap lg:p-5">
+                      <a routerLink="{{item.id}}" (click)="drawer.toggle()">
+                        <div class="font-bold">{{item?.MaDonHang}}</div>
+                        <div class="text-xs italic text-gray-500">{{item.CreateAt|date:'HH:mm:ss dd/MM/YYYY'}}
+                        </div>
+                      </a>
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap lg:p-5">
+                      <div>{{item?.Giohangs?.Khachhang?.Hoten}}</div>
+                      <div>{{item?.Giohangs?.Khachhang?.Email}}</div>
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap lg:p-5">
+                      <div class="font-bold">{{item?.Giohangs?.Khachhang?.SDT}}</div>
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap lg:p-5 text-end">
+                      <div class="font-bold">{{(item?.Giohangs?.Total| number:'1.0-0')||'0'}}đ</div>
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 lg:p-5">
+                      <div>{{item?.Giohangs?.Khachhang.Diachi}}</div>
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 lg:p-5">
+                      <div>{{item?.Thanhtoan?.Hinhthuc}}</div>
+                    </td>
+                    <td class="p-4 text-xs whitespace-nowrap">
+                      <span class="p-2 rounded-lg {{GetStatus(item?.Status,'Class')}}">
+                        {{GetStatus(item?.Status,'Title')}}
+                      </span>      
+                    </td>
+                    <td class="cursor-pointer p-4 space-x-2 whitespace-nowrap lg:p-5">
+                      <a routerLink="{{item.id}}">
+                        <span class="material-symbols-outlined p-2 border rounded-full 
+                        bg-slate-200 text-blue-500 
+                        hover:bg-blue-500 hover:text-white">
+                          edit_square
+                        </span>
+                      </a>
+                      <span (click)="XoaDialog(XoaTeamplate);SelectItem=item" class="material-symbols-outlined p-2 border rounded-full 
+                      bg-slate-200 text-red-500 
+                      hover:bg-red-500 hover:text-white">
+                         delete
+                      </span>
+                    </td>
+                  </tr>
+                  }
+
+                </tbody>
+              </table> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="flex justify-between items-center mx-4 mt-4 mb-6 bg-white p-3 rounded-lg">
+      <mat-paginator class="w-full" [pageSizeOptions]="[10, 20, 50]" [pageSize]="SearchParams.pageSize"
+        [length]="this.Lists.totalCount" [pageSizeOptions]="pageSizeOptions" [pageIndex]="SearchParams.pageNumber"
+        (page)="onPageChange($event)">
+      </mat-paginator>
+    </div> -->
+  </mat-drawer-content>
+</mat-drawer-container>
+<ng-template #dialogTemplate>
+  <div class="min-w-[672px]">
+    <div mat-dialog-title>Thêm Mới</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 p-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Tiêu Đề</mat-label>
+          <input matInput [(ngModel)]="Detail.Tieude" [ngModelOptions]="{standalone: true}" placeholder="Tiêu Đề">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Slug</mat-label>
+          <input matInput [(ngModel)]="Detail.Slug" [ngModelOptions]="{standalone: true}" placeholder="Slug">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Newlink</mat-label>
+          <input matInput [(ngModel)]="Detail.Newlink" [ngModelOptions]="{standalone: true}" placeholder="Newlink">
+        </mat-form-field>
+      </div>
+    </div>
+    <div mat-dialog-actions class="justify-center">
+      <button mat-button class="bg-red-400 hover:bg-red-600 text-white" mat-dialog-close="false">Huỷ</button>
+      <button mat-button class="bg-blue-400 hover:bg-blue-600 text-white" mat-dialog-close="true">Đồng Ý</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #XoaTeamplate>
+  <div class="flex flex-col space-y-3">
+    <div mat-dialog-title>Xoá</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 lg:p-4">
+          Bạn chắc chắn muốn Xoá?
+      </div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

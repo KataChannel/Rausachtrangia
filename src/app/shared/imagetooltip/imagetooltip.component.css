@@ -1,0 +1,17 @@
+.image-tooltip {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #f5f5f5; /* Adjust background color as needed */
+  }
+  
+  .image-tooltip img {
+    width: 20px; /* Adjust image size as needed */
+    height: 20px; /* Adjust image size as needed */
+    margin-right: 5px;
+  }
+  
+  .tooltip-text {
+    font-size: 12px;
+  }

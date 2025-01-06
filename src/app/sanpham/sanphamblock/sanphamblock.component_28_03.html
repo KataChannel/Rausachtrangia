@@ -1,0 +1,34 @@
+<div class="flex flex-col space-y-6 p-4">
+  <a href="san-pham/{{Detail.Slug}}" class="relative z-10 grid grid-cols-1 border rounded-lg p-3 bg-white transform duration-500 hover:scale-[110%] hover:shadow-lg">
+    @if(Detail && Detail.Image&&Detail.Image.Main)
+    {
+    <img loading="lazy" src="assets/images/sanpham/{{Detail.Image.Main}}" class="w-full">
+    }
+    @else if(Detail && Detail.Image&&Detail.Image.Hinhchinh&&Detail.Image.Hinhchinh.src){
+    <img loading="lazy" src="{{Detail.Image.Hinhchinh.src}}" class="w-full">
+    }
+    @else if(Detail && Detail.Image&&Detail.Image.Hinhchinh&&Detail.Image.Hinhchinh.src){
+    <img loading="lazy" src="assets/images/noimage.png" class="p-3 w-full mx-auto rounded-lg">
+    }
+    <div (click)="AddtoCart(Detail);$event.preventDefault()"
+      class="absolute bottom-2 right-2 z-20 flex flex-row space-x-2 justify-end">
+      <span
+        class="z-10 material-symbols-outlined rounded-lg p-2 bg-[#57A345] text-white hover:bg-[#afe8a2]">shopping_cart</span>
+    </div>
+  </a>
+  <div class="flex flex-col space-y-4 justify-start">
+  <span class="text-base font-bold line-clamp-2">{{Detail.Title}} <br/></span>
+  <div class="flex flex-row items-center justify-between">
+    <div class="flex flex-row space-x-2">
+      <span class="text-[#57A345] font-bold text-base"> {{Detail?.Giagoc[0]?.gia| number:'1.0-0'}}đ</span>
+      <span>/{{Detail?.Giagoc[0]?.khoiluong}}{{Detail?.Giagoc[0]?.dvt}}</span>
+    </div>
+    @if(isMuangay){
+      <div (click)="AddtoCart(Detail);$event.preventDefault()" class="hidden lg:block">
+        <span class="whitespace-nowrap rounded-lg p-2 bg-[#57A345] text-white hover:bg-[#afe8a2]">Mua Ngay</span>
+      </div>
+    }
+
+  </div> 
+  </div>
+</div>

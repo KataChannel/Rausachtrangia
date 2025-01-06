@@ -1,0 +1,46 @@
+<ng-container *ngIf="Image?.src; else elseTemplate">
+  <div class="rounded-lg border p-4 mx-auto group relative {{width}} {{height}}">
+    <img loading="lazy"[src]="Image?.src" class="mx-auto rounded-md"  [alt]="Image?.alt"/>
+    <div
+      class="group-hover:block rounded-md hidden absolute inset-0 items-center justify-center bg-black opacity-10"
+      (click)="onRemove(Image,dialogTemplate)">
+      <span class="material-icons text-white flex items-center justify-center h-full">
+        cancel
+      </span>
+    </div>
+    <span class="absolute text-xs italic flex justify-center p-2 rounded-lg bg-white top-0 left-0">
+      {{Title}}
+    </span>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <ngx-dropzone (change)="onSelect($event)" [multiple]="false" class="flex flex-col space-y-3 justify-center !h-full">
+    <ngx-dropzone-label>Chọn File</ngx-dropzone-label>
+  </ngx-dropzone>
+</ng-template>
+
+<!-- <ng-template #dialogTemplate>
+  <mat-dialog-content class="mat-typography">
+    Bạn có chắc chắn xoá
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button color="warn" mat-dialog-close="false">Huỷ</button>
+    <button mat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+  </mat-dialog-actions>
+  </ng-template> -->
+
+  <ng-template #dialogTemplate>
+    <div class="p-2 flex flex-col space-y-3">
+      <div mat-dialog-title>Xoá</div>
+      <div mat-dialog-content>
+        <div class="flex flex-col w-full space-y-4 lg:p-4">
+            Bạn chắc chắn muốn Xoá?
+        </div>
+        <div class="flex flex-row space-x-2 items-center justify-center">
+          <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+          <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+

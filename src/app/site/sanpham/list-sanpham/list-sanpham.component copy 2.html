@@ -1,0 +1,128 @@
+<section class="w-screen flex items-center bg-gray-200 py-3">
+    <div class="container">
+        <div class="flex items-center justify-center">
+            <ol aria-label="Breadcrumb" class="flex items-center whitespace-nowrap min-w-0 gap-2">
+                <li class="text-sm">
+               <a class="flex items-center gap-2 align-middle text-default-800 transition-all leading-none hover:text-primary-500"
+                        href="/">
+                        <span class="material-symbols-outlined">home</span>
+                        Trang Chủ
+                        <span class="material-symbols-outlined">navigate_next</span>
+                    </a>
+                </li>
+                <li aria-current="page"
+                    class="text-sm font-medium text-primary truncate leading-none hover:text-primary-500">
+                    Cửa Hàng
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="bg-white">
+    <div class="container grid lg:grid-cols-4 grid-cols-1 gap-3 py-8">
+        <div class="">
+            <div
+                class="{{isSticky?'fixed z-10 top-[90px]':''}} bg-white  lg:flex hidden flex-col space-y-6 border rounded-lg p-4">
+                <div class="sidebar-widget">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input (keyup)="applyFilter($event)" #search
+                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Tìm Kiếm">
+                    </div>
+                </div>
+                <hr />
+                <div class="overflow-auto p-2 flex flex-col space-y-4">
+                    <!-- <div class="flex flex-row justify-between items-center">
+                        <div class="text-lg font-bold">Bộ Lọc</div>
+                        <div class="hover:bg-slate-200 bg-slate-50 rounded-full p-2">Xoá</div>
+                    </div>
+                    <div class="text-xs">
+                        <mat-chip-set>
+                            @for (item of ChosenFilterDM; track item.id) {
+                            <mat-chip (click)="RemoveFilter(item)">
+                                <div class="flex flex-row items-center space-x-2">
+                                    <span>{{item.Title}}</span>
+                                    <span class="material-symbols-outlined">
+                                        cancel
+                                    </span>
+                                </div>
+                            </mat-chip>
+                            }
+                        </mat-chip-set>
+                    </div> -->
+                    <div class="flex flex-col">
+                        <div class="flex flex-row justify-between items-center">
+                            <div class="text-lg font-bold">Theo danh mục</div>
+                        </div>
+                        @for (item of FilterDanhmuc; track item.id) {
+                        <mat-checkbox (change)="onFilterChange()" color="warn"
+                            [(ngModel)]="FilterDanhmuc[$index].isChecked">{{item.Title}}</mat-checkbox>
+                        }
+                    </div>
+                </div>
+                <!-- <div class="py-4"><hr/></div>
+            <div class="flex flex-col space-y-4">
+                <div class="text-xl">Lọc theo Thương Hiệu</div>
+                @for (item of LocThuongHieu; track item.id) {
+                    <div class="flex flex-row space-x-2 items-center">
+                        <span class="material-symbols-outlined">check_box_outline_blank</span>                    
+                        <div>{{item.Title}}</div>
+                       </div>
+                }
+            </div> -->
+            </div>
+        </div>
+        <div class="lg:col-span-3 flex flex-col space-y-2">
+            <div class="flex flex-row justify-between items-center border rounded-lg p-3">
+                <div class="inspect-total-filtered-products-wrapper">
+                    Hiện có <span class="rounded-lg px-2 py-1 text-white bg-primary">{{ListSanpham.totalCount}}</span> Sản Phẩm Dành Cho bạn
+                    <!-- <mat-paginator class="!text-primary" (page)="onPageChange($event)"
+                        [length]="this.ListSanpham.totalCount" [pageSizeOptions]="pageSizeOptions"></mat-paginator> -->
+                    <!--                   
+                    <div class="inspect-total-filtered-products">
+                        Hiển thị 1 - 4 of 4 Kết quả
+                    </div> -->
+                </div>
+                <div class="inspect-filter-sort">
+                    <select (change)="onChangeSorting($event)" [(ngModel)]="SortingFilter"
+                        [ngModelOptions]="{standalone: true}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @for (item of Sorting; track item.id) {
+                        <option value="{{item.id}}">{{item.Title}}</option>
+                        }
+                    </select>
+                </div>
+                <div class="lg:hidden flex" (click)="openBottomSheet()"><span
+                        class="material-symbols-outlined">tune</span></div>
+            </div>
+            <div class="grid lg:grid-cols-3 grid-cols-2 gap-4">
+                @for (item of FilterSanpham; track item.id) {
+                <a href="san-pham/{{item.Slug}}" class="grid grid-cols-1 border rounded-lg p-3 bg-white">
+                    <span class="text-center font-bold line-clamp-1">{{item.Title}}</span>
+                    <img loading="lazy" src="/assets/images/sanpham/{{item.Image.Main}}" class="w-full" />
+                    <p class="text-gray-400 text-[13px] line-clamp-2" [innerHTML]="item.Mota"></p>
+                    <div class="flex flex-row space-x-2 justify-center items-center">
+                        <span class="font-semibold text-md">{{item.Giagoc[0].gia| number:'1.0-0'}}đ /
+                            {{item.Giagoc[0].khoiluong1}}{{item.Giagoc[0].dvt}}</span>
+                        <span (click)="AddtoCart(item);$event.preventDefault()"
+                            class="material-symbols-outlined rounded-full p-4 bg-[#e22026] text-white hover:bg-[#e8686c]">shopping_cart</span>
+                    </div>
+                </a>
+                }@empty {
+                <div class="text-center">Không tìm thấy sản phẩm <span class="rounded-lg px-2 py-1 text-white bg-primary">{{search.value}}</span></div>
+                }
+            </div>
+            <div class="text-center">
+                <mat-paginator class="!text-primary" (page)="onPageChange($event)"
+                [length]="this.ListSanpham.totalCount" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</section>

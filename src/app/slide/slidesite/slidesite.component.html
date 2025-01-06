@@ -1,0 +1,14 @@
+<section class="w-full {{Detail.isShowMobile?'':'lg:block hidden'}} grid grid-cols-1 relative border rounded-lg bg-[#EAEAEA]">
+  <div>
+    <div class="swiper-wrapper mySwiper{{GetID(Detail.id)}}">
+    <!-- <div class="swiper-wrapper" loop="true" class="mySwiper{{GetID(Detail.id)}}"> -->
+      @for (item of Detail?.Slides; track item.id) {
+      <div class="swiper-slide" class="w-full flex flex-col space-y-2 justify-between">
+        <img loading="lazy"[src]="item?.Image?.Hinhchinh?.src" class="w-full h-full">
+      </div>
+      }
+    <!-- </div> -->
+  </div>
+    <div class="swiper-pagination" slot="pagination"></div>
+  </div>
+</section>

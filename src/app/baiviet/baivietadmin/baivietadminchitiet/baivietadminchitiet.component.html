@@ -1,0 +1,121 @@
+<div class="bg-gray-50 relative p-4 w-full h-full md:h-auto">
+  <div class="relative bg-white rounded-2xl  shadow-gray-700">
+    <div class="flex justify-between space-x-4 items-center p-5 rounded-t border-b">
+      <a [routerLink]="['../']" (click)="CloseDrawer()">
+        <span class="material-symbols-outlined ">
+          close
+        </span>
+      </a>
+      <span class="lg:text-xl text-xs font-semibold">
+        {{Detail.Title}}
+      </span>
+      <button mat-flat-button [color]="'primary'" (click)="UpdateBaivietadmin()">Lưu</button>
+    </div>
+    <div class="p-4 grid lg:grid-cols-3 grid-cols-1 gap-4">
+      <div class="flex flex-col space-y-4">
+        <div>
+          <app-hinhanh [Title]="'Hình Chính'" [height]="'h-60'" [width]="'w-60'" [Image]="Detail?.Image?.Hinhchinh"
+          (UploadEmit)="GetUpload($event)"></app-hinhanh>  
+        </div>
+        <div class="flex flex-col space-y-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Danh Mục</mat-label>
+              <mat-select [(ngModel)]="Detail.idDM" [ngModelOptions]="{standalone: true}">
+                <mat-option [value]="item.id" *ngFor="let item of Danhmuc">{{item.Title}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Tiêu đề</mat-label>
+              <input (input)="FillSlug()" [(ngModel)]="Detail.Title" [ngModelOptions]="{standalone: true}" type="text"
+                matInput class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Tiêu đề'">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Slug</mat-label>
+              <input [(ngModel)]="Detail.Slug" [ngModelOptions]="{standalone: true}" type="text" matInput
+                class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Slug'">
+            </mat-form-field>
+
+
+
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Meta Author</mat-label>
+              <input [(ngModel)]="Detail.MetaTags.author" [ngModelOptions]="{standalone: true}" type="text" matInput
+                class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Meta Author'">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Meta Keywords</mat-label>
+              <!-- <input [(ngModel)]="Detail.MetaTags.keywords" [ngModelOptions]="{standalone: true}" type="text" matInput
+                class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Meta Keywords'"> -->
+                <textarea matInput [(ngModel)]="Detail.MetaTags.keywords" [ngModelOptions]="{standalone: true}" rows="8"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Meta Description</mat-label>
+              <!-- <input [(ngModel)]="Detail.MetaTags.description" [ngModelOptions]="{standalone: true}" type="text" matInput
+                class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Meta Description'"> -->
+                <textarea matInput [(ngModel)]="Detail.MetaTags.description" [ngModelOptions]="{standalone: true}" rows="8"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full text-xs">
+              <mat-label>Meta Abstract</mat-label>
+              <input [(ngModel)]="Detail.MetaTags.abstract" [ngModelOptions]="{standalone: true}" type="text" matInput
+                class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Meta Abstract'">
+            </mat-form-field>
+          </div>
+      </div>
+      <div class="col-span-2 flex flex-col space-y-3">
+        <div class="flex flex-col space-y-2">
+          <span class="font-bold">Nội dung</span>
+          <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Noidung" [ngModelOptions]="{standalone: true}"
+            [init]="configTiny"></editor>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <!-- <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Tags</mat-label>
+            <input type="text" matInput placeholder="Tags" [(ngModel)]="ChoosenTag"
+              (ngModelChange)="onChangeTags($event)" [matAutocomplete]="autoTinh">
+            <mat-autocomplete #autoTinh="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of ListsBaiviet" [value]="option" class="border">
+                {{ option.Title }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field> -->
+          <div class="flex flex-col space-y-2">
+            <!-- @for (item of Detail.Tags; track item.id) {
+            <span class="bg-gray-200 rounded-full px-2 py-1 text-xs">{{item.Title}} <span
+                (click)="RemoveTag($index)" class="material-symbols-outlined cursor-pointer">close</span></span>
+            } -->
+
+            <mat-form-field appearance="outline">
+              <mat-label>Tags</mat-label>
+              <mat-chip-grid #chipGrid>
+                <mat-chip-row *ngFor="let fruit of Detail.Tags" (removed)="remove(fruit)">
+                  {{fruit.Title}}
+                  <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+                    <span class="material-symbols-outlined text-red-500">cancel</span>
+                  </button>
+                </mat-chip-row>
+              </mat-chip-grid>
+              <input placeholder="Thêm Mới" #inputAuto (input)="onFilterTags($event)"
+                [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"/>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onChoosenTags($event)">
+                <mat-option *ngFor="let item of FilterListsBaiviet" [value]="item">
+                  {{item.Title}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+          </div>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <span class="font-bold">Footer</span>
+          <editor [apiKey]="APITINYMCE" [(ngModel)]="Detail.Mota" [ngModelOptions]="{standalone: true}"
+            [init]="configTiny"></editor>
+        </div>
+      </div>  
+
+    </div>
+  </div>
+</div>

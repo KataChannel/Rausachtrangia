@@ -1,0 +1,106 @@
+<div class="flex flex-col space-y-3" *ngIf="!isSingle">
+  <div (click)="SetActive(item)" class="flex flex-row space-x-2 items-center" *ngFor="let item of Diachis; let i = index">
+    <span class="material-symbols-outlined">{{item.Active?'radio_button_checked':'radio_button_unchecked'}}</span>
+    <span>Địa Chỉ {{i+1}} : </span>
+    <span>{{item.Diachi}} </span>
+    <span>{{item.Phuong}} </span>
+    <span>{{item.Quan}} </span>
+    <span>{{item.Tinh}} </span>
+    <span class="material-symbols-outlined text-red-600">do_not_disturb_on</span>
+  </div>
+  <div class="flex flex-row space-x-2" *ngIf="!isEdit">
+    <button mat-flat-button color="primary">
+      <span (click)="isEdit=true">Thêm Địa Chỉ</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3" *ngIf="isEdit">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Tỉnh/Thành Phố</mat-label>
+      <input type="text" matInput placeholder="Tỉnh/Thành Phố" [(ngModel)]="ChosenTinh"
+        (ngModelChange)="onTinhChange($event)" [matAutocomplete]="autoTinh">
+      <mat-autocomplete #autoTinh="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filterTinh" [value]="option">
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Quận/Huyện</mat-label>
+      <input type="text" matInput placeholder="Quận/Huyện" [(ngModel)]="ChosenQuan"
+        (ngModelChange)="onQuanChange($event)" [matAutocomplete]="autoQuan">
+      <mat-autocomplete #autoQuan="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filterQuan" [value]="option">
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Phường/Xã</mat-label>
+      <input type="text" matInput placeholder="Phường/Xã" [(ngModel)]="ChosenPhuong"
+        (ngModelChange)="onPhuongChange($event)" [matAutocomplete]="autoPhuong">
+      <mat-autocomplete #autoPhuong="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filterPhuong" [value]="option">
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Tên Đường, Số Nhà, Toà Nhà</mat-label>
+      <input matInput placeholder="Tên Đường, Số Nhà, Toà Nhà" [(ngModel)]="ChosenDiachi" />
+    </mat-form-field>
+  </div>
+  <div class="flex flex-row justify-center space-x-2"  *ngIf="isEdit">
+    <button mat-stroked-button (click)="ThemDiachi()">
+      Lưu
+    </button>
+    <button mat-stroked-button (click)="isEdit=false">
+     Huỷ
+    </button> 
+  </div>
+</div>
+
+
+
+<div class="flex flex-col space-y-3" *ngIf="isSingle">
+<div class="grid lg:grid-cols-2 gap-3">
+
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-label>Tỉnh/Thành Phố</mat-label>
+    <input type="text" matInput placeholder="Tỉnh/Thành Phố" [(ngModel)]="ChosenTinh"
+      (ngModelChange)="onTinhChangeSingle($event)" [matAutocomplete]="autoTinh">
+    <mat-autocomplete #autoTinh="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filterTinh" [value]="option">
+        {{ option.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-label>Quận/Huyện</mat-label>
+    <input type="text" matInput placeholder="Quận/Huyện" [(ngModel)]="ChosenQuan"
+      (ngModelChange)="onQuanChangeSingle($event)" [matAutocomplete]="autoQuan">
+    <mat-autocomplete #autoQuan="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filterQuan" [value]="option">
+        {{ option.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-label>Phường/Xã</mat-label>
+    <input type="text" matInput placeholder="Phường/Xã" [(ngModel)]="ChosenPhuong"
+      (ngModelChange)="onPhuongChangeSingle($event)" [matAutocomplete]="autoPhuong">
+    <mat-autocomplete #autoPhuong="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filterPhuong" [value]="option">
+        {{ option.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-label>Tên Đường, Số Nhà, Toà Nhà</mat-label>
+    <input matInput placeholder="Tên Đường, Số Nhà, Toà Nhà" [(ngModel)]="ChosenDiachi" (ngModelChange)="onDiachiSingle($event)"/>
+  </mat-form-field>
+</div>
+</div>

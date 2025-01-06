@@ -1,0 +1,135 @@
+<div class="flex flex-col space-y-16 container">
+  <app-banner></app-banner>
+  <app-aboutus></app-aboutus>
+  <div class="grid lg:grid-cols-2 grid-col-1">
+    <img loading="lazy" src="/assets/images/aboutus.png" class="rounded-lg bg-gray-200">
+    <div class="flex flex-col space-y-4 justify-between">
+      <div class="flex flex-col space-y-4">
+        <div><span class="bg-gray-200 rounded-3xl p-2">Về chúng tôi</span></div>
+        <div><span class="text-xl font-bold">Where quality food meet Excellent services.</span></div>
+        <div><span> It’s the perfect dining experience where every dish is crafted with fresh, high-quality ingredients
+            and served by friendly staff who go.</span></div>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="flex flex-col space-y-4 p-2 rounded-lg shadow-lg border hover:border-blue-200">
+          <img loading="lazy" src="/assets/images/about-us-1.png" class="w-10">
+          <div>Fast Foods</div>
+          <div>Healthy Foods are nutrient-Dense Foods</div>
+        </div>
+        <div class="flex flex-col space-y-4 p-2 rounded-lg shadow-lg border hover:border-blue-200">
+          <img loading="lazy" src="/assets/images/about-us-2.png" class="w-10">
+          <div>Fast Foods</div>
+          <div>Healthy Foods are nutrient-Dense Foods</div>
+        </div>
+        <div class="flex flex-col space-y-4 p-2 rounded-lg shadow-lg border hover:border-blue-200">
+          <img loading="lazy" src="/assets/images/about-us-3.png" class="w-10">
+          <div>Fast Foods</div>
+          <div>Healthy Foods are nutrient-Dense Foods</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- section2   -->
+  <div class="grid grid-cols-5 gap-4">
+    <div class="col-span-5"><span class="bg-gray-200 rounded-3xl p-2">Menu</span></div>
+    <div class="flex flex-col space-y-3 h-2/3 p-3 overflow-auto">
+      @for (item of [1,2,3,4,5,6,7,8,9,10]; track item.id) {
+      <div class="flex flex-row items-center space-x-3 rounded-lg p-4 hover:bg-slate-300">
+        <span class="material-symbols-outlined">
+          lunch_dining
+        </span>
+        <div>Menu {{item}}</div>
+      </div>
+      }
+    </div>
+    <div class="flex flex-col space-y-3 w-full col-span-4 p-3">
+      <div class="ml-auto flex flex-row space-x-3">
+        <span
+          class="prev_sanpham material-symbols-outlined bg-slate-300 rounded-full p-2 hover:bg-blue-500 hover:text-white">
+          chevron_left
+        </span>
+        <span
+          class="next_sanpham material-symbols-outlined bg-slate-300 rounded-full p-2 hover:bg-blue-500 hover:text-white">
+          chevron_right
+        </span>
+      </div>
+      <div>
+        <div class="swiper-wrapper" #swiperSanpham slides-per-view="3" speed="500" loop="true" pagination="true"
+          [navigation]="{prevEl: '.prev_sanpham', nextEl: '.next_sanpham' }" class="space-x-4">
+          <div class="swiper-slide"><img loading="lazy" src="/assets/images/sanpham1.png" class="w-full rounded-lg" /></div>
+          <div class="swiper-slide"><img loading="lazy" src="/assets/images/sanpham2.png" class="w-full rounded-lg" /></div>
+          <div class="swiper-slide"><img loading="lazy" src="/assets/images/sanpham3.png" class="w-full rounded-lg" /></div>
+          <div class="swiper-slide"><img loading="lazy" src="/assets/images/sanpham4.png" class="w-full rounded-lg" /></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- section2   -->
+    <!-- section3   -->
+    <div class="grid grid-cols-2 gap-4">
+      <div class="relative">
+        <img loading="lazy" src="/assets/images/Testimonials.png" class="lg:mx-0 mx-auto">
+        <div class="absolute -bottom-10 end-20">
+            <div class="bg-white shadow-lg rounded-xl dark:bg-default-100">
+                <div class="p-6">
+                    <h6 class="text-base font-semibold text-default-900 mb-2">Our Reviewers</h6>
+                    <div class="flex items-center justify-center -space-x-1">
+                        <div class="h-12 w-12">
+                            <img loading="lazy"class="h-full w-full rounded-full object-cover object-center ring ring-default-100" src="/assets/images/avatar1.png">
+                        </div>
+                        <div class="h-12 w-12">
+                            <img loading="lazy"class="h-full w-full rounded-full object-cover object-center ring ring-default-100" src="/assets/images/avatar2.png">
+                        </div>
+                        <div class="h-12 w-12">
+                            <img loading="lazy"class="h-full w-full rounded-full object-cover object-center ring ring-default-100" src="/assets/images/avatar3.png">
+                        </div>
+                        <div class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-primary text-default-50 font-medium ring ring-default-100">
+                            <span class="text-base"> 12K </span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end Reviewers -->
+        </div>
+    </div>
+      <div class="flex flex-col space-y-6 w-full p-3">
+        <div class="h-full">
+          <span class="bg-gray-200 rounded-3xl p-2">Testimonials</span>
+        </div>
+
+        <div class="h-full">
+          <div class="swiper-wrapper" class="h-full" #swiperSanpham slides-per-view="1" speed="500" loop="true" pagination="true"
+            [navigation]="{prevEl: '.prev_sanpham', nextEl: '.next_sanpham' }" class="space-x-4">
+           @for (item of [1,2,3]; track item.id) {
+            <div class="swiper-slide">
+              <div class="relative cursor-pointer">
+                <div class="flex items-center gap-3 mb-12">
+                    <img loading="lazy" src="/assets/images/avatar{{item}}.png" class="h-12 w-12 rounded-full">
+                    <div class="">
+                        <h6 class="text-base/none font-medium text-default-900 mb-2">Jeannette C. Siebert</h6>
+                        <div class="flex gap-1.5">
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-4 w-4 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-4 w-4 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-4 w-4 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-4 w-4 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-4 w-4 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative px-12">
+                    <div class="absolute -top-5 start-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="quote" class="lucide lucide-quote h-8 w-8 text-primary fill-primary rotate-180"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg>
+                    </div>
+                    <div class="absolute -bottom-5 end-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="quote" class="lucide lucide-quote h-8 w-8 text-primary fill-primary"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg>
+                    </div>
+                    <p class="text-base text-default-400 font-medium">Food is the best. Besides the many and delicious meals, the service is also very good, especially in the very fast delivery. I highly recommend Food to you.</p>
+                </div>
+            </div>
+            </div>
+           }
+          </div>
+        </div>
+      </div>
+    </div>   
+    <!-- section3   -->
+</div>

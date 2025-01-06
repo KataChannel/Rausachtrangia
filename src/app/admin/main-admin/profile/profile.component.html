@@ -1,0 +1,7 @@
+<button mat-icon-button [matMenuTriggerFor]="menuProfile"> <span class="material-symbols-outlined">
+  account_circle
+</span></button>
+<mat-menu #menuProfile="matMenu">
+  <a href="profile" mat-menu-item >Thông Tin</a>
+  <button mat-menu-item (click)="Dangxuat()">Đăng Xuất</button>
+</mat-menu>

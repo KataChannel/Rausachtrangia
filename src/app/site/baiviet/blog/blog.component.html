@@ -1,0 +1,87 @@
+<!-- <section class="w-screen flex items-center bg-gray-200 py-3">
+  <div class="container">
+    <div class="flex items-center justify-center">
+      <ol aria-label="Breadcrumb" class="flex items-center whitespace-nowrap min-w-0 gap-2">
+        <li class="text-sm">
+          <a class="flex items-center gap-2 align-middle text-default-800 transition-all leading-none hover:text-primary-500"
+            href="javascript:void(0)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="home"
+              class="lucide lucide-home w-4 h-4">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Trang Chủ
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              data-lucide="chevron-right" class="lucide lucide-chevron-right w-4 h-4">
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </a>
+        </li>
+        <li aria-current="page" class="text-sm font-medium text-primary truncate leading-none hover:text-primary-500">
+          Món Ngon Mỗi Ngày
+        </li>
+      </ol>
+    </div>
+  </div>
+</section> -->
+<app-breadcrumbadmin [Breadcrumb]="breadcrumb"></app-breadcrumbadmin>
+<section class="bg-white">
+  <div class="container grid lg:grid-cols-4 grid-cols-1 gap-3 py-8">
+    <div class="hidden lg:flex flex-col space-y-3">
+      <app-danhmucsanphamsite></app-danhmucsanphamsite>
+      <app-slide-sanpham Type="DOC" [Filter]="'Moi'" [Title]="'Sản Phẩm Giá Rẻ'"></app-slide-sanpham>
+    </div>
+
+    <div class="lg:col-span-3 flex flex-col space-y-2">
+      <!-- <div class="flex flex-row justify-between items-center border rounded-lg p-3">
+        <div class="inspect-total-filtered-products-wrapper">
+          <div class="inspect-total-filtered-products">
+            Hiển thị 1 - 4 of 4 Kết quả
+          </div>
+        </div>
+        <div class="inspect-filter-sort">
+          <select id="countries"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected>Sắp Xếp</option>
+            @for (item of Sorting; track item.id) {
+            <option value="{{item.id}}">{{item.Title}}</option>
+            }
+          </select>
+        </div>
+        <div class="lg:hidden flex" (click)="openBottomSheet()"><span class="material-symbols-outlined">tune</span>
+        </div>
+      </div> -->
+      <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+        @if (FilterBaiviet.length > 0) {  
+          @for (item of FilterBaiviet; track item.id) {
+            <a [routerLink]="item.Slug" class="grid grid-cols-2 gap-2 border rounded-lg p-3">
+              @if(item?.Image?.Thumb)
+              {
+              <img loading="lazy" src="assets/images/baiviet/{{item?.Image?.Thumb}}" class="p-3 max-h-40 m-auto rounded-lg">
+              }
+              @else if(item?.Image?.Hinhchinh?.src){
+                <img loading="lazy" src="{{item?.Image?.Hinhchinh?.src}}" class="p-3 max-h-40 m-auto rounded-lg">
+                }
+              @else {
+              <img loading="lazy" src="assets/images/noimage.png" class="p-3 max-h-40 m-auto rounded-lg">
+              }
+              <div class="flex flex-col space-y-2">
+                <span>{{item?.Type?.Title}} | {{item?.CreateAt|date:'yyyy-MM-dd'}}</span>
+                <div class="font-bold line-clamp-2 text-lg" [innerHTML]="item.Title"></div>
+                <div class="text-justify line-clamp-3" [innerHTML]="item.Mota"></div>
+              </div>
+            </a>
+              }
+          }
+          @else {
+            <div class="flex flex-col items-center justify-center">
+              <span class="text-lg font-bold">Không có bài viết nào</span>
+            </div>
+
+          }
+        </div>
+      </div>
+    </div>
+</section>

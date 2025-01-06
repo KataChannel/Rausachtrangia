@@ -1,0 +1,33 @@
+<section class="grid grid-cols-1 relative border rounded-lg bg-white">
+<!-- <div class="lg:flex hidden flex-col space-y-3 w-full col-span-4">
+  <div>
+    <div class="swiper-wrapper" slides-per-view="3" speed="1000" delay="1 0" autoplay="true" loop="true" pagination="false" space-between="0">
+      @for (item of images; track item.id) {
+      <div class="swiper-slide" class="flex flex-col space-y-2 justify-between">
+        dsadsaddfha
+        fdsfjsdhfasfksd
+        
+      </div>
+      }
+    </div>
+    <div class="swiper-pagination" slot="pagination"></div>
+  </div>
+</div> -->
+<div class="flex flex-col space-y-3 w-full">
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper pb-16">
+      @for (item of images; track item.id) {
+       <div href="#" class="swiper-slide flex flex-col justify-center space-y-2">
+        asdasdadasd
+        </div>
+        
+        <!-- <a href="san-pham/{{item.Slug}}" class="swiper-slide flex flex-col justify-center space-y-2">
+          <img loading="lazy" src="/assets/images/sanpham/{{item.Image.Main}}" class="w-full" />
+          <span class="text-sm">{{item.Danhmuc}}</span>
+        </a> -->
+      }
+    </div>
+    <div class="swiper-pagination !bottom-0"></div>
+  </div>
+</div>
+</section>

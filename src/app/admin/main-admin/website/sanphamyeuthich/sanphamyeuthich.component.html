@@ -1,0 +1,73 @@
+<section class="w-screen flex items-center bg-gray-200 py-3">
+  <div class="container">
+      <div class="flex items-center justify-center">
+          <ol aria-label="Breadcrumb" class="flex items-center whitespace-nowrap min-w-0 gap-2">
+              <li class="text-sm">
+                  <a class="flex items-center gap-2 align-middle text-default-800 transition-all leading-none hover:text-primary-500"
+                      href="javascript:void(0)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          data-lucide="home" class="lucide lucide-home w-4 h-4">
+                          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                      </svg>
+                      Trang Chủ
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          data-lucide="chevron-right" class="lucide lucide-chevron-right w-4 h-4">
+                          <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                  </a>
+              </li>
+              <li aria-current="page"
+                  class="text-sm font-medium text-primary truncate leading-none hover:text-primary-500">
+                 Sản Phẩm Yêu Thích
+              </li>
+          </ol>
+      </div>
+  </div>
+</section>
+<section class="w-full lg:py-10 py-6">
+  <div class="container">
+      <div class="grid grid-cols-1 border border-default-200 divide-y divide-default-200 rounded-lg">
+        @for (item of FilterLists; track item.id) {
+          <div class="w-full px-4 py-4 flex flex-row justify-between items-center">
+            <div class="w-auto">
+                <div class="flex items-center">
+                    <img loading="lazy" src="/assets/images/sanpham/{{item.Image.Main}}" class="lg:h-28 lg:w-28 w-14 h-14 lg:me-4 me-2">
+                    <div class="md:w-auto w-2/3">
+                        <p class="text-xs font-medium text-primary mb-2">{{item.Title}}</p>
+                        <h4 class="text-xl font-semibold text-default-800 mb-2 line-clamp-1">{{item.Title}}</h4>
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-5 w-5 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span class="lg:hidden flex text-primary text-base font-semibold">4.2</span>
+                                <div class="lg:flex hidden gap-1.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-5 w-5 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-5 w-5 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-5 w-5 text-yellow-400 fill-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star h-5 w-5 text-default-400 fill-default-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </div>
+                            </div>
+                            <h6 class="text-sm text-default-500 font-medium mt-1">(1.2k)</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-auto">
+                <div class="text-end">
+                    <h4 class="text-2xl font-medium text-default-500">{{item.Giagoc}}</h4>
+                    <!-- <h4 class="text-base font-medium text-default-500 line-through">$25</h4> -->
+                </div>
+            </div>
+            <div class="md:w-auto w-full lg:mt-0 mt-4">
+                <div class="flex lg:flex-col justify-between gap-2">
+                    <a href="javascript:void(0)" class="py-3 px-6 font-medium text-center text-white bg-primary rounded-full hover:bg-primary-500 transition-all">Thêm Vào Giỏ Hàng</a>
+                    <a href="javascript:void(0)" class="py-3 px-6 font-medium text-center lg:text-primary rounded-full lg:hover:bg-primary/20 lg:bg-transparent bg-primary  transition-all border">Xoá</a>
+                </div>
+            </div>
+        </div>
+        }
+      </div>
+  </div>
+</section>

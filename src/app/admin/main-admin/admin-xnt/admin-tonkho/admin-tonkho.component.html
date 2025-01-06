@@ -1,0 +1,181 @@
+<mat-drawer-container class="example-container w-full h-full " autosize>
+  <mat-drawer #drawer mode="side" class="!flex flex-col flex-auto min-w-0 relative h-full w-full" position="end">
+    <div class="relative flex flex-col h-full w-full overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="!flex flex-col flex-auto min-w-0 relative !h-[90vh]">
+    <div class="relative flex flex-col">
+      <div class="flex justify-between items-center space-x-2 m-2 bg-white p-3 rounded-lg">
+        <div class="flex flex-row space-x-3 justify-center items-center">
+          <div class="relative mt-1 lg:w-80">
+            <input (keyup)="applyFilter($event)" type="text" name="email" id="topbar-search"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+              placeholder="Tìm Kiếm Sản Phẩm">
+          </div>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <div class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Tùy Chỉnh">tune</span>
+                <span class="text-sm">Cấu Hình</span>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Lấy Mẫu">file_download</span>
+                <span class="text-sm">Download</span>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="flex flex-row space-x-2 items-center justify-center">
+                <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+                <span class="text-sm">Upload</span>
+              </div>
+            </button>
+          </mat-menu>
+          <div class="hidden lg:flex flex-row space-x-3">
+            <div (click)="writeExcelFile()"
+              class="flex flex-col items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_download</span>
+              <span class="text-xs">Download</span>
+            </div>
+            <div (click)="uploadfile.click()"
+              class="flex flex-col items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg">
+              <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+              <span class="text-xs">Upload</span>
+              <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row space-x-2 items-center">
+          <button (click)="openDialog(dialogTemplate)"  mat-flat-button color="primary">
+            <div class="flex flex-row items-center">
+              <span class="material-symbols-outlined">add</span>
+              <span class="hidden lg:flex">Thêm</span>
+            </div>
+          </button>
+          <button class="lg:!hidden flex" mat-icon-button [matMenuTriggerFor]="menu">
+            <span class="material-symbols-outlined">more_vert</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="relative flex flex-col h-full w-full overflow-auto">
+      <div class="flex flex-col my-6 mx-4 rounded-lg shadow-xl shadow-gray-200">
+        <div class="overflow-x-auto rounded-2xl">
+          <div class="inline-block min-w-full align-middle">
+            <div class="overflow-hidden">
+              <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                <thead class="bg-white">
+                  <tr>
+                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase lg:p-5">
+                      Tiêu Đề
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase lg:p-5">
+                      Số Lượng
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase lg:p-5">
+                     Ngày Tạo
+                    </th>
+                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase lg:p-5">
+                      Hành Động
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  @for (item of FilterLists; track item.id) {
+                  <tr class="hover:bg-gray-100">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap lg:p-5">
+                      <div class="flex flex-col space-y-2">
+                        <span>{{item.idSP}}</span>
+                      </div>
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap lg:p-5">
+                      <div>{{(item.Soluong| number:'1.0-0')||'0'}}</div>
+                    </td>
+                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap lg:p-5">
+                       <span class="text-xs">{{item.CreateAt|date:'dd/MM/yyyy'}}</span>
+                    </td>
+                    <td class="p-4 space-x-2 whitespace-nowrap lg:p-5">
+                      <button routerLink="{{item.id}}" type="button" data-modal-toggle="product-modal"
+                        class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 hover:text-gray-900 hover:scale-[1.02] transition-all">
+                        <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
+                          </path>
+                          <path fill-rule="evenodd"
+                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                            clip-rule="evenodd"></path>
+                        </svg>
+                        Sửa
+                      </button>
+                      <button type="button" data-modal-toggle="delete-product-modal"
+                        class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-gradient-to-br from-red-400 to-red-600 rounded-lg shadow-md shadow-gray-300 hover:scale-[1.02] transition-transform">
+                        <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd"></path>
+                        </svg>
+                        Xoá
+                      </button>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-between items-center mx-4 mt-4 mb-6 bg-white p-3 rounded-lg">
+      <mat-paginator class="w-full" [pageSizeOptions]="[10, 20, 50]" [pageSize]="SearchParams.pageSize"
+        [length]="this.Lists.totalCount" [pageSizeOptions]="pageSizeOptions" [pageIndex]="SearchParams.pageNumber"
+        (page)="onPageChange($event)">
+      </mat-paginator>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+<ng-template #dialogTemplate>
+  <div class="min-w-[400px]">
+    <div mat-dialog-title>Thêm Mới</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 p-4">
+
+        <div class="flex flex-row space-x-2">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tiêu Đề</mat-label>
+            <input matInput [(ngModel)]="Detail.Title" [ngModelOptions]="{standalone: true}" placeholder="Tiêu Đề">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Code</mat-label>
+            <input matInput [(ngModel)]="Detail.Code"  disabled [ngModelOptions]="{standalone: true}" placeholder="Tiêu Đề">
+          </mat-form-field>
+        </div>
+        <div class="flex flex-row space-x-2">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Giá Trị</mat-label>
+            <input matInput [(ngModel)]="Detail.Value" [ngModelOptions]="{standalone: true}" placeholder="Giá Trị">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+              <mat-label>Loại Khuyến mãi</mat-label>
+              <mat-select [(ngModel)]="Detail.Type" [ngModelOptions]="{standalone: true}">
+                @for (item of ListLoaiKM; track item.id) {
+                  <mat-option [value]="item">{{item.Title}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+        </div>
+
+        
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <div class="w-full flex justify-center items-center text-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

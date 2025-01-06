@@ -1,0 +1,11 @@
+<div class="!text-xl !font-semibold text-default-700">Khuyến Mãi</div>
+  <div class="w-full p-4 flex flex-row items-center space-x-2">
+      <input [(ngModel)]="MaKhuyenmai" [ngModelOptions]="{standalone: true}"
+          class="block w-full bg-transparent rounded-full  border border-default-200"
+          type="text" placeholder="Nhập Mã Khuyến Mãi">
+          <span (click)="ApdungKhuyenmai()"
+              class="cursor-pointer whitespace-nowrap rounded-full bg-primary 
+              px-6 py-3 text-center text-sm font-medium text-white 
+              shadow-sm transition-all duration-500 hover:bg-primary-500">
+              Áp dụng</span>
+  </div>

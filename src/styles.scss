@@ -1,0 +1,133 @@
+@use 'swiper/css';
+@use 'swiper/css/navigation';
+@use 'swiper/css/pagination';
+@use 'swiper/css/autoplay'; // Nếu sử dụng autoplay
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  // font-family: 'Poppins', sans-serif !important;
+}
+.text-primary
+{
+  font-family: 'Roboto', sans-serif;
+  // font-family: 'Poppins', sans-serif !important;
+}
+
+
+.cdk-header-cell
+{
+  white-space: nowrap;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #ddd;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #00256e;
+}
+// mat-snack-bar-container{
+//   margin:15% !important
+// }
+.mdc-snackbar__surface{
+  background-color:white !important;
+}
+.success .mdc-snackbar__label{
+  color: #5cb85c !important;
+}
+.danger .mdc-snackbar__label{
+  color: #D9534F !important;
+}
+.warning .mdc-snackbar__label{
+  color: #F0AD4E !important;
+}
+.info .mdc-snackbar__surface{
+  color: 5BC0DE !important;
+}
+// .danger .mdc-snackbar__surface{
+//   color: white !important;
+//   background-color:#D9534F !important;
+// }
+// .warning .mdc-snackbar__surface{
+//   color: white !important;
+//   background-color:#F0AD4E !important;
+// }
+// .info .mdc-snackbar__surface{
+//   color: white !important;
+//   background-color:#5BC0DE !important;
+// }
+.p-sidebar-mask
+{
+  z-index: 1 !important;
+}
+.bg-primary
+{
+  background-color: #e22026 !important;
+}
+.bg-primary-400
+{
+  background-color: #e8686c !important;
+}
+.mdc-notched-outline__notch
+{
+  border: 0;
+}
+.mdc-dialog .mdc-dialog__content {
+  padding: 15px;
+}
+.mdc-data-table__cell, .mdc-data-table__header-cell{
+  padding: 16px !important;
+}
+// .mat-mdc-form-field-bottom-align
+// {
+//   height: 0;
+// }
+.cdk-overlay-pane
+{
+  max-width: 100vw !important;
+}
+.loading-page
+{
+  background-color: black;
+  opacity: 0.6;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+.PDFVIEW .mat-mdc-dialog-content{
+  max-height: 100vh !important;
+}
+
+@media print {
+  #nonPrintable {
+    display: none;
+  }
+  /* Add your additional print styles here */
+  #printArea {
+    font-size: 12px; /* Example print style */
+  }
+}
+router-outlet+* {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  flex-direction: column;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

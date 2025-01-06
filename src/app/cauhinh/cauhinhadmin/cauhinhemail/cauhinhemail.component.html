@@ -1,0 +1,36 @@
+<div class="flex flex-col space-y-3 lg:w-1/3 mx-auto">
+<mat-form-field subscriptSizing="dynamic" appearance="outline">
+  <mat-label>Host</mat-label>
+  <input [(ngModel)]="Dulieu.host" [ngModelOptions]="{standalone: true}"
+   type="text" matInput class="border border-gray-200 rounded" [placeholder]="'Host'" />
+</mat-form-field>
+<mat-form-field subscriptSizing="dynamic" appearance="outline">
+  <mat-label>Port</mat-label>
+  <input [(ngModel)]="Dulieu.port" [ngModelOptions]="{standalone: true}"
+   type="text" matInput class="border border-gray-200 rounded" [placeholder]="'Port'" />
+</mat-form-field>
+<mat-form-field subscriptSizing="dynamic" appearance="outline">
+  <mat-label>Secure</mat-label>
+  <input [(ngModel)]="Dulieu.secure" [ngModelOptions]="{standalone: true}"
+   type="text" matInput class="border border-gray-200 rounded" [placeholder]="'Secure'" />
+</mat-form-field>
+<mat-form-field subscriptSizing="dynamic" appearance="outline">
+  <mat-label>Host</mat-label>
+  <input [(ngModel)]="Dulieu.auth.user" [ngModelOptions]="{standalone: true}"
+   type="text" matInput class="border border-gray-200 rounded" [placeholder]="'Host'" />
+</mat-form-field>
+<mat-form-field subscriptSizing="dynamic" appearance="outline">
+  <mat-label>Host</mat-label>
+  <input [(ngModel)]="Dulieu.auth.pass" [ngModelOptions]="{standalone: true}"
+   type="text" matInput class="border border-gray-200 rounded" [placeholder]="'Host'" />
+</mat-form-field>
+<mat-form-field subscriptSizing="dynamic" appearance="outline">
+  <mat-label>Host</mat-label>
+  <input [(ngModel)]="Dulieu.Brand" [ngModelOptions]="{standalone: true}"
+   type="text" matInput class="border border-gray-200 rounded" [placeholder]="'Host'" />
+</mat-form-field>
+<div class="text-center">
+<button (click)="UpdateDulieu()" mat-flat-button color="primary">Lưu</button>
+</div>
+
+</div>

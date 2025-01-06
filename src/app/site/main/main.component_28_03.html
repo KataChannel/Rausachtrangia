@@ -1,0 +1,77 @@
+<div class="w-full flex flex-col justify-center items-center">
+  <div class="{{isSticky?'fixed top-0 border border-b':''}} w-full z-10">
+  
+    <div class="{{isSticky?'lg:hidden':''}} lg:flex hidden w-full border border-b py-4 bg-[#EAEAEA]">
+      <div class="container flex flex-row justify-between">
+        <div class="flex flex-row space-x-6 items-center">
+          <div class="flex flex-row space-x-1 items-center">
+            <span class="material-symbols-outlined">
+              mail
+            </span>
+            <span class="font-bold">rausachtrangia&#64;gmail.com</span>
+            <!-- <marquee scrolldelay="400">
+              <span>rausachtrangia&#64;gmail.com</span>
+            </marquee> -->
+         
+          </div>
+
+          <div class="flex flex-row space-x-1 items-center">
+            <span class="material-symbols-outlined">
+              phone_iphone
+            </span>
+            <div class="font-bold">0865.77.0009</div>
+            <!-- <marquee scrolldelay="400">
+              <div>0865.77.0009</div>
+            </marquee> -->
+
+          </div>
+        </div>
+
+
+        <div>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <div class="flex flex-row space-x-2 items-center">
+              <span>Vietnamese</span>
+              <span class="material-symbols-outlined">arrow_drop_down</span>
+            </div>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Vietnamese</button>
+            <button mat-menu-item>English</button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+    
+    <div class="w-full bg-white">
+      <app-header></app-header>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+  <section class="bg-gray-100 w-full">
+    <div class="container grid lg:grid-cols-2 grid-cols-1 gap-4 relative p-8">
+      <div class="flex flex-col lg:text-justify text-center">
+        <span class="text-xl font-bold">Đăng ký Bảng tin</span>
+        <span>Nhận thông tin cập nhật bằng cách đăng ký bản tin của chúng tôi</span>
+      </div>
+      <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <span class="material-symbols-outlined">
+            mail
+          </span>
+        </div>
+        <input [(ngModel)]="Detail.Email" [ngModelOptions]="{standalone: true}" type="search" id="default-search"
+          class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Địa Chỉ Email" required>
+        <button (click)="CreateLienhe()" type="submit"
+          class="text-white absolute end-2.5 bottom-2.5 bg-primary focus:ring-4 focus:outline-none hover:bg-primary-500 font-medium rounded-lg text-sm px-4 py-2">Đăng
+          Ký</button>
+        <!-- <button type="submit"
+          class="text-white absolute end-2.5 bottom-2.5 bg-primary focus:ring-4 focus:outline-none hover:bg-primary-500 font-medium rounded-lg text-sm px-4 py-2">Đăng
+          Ký</button> -->
+      </div>
+    </div>
+  </section>
+  <app-footer class="w-full"></app-footer>
+</div>
+<app-site-cta></app-site-cta>

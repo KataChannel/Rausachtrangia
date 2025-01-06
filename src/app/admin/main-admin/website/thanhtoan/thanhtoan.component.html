@@ -1,0 +1,454 @@
+<section class="w-screen flex items-center bg-gray-200 py-3">
+    <div class="container">
+        <div class="flex items-center justify-center">
+            <ol aria-label="Breadcrumb" class="flex items-center whitespace-nowrap min-w-0 gap-2">
+                <li class="text-sm">
+                    <a class="flex items-center gap-2 align-middle text-default-800 transition-all leading-none hover:text-primary-500"
+                        href="/">
+                        <span class="material-symbols-outlined">home</span>
+                        Trang Chủ
+                        <span class="material-symbols-outlined">navigate_next</span>
+                    </a>
+                </li>
+                <li aria-current="page"
+                    class="text-sm font-medium text-primary truncate leading-none hover:text-primary-500">
+                    Thanh Toán
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="lg:py-10 py-6">
+    @if(Donhang?.Giohangs?.Sanpham.length>0){
+    <div class="container">
+        <div class="grid lg:grid-cols-3 grid-cols-1 gap-6">
+            <div class="lg:col-span-2 col-span-1 border border-default-200 rounded-lg p-5">
+                <div class="mb-8">
+                    <div class="grid lg:grid-cols-6 gap-6">
+                        <span class="lg:col-span-6 !text-xl !font-semibold text-default-800 mb-6">Thông tin thanh
+                            toán</span>
+                        <div class="lg:col-span-3">
+                            <label class="block text-sm text-default-700 mb-2">Họ Tên *</label>
+                            <input [(ngModel)]="Donhang.Khachhang.Hoten" [ngModelOptions]="{standalone: true}"
+                                class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                type="text" placeholder="Họ Tên">
+                        </div>
+                        <div class="lg:col-span-3">
+                            <label class="block text-sm text-default-700 mb-2">Số Điện Thoại *</label>
+                            <input [(ngModel)]="Donhang.Khachhang.SDT" [ngModelOptions]="{standalone: true}"
+                                class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                type="text" placeholder="Vui lòng nhập số điện thoại">
+                        </div>
+                        <!-- <div class="lg:col-span-2">
+                            <label class="block text-sm text-default-700 mb-2">Địa Chỉ *</label>
+                            <input [(ngModel)]="Donhang.Khachhang.Diachi" [ngModelOptions]="{standalone: true}"
+                                class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                type="text" placeholder="Vui lòng nhập địa chỉ">
+                        </div> -->
+                        <div class="lg:col-span-3">
+                            <label class="block text-sm text-default-700 mb-2">Email</label>
+                            <input [(ngModel)]="Donhang.Khachhang.Email"
+                                class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                type="text" placeholder="example@gmail.com">
+                        </div>
+
+
+                        <span class="lg:col-span-6 !text-xl !font-semibold text-default-800 mb-6">Thông tin giao
+                            hàng</span>
+
+                        <app-diachi-admin [isSingle]="true" [Diachis]="Diachis" (diachiEmit)="GetDiachi($event)"
+                            class="lg:col-span-6"></app-diachi-admin>
+                        @if(Donhang.Khachhang.Diachi){
+                        <div class="p-4 rounded-lg bg-slate-200 lg:col-span-6">
+                            {{Donhang.Khachhang.Hoten}} - {{Donhang.Khachhang.SDT}} - {{Donhang.Khachhang.Diachi}}
+                        </div>
+                        }
+
+                        <div class="lg:col-span-6 flex justify-center">
+                            <textarea [(ngModel)]="Donhang.Ghichu" [ngModelOptions]="{standalone: true}"
+                                class="block w-full bg-transparent dark:bg-default-50 rounded-lg py-2.5 px-4 border border-default-200"
+                                rows="4" type="text" placeholder="Ghi chú giao hàng"></textarea>
+                        </div>
+
+                        <div class="lg:col-span-6 flex justify-center">
+                            <a (click)="UpdatePhiship()"
+                                class="cursor-pointer hover:scale-[101%] inline-flex items-center justify-center rounded-full border border-primary bg-primary px-10 py-3 text-center text-sm font-medium text-white shadow-sm transition-all duration-500 hover:bg-primary-500">
+                                Xác Nhận Thông Tin Giao Hàng
+                            </a>
+                        </div>
+
+                        <!-- <div class="lg:col-span-4">
+                            <button mat-flat-button color="primary" (click)="UpdatePhiship()">Phí Ship</button>
+                        </div>
+                        <div class="lg:col-span-4">
+                           {{Khoangcach?.text}}
+                        </div> -->
+                        <!-- <div class="flex items-center">
+                            <input id="shipmentAddress"
+                                class="text-primary w-5 h-5 rounded border-default-200 focus:ring-0 bg-transparent"
+                                type="checkbox" placeholder="+1  123-XXX-7890">
+                            <label for="shipmentAddress" class="block text-sm text-default-700 ms-2">Ship into different
+                                address </label>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- <div class="mb-8">
+                    <h4 class="text-lg font-medium text-default-800 mb-6">Hình thức thanh toán</h4>
+
+                    <div class="border border-default-200 rounded-lg p-6 lg:w-full mb-5">
+                        <mat-radio-group class="grid lg:grid-cols-3 grid-cols-1 lg:gap-8 gap-2" [color]="'primary'" [(ngModel)]="Donhang.Thanhtoan.Hinhthuc">
+                             <div class="flex flex-row items-center justify-between space-x-2 p-2 border rounded-lg">
+                                <label for="paymentCOD">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" data-lucide="dollar-sign"
+                                        class="lucide lucide-dollar-sign text-primary">
+                                        <line x1="12" x2="12" y1="2" y2="22"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                </label>
+                                <span class="text-sm font-medium text-default-700">Trả tiền mặt (COD)</span>
+                                <div>
+                                    <mat-radio-button class="example-radio-button" [value]="'COD'"></mat-radio-button>
+                                </div>
+
+                            </div>
+                            <div class="flex flex-row items-center justify-between space-x-2 p-2 border rounded-lg">
+                                <label for="paymentCard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" data-lucide="credit-card"
+                                        class="lucide lucide-credit-card text-primary">
+                                        <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                                        <line x1="2" x2="22" y1="10" y2="10"></line>
+                                    </svg>
+                                </label>
+                                <span class="text-sm font-medium text-default-700">Ck qua bank (VNPAY)</span>
+                                <div>
+                                    <mat-radio-button class="example-radio-button" [value]="'VNPAY'"></mat-radio-button>
+                                </div>
+                            </div>
+                            <div class="flex flex-row items-center justify-between space-x-2 p-2 border rounded-lg">
+                                <label for="paymentCard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" data-lucide="credit-card"
+                                        class="lucide lucide-credit-card text-primary">
+                                        <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                                        <line x1="2" x2="22" y1="10" y2="10"></line>
+                                    </svg>
+                                </label>
+                                <span class="text-sm font-medium text-default-700">MOMO</span>
+                                <div>
+                                    <mat-radio-button class="example-radio-button" [value]="'MOMO'"></mat-radio-button>
+                                </div>
+
+                            </div>
+                        </mat-radio-group>
+                    </div>
+
+                    @if (Donhang.Thanhtoan.Hinhthuc=='VNPAY') {
+                        <div class="grid lg:grid-cols-2 gap-6" >
+                            <div class="lg:col-span-2">
+                                <label class="block text-sm text-default-700 mb-2">Họ Tên Thẻ</label>
+                                <input
+                                    class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                    type="text" placeholder="Họ Tên Thẻ">
+                            </div>
+    
+                            <div class="lg:col-span-2">
+                                <label class="block text-sm text-default-700 mb-2">Số Thẻ</label>
+                                <input
+                                    class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                    type="text" placeholder="Vui lòng nhập số thẻ">
+                            </div>
+    
+                            <div>
+                                <label class="block text-sm text-default-700 mb-2">Ngày Hết Hạn</label>
+                                <input
+                                    class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                    type="text" placeholder="Tháng/Năm">
+                            </div>
+    
+                            <div>
+                                <label class="block text-sm text-default-700 mb-2">CVC</label>
+                                <input
+                                    class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                                    type="text" placeholder="Vui lòng nhập số CVC">
+                            </div>
+    
+                        </div>   
+                    }
+                </div> -->
+
+            </div>
+
+            <div class="mb-5">
+                <div class="border border-default-200 rounded-lg p-5">
+                    <h4 class="!text-xl !font-semibold text-default-700 mb-5">Tóm tắt đơn hàng</h4>
+                    @for (item of Donhang.Giohangs.Sanpham; track item.id) {
+                    <div class="flex items-center mb-4">
+                        @if(item && item.Image&&item.Image.Thumb)
+                        {
+                        <img loading="lazy" src="assets/images/sanpham/{{item.Image.Thumb}}" class="h-20 w-20 me-2">
+                        }
+                        @else if(item && item.Image&&item.Image.Hinhchinh&&item.Image.Hinhchinh.src){
+                        <img loading="lazy" src="{{item.Image.Hinhchinh.src}}" class="h-20 w-20 me-2">
+                        }
+                        @else {
+                        <img loading="lazy" src="assets/images/noimage.png" class="p-3 h-20 w-20 me-2 rounded-lg">
+                        }
+                        <!-- <img loading="lazy" src="/assets/images/sanpham/{{item.Image.Main}}" class="h-20 w-20 me-2"> -->
+                        <div>
+                            <h4 class="text-sm text-default-600 mb-2">
+                                {{item.Title}}({{item?.Giachon?.khoiluong}}{{item?.Giachon?.dvt}})</h4>
+                            <h4 class="text-sm text-default-400">{{item.Soluong}} x <span
+                                    class="text-primary font-semibold">{{(item.Giachon.gia|
+                                    number:'1.0-0')||'0'}}đ</span>
+                            </h4>
+                        </div>
+                    </div>
+                    }
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-3">
+                            <p class="text-sm text-default-500">Tổng</p>
+                            <p class="text-sm text-default-700 font-medium">
+                                {{Donhang.SubTotal??0 |number:'1.0-0'}}đ</p>
+                        </div>
+                        <div class="flex justify-between mb-3">
+                            <p class="text-sm text-default-500">Phí Vận Chuyển</p>
+                            <p class="flex flex-col text-sm text-default-700 font-medium">
+                                <span>{{(Donhang.Vanchuyen.Phivanchuyen| number:'1.0-0')||'0'}}đ</span>
+                                @if(Khoangcach&&Khoangcach.distance&&Khoangcach.distance.text)
+                                {
+                                <span class="text-xs italic text-red-500">({{Khoangcach?.distance?.text}})</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="flex justify-between mb-3">
+                            <p class="text-sm text-default-500">Giảm giá</p>
+                            @if(Donhang.Giamgia>0)
+                            {
+                            @if(Donhang?.Khuyenmai?.Type?.Value=='phantram')
+                            {
+                            <p class="text-sm text-default-700 font-medium text-red-500">
+                                - {{(Donhang.SubTotal*Donhang.Giamgia| number:'1.0-0')||'0'}}đ
+                            </p>
+                            }
+                            @else {
+                            <p class="text-sm text-default-700 font-medium text-red-500">
+                                - {{(Donhang.Giamgia| number:'1.0-0')||'0'}}đ
+                            </p>
+                            }
+                            }
+                            @else {
+                            <p class="text-sm text-default-700 font-medium">
+                                {{(Donhang.Giamgia| number:'1.0-0')||'0'}}đ
+                            </p>
+                            }
+                        </div>
+                        <div class="flex justify-between mb-3">
+                            <p class="text-sm text-default-500">Thuế</p>
+                            <p class="text-sm text-default-700 font-medium">{{(GetTotal(Donhang.Giohangs.Sanpham,'Thue','')|
+                                number:'1.0-0')||'0'}}đ</p>
+                        </div>
+                        <div class="border-b border-default-200 my-4"></div>
+                        <div class="flex justify-between mb-3">
+                            <p class="text-base text-default-700">Tổng Cộng</p>
+                            <p class="text-base text-default-700 font-medium">{{Donhang.Total| number:'1.0-0'}}đ
+                            </p>
+                        </div>
+                    </div>
+                    <app-khuyenmaisite [MaKhuyenmai]="Donhang?.Khuyenmai?.Code" [Donhang]="Donhang"></app-khuyenmaisite>
+                   @if(!isPaying)
+                   {
+                    <a (click)="Xacnhandonhang(customSnackbar)"
+                        class="cursor-pointer w-full hover:scale-[101%] inline-flex items-center justify-center rounded-full border border-primary bg-primary px-10 py-3 text-center text-sm font-medium text-white shadow-sm transition-all duration-500 hover:bg-primary-500">
+                        Thanh Toán
+                    </a>
+                  }
+                </div>
+            </div>
+            <app-slide-sanpham Filter="Noibat" [Sohang]="1" [Title]="'Sản Phẩm Gợi Ý'"
+                class="lg:col-span-3"></app-slide-sanpham>
+        </div>
+    </div>
+    }
+    @else{
+    <div class="w-full flex flex-col justify-center items-center space-y-6">
+        <div>
+            <svg width="180" height="309.722" viewBox="0 0 180 309.722">
+                <g id="no_cart_in_bag" data-name="no cart in bag" transform="translate(-988 -7673)">
+                    <g id="no_cart" data-name="no cart" transform="translate(988 7673)">
+                        <g id="Group_5970" data-name="Group 5970" transform="translate(0 0)">
+                            <g id="Group_5967" data-name="Group 5967" transform="translate(17.408 92.119)">
+                                <path id="Path_17743" data-name="Path 17743"
+                                    d="M405.506,794.581l63.621-36.762L418.2,724.274Z"
+                                    transform="translate(-323.428 -576.978)" fill="#ba8064"></path>
+                                <path id="Path_17744" data-name="Path 17744"
+                                    d="M135.711,140.727l32.918-.12,1.287-20.225,79.451,45.843-34.42,1.084v19.165Z"
+                                    transform="translate(-118.988 -119.373)" fill="#dba480"></path>
+                                <path id="Path_17745" data-name="Path 17745"
+                                    d="M314.4,206.341,272,124.761l-2.279,22.008,1.4,59.572Z"
+                                    transform="translate(-220.537 -122.691)" fill="#460100" opacity="0.1"></path>
+                                <path id="Path_17746" data-name="Path 17746"
+                                    d="M141.237,253.056l-10.26-47.388,34.59-.126v37.243Z"
+                                    transform="translate(-115.402 -183.904)" fill="#995b47"></path>
+                                <path id="Path_17747" data-name="Path 17747"
+                                    d="M511.029,445.295l-49.136-22.179L460.8,385.489l1.089-72.515,35.954-1.133Z"
+                                    transform="translate(-365.33 -264.454)" fill="#a96e56"></path>
+                                <path id="Path_17748" data-name="Path 17748"
+                                    d="M148.755,398.756l9.58-70.307,4.9-79.149L81.161,201.911,66.677,351.368Z"
+                                    transform="translate(-66.677 -181.153)" fill="#dba480"></path>
+                                <path id="Path_17749" data-name="Path 17749"
+                                    d="M349.459,429.379c-.415,1.942-2.182,2.6-3.948,1.46a5.753,5.753,0,0,1-2.446-5.572c.414-1.942,2.182-2.6,3.948-1.46A5.753,5.753,0,0,1,349.459,429.379Z"
+                                    transform="translate(-276.046 -348.874)" fill="#67251d"></path>
+                                <path id="Path_17750" data-name="Path 17750"
+                                    d="M209.819,348.753c-.415,1.942-2.182,2.6-3.948,1.46a5.753,5.753,0,0,1-2.446-5.572c.415-1.942,2.182-2.6,3.948-1.46A5.753,5.753,0,0,1,209.819,348.753Z"
+                                    transform="translate(-170.233 -287.779)" fill="#67251d"></path>
+                                <g id="Group_5965" data-name="Group 5965" transform="translate(31.503 60.166)"
+                                    opacity="0.2">
+                                    <path id="Path_17751" data-name="Path 17751"
+                                        d="M219.35,441.507a16.861,16.861,0,0,1-8.439-2.272A28.35,28.35,0,0,1,196.858,412l4.383-45.226a2.414,2.414,0,0,1,4.806.467l-4.383,45.226a23.483,23.483,0,0,0,11.608,22.554,12.055,12.055,0,0,0,18.081-9.247l3.819-39.41a2.414,2.414,0,0,1,4.806.467l-3.819,39.41a16.912,16.912,0,0,1-16.809,15.266Z"
+                                        transform="translate(-196.727 -364.591)" fill="#460100"></path>
+                                </g>
+                                <path id="Path_17752" data-name="Path 17752"
+                                    d="M162.373,116.218,161.06,136.85l-34.59.126,82.078,47.388V164.738l35.954-1.132Zm44.968,47.351v18.7l-76.395-44.106,31.247-.113,1.261-19.819,76.774,44.3Z"
+                                    transform="translate(-111.986 -116.218)" fill="#fcc89d"></path>
+                                <g id="Group_5966" data-name="Group 5966" transform="translate(29.24 57.45)">
+                                    <path id="Path_17753" data-name="Path 17753"
+                                        d="M210.007,430.3a16.864,16.864,0,0,1-8.438-2.271,28.35,28.35,0,0,1-14.054-27.235l4.383-45.226a2.414,2.414,0,0,1,4.806.467l-4.383,45.226a23.483,23.483,0,0,0,11.608,22.554,12.055,12.055,0,0,0,18.081-9.247l3.819-39.41a2.414,2.414,0,0,1,4.806.467l-3.819,39.41A16.912,16.912,0,0,1,210.007,430.3Z"
+                                        transform="translate(-187.384 -353.38)" fill="#995b47"></path>
+                                </g>
+                                <path id="Path_17754" data-name="Path 17754" d="M405.506,546.991,419.99,488.05V397.534Z"
+                                    transform="translate(-323.428 -329.388)" fill="#995b47"></path>
+                            </g>
+                            <g id="Group_5968" data-name="Group 5968" transform="translate(0 0)">
+                                <path id="Path_17755" data-name="Path 17755"
+                                    d="M394.573,120.6c-.142-.5.244-.855.5-1.088a1.4,1.4,0,0,0,.271-.293,0,0,0,0,0,0,0,1.39,1.39,0,0,0-.384-.107c-.34-.065-.853-.162-1-.665s.244-.855.5-1.088a1.39,1.39,0,0,0,.271-.293,0,0,0,0,0,0,0,1.4,1.4,0,0,0-.384-.107c-.34-.064-.853-.162-1-.664s.244-.855.5-1.088l.009-.008a.9.9,0,0,0,.259-.482.391.391,0,0,1,.276-.292.41.41,0,0,1,.5.316,1.122,1.122,0,0,1-.51,1.046,1.4,1.4,0,0,0-.271.292,0,0,0,0,0,0,0,1.4,1.4,0,0,0,.384.107c.34.065.853.162,1,.665s-.244.855-.5,1.088a1.4,1.4,0,0,0-.271.293,0,0,0,0,0,0,0,1.391,1.391,0,0,0,.384.107c.34.065.853.162,1,.665s-.244.855-.5,1.088a1.257,1.257,0,0,0-.273.3,0,0,0,0,0,0,0,1.641,1.641,0,0,0,.387.1c.331.063.826.157.983.625a.416.416,0,0,1-.21.507.392.392,0,0,1-.456-.109.789.789,0,0,0-.464-.253h0C395.229,121.2,394.716,121.1,394.573,120.6Z"
+                                    transform="translate(-349.075 -37.518)" fill="#212121" opacity="0.3"></path>
+                                <path id="Path_17765" data-name="Path 17765"
+                                    d="M395.468,120.6c.142-.5-.244-.855-.5-1.088a1.4,1.4,0,0,1-.271-.293,0,0,0,0,1,0,0,1.39,1.39,0,0,1,.384-.107c.34-.065.853-.162,1-.665s-.244-.855-.5-1.088a1.389,1.389,0,0,1-.271-.293,0,0,0,0,1,0,0,1.4,1.4,0,0,1,.384-.107c.34-.064.853-.162,1-.664s-.244-.855-.5-1.088l-.009-.008a.9.9,0,0,1-.259-.482.391.391,0,0,0-.276-.292.41.41,0,0,0-.5.316,1.122,1.122,0,0,0,.51,1.046,1.4,1.4,0,0,1,.271.292,0,0,0,0,1,0,0,1.4,1.4,0,0,1-.384.107c-.34.065-.853.162-1,.664s.244.855.5,1.088a1.4,1.4,0,0,1,.271.293,0,0,0,0,1,0,0,1.39,1.39,0,0,1-.384.107c-.34.065-.853.162-1,.665s.244.855.5,1.088a1.257,1.257,0,0,1,.273.3,0,0,0,0,1,0,0,1.641,1.641,0,0,1-.387.1c-.331.063-.826.157-.983.625a.416.416,0,0,0,.21.507.392.392,0,0,0,.456-.109.789.789,0,0,1,.464-.253h0C394.812,121.2,395.326,121.1,395.468,120.6Z"
+                                    transform="translate(-262.76 -23.736)" fill="#212121" opacity="0.3"></path>
+                                <path id="Path_17756" data-name="Path 17756"
+                                    d="M375.447,179.277a2.539,2.539,0,1,1,3.346,1.3A2.542,2.542,0,0,1,375.447,179.277Zm3.737-1.643a1.543,1.543,0,1,0-.791,2.034A1.545,1.545,0,0,0,379.184,177.634Z"
+                                    transform="translate(-375.232 -52.408)" fill="#212121" opacity="0.3"></path>
+                                <path id="Path_17764" data-name="Path 17764"
+                                    d="M375.447,179.277a2.539,2.539,0,1,1,3.346,1.3A2.542,2.542,0,0,1,375.447,179.277Zm3.737-1.643a1.543,1.543,0,1,0-.791,2.034A1.545,1.545,0,0,0,379.184,177.634Z"
+                                    transform="translate(-333.888 -175.716)" fill="#212121" opacity="0.3"></path>
+                                <path id="Path_17757" data-name="Path 17757"
+                                    d="M350.086,264.8a1.852,1.852,0,0,1-2.682-2.547l-.868-.823a3.047,3.047,0,0,0,4.417,4.194Z"
+                                    transform="translate(-253.642 -206.302)" fill="#212121" opacity="0.3"></path>
+                                <path id="Path_17766" data-name="Path 17766"
+                                    d="M346.628,264.8a1.852,1.852,0,0,0,2.682-2.547l.867-.823a3.047,3.047,0,0,1-4.417,4.194Z"
+                                    transform="translate(-170.953 -110.557)" fill="#212121" opacity="0.15"></path>
+                                <path id="Union_11" data-name="Union 11"
+                                    d="M2.059,6.97l.989-3.048L0,2.933.283,2.06l3.049.989L4.321,0,5.2.284l-.99,3.048,3.047.989L6.97,5.2l-3.048-.99-.99,3.049Z"
+                                    transform="translate(6.528 48.598)" fill="#212121" stroke="rgba(0,0,0,0)"
+                                    stroke-miterlimit="10" stroke-width="1" opacity="0.3"></path>
+                                <path id="Union_13" data-name="Union 13"
+                                    d="M2.059,6.97l.989-3.048L0,2.933.283,2.06l3.049.989L4.321,0,5.2.284l-.99,3.048,3.047.989L6.97,5.2l-3.048-.99-.99,3.049Z"
+                                    transform="translate(94.294 121.132)" fill="#212121" stroke="rgba(0,0,0,0)"
+                                    stroke-miterlimit="10" stroke-width="1" opacity="0.3"></path>
+                                <path id="Union_12" data-name="Union 12"
+                                    d="M1.235,4.182l.593-1.829L0,1.759l.17-.524L2,1.829,2.592,0l.525.17L2.523,2l1.828.594-.17.523L2.353,2.523,1.759,4.352Z"
+                                    transform="translate(107.351 6.528)" fill="#212121" stroke="rgba(0,0,0,0)"
+                                    stroke-miterlimit="10" stroke-width="1" opacity="0.3"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+
+        <span class="text-xl font-bold">Giỏ Hàng Trống</span>
+        <div>
+            <a href="danh-muc/cac-loai-nam"
+                class="flex items-center justify-center rounded-full border border-primary bg-primary px-10 py-3 text-center text-sm font-medium text-white hover:bg-primary-500">
+                Quay về gian hàng</a>
+        </div>
+    </div>
+
+
+    }
+
+
+</section>
+
+<ng-template #customSnackbar let-data="customData">
+    <div class="flex flex-row items-center rounded-lg space-x-2">
+        <span class="material-symbols-outlined">{{ListNotifyType[this.Notify.type]}}</span>
+        <div>{{this.Notify.Noidung}}</div>
+    </div>
+</ng-template>
+
+
+
+<ng-template #HinhthucTeamplate>
+    <div class="p-2 flex flex-col space-y-3">
+        <div mat-dialog-title>
+            <div class="uppercase text-[#439c30] font-bold text-center">
+                Vui Lòng Chọn Phương Thức Thanh Toán
+            </div>
+        </div>
+        <div mat-dialog-content>
+            <div class="flex flex-col space-y-3">
+                <div class="cursor-pointer grid grid-cols-3 gap-4 lg:p-4">
+                    <div (click)="ChooseMethod('COD')"
+                        class="p-4 rounded-lg text-center    {{Donhang.Thanhtoan.Hinhthuc=='COD'?'text-white bg-[#A52167]':'bg-slate-100'}} hover:text-white hover:bg-[#A52167]">
+                        Tiền Mặt
+                    </div>
+                    <div (click)="ChooseMethod('BANK')"
+                        class="p-4 rounded-lg text-center  {{Donhang.Thanhtoan.Hinhthuc=='BANK'?'text-white bg-[#439c30]':'bg-slate-100'}} hover:text-white hover:bg-[#439c30]">
+                        Chuyển Khoản
+                    </div>
+                    <div (click)="ChooseMethod('MOMO')"
+                        class="p-4 rounded-lg text-center  {{Donhang.Thanhtoan.Hinhthuc=='MOMO'?'text-white bg-[#ED860A]':'bg-slate-100'}} hover:text-white hover:bg-[#ED860A]">
+                        MOMO</div>
+                </div>
+                <div>
+                    @if(Donhang.Thanhtoan.Hinhthuc=='BANK'){
+                    <div class="grid grid-cols-2 gap-2">
+                        <img loading="lazy" src="/assets/images/QR-Thanh toan-BANK.svg" class="w-40 mx-auto">
+                        <div class="flex flex-col max-w-xs space-y-2 text-center justify-center">
+                            <span>Nội dung CK :</span>
+                            <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{Donhang.MaDonHang}}</span>
+                            <span>"Vui lòng ghi đúng nội dung chuyển khoản để chúng tôi có thể cập nhật đơn hàng nhanh
+                                nhất"</span>
+                        </div>
+                    </div>
+                    }
+                    @else if(Donhang.Thanhtoan.Hinhthuc=='MOMO')
+                    {
+                    <div class="grid grid-cols-2 gap-2">
+                        <img loading="lazy" src="/assets/images/QR-Thanh toan-MOMO.svg" class="w-40 mx-auto">
+                        <div class="flex flex-col max-w-xs space-y-2 text-center justify-center">
+                            <span>Nội dung CK :</span>
+                            <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{Donhang.MaDonHang}}</span>
+                            <span>"Vui lòng ghi đúng nội dung chuyển khoản để chúng tôi có thể cập nhật đơn hàng nhanh
+                                nhất"</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+                <div class="cursor-pointer flex flex-row space-x-2 items-center justify-center">
+                    @if(Donhang.Thanhtoan.Hinhthuc&&Donhang.Thanhtoan.Hinhthuc!='')
+                    {
+                    <span
+                        class="px-4 py-2 rounded-lg border border-[#439c30] text-[#439c30] hover:bg-[#439c30] hover:text-white"
+                        mat-dialog-close="true">
+                        Thanh Toán
+                    </span>
+                    }
+
+                    <!-- <button disabled="{{(Donhang.Thanhtoan.Hinhthuc&&Donhang.Thanhtoan.Hinhthuc!='')?false:true}}"
+                        mat-flat-button color="primary" mat-dialog-close="true">
+                        Thanh Toán
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
