@@ -10,7 +10,7 @@
             <div class="col-span-5 flex flex-col space-y-2 py-2 cursor-pointer justify-center">
                 <div class="flex flex-row space-x-16 items-center">
                     <div class="hidden lg:flex flex-row space-x-3 text-white">
-                        @for(item of Menus; track item.id.id) {
+                        @for(item of Menus; track item) {
                         @if (item.children!=null&&item.children.length>0) {
                         <div class="group relative">
                             <a [href]="[item.Slug]"

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostBinding, HostListener, OnInit, TemplateRef, ViewChild, effect, inject, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID, TemplateRef, ViewChild, effect, inject, signal } from '@angular/core';
 import { AppService } from '../../app.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MainComponent } from '../main/main.component';
@@ -108,8 +108,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private dialog:MatDialog,
     private _snackBar:MatSnackBar,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this._AppService.isDarkTheme$.subscribe(isDarkTheme => {
+      if (isPlatformBrowser(this.platformId)) {
+        // Access 'document' safely in the browser environment
+        document.body.classList.toggle('dark', isDarkTheme);
+      }
       document.body.classList.toggle('dark', isDarkTheme);
     });
     this._GiohangService.getDonhang()
