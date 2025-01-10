@@ -28,6 +28,8 @@ export class DonhangEntity {
   TimePrint: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
   Diachis: string;
+  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
+  Banggia: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   Ghichu: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
