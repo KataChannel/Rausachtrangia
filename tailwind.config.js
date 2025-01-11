@@ -1,8 +1,8 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       order: {
@@ -28,14 +28,16 @@ module.exports = {
           secondary: '#333',
         },
       },
-      extend: {
-        width: {
+      width: {
           'screen-40': 'calc(100% - 160px)',      
-          'screen-60': 'calc(100% - 240px)',      
-        },
-        height: {
-          'screen-16': 'calc(100% - 4rem) !important'         
-        },
+          'screen-60': 'calc(100% - 240px)',   
+          'screen-14': 'calc(100vw - 3.5rem)',     
+      },
+      height: {
+          'screen-16': 'calc(100vh - 4rem)',              
+          'screen-14': 'calc(100vh - 3.5rem)', 
+          'screen-12': 'calc(100vh - 3rem)',                
+          'screen-28': 'calc(100vh - 7rem)',                
       },
     },
     screens: {
@@ -46,4 +48,5 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
+

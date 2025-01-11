@@ -2,7 +2,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { SanphamService } from '../../admin/main-admin/sanpham/sanpham.service';
 import { GiohangService } from '../../admin/main-admin/website/giohang/giohang.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-sanphamblock',
@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports:[
     CommonModule,
     MatTooltipModule,
+    //NgOptimizedImage
   ],
   templateUrl: './sanphamblock.component.html',
   styleUrls: ['./sanphamblock.component.css']
@@ -23,7 +24,7 @@ export class SanphamblockComponent implements OnInit {
     private _snackBar:MatSnackBar
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {   
     // this.Detail.Title = this.Detail.Title+"\n aa"
   }
   AddtoCart(data:any)

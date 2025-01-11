@@ -43,20 +43,20 @@ export class AuthGuard implements CanActivate {
     return this._check('/');
   }
   private _check(redirectURL: string) {
-    const check = this._authService.checkDangnhap()
-    if (!check) {
-      this._router.navigate(['/dangnhap'], { queryParams: { redirectURL } });
-      return check;
-    }
-    return check;
-    // return this._authService.checkDangnhap().pipe(
-    //   switchMap((authenticated) => {
-    //     if (!authenticated) {
-    //       this._router.navigate(['/dangnhap'], { queryParams: { redirectURL } });
-    //       return of(false);
-    //     }
-    //     return of(true);
-    //   })
-    // );
+    // const check = this._authService.checkDangnhap()
+    // if (!check) {
+    //   this._router.navigate(['/dangnhap'], { queryParams: { redirectURL } });
+    //   return check;
+    // }
+    // return check;
+    return this._authService.checkDangnhap().pipe(
+      switchMap((authenticated) => {
+        if (!authenticated) {
+          this._router.navigate(['/dangnhap'], { queryParams: { redirectURL } });
+          return of(false);
+        }
+        return of(true);
+      })
+    );
   }
 }

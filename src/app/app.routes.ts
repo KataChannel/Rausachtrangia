@@ -1,41 +1,35 @@
 import { Route } from '@angular/router';
-import { MainComponent } from './site/main/main.component';
-import { MainAdminComponent } from './admin/main-admin/main-admin.component';
-import { DanhmucComponent } from './admin/main-admin/danhmuc/danhmuc.component';
-import { DanhmucChitietComponent } from './admin/main-admin/danhmuc/danhmuc-chitiet/danhmuc-chitiet.component';
-import { DashboardComponent } from './admin/main-admin/dashboard/dashboard.component';
-import { DonhangAdminComponent } from './admin/main-admin/donhang-admin/donhang-admin.component';
-import { DonhangAdminChitietComponent } from './admin/main-admin/donhang-admin/donhang-admin-chitiet/donhang-admin-chitiet.component';
-import { AuthGuard } from './admin/users/auth/guards/auth.guard';
-import { DangnhapComponent } from './admin/users/dangnhap/dangnhap.component';
-import { DangkyComponent } from './admin/users/dangky/dangky.component';
-import { GuestGuard } from './admin/users/auth/guards/guest.guard';
-import { ProfileComponent } from './admin/users/profile/profile.component';
-import { AdminuserComponent } from './admin/users/adminuser/adminuser.component';
-import { AdminuserDetailComponent } from './admin/users/adminuser/adminuser-detail/adminuser-detail.component';
+import { AdminChuongtrinhkhuyenmaiComponent } from './admin/main-admin/admin-chuongtrinhkhuyenmai/admin-chuongtrinhkhuyenmai.component';
+import { AdminKhachhangComponent } from './admin/main-admin/admin-khachhang/admin-khachhang.component';
 import { AdminLienheChitietComponent } from './admin/main-admin/admin-lienhe/admin-lienhe-chitiet/admin-lienhe-chitiet.component';
 import { AdminLienheComponent } from './admin/main-admin/admin-lienhe/admin-lienhe.component';
-import { AdminKhachhangComponent } from './admin/main-admin/admin-khachhang/admin-khachhang.component';
-import { AdminChuongtrinhkhuyenmaiComponent } from './admin/main-admin/admin-chuongtrinhkhuyenmai/admin-chuongtrinhkhuyenmai.component';
-import { AdminTonkhoComponent } from './admin/main-admin/admin-xnt/admin-tonkho/admin-tonkho.component';
 import { AdminTonkhoChitietComponent } from './admin/main-admin/admin-xnt/admin-tonkho/admin-tonkho-chitiet/admin-tonkho-chitiet.component';
-import { MenuAdminComponent } from './admin/menu/menu-admin/menu-admin.component';
-import { MenuAdminChitietComponent } from './admin/menu/menu-admin/menu-admin-chitiet/menu-admin-chitiet.component';
-import { DemoadminComponent } from './demo/demoadmin/demoadmin.component';
-import { DemoadmindetailComponent } from './demo/demoadmin/demoadmindetail/demoadmindetail.component';
+import { AdminTonkhoComponent } from './admin/main-admin/admin-xnt/admin-tonkho/admin-tonkho.component';
+import { DanhmucChitietComponent } from './admin/main-admin/danhmuc/danhmuc-chitiet/danhmuc-chitiet.component';
+import { DanhmucComponent } from './admin/main-admin/danhmuc/danhmuc.component';
+import { DashboardComponent } from './admin/main-admin/dashboard/dashboard.component';
+import { DonhangAdminChitietComponent } from './admin/main-admin/donhang-admin/donhang-admin-chitiet/donhang-admin-chitiet.component';
+import { DonhangAdminComponent } from './admin/main-admin/donhang-admin/donhang-admin.component';
+import { AdminuserDetailComponent } from './admin/users/adminuser/adminuser-detail/adminuser-detail.component';
+import { AdminuserComponent } from './admin/users/adminuser/adminuser.component';
+import { AuthGuard } from './admin/users/auth/guards/auth.guard';
+import { GuestGuard } from './admin/users/auth/guards/guest.guard';
+import { DangkyComponent } from './admin/users/dangky/dangky.component';
+import { DangnhapComponent } from './admin/users/dangnhap/dangnhap.component';
 import { CauhinhadminComponent } from './cauhinh/cauhinhadmin/cauhinhadmin.component';
 import { CauhinhadmindetailComponent } from './cauhinh/cauhinhadmin/cauhinhadmindetail/cauhinhadmindetail.component';
-import { UsergroupadminComponent } from './usergroup/usergroupadmin/usergroupadmin.component';
-import { UsergroupChitietComponent } from './usergroup/usergroupadmin/usergroupadmindetail/usergroupadmindetail.component';
-import { SlideadminComponent } from './slide/slideadmin/slideadmin.component';
-import { SlideadminChitietComponent } from './slide/slideadmin/slideadmindetail/slideadmindetail.component';
-import { BaivietAdminComponent } from './baiviet/baivietadmin/baivietadmin.component';
+import { DemoadminComponent } from './demo/demoadmin/demoadmin.component';
+import { DemoadmindetailComponent } from './demo/demoadmin/demoadmindetail/demoadmindetail.component';
+import { moduleadminComponent } from './module/moduleadmin/moduleadmin.component';
+import { PageadminComponent } from './page/pageadmin/pageadmin.component';
 import { SanphamAdminComponent } from './sanpham/sanphamadmin/sanphamadmin.component';
 import { SanphamAdminDetailComponent } from './sanpham/sanphamadmin/sanphamadmindetail/sanphamadmindetail.component';
-import { BaivietadminChitietComponent } from './baiviet/baivietadmin/baivietadminchitiet/baivietadminchitiet.component';
-import { PageadminComponent } from './page/pageadmin/pageadmin.component';
-import { moduleadminComponent } from './module/moduleadmin/moduleadmin.component';
-
+import { MainComponent } from './site/main/main.component';
+import { SlideadminComponent } from './slide/slideadmin/slideadmin.component';
+import { SlideadminChitietComponent } from './slide/slideadmin/slideadmindetail/slideadmindetail.component';
+import { UsergroupadminComponent } from './usergroup/usergroupadmin/usergroupadmin.component';
+import { UsergroupChitietComponent } from './usergroup/usergroupadmin/usergroupadmindetail/usergroupadmindetail.component';
+import { ProfileComponent } from './admin/users/profile/profile.component';
 export const appRoutes: Route[] = [
     // { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
     { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
@@ -100,7 +94,7 @@ export const appRoutes: Route[] = [
             {
                 path: 'danh-muc/:slug',
                 title: 'Danh Mục',
-                loadComponent: () => import('./site/sanpham/list-sanpham/list-sanpham.component').then(comp => comp.ListSanphamComponent)
+                loadComponent: () => import('./site/sanpham/list-sanpham/list-sanpham.component').then(comp => comp.ListSanphamComponent),
             },
             {
                 path: 'danh-muc',
@@ -143,23 +137,49 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'profile',
+                redirectTo:'profile/general',
+                pathMatch:'full'
+            },
+            {
+                path: 'profile',
                 canActivate: [AuthGuard],
-                component: ProfileComponent,
+                loadComponent: () => import('./admin/users/profile/profile.component').then(c => c.ProfileComponent),
+                children:[
+                    {
+                        path:'general',
+                        loadComponent: () => import('./admin/users/profile/general/general.component').then(c => c.GeneralComponent),
+                    },
+                    {
+                        path:'changepassword',
+                        loadComponent: () => import('./admin/users/profile/changepassword/changepassword.component').then(c => c.ChangepasswordComponent),
+                    },
+                    {
+                        path:'social',
+                        loadComponent: () => import('./admin/users/profile/social/social.component').then(c => c.SocialComponent),
+                    },
+                    {
+                        path:'myorder',
+                        loadComponent: () => import('./admin/users/profile/myorder/myorder.component').then(c => c.MyorderComponent),
+                    },
+
+                ]
+
             },
         ]
     },
     {
         path: 'admin',
         canActivate: [AuthGuard],
-        component: MainAdminComponent,
+        canActivateChild: [AuthGuard],
+        loadComponent: () => import('./admin/main-admin/main-admin.component').then(c => c.MainAdminComponent),
         children: [
             {
                 path: 'menu',
-                component: MenuAdminComponent,
+                loadComponent: () => import('./admin/menu/menu-admin/menu-admin.component').then(c => c.MenuAdminComponent),
                 children: [
                     {
                         path: ':id',
-                        component: MenuAdminChitietComponent,
+                        loadComponent: () => import('./admin/menu/menu-admin/menu-admin-chitiet/menu-admin-chitiet.component').then(c => c.MenuAdminChitietComponent),
                     },
                 ]
             },
@@ -228,11 +248,11 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'baiviet',
-                component: BaivietAdminComponent,
+                loadComponent: () => import('./baiviet/baivietadmin/baivietadmin.component').then(c => c.BaivietAdminComponent),
                 children: [
                     {
                         path: ':id',
-                        component: BaivietadminChitietComponent,
+                        loadComponent: () => import('./baiviet/baivietadmin/baivietadminchitiet/baivietadminchitiet.component').then(c => c.BaivietadminChitietComponent),
                     }
                 ]
             },
@@ -249,12 +269,6 @@ export const appRoutes: Route[] = [
             {
                 path: 'khuyenmai',
                 component: AdminChuongtrinhkhuyenmaiComponent,
-                // children:[
-                //     {
-                //         path: ':id',
-                //         component: AdminLienheChitietComponent,
-                //     }
-                // ]
             },
             {
                 path: 'user',

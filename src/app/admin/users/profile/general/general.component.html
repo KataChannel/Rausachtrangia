@@ -1,0 +1,47 @@
+<div class="grid lg:grid-cols-1 p-4 border rounded-lg gap-4">
+    <div class="text-xl font-medium text-default-900 mb-4">Thông Tin Cá Nhân</div>
+    <div>
+      <label class="block text-sm font-medium text-default-900 mb-2">Họ Tên</label>
+      <input [(ngModel)]="User.Hoten" [ngModelOptions]="{standalone: true}"
+        class="block w-full bg-transparent rounded-full py-2.5 px-4 border  focus:ring-transparent focus: dark:bg-default-50"
+        type="text" placeholder="Vui lòng nhập họ tên">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-default-900 mb-2" for="userName">Số Điện Thoại</label>
+      <input [(ngModel)]="User.SDT" [ngModelOptions]="{standalone: true}"
+        class="block w-full bg-transparent rounded-full py-2.5 px-4 border  focus:ring-transparent focus: dark:bg-default-50"
+        type="text" placeholder="Enter Your User Name">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-default-900 mb-2" for="emailAddress">Email</label>
+      <input [(ngModel)]="User.email" [ngModelOptions]="{standalone: true}"
+        class="block w-full bg-transparent rounded-full py-2.5 px-4 border  focus:ring-transparent focus: dark:bg-default-50"
+        type="email" placeholder="demoexample@mail.com">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-default-900 mb-2">Địa Chỉ</label>
+      <select id="country"
+        class="block w-full bg-transparent rounded-full py-2.5 px-4 border  focus:ring-transparent focus: dark:bg-default-50">
+        <option value="United States" selected="">United States</option>
+        <option value="Canada">Canada</option>
+        <option value="Australia">Australia</option>
+        <option value="Germany">Germany</option>
+        <option value="Bangladesh">Bangladesh</option>
+        <option value="China">China</option>
+        <option value="Argentina">Argentina</option>
+        <option value="Bharat">Bharat</option>
+        <option value="Afghanistan">Afghanistan</option>
+        <option value="France">France</option>
+        <option value="Brazil">Brazil</option>
+        <option value="Belgium">Belgium</option>
+        <option value="Colombia">Colombia</option>
+        <option value="Albania">Albania</option>
+      </select>
+    </div>
+    <div>
+      <button (click)="UpdateProfile()"
+        class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-center text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:border-primary-700 hover:bg-primary-500">
+        Lưu Thay Đổi</button>
+    </div>
+  </div>

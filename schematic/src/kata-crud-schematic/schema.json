@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "crud-schematic",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Crud Component",
+      "default": "home"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path Component",
+      "default": "path"
+    }
+  },
+  "required": ["name"]
+}

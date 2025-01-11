@@ -1,0 +1,105 @@
+@defer (when Lists?.items?.length>0) {
+    @if (Type=='DOC') {
+      <div class="swiper p-4 w-72 border rounded-xl bg-white" #swiperRef>
+        <div class="p-2 rounded-lg bg-[#57A345] text-white text-center font-bold text-lg">{{Title||Danhmuc.Title}}</div>
+        <div class="swiper-wrapper" class="h-[360px]">
+          @for (item of Lists?.items; track item) {
+          <div class="swiper-slide" class="flex flex-col space-y-2 justify-between">
+            <a href="san-pham/{{item.Slug}}" class="p-2 cursor-pointer h-full grid grid-cols-3 gap-2 items-center">
+              <div class="grid grid-cols-1 bg-white">
+                @if(item?.Image?.Main!=null)
+                {
+                <img loading="lazy" src="assets/images/sanpham/{{item.Image.Main}}" class="h-20">
+                }
+                @else if(item?.Image?.Hinhchinh?.src!=null){
+                <img loading="lazy" src="{{item.Image.Hinhchinh.src}}" class="h-20">
+                }
+                @else {
+                <img loading="lazy" src="assets/images/noimage.png" class="p-3 h-20 mx-auto">
+                }
+              </div>
+              <div class="flex flex-col col-span-2 justify-center">
+                <span>{{item.Title}}</span>
+                <div class="flex flex-row">
+                  <span class="font-semibold text-md inline-flex text-[#e22026]">
+                    {{item?.Giagoc[0]?.gia| number:'1.0-0'}}đ </span>
+                    <span> /{{item?.Giagoc[0]?.khoiluong}}{{item?.Giagoc[0]?.dvt}}</span>
+                </div>
+              </div> 
+            </a>
+          </div>
+          }
+        </div>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </div>
+    }
+    @else {
+        <section class="grid grid-cols-1 relative border rounded-lg bg-white order-[{{Ordering}}]">
+          <div class="mt-4 flex flex-row justify-between items-center border-b">
+            <h2 class="!text-xl font-bold !mb-0 px-4 py-2 bg-[#57A345] text-white rounded-tr-3xl">
+              {{Title||Danhmuc.Title}}
+            </h2>
+            <div class="flex flex-row px-4">
+              <div class="button-prev">
+                <button mat-icon-button><mat-icon>chevron_left</mat-icon></button>
+              </div>
+              <div class="button-next"><button mat-icon-button><mat-icon>chevron_right</mat-icon></button></div>
+            </div>
+          </div>
+          <div class="flex flex-col space-y-3 w-full col-span-4">
+            <div>
+            <div class="swiper p-4" #swiperRef>
+              <div class="swiper-wrapper">
+                @for (items of FilterLists; track items) {
+                <div class="swiper-slide flex flex-col space-y-2 justify-between">
+                  @for (item of items; track item) {
+                    <app-sanphamblock [Detail]="item"></app-sanphamblock>
+                  }
+                </div>
+                }
+              </div>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </div>
+          </div>
+          </div>
+    
+          <!-- <div class="lg:hidden flex flex-col space-y-3 w-full col-span-4">
+            <div>
+              <div class="swiper-wrapper">
+                @for (items of FilterLists; track items) {
+                <div class="swiper-slide" class="flex flex-col space-y-2 justify-between">
+                  @for (item of items; track item) {
+                    <app-sanphamblock [Detail]="item"></app-sanphamblock>
+                  }
+                </div>
+                }
+              </div>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </div>
+          </div> -->
+          <div class="flex text-center py-3 justify-center ">
+            <!-- <button mat-stroked-button>
+              <a href="danh-muc/cac-loai-nam" class="text-primary font-bold">Xem Tất Cả ></a>
+            </button> -->
+            @if (Soluong!=999) {
+              <a href="danh-muc{{Danhmuc.Slug?'/'+Danhmuc.Slug:''}}"
+              class="bottom-2.5 bg-white font-bold text-[#FAA61A] border-2 border-[#FAA61A] hover:bg-[#FAA61A] hover:text-white focus:ring-4 focus:outline-none rounded-lg text-sm px-4 py-2">
+              Xem Tất Cả >
+            </a>
+            }
+          </div>
+        </section>
+    
+    } 
+
+  } @placeholder () {
+    <div class="h-[330px] w-full rounded-lg bg-white border">
+      <p>Placeholder</p>
+    </div>
+  } @loading (minimum 3000) {
+    <div class="h-[330px] w-full rounded-lg bg-white border">
+      <p>Loading</p>  
+    </div>
+  } @error {
+    <p>An loading error occurred</p>
+  }

@@ -54,18 +54,18 @@ export class AuthService {
         return console.error(error);
     }
   }
-  checkDangnhap() {
+  checkDangnhap(): Observable<boolean> {
     if (this._authenticated) {
-      return true;
+      return of(true);
     }
     if (!this.accessToken || this.accessToken === 'undefined') {
-      this._LocalStorageService.removeItem('token')
-      return false;
+      this._LocalStorageService.removeItem('token');
+      return of(false);
     }
     if (AuthUtils.isTokenExpired(this.accessToken)) {
-      return false;
+      return of(false);
     }
-    return true;
+    return of(true);
     // return this.signInUsingToken();
   }
   Dangxuat() {

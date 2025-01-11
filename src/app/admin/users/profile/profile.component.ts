@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { BreadcrumbadminComponent } from '../../../breadcrumb/breadcrumbadmin/breadcrumbadmin.component';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +15,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports:[
     CommonModule,
     FormsModule,
-    AvatarComponent
+    //AvatarComponent,
+    RouterOutlet,
+    MatIconModule,
+    RouterLink,
+    RouterLinkActive,
+    BreadcrumbadminComponent
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
@@ -22,6 +30,16 @@ export class ProfileComponent implements OnInit {
   _LocalStorageService: LocalStorageService = inject(LocalStorageService);
   User: any = {}
   Token:any=this._LocalStorageService.getItem('token') ?? null;
+  ListProfile:any[]=[
+    {id:1,Title:'Thông Tin Chung', Slug:'general',Ordering:1},
+    {id:2,Title:'Đổi Mật Khẩu', Slug:'changepassword',Ordering:2},
+    {id:3,Title:'Mạng Xã Hội', Slug:'social',Ordering:3},
+    {id:4,Title:'Đơn hàng Của Tôi', Slug:'myorder',Ordering:3},
+  ]
+  breadcrumb = [
+    { title: 'Trang Chủ', Slug: '/' },
+    { title: 'Profile', Slug: 'profile'}
+  ]
   constructor(private _snackBar: MatSnackBar) {
     if(this.Token)
     {
@@ -36,6 +54,15 @@ export class ProfileComponent implements OnInit {
     }
   }
   ngOnInit() {
+  }
+  CheckNoti()
+  {
+      this._snackBar.open('Cập Nhật Thành Công', '', {
+        duration: 1000,
+        horizontalPosition: "end",
+        verticalPosition: "top",
+        panelClass: ['snackbar-success'],
+      });
   }
   GetUpload(e:any)
   {

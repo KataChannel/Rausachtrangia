@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "first-schematic",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "First Component",
+      "default": "home"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path Component",
+      "default": "path"
+    }
+  },
+  "required": ["name"]
+}

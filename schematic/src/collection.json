@@ -1,0 +1,25 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "kata-schematic": {
+      "description": "A blank schematic.",
+      "factory": "./kata-schematic/index#kataSchematic",
+      "schema": "./kata-schematic/schema.json"
+    },
+    "kata-crud-schematic": {
+      "description": "A blank schematic.",
+      "factory": "./kata-crud-schematic/index#kataCrudSchematic",
+      "schema": "./kata-crud-schematic/schema.json"
+    },
+    "kata-dashboard-schematic": {
+      "description": "A blank schematic.",
+      "factory": "./kata-dashboard-schematic/index#kataDashboardSchematic",
+      "schema": "./kata-dashboard-schematic/schema.json"
+    },
+    "kata-fullcom-schematic": {
+      "description": "A blank schematic.",
+      "factory": "./kata-fullcom-schematic/index#kataFullcomSchematic",
+      "schema": "./kata-fullcom-schematic/schema.json"
+    }
+  }
+}

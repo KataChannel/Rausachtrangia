@@ -115,7 +115,7 @@ export class HeaderComponent implements OnInit {
         // Access 'document' safely in the browser environment
         document.body.classList.toggle('dark', isDarkTheme);
       }
-      document.body.classList.toggle('dark', isDarkTheme);
+      // document.body.classList.toggle('dark', isDarkTheme);
     });
     this._GiohangService.getDonhang()
     this._GiohangService.donhang$.subscribe((data: any) => {

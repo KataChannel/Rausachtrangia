@@ -41,20 +41,43 @@ body {
 // mat-snack-bar-container{
 //   margin:15% !important
 // }
-.mdc-snackbar__surface{
-  background-color:white !important;
+
+// .mdc-snackbar__surface{
+//   background-color:white !important;
+// }
+// .success .mdc-snackbar__label{
+//   color: #5cb85c !important;
+// }
+// .danger .mdc-snackbar__label{
+//   color: #D9534F !important;
+// }
+// .warning .mdc-snackbar__label{
+//   color: #F0AD4E !important;
+// }
+// .info .mdc-snackbar__surface{
+//   color: 5BC0DE !important;
+// }
+
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  // color: var(--mdc-snackbar-supporting-text-color, var(--mat-sys-inverse-on-surface));
+  // border-radius: var(--mdc-snackbar-container-shape, var(--mat-sys-corner-extra-small));
+  background-color: transparent !important
 }
-.success .mdc-snackbar__label{
-  color: #5cb85c !important;
+
+/* Custom styles for MatSnackBar */
+.snackbar-success {
+  background-color: #4caf50; /* Green */
+  color: white;
 }
-.danger .mdc-snackbar__label{
-  color: #D9534F !important;
+
+.snackbar-warning {
+  background-color: #ff9800; /* Orange */
+  color: white;
 }
-.warning .mdc-snackbar__label{
-  color: #F0AD4E !important;
-}
-.info .mdc-snackbar__surface{
-  color: 5BC0DE !important;
+
+.snackbar-error {
+  background-color: #f44336; /* Red */
+  color: white;
 }
 // .danger .mdc-snackbar__surface{
 //   color: white !important;

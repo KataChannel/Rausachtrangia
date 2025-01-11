@@ -1,4 +1,13 @@
-import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { SanphamService } from '../../sanpham/sanpham.service';
 import { DecimalPipe, NgOptimizedImage } from '@angular/common';
 import { GiohangService } from '../giohang/giohang.service';
@@ -14,45 +23,47 @@ Swiper.use([Navigation, Pagination, Autoplay]); // Khai báo các module đã im
 
 @Component({
   selector: 'app-slide-sanpham',
-  standalone:true,
-  imports:[
+  standalone: true,
+  imports: [
     DecimalPipe,
     MatButtonModule,
     SanphamblockComponent,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+  //  NgOptimizedImage,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './slide-sanpham.component.html',
-  styleUrls: ['./slide-sanpham.component.css']
+  styleUrls: ['./slide-sanpham.component.css'],
 })
-export class SlideSanphamComponent implements OnInit,AfterViewInit {
-  @Input() Title:any='';
-  @Input() Sohang=1;
-  @Input() Socot=4;
-  @Input() Soluong=8;
-  @Input() Filter='';
-  @Input() idDM=0;
-  @Input() Danhmuc:any={};
-  @Input() Type='NGANG';
-  @Input() Ordering=0;
-  _SanphamService:SanphamService = inject(SanphamService)
+export class SlideSanphamComponent implements OnInit, AfterViewInit {
+  @Input() Title: any = '';
+  @Input() Sohang = 1;
+  @Input() Socot = 4;
+  @Input() Soluong = 8;
+  @Input() Filter = '';
+  @Input() idDM = 0;
+  @Input() Danhmuc: any = {};
+  @Input() Type = 'NGANG';
+  @Input() Ordering = 0;
+  _SanphamService: SanphamService = inject(SanphamService);
   _GiohangService: GiohangService = inject(GiohangService);
-  Lists: any={}
-  FilterLists: any[] = []
-  FilterListsDesk: any[] = []
+  Lists: any = {};
+  FilterLists: any[] = [];
+  FilterListsDesk: any[] = [];
   SearchParams: any = {
-    pageSize:8,
-    pageNumber:0,
-    Status:1
+    pageSize: 8,
+    pageNumber: 0,
+    Status: 1,
   };
+  isLoading: boolean = false;
   @ViewChild('swiperRef', { static: false }) swiperRef!: ElementRef;
   swiper?: Swiper;
-  @Input() Config:any
+  @Input() Config: any;
   constructor(
     private _snackBar: MatSnackBar,
     private breakpointObserver: BreakpointObserver
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.breakpointObserver.observe([Breakpoints.XSmall])
@@ -105,44 +116,40 @@ export class SlideSanphamComponent implements OnInit,AfterViewInit {
       }
     });
   }
-  SanphamColumn(data:any,n:any)
-  {
+  SanphamColumn(data: any, n: any) {
     const chunkSize = n; // Number of elements per subarray
     const newArray = [];
     for (let i = 0; i < data.length; i += chunkSize) {
       newArray.push(data.slice(i, i + chunkSize));
     }
-    return newArray
+    return newArray;
   }
-  LitmitSanpham(items:any,soluong:any)
-  {
-    return items?.slice(0,soluong)   
+  LitmitSanpham(items: any, soluong: any) {
+    return items?.slice(0, soluong);
   }
-  AddtoCart(data:any)
-  { 
-    let item:any={}
-    item = data
-    item.Giachon = data.Giagoc[0]
-    item.Giachon.SLTT = data.Giagoc[0].khoiluong
-    item.Soluong=1    
-    this._GiohangService.addToCart(item).then(()=>
-    {
-      this._snackBar.open('Thêm Vào Giỏ Hàng Thành Công','',{
-        horizontalPosition: "end",
-        verticalPosition: "top",
-        panelClass:'success',
+  AddtoCart(data: any) {
+    let item: any = {};
+    item = data;
+    item.Giachon = data.Giagoc[0];
+    item.Giachon.SLTT = data.Giagoc[0].khoiluong;
+    item.Soluong = 1;
+    this._GiohangService.addToCart(item).then(() => {
+      this._snackBar.open('Thêm Vào Giỏ Hàng Thành Công', '', {
+        horizontalPosition: 'end',
+        verticalPosition: 'top',
+        panelClass: 'success',
         duration: 1000,
       });
-    })
+    });
   }
   ngAfterViewInit() {
-    setTimeout(() => {      
-      if(!this.Config)
-        {
+    if (this.isLoading == false) {
+      setTimeout(() => {
+        if (!this.Config) {
           this.Config = {
             // Các tùy chọn của Swiper
-            slidesPerView: 5,
-            spaceBetween: 30,
+            slidesPerView: 2,
+            spaceBetween: 20,
             loop: true,
             // pagination: {
             //   el: '.swiper-pagination',
@@ -152,29 +159,32 @@ export class SlideSanphamComponent implements OnInit,AfterViewInit {
               nextEl: '.button-next',
               prevEl: '.button-prev',
             },
+            breakpoints: {
+              480: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1280: {
+                slidesPerView: 5,
+              },
+            },
             autoplay: false,
             // autoplay: {
             //   delay: 2500,
             //   disableOnInteraction: false,
             // },
-          }
+          };
+        } else {
+          this.Config = this.Config;
         }
-        else{
-          this.Config = this.Config
-        }
-    
-
-        console.log(this.Config);
         if (this.swiperRef) {
           this.swiper = new Swiper(this.swiperRef.nativeElement, this.Config);
-          console.log( this.swiper);
         } else {
           console.error('Element reference is not available.');
         }
-
-
-    }, 1000);
-
-
+      }, 1000);
+    }
   }
 }

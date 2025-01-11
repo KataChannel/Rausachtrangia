@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "dashboard-schematic",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "dashboard Component",
+      "default": "dashboard"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path dashboard Component",
+      "default": "path"
+    }
+  },
+  "required": ["name"]
+}
