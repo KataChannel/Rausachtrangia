@@ -11,6 +11,7 @@ export class TimelineDonhangComponent implements OnInit {
 
   constructor() { }
   @Input() Status:any =0
+  @Input() Type:any ='Donhang'
   ListTrangThaiDonhang: any[] = [
     {id:0,Title:"Đơn Mới",    Class:"text-white bg-blue-300"},
     {id:1,Title:"Xác Nhận",   Class:"text-white bg-cyan-500"},

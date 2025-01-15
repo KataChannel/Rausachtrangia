@@ -13,7 +13,8 @@ export class GiohangService {
     private _addonhangs: BehaviorSubject<any[] | []> = new BehaviorSubject<any | null>(null);
     private _addonhang: BehaviorSubject<any | null> = new BehaviorSubject<any | null>(null);
     // Giohangs: any  = this._LocalStorageService.getItem('Giohang')||[]
-    Donhang: any = this._LocalStorageService.getItem('Donhang') || { Giohangs: { Sanpham: [] }, Khachhang: {}, Thanhtoan: {}, Vanchuyen: { Phivanchuyen: 0 } }
+    // Donhang: any = this._LocalStorageService.getItem('Donhang') || { Giohangs: { Sanpham: [] }, Khachhang: {}, Thanhtoan: {}, Vanchuyen: { Phivanchuyen: 0 } }
+    Donhang:any
     get addonhangs$(): Observable<any[] | null> {
         return this._addonhangs.asObservable();
     }
@@ -135,7 +136,7 @@ export class GiohangService {
             }
             const data = await response.json();
             this._donhang.next(data)
-            this._LocalStorageService.setItem('Donhang', data)
+            //this._LocalStorageService.setItem('Donhang', data)
         } catch (error) {
             return console.error(error);
         }
@@ -266,7 +267,7 @@ export class GiohangService {
             this.Donhang.Status = 0
             this.Donhang.Giohangs.Sanpham = [item]
             await this.getDonhang()
-            this._LocalStorageService.setItem('Donhang', this.Donhang)
+           // this._LocalStorageService.setItem('Donhang', this.Donhang)
             this._donhang.next(this.Donhang)
         }
         else {
@@ -279,7 +280,7 @@ export class GiohangService {
                 this.Donhang.Giohangs.Sanpham.push(item);
             }
             await this.getDonhang()
-            this._LocalStorageService.setItem('Donhang', this.Donhang)
+           // this._LocalStorageService.setItem('Donhang', this.Donhang)
             this._donhang.next(this.Donhang)
         }
     }
@@ -313,12 +314,12 @@ export class GiohangService {
         if (existingItemIndex !== -1) {
             this.Donhang.Giohangs.Sanpham.splice(existingItemIndex, 1);
         }
-        this._LocalStorageService.setItem('Donhang', this.Donhang)
+       // this._LocalStorageService.setItem('Donhang', this.Donhang)
         this._donhang.next(this.Donhang)
     }
     async clearCart(): Promise<void> {
         this._donhang.next({ Giohangs: { Sanpham: [] }, Khachhang: {}, Thanhtoan: {}, Vanchuyen: { Phivanchuyen: 0 } })
-        this._LocalStorageService.removeItem('Donhang')
+     //   this._LocalStorageService.removeItem('Donhang')
     }
     async SearchDonhang(SearchParams: any) {
         try {
@@ -420,7 +421,7 @@ export class GiohangService {
         }
         this._donhang.next(item);
         this._addonhang.next(item);
-        this._LocalStorageService.setItem('Donhang', this.Donhang);
+       // this._LocalStorageService.setItem('Donhang', this.Donhang);
         // console.log(item);
 
     }
@@ -452,10 +453,10 @@ export class GiohangService {
             this._donhang.next(item);
             this._addonhang.next(item);
             // console.log(item);
-            this._LocalStorageService.setItem('Donhang', this.Donhang)
+           // this._LocalStorageService.setItem('Donhang', this.Donhang)
         }
         else {
-            this._LocalStorageService.removeItem('Donhang')
+           // this._LocalStorageService.removeItem('Donhang')
         }
 
     }

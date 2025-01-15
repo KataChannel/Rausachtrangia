@@ -5,8 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ListdonhangComponent } from '../listdonhang.component';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Forms, ListDonhang } from '../listdonhang';
+import { DonhangsService } from '../listdonhang.service';
+import { TimelineDonhangComponent } from '../../../../shared/timeline-donhang/timeline-donhang.component';
+import { CommonModule } from '@angular/common';
+import { KhuyenmaisiteComponent } from '../../../../khuyenmai/khuyenmaisite/khuyenmaisite.component';
 
 @Component({
   selector: 'app-detaildonhang',
@@ -16,32 +20,37 @@ import { Forms, ListDonhang } from '../listdonhang';
     FormsModule,
     MatIconModule,
     MatButtonModule,
+   // TimelineDonhangComponent,
+    CommonModule,
+  //  KhuyenmaisiteComponent
   ],
   templateUrl: './detaildonhang.component.html',
   styleUrl: './detaildonhang.component.scss'
 })
 export class DetailDonhangComponent {
   _ListdonhangComponent:ListdonhangComponent = inject(ListdonhangComponent)
-  _router:ActivatedRoute = inject(ActivatedRoute)
+  _route:ActivatedRoute = inject(ActivatedRoute)
+  _router: Router = inject(Router)
+  _DonhangsService:DonhangsService= inject(DonhangsService)
   constructor(){}
   Detail:any={Data:{},Forms:[]}
   isEdit:boolean=false
   isDelete:boolean=false
   idDonhang:any
-  ngOnInit(): void {
-    this._router.paramMap.subscribe(async (data: any) => {
+  async ngOnInit(): Promise<void> {
+    this._route.paramMap.subscribe(async (data: any) => {
       this.idDonhang = data.get('id')
       this.Detail.Forms = Forms;
       this.isEdit = this.idDonhang === '0';   
       if (this.idDonhang) {
-        this._ListdonhangComponent.drawer.open();     
-        this.Detail.Data = ListDonhang.find((v: any) => v.id === this.idDonhang) || {};
+        await this._DonhangsService.getDonhangByid(this.idDonhang)
+        this._ListdonhangComponent.drawer.open();    
+        this._ListdonhangComponent.Detail = this.Detail.Data = this._DonhangsService.Donhang() || {};
+        console.log(this._ListdonhangComponent.Detail);
       } else {
         this.Detail.Data = {};
       }
-    });
-    
-    
+    });    
   }
   SaveData()
   {
@@ -55,5 +64,12 @@ export class DetailDonhangComponent {
     }
     this.isEdit=false
     
+  }
+  goBack()
+  {
+
+    this._ListdonhangComponent.Detail = {}
+    this._router.navigate(['admin/donhang'])
+    this._ListdonhangComponent.drawer.close()
   }
 }

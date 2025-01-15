@@ -1,0 +1,39 @@
+<mat-stepper labelPosition="bottom" #stepper>
+    <!-- Step 1 -->
+    <mat-step>
+      <ng-template matStepLabel>Fill out your name</ng-template>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Last name, First name" [(ngModel)]="name" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext [disabled]="!name">Next</button>
+      </div>
+    </mat-step>
+  
+    <!-- Step 2 -->
+    <mat-step optional>
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Ex. 1 Main St, New York, NY" [(ngModel)]="address" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="!address">Next</button>
+      </div>
+    </mat-step>
+  
+    <!-- Step 3 -->
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <p><strong>Name:</strong> {{ name }}</p>
+      <p><strong>Address:</strong> {{ address }}</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="resetStepper(stepper)">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  

@@ -1,17 +1,22 @@
-import {AfterViewInit, Component, inject, viewChild, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, signal, viewChild, ViewChild,ChangeDetectionStrategy} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { ListDonhang } from './listdonhang';
 import { MatMenuModule } from '@angular/material/menu';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { DetailDonhangComponent } from './detaildonhang/detaildonhang.component';
+import { DonhangsService } from './listdonhang.service';
+import moment from 'moment';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { ListTrangThaiDonhang } from '../../../shared/shared.utils';
 @Component({
   selector: 'app-listdonhang',
   templateUrl: './listdonhang.component.html',
@@ -27,37 +32,75 @@ import { DetailDonhangComponent } from './detaildonhang/detaildonhang.component'
     RouterOutlet,
     MatIconModule,
     MatButtonModule,
+    MatSelectModule,
+    FormsModule,
+    MatDatepickerModule
   ],
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListdonhangComponent implements AfterViewInit {
   Detail:any={}
   dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = [
     'STT',
-    'email', 
+    'MaDonHang', 
     'Hoten', 
     'SDT',
+    'Diachi',
+    'Thanhtoan',
+    'Ghichu',
     'CreateAt',
-    'field6',
+    'Status',
   ];
   ColumnName:any={
     'STT':'STT',
+    'MaDonHang':'Mã Đơn Hàng', 
     'Hoten':'Họ Tên', 
-    'email':'Email', 
     'SDT':'SDT',
+    'Diachi':'Địa Chỉ',
+    'Thanhtoan':'Hình Thức TT',
+    'Ghichu':'Ghi Chú',
+    'Status':'Trạng Thái',
     'CreateAt':'Ngày Tạo',
-    'field6':'Hành Động',
   }
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  ListDate:any[]=[
+    {id:1,Title:'1 Tuần',value:'week'},
+    {id:2,Title:'1 Tháng',value:'month'},
+    {id:3,Title:'1 Năm',value:'year'},
+  ]
+  @ViewChild(MatPaginator,{ static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
+  _DonhangsService:DonhangsService= inject(DonhangsService)
+  ListDonhang = signal<any[]>([]);
+  SearchParams: any = {
+    Batdau:moment().startOf('week').toDate(),
+    Ketthuc: moment().endOf('week').toDate(),
+    pageSize:9999,
+    pageNumber:0
+  };
+  Chonthoigian:any='week'
   constructor(
     private _breakpointObserver: BreakpointObserver,
     private _router: Router,
   ) {}
 
-  ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(ListDonhang); 
+  async ngOnInit(): Promise<void> {
+    await this._DonhangsService.SearchDonhang(this.SearchParams)
+    this.ListDonhang = this._DonhangsService.ListDonhang
+    this.dataSource = new MatTableDataSource(this.ListDonhang().map((v:any)=>({
+      id:v?.id,
+      MaDonHang:v?.MaDonHang,
+      Thanhtoan:v?.Thanhtoan?.Hinhthuc,
+      Diachi:v?.Khachhang?.Diachi,
+      Hoten:v?.Khachhang?.Hoten,
+      SDT:v?.Khachhang?.SDT,
+      Ghichu:v.Ghichu,
+      CreateAt:moment(v.CreateAt).format('HH:ss:mm DD/MM/YYYY'),
+      Status:`<span class="${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Class} p-2 rounded-lg">${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Title}</span>`,
+    }))); 
+    console.log(this.dataSource.data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.Detail.id?this.drawer.open():this.drawer.close()
@@ -66,7 +109,7 @@ export class ListdonhangComponent implements AfterViewInit {
        this.drawer.mode = 'over';
        this.paginator.hidePageSize =true
       } else {
-        this.drawer.mode = 'side';
+        this.drawer.mode = 'over';
       }
     });
     
@@ -81,7 +124,29 @@ export class ListdonhangComponent implements AfterViewInit {
     this.paginator._intl.lastPageLabel = 'Trang Cuối';
     this.paginator.pageSize = 30
   }
-
+  onSelectionChange(event: MatSelectChange) {
+    switch (event.value) {
+      case 'month':
+        this.SearchParams.Batdau = moment().startOf('month').toDate()
+        this.SearchParams.Ketthuc = moment().endOf('month').toDate()    
+        this.ngOnInit()
+        break;
+      case 'year':
+        this.SearchParams.Batdau = moment().startOf('year').toDate()
+        this.SearchParams.Ketthuc = moment().endOf('year').toDate()   
+        this.ngOnInit()    
+        break;
+      default:
+        this.SearchParams.Batdau = moment().startOf('week').toDate()
+        this.SearchParams.Ketthuc = moment().endOf('week').toDate() 
+        this.ngOnInit()      
+        break;
+    }
+  }
+  ApplyDate()
+  {
+    this.ngOnInit()    
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -93,11 +158,12 @@ export class ListdonhangComponent implements AfterViewInit {
   Create()
   {
     this.drawer.open();
-    this._router.navigate(['admin/donhangs', 0])
+    this._router.navigate(['admin/donhang', 0])
   }
   goToDetail(item:any)
   {
     this.drawer.open();
     this.Detail=item
-    this._router.navigate(['admin/donhangs', item.id])  }
+    this._router.navigate(['admin/donhang', item.id])  
+  }
 }

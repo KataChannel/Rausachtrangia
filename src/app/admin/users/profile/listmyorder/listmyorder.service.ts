@@ -1,13 +1,12 @@
 import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { LocalStorageService } from '../../../shared/localstorage.service';
-import { environment } from '../../../../environments/environment';
-
+import { LocalStorageService } from '../../../../shared/localstorage.service';
+import { environment } from '../../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class DonhangsService {
+export class MyordersService {
   private _authenticated: boolean = false;
   private APIURL: string = environment.APIURL;
   private isBrowser: boolean;
@@ -18,9 +17,9 @@ export class DonhangsService {
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
-  ListDonhang = signal<any[]>([]);
-  Donhang = signal<any>({});
-  async getAllDonhang() {
+  ListMyorder = signal<any[]>([]);
+  Myorder = signal<any>({});
+  async getAllMyorder() {
     try {
       const options = {
         method: 'GET',
@@ -29,7 +28,7 @@ export class DonhangsService {
           'Authorization': 'Bearer '+this._StorageService.getItem('token')
         },
       };
-      const response = await fetch(`${environment.APIURL}/donhang`, options);
+      const response = await fetch(`${environment.APIURL}/myorders`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -48,48 +47,13 @@ export class DonhangsService {
         }
       }
       const data = await response.json();     
-      this.ListDonhang.set(data)
+      this.ListMyorder.set(data)
       return data;
     } catch (error) {
       return console.error(error);
     }
   }
-  async createDonhang(item:any) {
-    try {
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+this._StorageService.getItem('token')
-        },
-        body: JSON.stringify(item),
-      };
-      const response = await fetch(`${environment.APIURL}/donhang`, options);
-      if (!response.ok) {
-        if (response.status === 401) {
-          const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-          // this.Dangxuat()
-        } else if (response.status === 403) {
-          const result  = JSON.stringify({ code:response.status,title:'Bạn không có quyền truy cập' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-          // this.Dangxuat()
-        } else if (response.status === 500) {
-          const result  = JSON.stringify({ code:response.status,title:'Lỗi máy chủ, vui lòng thử lại sau' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-        } else {
-          const result  = JSON.stringify({ code:response.status,title:'Lỗi không xác định' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-        }
-      }
-      const data = await response.json();     
-      //this.ListDonhang.set(data)
-      return data;
-    } catch (error) {
-      return console.error(error);
-    }
-  }
-  async SearchDonhang(SearchParams:any) {
+  async SearchMyorder(SearchParams:any) {
     try {
       const options = {
         method:'POST',
@@ -98,7 +62,7 @@ export class DonhangsService {
         },
         body: JSON.stringify(SearchParams),
       };
-          const response = await fetch(`${environment.APIURL}/donhang/search`,options);
+          const response = await fetch(`${environment.APIURL}/setting/search`,options);
           if (!response.ok) {
             if (response.status === 401) {
               const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -117,14 +81,14 @@ export class DonhangsService {
               this.router.navigate(['/errorserver'], { queryParams: {data:result}});
             }
           }
-          const data = await response.json();          
-          this.ListDonhang.set(data.items)
+          const data = await response.json();
+          this.Myorder.set(data.items)
           return data;
       } catch (error) {
           return console.error(error);
       }
   }
-  async getDonhangByid(id: any) {
+  async getMyorderByid(id: any) {
     try {
       const options = {
         method: 'GET',
@@ -132,7 +96,7 @@ export class DonhangsService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/donhang/findid/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/myorders/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -152,45 +116,12 @@ export class DonhangsService {
         }
       }
       const data = await response.json();
-      this.Donhang.set(data)
+      this.Myorder.set(data)
     } catch (error) {
       return console.error(error);
     }
   }
-  async getDonhangByidUser(id: any) {
-    try {
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const response = await fetch(`${environment.APIURL}/donhang/findbyuser/${id}`, options);
-      if (!response.ok) {
-        if (response.status === 401) {
-          const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-          // this.Dangxuat()
-        } else if (response.status === 403) {
-          const result  = JSON.stringify({ code:response.status,title:'Bạn không có quyền truy cập' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-          // this.Dangxuat()
-        } else if (response.status === 500) {
-          const result  = JSON.stringify({ code:response.status,title:'Lỗi máy chủ, vui lòng thử lại sau' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-          // this.Dangxuat()
-        } else {
-          const result  = JSON.stringify({ code:response.status,title:'Lỗi không xác định' })
-          this.router.navigate(['/errorserver'], { queryParams: {data:result}});
-        }
-      }
-      const data = await response.json();
-      this.Donhang.set(data)
-    } catch (error) {
-      return console.error(error);
-    }
-  }
-  async updateOneDonhang(dulieu: any) {
+  async updateOneMyorder(dulieu: any) {
     try {
       const options = {
           method:'PATCH',
@@ -199,7 +130,7 @@ export class DonhangsService {
           },
           body: JSON.stringify(dulieu),
         };
-        const response = await fetch(`${environment.APIURL}/donhangs/${dulieu.id}`, options);
+        const response = await fetch(`${environment.APIURL}/myorders/${dulieu.id}`, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -222,13 +153,13 @@ export class DonhangsService {
             this.router.navigate(['/errorserver'], { queryParams: {data:result}});
           }
         }
-        this.getAllDonhang()
+        this.getAllMyorder()
         return data;
     } catch (error) {
         return console.error(error);
     }
   }
-  async DeleteDonhang(item:any) {    
+  async DeleteMyorder(item:any) {    
     try {
         const options = {
             method:'DELETE',
@@ -236,7 +167,7 @@ export class DonhangsService {
               'Content-Type': 'application/json',
             },
           };
-          const response = await fetch(`${environment.APIURL}/donhangs/${item.id}`, options);
+          const response = await fetch(`${environment.APIURL}/myorders/${item.id}`, options);
           if (!response.ok) {
             if (response.status === 401) {
               const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -252,65 +183,10 @@ export class DonhangsService {
               this.router.navigate(['/errorserver'], { queryParams: {data:result}});
             }
           }
-          this.getAllDonhang()
+          this.getAllMyorder()
           return await response.json();
       } catch (error) {
           return console.error(error);
       }
   }
-
-
-
-    async addToCart(item: any): Promise<void> {
-      const Donhang = this._StorageService.getItem('Donhang')||{
-        Giohangs:[],
-        Khachhang:{
-          Hoten:'',
-          SDT:'',
-          Email:''
-        },
-        Diachis:[],
-        Vanchuyen:{
-          Diachi:''
-        },
-        Thanhtoan:{Hinhthuc:'COD'},
-        Khuyenmai:{}
-      }
-      Donhang.Giohangs = Donhang?.Giohangs?.length > 0 ? Donhang.Giohangs : [];
-      console.log(Donhang);
-      console.log(item);
-      const existingItemIndex = Donhang?.Giohangs?.findIndex((v: any) => v.MaSP === item.MaSP);
-       if (existingItemIndex !== -1) {
-              Donhang.Giohangs[existingItemIndex].Soluong += Number(item.Soluong);
-              Donhang.Giohangs[existingItemIndex].SLTT += Number(item.Soluong) * parseFloat(Number(item.khoiluong).toFixed(2));
-        } else {
-              item.SLTT = Number(item.khoiluong)
-              Donhang.Giohangs.push(item);
-        }
-        this._StorageService.setItem('Donhang', Donhang)
-        this.Donhang.set(Donhang)
-    }
-    DonhangInit(){
-      const Donhang = this._StorageService.getItem('Donhang')||
-      {
-        Giohangs:[],
-        Khachhang:{
-          Hoten:'',
-          SDT:'',
-          Email:''
-        },
-        Diachis:[],
-        Vanchuyen:{
-          Diachi:''
-        },
-        Thanhtoan:{Hinhthuc:'COD'},
-        Khuyenmai:{}
-      }
-      this.Donhang.set(Donhang)
-    }
-    async UpdateDonhang(item: any): Promise<void> {
-        this._StorageService.setItem('Donhang', item)
-        this.Donhang.set(item)
-    }
-    
 }

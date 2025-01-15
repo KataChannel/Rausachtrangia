@@ -82,8 +82,6 @@ export class MainService {
             };
             const response = await fetch(`${environment.APIURL}/visitor/getvisitor`, options);
             const data = await response.json();
-          console.log(data);
-
             this._mains.next(data)
             return data;
         } catch (error) {

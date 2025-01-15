@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { SanphamService } from '../../admin/main-admin/sanpham/sanpham.service';
+import { GiohangService } from '../../admin/main-admin/website/giohang/giohang.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DonhangsService } from '../../admin/donhang/listdonhang/listdonhang.service';
 @Component({
   selector: 'app-sanphamblock',
   standalone:true,
@@ -19,7 +19,7 @@ export class SanphamblockComponent implements OnInit {
   @Input() Detail:any={}
   @Input() isMuangay:boolean =true
   _SanphamService:SanphamService = inject(SanphamService)
-  _DonhangsService: DonhangsService = inject(DonhangsService);
+  _GiohangService: GiohangService = inject(GiohangService);
   constructor(
     private _snackBar:MatSnackBar
   ) { }
@@ -29,16 +29,12 @@ export class SanphamblockComponent implements OnInit {
   }
   AddtoCart(data:any)
   { 
-    console.log(data);
-    
     let item:any={}
-    item = data.Giagoc.find((v:any)=>v.default == true)||data.Giagoc[0]
-    // item.Giachon = data.Giagoc[0]
-    // item.Giachon.SLTT = data.Giagoc[0].khoiluong
-    item.Soluong=1
-    item.Title = data.Title
-    item.Image = data?.Image?.Hinhchinh?.src
-    this._DonhangsService.addToCart(item).then(()=>
+    item = data
+    item.Giachon = data.Giagoc[0]
+    item.Giachon.SLTT = data.Giagoc[0].khoiluong
+    item.Soluong=1    
+    this._GiohangService.addToCart(item).then(()=>
     {
       this._snackBar.open('Thêm Vào Giỏ Hàng Thành Công','',{
         horizontalPosition: "end",

@@ -10,6 +10,10 @@ import { GenId } from '../../../shared/shared.utils';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from '../../users/auth/auth.service';
+import { UsersInterceptor } from '../../users/auth/users.interceptor';
+import { MatIconModule } from '@angular/material/icon';
 ;
 @Component({
   selector: 'app-diachi-admin',
@@ -20,7 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     FormsModule,
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './diachi-admin.component.html',
   styleUrls: ['./diachi-admin.component.css']
@@ -44,7 +49,7 @@ export class DiachiAdminComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _notifierService: NotifierService,
+ //   private _notifierService: NotifierService,
     private fb: FormBuilder,
     private _dialog: MatDialog,
 
@@ -56,6 +61,8 @@ export class DiachiAdminComponent implements OnInit {
       this.onTinhChangeSingle(Default)
       this.ChosenTinh = Default
     }, 1000);
+    console.log(this.Diachis);
+    
   }
   displayFn(data: any): string {
     return data && data.name ? data.name : '';
@@ -142,12 +149,17 @@ export class DiachiAdminComponent implements OnInit {
     }
     else 
     {
-      this._notifierService.notify("error","Vui lòng thêm thông tin")
+    //  this._notifierService.notify("error","Vui lòng thêm thông tin")
     }
   }
   SetActive(item:any)
   {
     this.Diachis.forEach(v => v.Active = v.id === item.id);
+    this.diachiEmit.emit(this.Diachis);
+  }
+  XoaDiachi(item:any)
+  {
+    this.Diachis = this.Diachis.filter((v)=>v.id!==item.id)
     this.diachiEmit.emit(this.Diachis);
   }
 }

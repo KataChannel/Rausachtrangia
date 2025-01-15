@@ -1,0 +1,27 @@
+<mat-stepper labelPosition="bottom" #stepper>
+    <mat-step *ngFor="let step of steps; let i = index">
+      <ng-template matStepLabel>{{ step.label }}</ng-template>
+      <!-- Content for the current step -->
+      <div *ngIf="step.type === 'input'">
+        <mat-form-field>
+          <mat-label>{{ step.placeholder }}</mat-label>
+          <input matInput [(ngModel)]="step.value" [required]="step.required" />
+        </mat-form-field>
+      </div>
+      <div *ngIf="step.type === 'content'">
+        <p>{{ step.content }}</p>
+      </div>
+  
+      <!-- Navigation buttons -->
+      <div>
+        <button mat-button matStepperPrevious *ngIf="i > 0">Back</button>
+        <button mat-button matStepperNext *ngIf="i < steps.length - 1" [disabled]="step.required && !step.value">
+          Next
+        </button>
+        <button mat-button (click)="completeStepper()" *ngIf="i === steps.length - 1">
+          Finish
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  

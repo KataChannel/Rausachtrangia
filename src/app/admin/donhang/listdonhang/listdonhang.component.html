@@ -1,12 +1,11 @@
-<mat-drawer-container class="w-full h-full" autosize>
-  <mat-drawer #drawer class="flex flex-col lg:!w-1/3 !w-full h-full" [position]="'end'">    
+<mat-drawer-container [@.disabled]="true" class="w-full h-full" autosize>
+  <mat-drawer #drawer class="flex flex-col !w-full h-full" [position]="'end'">    
     <router-outlet></router-outlet>
   </mat-drawer>
-
 <div class="flex flex-col space-y-2 h-screen-12 w-full justify-between p-2">
     <div class="flex flex-col space-y-2 w-full p-2">
-        <div class="cursor-pointer w-full relative grid lg:grid-cols-2 gap-2 justify-between items-center">
-            <div class="w-full flex flex-row space-x-2 items-center">
+        <div class="cursor-pointer w-full relative grid lg:grid-cols-2 gap-2 justify-between items-center bg-white rounded-lg p-2">
+                <div class="flex flex-row space-x-2 items-center">
                 <div class="relative">
                     <input type="text" placeholder="Tìm Kiếm..." #input (keyup)="applyFilter($event)"
                         class="block pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40">
@@ -14,28 +13,58 @@
                         <span class="material-symbols-outlined text-gray-500">search</span>
                     </div>
                 </div>
-                <span (click)="Create()"
-                    class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>
+                <span (click)="Create()" class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>
+                </div>
+                <div class="flex flex-row space-x-2 items-center justify-end">
+                    <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+                        <mat-label>Chọn Thời Gian</mat-label>
+                        <mat-select [(ngModel)]="Chonthoigian" [ngModelOptions]="{standalone: true}" (selectionChange)="onSelectionChange($event)">
+                          @for (item of ListDate; track item) {
+                            <mat-option [value]="item.value">{{item.Title}}</mat-option>
+                          }
+                        </mat-select>
+                     </mat-form-field>
+
+                        <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+                            <mat-label>Khoảng Thời Gian</mat-label>
+                            <mat-date-range-input [rangePicker]="picker">
+                              <input matStartDate  [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}" placeholder="Start date">
+                              <input matEndDate [(ngModel)]="SearchParams.Ketthuc" [ngModelOptions]="{standalone: true}" placeholder="End date">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker touchUi #picker>
+                                <mat-date-range-picker-actions>
+                                    <button mat-stroked-button color="warn" matDateRangePickerCancel>Huỷ Bỏ</button>
+                                    <button mat-stroked-button color="primary" matDateRangePickerApply (click)="ApplyDate()">Đồng Ý</button>
+                                  </mat-date-range-picker-actions>
+                            </mat-date-range-picker>
+                          </mat-form-field>
             </div>
         </div>
-        <div class="w-full">
+        <div class="w-full overflow-auto">
             <table class="!border w-full cursor-pointer" mat-table [dataSource]="dataSource" matSort>
                 @for (column of displayedColumns; track column) {
                   <ng-container [matColumnDef]="column">
                     <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header>{{ ColumnName[column] }}
                     </th>
-                    <td class="whitespace-nowrap" mat-cell *matCellDef="let row;let idx = index">
-                         {{ column === 'STT' ? idx + 1 : row[column] }}
-                    </td>
+                    <td class="lg:whitespace-normal whitespace-nowrap" mat-cell *matCellDef="let row;let idx = index">
+                        @if(column === 'STT')
+                        {
+                           {{idx + 1}}
+                        }
+                        @else {
+                           <div [innerHTML]="row[column]"></div>
+                        }
+                   </td>
                  </ng-container>
                 }
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToDetail(row);"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-slate-100 {{Detail?.id==row.id?'!bg-slate-300':''}}" (click)="goToDetail(row)"></tr>
                 <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">Không tìm thấy "{{input.value}}"</td>
+                    <td class="mat-cell p-4" colspan="4">Không tìm thấy "{{input.value}}"</td>
                 </tr>
             </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of donhangs"></mat-paginator>
+            <mat-paginator #paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
         </div>
     </div>    
 </div>

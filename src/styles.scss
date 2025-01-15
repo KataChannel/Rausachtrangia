@@ -57,6 +57,13 @@ body {
 // .info .mdc-snackbar__surface{
 //   color: 5BC0DE !important;
 // }
+.mat-column-STT {
+  width: 10px !important;
+}
+.mat-column-Tongtien {
+  text-align: right !important;
+}
+
 
 .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
   // color: var(--mdc-snackbar-supporting-text-color, var(--mat-sys-inverse-on-surface));
@@ -66,7 +73,7 @@ body {
 
 /* Custom styles for MatSnackBar */
 .snackbar-success {
-  background-color: #4caf50; /* Green */
+  background-color: #3f51b5; /* Green */
   color: white;
 }
 

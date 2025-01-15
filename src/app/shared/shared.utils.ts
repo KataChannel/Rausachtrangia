@@ -24,6 +24,15 @@ export function ConvertDriveData(data:any){
     };
   });
 } 
+
+export function formatCurrency  (amount: number, currency: string, locale: string = 'en-US') {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(amount);
+};
+
+
 export function genMaDonhang(startNumber:any) {
   let code = startNumber.toString();
   while (code.length < 3) {
@@ -73,12 +82,12 @@ export const ListHinhthucthanhtoan: any[] = [
     {id:"BANK",Title:"Chuyển Khoản",  Class:"text-white bg-[#ED860A]"},
   ]
 export const ListTrangThaiDonhang: any[] = [
-    {id:0,Title:"Đơn Mới",    Class:"text-white bg-[#44C8F5]"},
-    {id:1,Title:"Xác Nhận",   Class:"text-white bg-[#ED860A]"},
-    {id:2,Title:"Đang xử lý", Class:"text-white bg-[#632B85]"},
-    {id:3,Title:"Đang Giao",  Class:"text-white bg-[#FBCD18]"},
-    {id:4,Title:"Hoàn Thành", Class:"text-white bg-[#32A649]"},
-    {id:5,Title:"Huỷ",        Class:"text-white bg-[#E1232A]"}
+    {id:0,Title:"Đơn Mới",    color:'text-white', bg:'bg-[#44C8F5]', Class:"text-white bg-[#44C8F5]"},
+    {id:1,Title:"Xác Nhận",   color:'text-white', bg:'bg-[#ED860A]', Class:"text-white bg-[#ED860A]"},
+    {id:2,Title:"Đang xử lý", color:'text-white', bg:'bg-[#632B85]', Class:"text-white bg-[#632B85]"},
+    {id:3,Title:"Đang Giao",  color:'text-white', bg:'bg-[#FBCD18]', Class:"text-white bg-[#FBCD18]"},
+    {id:4,Title:"Hoàn Thành", color:'text-white', bg:'bg-[#32A649]', Class:"text-white bg-[#32A649]"},
+    {id:5,Title:"Huỷ",        color:'text-white', bg:'bg-[#E1232A]', Class:"text-white bg-[#E1232A]"}
   ]
 export const ListRole: any[] =[
   {id:'admin',value:'Admin'},

@@ -18,8 +18,6 @@ import { DiachiAdminComponent } from '../../../diachi/diachi-admin/diachi-admin.
 import { GiohangService } from '../giohang/giohang.service';
 import { SlideSanphamComponent } from '../slide-sanpham/slide-sanpham.component';
 import { ThanhtoanService } from './thanhtoan.service';
-import { NotifierService } from 'angular-notifier';
-
 @Component({
   selector: 'app-thanhtoan',
   standalone: true,
@@ -40,12 +38,11 @@ import { NotifierService } from 'angular-notifier';
 export class ThanhtoanComponent implements OnInit {
 
   _GiohangService: GiohangService = inject(GiohangService)
-  _NotifierService: NotifierService = inject(NotifierService)
   _SendemailService: SendemailService = inject(SendemailService)
   _ThanhtoanService: ThanhtoanService = inject(ThanhtoanService)
   _CauhinhService: CauhinhService = inject(CauhinhService)
   _UploadService: UploadService = inject(UploadService)
-  _TelegramService: TelegramService = inject(TelegramService)
+  //_TelegramService: TelegramService = inject(TelegramService)
   Khoangcach: any = {}
   ListNotifyType: any = ListNotifyType
   Notify: any = {}
@@ -195,46 +192,48 @@ export class ThanhtoanComponent implements OnInit {
                 this.CauhinhEmail.subject = `Xác Nhận Đơn Hàng ${data.MaDonHang}`
                 this.CauhinhEmail.toemail = this.Donhang.Khachhang.Email
                 this.CauhinhEmail.text = htmlteamplate
-                this._SendemailService.SendEmail(this.CauhinhEmail)
+             //   this._SendemailService.SendEmail(this.CauhinhEmail)
+             window.location.href = `cam-on?MaDonHang=${data.MaDonHang}`;
                 const Telegram = `Xác Nhận Đơn Hàng <a href="https://shop.rausachtrangia.com/tra-cuu-don?MaDonHang=${data.MaDonHang}">${data.MaDonHang}</a> đã đặt lúc ${moment().format("HH:mm:ss DD/MM/YYYY")}`
-                this._TelegramService.SendNoti(Telegram).then(() => {
-                  this._GiohangService.clearCart()
-                  setTimeout(() => {
-                    this._snackBar.open('Đặt Hàng Thành Công', '', {
-                      horizontalPosition: "end",
-                      verticalPosition: "top",
-                      panelClass: 'success',
-                      duration: 2000,
-                    });
-                    window.location.href = `cam-on?MaDonHang=${data.MaDonHang}`;
-                  }, 1000);
-                })
+                // this._TelegramService.SendNoti(Telegram).then(() => {
+                //   this._GiohangService.clearCart()
+                //   setTimeout(() => {
+                //     this._snackBar.open('Đặt Hàng Thành Công', '', {
+                //       horizontalPosition: "end",
+                //       verticalPosition: "top",
+                //       panelClass: 'success',
+                //       duration: 2000,
+                //     });
+                //     window.location.href = `cam-on?MaDonHang=${data.MaDonHang}`;
+                //   }, 1000);
+                // })
               }
               else {
+                window.location.href = `cam-on?MaDonHang=${data.MaDonHang}`;
                 const Telegram = `Xác Nhận Đơn Hàng <a href="https://shop.rausachtrangia.com/tra-cuu-don?MaDonHang=${data.MaDonHang}">${data.MaDonHang}</a> đã đặt lúc ${moment().format("HH:mm:ss DD/MM/YYYY")}`
-                this._TelegramService.SendNoti(Telegram).then(() => {
-                  this._GiohangService.clearCart()
-                  setTimeout(() => {
-                    this._snackBar.open('Đặt Hàng Thành Công', '', {
-                      horizontalPosition: "end",
-                      verticalPosition: "top",
-                      panelClass: 'success',
-                      duration: 2000,
-                    });
-                    window.location.href = `cam-on?MaDonHang=${data.MaDonHang}`;
-                  }, 1000);
-                })
+                // this._TelegramService.SendNoti(Telegram).then(() => {
+                //   this._GiohangService.clearCart()
+                //   setTimeout(() => {
+                //     this._snackBar.open('Đặt Hàng Thành Công', '', {
+                //       horizontalPosition: "end",
+                //       verticalPosition: "top",
+                //       panelClass: 'success',
+                //       duration: 2000,
+                //     });
+                //     window.location.href = `cam-on?MaDonHang=${data.MaDonHang}`;
+                //   }, 1000);
+                // })
               }
 
             }
             else {
               this._GiohangService.clearCart()
               const Telegram = `Tạo trùng đơn hàng ${this.Donhang.MaDonHang}`
-              this._TelegramService.SendNoti(Telegram).then(() => {
-                setTimeout(() => {
-                  window.location.href = `/`;
-                }, 1000);
-              })
+              // this._TelegramService.SendNoti(Telegram).then(() => {
+              //   setTimeout(() => {
+              //     window.location.href = `/`;
+              //   }, 1000);
+              // })
             }
           })
         }

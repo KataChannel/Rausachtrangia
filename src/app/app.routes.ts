@@ -159,7 +159,13 @@ export const appRoutes: Route[] = [
                     },
                     {
                         path:'myorder',
-                        loadComponent: () => import('./admin/users/profile/myorder/myorder.component').then(c => c.MyorderComponent),
+                        loadComponent: () => import('./admin/users/profile/listmyorder/listmyorder.component').then(c => c.ListmyorderComponent),
+                        children:[
+                            {
+                                path:':id',
+                                loadComponent: () => import('./admin/users/profile/listmyorder/detailmyorder/detailmyorder.component').then(c => c.DetailMyorderComponent),
+                            }
+                        ]
                     },
 
                 ]
@@ -197,6 +203,16 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'donhang',
+                loadComponent: () => import('./admin/donhang/listdonhang/listdonhang.component').then(c => c.ListdonhangComponent),
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/donhang/listdonhang/detaildonhang/detaildonhang.component').then(c => c.DetailDonhangComponent),
+                    },
+                ]
+            },
+            {
+                path: 'giohang',
                 component: DonhangAdminComponent,
                 children: [
                     {

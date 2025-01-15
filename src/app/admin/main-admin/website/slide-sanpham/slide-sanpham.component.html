@@ -36,7 +36,6 @@
     </div>
   }
   @else {
-  <!-- @defer (when isLoading==true) { -->
       <section class="w-full grid grid-cols-1 relative border rounded-lg bg-white order-[{{Ordering}}]">
         <div class="mt-4 flex flex-row justify-between items-center border-b">
           <h2 class="!text-xl font-bold !mb-0 px-4 py-2 bg-[#57A345] text-white rounded-tr-3xl">
@@ -65,25 +64,7 @@
           </div>
         </div>
         </div>
-  
-        <!-- <div class="lg:hidden flex flex-col space-y-3 w-full col-span-4">
-          <div>
-            <div class="swiper-wrapper">
-              @for (items of FilterLists; track items) {
-              <div class="swiper-slide" class="flex flex-col space-y-2 justify-between">
-                @for (item of items; track item) {
-                  <app-sanphamblock [Detail]="item"></app-sanphamblock>
-                }
-              </div>
-              }
-            </div>
-            <div class="swiper-pagination" slot="pagination"></div>
-          </div>
-        </div> -->
         <div class="flex text-center py-3 justify-center ">
-          <!-- <button mat-stroked-button>
-            <a href="danh-muc/cac-loai-nam" class="text-primary font-bold">Xem Tất Cả ></a>
-          </button> -->
           @if (Soluong!=999) {
             <a href="danh-muc{{Danhmuc.Slug?'/'+Danhmuc.Slug:''}}"
             class="bottom-2.5 bg-white font-bold text-[#FAA61A] border-2 border-[#FAA61A] hover:bg-[#FAA61A] hover:text-white focus:ring-4 focus:outline-none rounded-lg text-sm px-4 py-2">
@@ -92,7 +73,6 @@
           }
         </div>
       </section>
-    <!-- }  -->
   }
   
 }

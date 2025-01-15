@@ -1,0 +1,320 @@
+@defer {
+<div class="bg-gray-50 relative p-4 w-full h-full md:h-auto">
+  <div class="relative grid lg:grid-cols-3 gap-2">
+    <div class="flex flex-col overflow-y-auto col-span-2">
+      <div class="bg-white p-2 rounded-lg border border-default-200 col-span-2">
+        <div class="p-4 border-b border-default-200">
+          <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
+        </div>
+        <app-giohangcommon [Giohangs]="Detail?.Giohangs?.Sanpham"></app-giohangcommon>
+        <div class="p-4 overflow-y-auto">
+          <table class="min-w-full divide-y divide-default-200 border">
+            <thead class="bg-default-400/10">
+              <tr>
+                <th scope="col" class="min-w-[14rem] px-5 py-3 text-start text-xs font-medium text-default-500 uppercase">
+                  Sản Phẩm</th>
+                <!-- <th scope="col" class="px-5 py-3 text-start text-xs font-medium text-default-500 uppercase">
+                        Giá</th> -->
+                <th scope="col" class="px-5 py-3 text-start text-xs font-medium text-default-500 uppercase">
+                  Số Lượng</th>
+                <th scope="col" class="px-5 py-3 text-center text-xs font-medium text-default-500 uppercase">
+                  Tổng Tiền</th>
+                <th scope="col" class="px-5 py-3 text-start text-xs font-medium text-default-500 uppercase">
+                  SL Thực Tế</th>
+                <th scope="col" class="px-5 py-3 text-center text-xs font-medium text-default-500 uppercase">
+                  Tổng Thực Tế</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-default-200">
+              @for (item of Detail?.Giohangs?.Sanpham; track item) {
+              <tr>
+                <td class="flex flex-row px-5 py-3 items-center whitespace-nowrap">
+                  <div (click)="RemoveSanpham(item)" class="p-2">
+                    <span class="material-symbols-outlined rounded-full 
+                       text-red-500 hover:bg-red-500 hover:text-white">
+                      cancel
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    @if(item && item.Image&&item.Image.Thumb)
+                    {
+                    <img loading="lazy" src="assets/images/sanpham/{{item.Image.Thumb}}" class="h-20 w-20">
+                    }
+                    @else if(item && item.Image&&item.Image.Hinhchinh&&item.Image.Hinhchinh.src){
+                    <img loading="lazy" src="{{item.Image.Hinhchinh.src}}" class="h-20 w-20">
+                    }
+                    @else {
+                    <img loading="lazy" src="assets/images/noimage.png" class="p-3 h-20 w-20 rounded-lg">
+                    }
+                    <h4 class="text-wrap text-sm font-medium text-default-800">
+                      {{item.Title}}({{item?.Giachon?.khoiluong}}{{item?.Giachon?.dvt}})
+                    </h4>
+                  </div>
+                </td>
+                <!-- <td class="px-5 py-3 whitespace-nowrap text-sm text-default-800">
+                        {{(item?.Giachon?.gia| number:'1.0-0')||'0'}}đ</td> -->
+                <td class="px-5 py-3 whitespace-nowrap">
+                  <div class="inline-flex justify-between border border-default-200 p-1 rounded-full">
+                    <button (click)="Giamgiatri($index,'Soluong')" type="button"
+                      class="minus flex-shrink-0 bg-default-200 text-default-800 rounded-full h-6 w-6 text-sm inline-flex items-center justify-center">–</button>
+                    <input type="number" [(ngModel)]="Detail.Giohangs.Sanpham[$index].Soluong"
+                      [ngModelOptions]="{standalone: true}"
+                      class="w-12 border-0 text-sm text-center text-default-800 focus:ring-0 p-0 bg-transparent" min="0"
+                      max="100" step="0.01">
+                    <button (click)="Tanggiatri($index,'Soluong')" type="button"
+                      class="plus flex-shrink-0 bg-default-200 text-default-800 rounded-full h-6 w-6 text-sm inline-flex items-center justify-center">+</button>
+                  </div>
+                  <strong>{{(item.Soluong*item?.Giachon?.khoiluong).toFixed(2)}}{{item?.Giachon?.dvt}}</strong>
+                </td>
+                <td class="px-5 py-3 whitespace-nowrap text-sm text-center text-default-800">
+                  {{(item.Soluong*item.Giachon.gia| number:'1.0-0')||'0'}}đ
+                </td>
+  
+                <td class="px-5 py-3 whitespace-nowrap">
+                  <div class="inline-flex justify-between border border-default-200 p-1 rounded-full">
+                    <button (click)="GiamTT($index,'SLTT')" type="button"
+                      class="minus flex-shrink-0 bg-default-200 text-default-800 rounded-full h-6 w-6 text-sm inline-flex items-center justify-center">–</button>
+                    <input type="number" [(ngModel)]="Detail.Giohangs.Sanpham[$index].Giachon.SLTT"
+                      [ngModelOptions]="{standalone: true}"
+                      class="w-12 border-0 text-sm text-center text-default-800 focus:ring-0 p-0 bg-transparent" min="0"
+                      max="100" step="0.01">
+                    <button (click)="TangTT($index,'SLTT')" type="button"
+                      class="plus flex-shrink-0 bg-default-200 text-default-800 rounded-full h-6 w-6 text-sm inline-flex items-center justify-center">+</button>
+                  </div>
+                </td>
+                <td class="px-5 py-3 whitespace-nowrap text-sm text-center text-default-800">
+                  {{(item.Giachon.SLTT*item.Giachon.GiaCoSo| number:'1.0-0')||'0'}}đ
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+  
+  
+          <div (click)="AddSanpham()" class="cursor-pointer flex-row inline-flex space-x-2 
+            bg-slate-200 text-blue-500 
+            hover:bg-blue-500 hover:text-white justify-center items-center my-2  px-4 py-2 border rounded-lg">
+  
+            <span>Thêm Sản Phẩm Mới</span>
+            <span class="material-symbols-outlined">
+              add_circle
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="rounded-lg flex flex-col space-y-4">
+
+      <div class="bg-white p-2 rounded-lg border border-default-200">
+        <div class="p-4 border-b border-default-200">
+          <span class="!text-lg !font-semibold text-default-800">Khách Hàng</span>
+        </div>
+        <div class="p-4">
+          <div class="lg:col-span-3">
+            <label class="block text-sm text-default-700 mb-2">Họ Tên *</label>
+            <input [(ngModel)]="Detail.Khachhang.Hoten" [ngModelOptions]="{standalone: true}"
+                class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                type="text" placeholder="Họ Tên">
+        </div>
+        <div class="lg:col-span-3">
+            <label class="block text-sm text-default-700 mb-2">Số Điện Thoại *</label>
+            <input [(ngModel)]="Detail.Khachhang.SDT" [ngModelOptions]="{standalone: true}"
+                class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                type="text" placeholder="Vui lòng nhập số điện thoại">
+        </div>
+        <div class="lg:col-span-3">
+            <label class="block text-sm text-default-700 mb-2">Email</label>
+            <input [(ngModel)]="Detail.Khachhang.Email"
+                class="block w-full bg-transparent dark:bg-default-50 rounded-full py-2.5 px-4 border border-default-200"
+                type="text" placeholder="example@gmail.com">
+        </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="bg-white p-2 rounded-lg border border-default-200">
+        <div class="p-4 border-b border-default-200">
+          <span class="!text-lg !font-semibold text-default-800">Vận Chuyển</span>
+        </div>
+        <div class="p-4">
+          <span>Họ tên : {{Detail.Giohangs.Khachhang.Hoten}} - Số điện thoại - {{Detail.Giohangs.Khachhang.SDT}} Địa Chỉ
+            :
+            {{Detail.Giohangs.Khachhang.Diachi}}</span>
+          <p class="text-sm text-red-500 mb-4 italic">Khoản Cách : {{Detail.Vanchuyen.text}}</p>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Họ Tên</mat-label>
+            <input type="text" [(ngModel)]="Detail.Giohangs.Khachhang.Hoten" [ngModelOptions]="{standalone: true}"
+              matInput class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Họ Tên'" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Số Điện Thoại</mat-label>
+            <input type="text" [(ngModel)]="Detail.Giohangs.Khachhang.SDT" [ngModelOptions]="{standalone: true}"
+              matInput class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Số Điện Thoại'" />
+          </mat-form-field>
+          <!-- <app-diachi-admin  [isSingle]="true" [Diachis]="Detail.Diachis[0]" (diachiEmit)="GetDiachi($event)" class="lg:col-span-6"></app-diachi-admin> -->
+        </div>
+      </div>
+
+
+      <div class="bg-white p-2 rounded-lg border border-default-200">
+        <div class="p-4 border-b border-default-200">
+          <span class="!text-lg !font-semibold text-default-800">Thanh Toán</span>
+        </div>
+        <div class="bg-white p-2 rounded-lg mx-auto flex flex-col space-y-3">
+          <div class="cursor-pointer grid grid-cols-3 gap-4 lg:p-4">
+            <div (click)="ChooseMethod('COD')"
+              class="p-4 rounded-lg text-center    {{Donhang.Thanhtoan.Hinhthuc=='COD'?'text-white bg-[#A52167]':'bg-slate-100'}} hover:text-white hover:bg-[#A52167]">
+              Tiền Mặt
+            </div>
+            <div (click)="ChooseMethod('BANK')"
+              class="p-4 rounded-lg text-center  {{Donhang.Thanhtoan.Hinhthuc=='BANK'?'text-white bg-[#439c30]':'bg-slate-100'}} hover:text-white hover:bg-[#439c30]">
+              Chuyển Khoản
+            </div>
+            <div (click)="ChooseMethod('MOMO')"
+              class="p-4 rounded-lg text-center  {{Donhang.Thanhtoan.Hinhthuc=='MOMO'?'text-white bg-[#ED860A]':'bg-slate-100'}} hover:text-white hover:bg-[#ED860A]">
+              MOMO</div>
+          </div>
+          <div>
+            @if(Donhang.Thanhtoan.Hinhthuc=='BANK'){
+            <div class="grid grid-cols-2 gap-2">
+              <img loading="lazy" src="/assets/images/QR-Thanh toan-BANK.svg" class="w-40 mx-auto">
+              <div class="flex flex-col max-w-xs space-y-2 text-center justify-center">
+                <span>Nội dung CK :</span>
+                <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{Donhang.MaDonHang}}</span>
+                <span>"Vui lòng ghi đúng nội dung chuyển khoản để chúng tôi có thể cập nhật đơn hàng nhanh
+                  nhất"</span>
+              </div>
+            </div>
+            }
+            @else if(Donhang.Thanhtoan.Hinhthuc=='MOMO')
+            {
+            <div class="grid grid-cols-2 gap-2">
+              <img loading="lazy" src="/assets/images/QR-Thanh toan-MOMO.svg" class="w-40 mx-auto">
+              <div class="flex flex-col max-w-xs space-y-2 text-center justify-center">
+                <span>Nội dung CK :</span>
+                <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{Donhang.MaDonHang}}</span>
+                <span>"Vui lòng ghi đúng nội dung chuyển khoản để chúng tôi có thể cập nhật đơn hàng nhanh
+                  nhất"</span>
+              </div>
+            </div>
+            }
+          </div>
+          <div class="cursor-pointer flex flex-row space-x-2 items-center justify-center">
+            @if(Donhang.Thanhtoan.Hinhthuc&&Donhang.Thanhtoan.Hinhthuc!='')
+            {
+            <span class="px-4 py-2 rounded-lg border border-[#439c30] text-[#439c30] hover:bg-[#439c30] hover:text-white"
+              mat-dialog-close="true">
+              Thanh Toán
+            </span>
+            }
+  
+            <!-- <button disabled="{{(Donhang.Thanhtoan.Hinhthuc&&Donhang.Thanhtoan.Hinhthuc!='')?false:true}}"
+                    mat-flat-button color="primary" mat-dialog-close="true">
+                    Thanh Toán
+                </button> -->
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+</div>
+} @loading {
+<div class="w-full h-full flex items-center justify-center">
+  <span> Loading...</span>
+
+</div>
+
+}
+<ng-template #dialogXemFormin>
+  <!-- <div class="!relative lg:h-[90vh] lg:w-[90vw] p-4"> -->
+  <div class="!relative lg:h-[90vh] lg:w-[90vw]">
+    <div class="relative flex flex-col space-y-2">
+      <app-formin-admin [Type]="'ADMIN'" [isShowAction]="true" [Donhang]="Detail"></app-formin-admin>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #GhichuDialog>
+  <div class="lg:w-[40vw] p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Lý do huỷ đơn *</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 lg:p-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nội Dung</mat-label>
+          <textarea [(ngModel)]="Detail.Lydohuy" [ngModelOptions]="{standalone: true}" matInput name="" id="" cols="3"
+            rows="3"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+        @if(Detail?.Lydohuy!=''){
+        <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
+        }
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #ChonSanphamDialog>
+  <div class="w-[80vw] h-[80vh] p-2 flex flex-col space-y-3">
+    <div mat-dialog-title>Chọn Sản Phẩm Để Thêm</div>
+    <div mat-dialog-content>
+      <div class="flex flex-col w-full space-y-4 lg:p-4">
+        <!-- <mat-form-field appearance="outline">
+            <mat-label>Sản Phẩm</mat-label>
+            <mat-select [(ngModel)]="Sanpham" [ngModelOptions]="{standalone: true}">
+              <mat-option [value]="item" *ngFor="let item of Sanphams">{{item.Title}}</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <input matInput (keyup)="DoSearchSanpham($event)" placeholder="Tìm Sản Phẩm" />
+        </mat-form-field>
+
+
+        <div class="grid lg:grid-cols-3 gap-4">
+          @for (items of FilterSanphams; track items) {
+          <div (click)="Chonsanpham(items)" class="flex flex-col space-y-2 rounded-lg border p-2"
+            mat-dialog-close="true">
+            <img [src]="items?.Danhmuc?.Image?.Hinhchinh?.src" class="m-auto h-20 w-20">
+            <div>{{items.Title}}</div>
+            <div>{{items.MaSP}}</div>
+            <div class="flex flex-row space-x-2">
+              @for(item of items.Giagoc;track item){
+              <div class="p-2 rounded-lg bg-slate-100 hover:bg-slate-300 font-bold">{{item.khoiluong}} {{item.dvt}} -
+                {{item.gia}}</div>
+              }
+            </div>
+
+          </div>
+
+
+
+
+
+          <!-- <div (click)="Chonsanpham(item)" class="flex flex-row space-x-2 p-4 rounded-lg border hover:bg-slate-100"
+            mat-dialog-close="true">
+            <div>Mã Sản Phẩm : {{item.MaSP}}</div>
+            <div>Khối Lượng : {{item.khoiluong}}</div>
+            <div>Giá : {{item.gia}}</div>
+          </div> -->
+          }
+        </div>
+      </div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="warn" mat-dialog-close="false">Huỷ</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

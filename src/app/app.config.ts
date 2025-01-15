@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, isDevMode, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, isDevMode, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -8,10 +8,14 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntl } from './shared/CustomPaginator';
 import { IMAGE_CONFIG } from '@angular/common';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { UsersInterceptor } from './admin/users/auth/users.interceptor';
 export const appConfig: ApplicationConfig = {
+
   providers: [
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: UsersInterceptor, multi: true },
     provideZoneChangeDetection({ eventCoalescing: true }),  
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()), 

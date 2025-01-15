@@ -19,10 +19,6 @@ import { Observable } from 'rxjs';
     AuthModule,
     MatProgressSpinnerModule,
   ],
-  providers: [
-    AuthService,
-    { provide: HTTP_INTERCEPTORS, useClass: UsersInterceptor, multi: true },
-  ],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
