@@ -1,0 +1,261 @@
+{
+  "k-material-input": {
+    "prefix": "k-material-input",
+    "body": [
+      "<mat-form-field appearance=\"outline\" class=\"w-full\" subscriptSizing=\"dynamic\">",
+      "    <input matInput [(ngModel)]=\"Detail.Title\"  [ngModelOptions]=\"{ standalone: true }\" placeholder=\"Vui lòng Nhập Tiêu Đề\" />",
+      "    </mat-form-field> ",
+      "    <div class=\"mb-4\">",
+      "        <label for=\"email\" class=\"block text-gray-700 font-bold mb-2\">Email</label>",
+      "        <input type=\"email\" class=\"border border-gray-400 p-2 w-full rounded\" [(ngModel)]=\"Detail.Title\"  [ngModelOptions]=\"{ standalone: true }\" placeholder=\"Vui lòng Nhập Tiêu Đề\">",
+      "</div>",
+      "",
+      "<mat-form-field appearance=\"outline\" class=\"w-full\" subscriptSizing=\"dynamic\">",
+      "  <mat-label>Teamplate</mat-label>",
+      "  <mat-select [(ngModel)]=\"teamplate\" [ngModelOptions]=\"{ standalone: true }\">",
+      "    @for (item of ListTeamplate; track item.id) {",
+      "      <mat-option [value]=\"item.id\">{{item.Title}}</mat-option>",
+      "    }",
+      "  </mat-select>",
+      "</mat-form-field>"
+    ]
+  },
+  "k-tailwind-input": {
+    "prefix": "k-tailwind-input\r",
+    "body": [
+      "\r",
+      "<div class=\"relative w-full\">\r",
+      "    <input type=\"text\"\r",
+      "        placeholder=\"Tìm Kiếm...\"\r",
+      "        class=\"block w-full pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40\">\r",
+      "    <div class=\"absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none\">\r",
+      "        <span class=\"material-symbols-outlined text-gray-500\">search</span>\r",
+      "    </div>\r",
+      "</div>"
+    ]
+  },
+  "k-tailwind-outline-input": {
+    "prefix": "k-tailwind-outline-input",
+    "body": [
+      "<div class=\"relative\">",
+      "    <input [(ngModel)]=\"Detail.Slug\"  [ngModelOptions]=\"{ standalone: true }\" type=\"text\" class=\"block border px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer\" placeholder=\" \" />",
+      "    <label class=\"absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1\">Floating outlined</label>",
+      "</div>"
+    ]
+  },
+  "k-for": {
+    "prefix": "k-for",
+    "body": [
+      "@for (item of items; track item.id; let idx = \\$index, e = \\$even, first = \\$first, last = \\$last) {",
+      "  Item #{{ idx }}: {{ item.name }}",
+      "}",
+      "@empty {",
+      "  <span class=\"p-2 text-center\">There are no items.</span>",
+      "  }"
+    ]
+  },
+  "k-switch": {
+    "prefix": "k-switch",
+    "body": [
+      "@switch (condition) {",
+      "    @case (caseA) {",
+      "      Case A.",
+      "    }",
+      "    @case (caseB) {",
+      "      Case B.",
+      "    }",
+      "    @default {",
+      "      Default case.",
+      "    }",
+      "  }"
+    ]
+  },
+  "k-defer": {
+    "prefix": "k-defer",
+    "body": [
+      "@defer ( on <trigger>; when <condition>; prefetch on <trigger>; prefetch when <condition> ) {",
+      "    <!-- deferred template fragment -->",
+      "    <calendar-cmp />",
+      "  } @placeholder ( minimum? <duration> ) {",
+      "    <!-- placeholder template fragment -->",
+      "    <p>Placeholder</p>",
+      "  } @loading ( minimum? <duration>; after? <duration> ) {",
+      "    <!-- loading template fragment -->",
+      "    <img alt=\"loading image\" src=\"loading.gif\" />",
+      "  } @error {",
+      "    <!-- error template fragment -->",
+      "    <p>An loading error occurred</p>",
+      "  }",
+      ""
+    ]
+  },
+  "k-mat-icon": {
+    "prefix": "k-mat-icon",
+    "body": [
+      "<span (click)=\"drawer.close()\" class=\"cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100\">arrow_back</span>"
+    ]
+  },
+  "k-material-drawer": {
+    "prefix": "k-material-drawer\r",
+    "body": [
+      "\r",
+      "\r",
+      "<mat-drawer-container class=\"w-full h-full\" autosize>\r",
+      "  <mat-drawer #drawer class=\"flex flex-col lg:!w-3/4 !w-full h-full\" [position]=\"'end'\" [mode]=\"'side'\" [opened]=\"true\">\r",
+      "    <p>Auto-resizing sidenav</p>\r",
+      "    <router-outlet></router-outlet>\r",
+      "  </mat-drawer>\r",
+      "\r",
+      "<div class=\"flex flex-col space-y-2 h-screen-12 w-full justify-between p-2\">\r",
+      "    <div class=\"cursor-pointer w-full relative flex justify-between items-center space-x-2\">\r",
+      "          <div class=\"flex flex-row space-x-2 items-center\">\r",
+      "              <div class=\"relative w-full\">\r",
+      "                  <input type=\"text\"\r",
+      "                      placeholder=\"Tìm Kiếm...\"\r",
+      "                      class=\"block w-full pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40\">\r",
+      "                  <div class=\"absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none\">\r",
+      "                      <span class=\"material-symbols-outlined text-gray-500\">search</span>\r",
+      "                  </div>\r",
+      "              </div>\r",
+      "              <span (click)=\"AddSetting()\" class=\"cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100\">add_circle</span>\r",
+      "          </div>\r",
+      "    </div>\r",
+      "    <div class=\"my-2 relative flex flex-col h-full overflow-auto\">\r",
+      "        @for(menu of Menus;track menu.id)\r",
+      "        {\r",
+      "        <a class=\"flex flex-row space-x-2 items-center hover:bg-slate-200 rounded-lg p-2\" [href]=\"menu.Url\">\r",
+      "            <span class=\"material-symbols-outlined\">{{menu.Icon}}</span>\r",
+      "            <span class=\"\">{{menu.Title}}</span>\r",
+      "        </a>\r",
+      "        }\r",
+      "\r",
+      "    </div>\r",
+      "    <div class=\"relative flex flex-row justify-center items-center\">3</div>\r",
+      "</div>\r",
+      "</mat-drawer-container>"
+    ]
+  },
+  "k-if": {
+    "prefix": "k-if",
+    "body": [
+      "@if (isAdmin()) {",
+      "    <h2>Admin settings</h2>",
+      "    <!-- ... -->",
+      "  } @else {",
+      "    <h2>User settings</h2>",
+      "    <!-- ... -->  ",
+      "  }",
+      ""
+    ]
+  },
+  "k-angular-searchchose": {
+    "prefix": "k-angular-searchchose\r",
+    "body": [
+      "<app-searchchose \r",
+      "[Icon]=\"'dashboard'\"\r",
+      "[Label]=\"''\"\r",
+      "[ClassMain]=\"'p-2 rounded-lg border'\"\r",
+      "[Backgroup]=\"'bg-white'\"\r",
+      "[Point]=\"\"\r",
+      "[Title]=\"'Demo3'\"\r",
+      "[ClassTitle]=\"'text-red-500'\"\r",
+      "[ClassIcon]=\"'text-yellow-500'\"\r",
+      "[ClassPoint]=\"'text-bg-blue-500'\"\r",
+      "[Type]=\"''\"\r",
+      "[showSearch]=\"true\"\r",
+      "[ListInit]=\"[]\"\r",
+      "[Detail]=\"[]\"\r",
+      "(onSearch)=\"onSearch($event)\"       \r",
+      "></app-searchchose>"
+    ]
+  },
+  "k-angular-listmenu": {
+    "prefix": "k-angular-listmenu\r",
+    "body": [
+      "\r",
+      "@for (item of _UsersService.ListUser(); track item.id; let idx = $index) {\r",
+      "    <div routerLinkActive=\"bg-slate-200 font-bold\"  class=\"cursor-pointer group flex flex-row items-center w-full border hover:bg-slate-200 rounded-lg\">\r",
+      "        <a (click)=\"drawer.open()\" [routerLink]=\"item.id\" class=\"w-full flex flex-col p-2 truncate\">\r",
+      "            <span class=\"font-bold\">{{item.Hoten||'Chưa Cập Nhật Tên'}}</span>\r",
+      "            <span class=\"italic\">{{item.email}}</span>\r",
+      "            <span class=\"text-xs italic\">{{item.email}}</span>\r",
+      "        </a>\r",
+      "        <button mat-icon-button [matMenuTriggerFor]=\"menu1\">\r",
+      "            <span class=\"material-symbols-outlined\">more_vert</span>\r",
+      "          </button>\r",
+      "          <mat-menu #menu1=\"matMenu\">\r",
+      "            <button mat-menu-item (click)=\"Update(item)\">\r",
+      "              <div class=\"flex flex-row items-center\">\r",
+      "                <span class=\"material-symbols-outlined text-blue-500 mr-2\">edit</span>\r",
+      "                <span>Sửa</span>\r",
+      "              </div>\r",
+      "            </button>\r",
+      "            <button mat-menu-item (click)=\"Delete(item)\">\r",
+      "              <div class=\"flex flex-row items-center\">\r",
+      "                <span class=\"material-symbols-outlined text-red-500 mr-2\">delete</span>\r",
+      "                <span>Xoá</span>\r",
+      "              </div>\r",
+      "            </button>\r",
+      "          </mat-menu>\r",
+      "        <!-- <span (click)=\"UpdateSetting(menu)\" class=\"group-hover:block hidden transition-transform duration-300 cursor-pointer material-symbols-outlined p-1 rounded-lg hover:bg-slate-100\">edit</span> -->\r",
+      "        <!-- <span (click)=\"DeleteSetting(menu)\" class=\"group-hover:block hidden transition-transform duration-300 cursor-pointer material-symbols-outlined p-1 rounded-lg hover:bg-slate-100\">delete</span> -->\r",
+      "     </div> \r",
+      " }\r",
+      " @empty {\r",
+      "   <span class=\"p-2 text-center\">There are no items.</span>\r",
+      "   }"
+    ]
+  },
+  "k-angular-defer": {
+    "prefix": "k-angular-defer",
+    "body": [
+      "@defer ( on <trigger>; when <condition>; prefetch on <trigger>; prefetch when <condition> ) {",
+      "    <!-- deferred template fragment -->",
+      "    <calendar-cmp />",
+      "  } @placeholder ( minimum? <duration> ) {",
+      "    <!-- placeholder template fragment -->",
+      "    <p>Placeholder</p>",
+      "  } @loading ( minimum? <duration>; after? <duration> ) {",
+      "    <!-- loading template fragment -->",
+      "    <img alt=\"loading image\" src=\"loading.gif\" />",
+      "  } @error {",
+      "    <!-- error template fragment -->",
+      "    <p>An loading error occurred</p>",
+      "  }",
+      ""
+    ]
+  },
+  "k-angular-material-button-icon": {
+    "prefix": "k-angular-material-button-icon",
+    "body": [
+      "<button mat-icon-button>",
+      "    <mat-icon>more_vert</mat-icon>",
+      "</button>"
+    ]
+  },
+  "k-angular-material-table": {
+    "prefix": "k-angular-material-table\r",
+    "body": [
+      "\r",
+      "<div class=\"w-full\">\r",
+      "    <table class=\"!border w-full cursor-pointer\" mat-table [dataSource]=\"dataSource\" matSort>\r",
+      "        @for (column of displayedColumns; track column) {\r",
+      "          <ng-container [matColumnDef]=\"column\">\r",
+      "            <th class=\"whitespace-nowrap\" mat-header-cell *matHeaderCellDef mat-sort-header>{{ ColumnName[column] }}\r",
+      "            </th>\r",
+      "            <td class=\"whitespace-nowrap\" mat-cell *matCellDef=\"let row;let idx = index\">\r",
+      "                 {{ column === 'STT' ? idx + 1 : row[column] }}\r",
+      "            </td>\r",
+      "         </ng-container>\r",
+      "        }\r",
+      "        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r",
+      "        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\" (click)=\"goToDetail(row);\"></tr>\r",
+      "        <tr class=\"mat-row\" *matNoDataRow>\r",
+      "            <td class=\"mat-cell\" colspan=\"4\">Không tìm thấy \"{{input.value}}\"</td>\r",
+      "        </tr>\r",
+      "    </table>\r",
+      "    <mat-paginator [pageSizeOptions]=\"[5, 10, 25, 100]\" aria-label=\"Select page of giohangs\"></mat-paginator>\r",
+      "</div>"
+    ]
+  }
+}

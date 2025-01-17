@@ -69,6 +69,8 @@ export class DiachiAdminComponent implements OnInit {
   }
   onTinhChange(state: any) {
     this.filterTinh = this.Tinh.filter(v => v.name.toLowerCase().includes(state));    
+    console.log(state);
+    
     if(state &&state.name)
     {
       this.Quan = this.filterQuan = state.districts  

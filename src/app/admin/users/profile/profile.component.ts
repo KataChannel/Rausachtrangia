@@ -7,7 +7,6 @@ import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { BreadcrumbadminComponent } from '../../../breadcrumb/breadcrumbadmin/breadcrumbadmin.component';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +19,6 @@ import { BreadcrumbadminComponent } from '../../../breadcrumb/breadcrumbadmin/br
     MatIconModule,
     RouterLink,
     RouterLinkActive,
-    BreadcrumbadminComponent
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
@@ -48,7 +46,7 @@ export class ProfileComponent implements OnInit {
         if (data) {
           this.User = data
           this.User.Image.src = this.User.Image.Main
-          console.log(this.User); 
+         // console.log(this.User); 
         }
       })
     }

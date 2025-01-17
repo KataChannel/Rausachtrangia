@@ -16,7 +16,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { ListTrangThaiDonhang } from '../../../shared/shared.utils';
+import { ListHinhthucthanhtoan, ListTrangThaiDonhang } from '../../../shared/shared.utils';
 @Component({
   selector: 'app-listdonhang',
   templateUrl: './listdonhang.component.html',
@@ -89,17 +89,20 @@ export class ListdonhangComponent implements AfterViewInit {
   async ngOnInit(): Promise<void> {
     await this._DonhangsService.SearchDonhang(this.SearchParams)
     this.ListDonhang = this._DonhangsService.ListDonhang
-    this.dataSource = new MatTableDataSource(this.ListDonhang().map((v:any)=>({
+    this.dataSource = new MatTableDataSource(this.ListDonhang()
+    .map((v:any)=>({
       id:v?.id,
       MaDonHang:v?.MaDonHang,
-      Thanhtoan:v?.Thanhtoan?.Hinhthuc,
       Diachi:v?.Khachhang?.Diachi,
       Hoten:v?.Khachhang?.Hoten,
       SDT:v?.Khachhang?.SDT,
       Ghichu:v.Ghichu,
       CreateAt:moment(v.CreateAt).format('HH:ss:mm DD/MM/YYYY'),
       Status:`<span class="${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Class} p-2 rounded-lg">${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Title}</span>`,
-    }))); 
+      Thanhtoan:`<span class="${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Class} p-2 rounded-lg">${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Title}</span>`,
+    }))
+  
+  ); 
     console.log(this.dataSource.data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

@@ -26,6 +26,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { SanphamService } from '../../admin/main-admin/sanpham/sanpham.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SanphamblockComponent } from '../../sanpham/sanphamblock/sanphamblock.component';
+import { DonhangsService } from '../../admin/donhang/listdonhang/listdonhang.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -58,6 +59,7 @@ export class HeaderComponent implements OnInit {
   _MainComponent: MainComponent = inject(MainComponent);
   _DanhmucService: DanhmucService = inject(DanhmucService);
   _GiohangService: GiohangService = inject(GiohangService);
+  _DonhangsService: DonhangsService = inject(DonhangsService);
   _UsersService: UsersService = inject(UsersService);
   _AuthService: AuthService = inject(AuthService);
   _SanphamService: SanphamService = inject(SanphamService);
@@ -104,6 +106,7 @@ export class HeaderComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   hasChild = (_: number, node: any) => node.expandable;
   Today:any= new Date()
+  Donhang = signal<any>({});
   Timkiems:any=[]
   constructor(
     private dialog:MatDialog,
@@ -117,11 +120,16 @@ export class HeaderComponent implements OnInit {
       }
       // document.body.classList.toggle('dark', isDarkTheme);
     });
-    this._GiohangService.getDonhang()
-    this._GiohangService.donhang$.subscribe((data: any) => {
-      this.Soluong = data?.Giohangs?.Sanpham?.reduce((acc: any, item: any) => acc + item.Soluong, 0);
-      this.Tongcong = data?.Giohangs?.Sanpham?.reduce((acc: any, item: any) => acc + item.Giachon?.gia * item.Soluong, 0);
-    })
+
+  }
+  Soluong = 0
+  Tongcong = 0
+  options: string[] = ['Option 1', 'Option 2', 'Option 3'];
+  selectedOption: string = '';
+
+  async ngOnInit(): Promise<void> {
+    this._DonhangsService.DonhangInit()
+    this.Donhang = this._DonhangsService.Donhang  
     if(this.Token)
     {
       this._UsersService.getProfile()
@@ -132,15 +140,6 @@ export class HeaderComponent implements OnInit {
         }
       })
     }
-  }
-  Soluong = 0
-  Tongcong = 0
-  options: string[] = ['Option 1', 'Option 2', 'Option 3'];
-  selectedOption: string = '';
-  onSelect(option: string) {
-    this.selectedOption = option;
-  }
-  async ngOnInit(): Promise<void> {
     this.Danhmucs = await this._DanhmucService.SearchDanhmuc(this.SearchParams)
     this.Menus =[
     { id: 1, Title: 'Về Chúng Tôi', Slug: 'blog/gioi-thieu/ve-chung-toi' },
@@ -163,6 +162,14 @@ export class HeaderComponent implements OnInit {
     { id: 3, Title: 'Liên hệ', Slug: 'lien-he' },
   ]
   this.dataSource.data = this.Menus;
+  }
+
+  GetTongCong()
+  {
+    return this.Donhang()?.Giohangs?.reduce((acc: any, item: any) => acc + item.Tongtien, 0);  
+  }
+  onSelect(option: string) {
+    this.selectedOption = option;
   }
 
   toggleTheme() {

@@ -1,18 +1,20 @@
-<div class="bg-gray-50 relative p-4 w-full h-full md:h-auto">
+<div class="container relative p-4 w-full h-full md:h-auto">
   <div class="relative flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2">
 
     <div class="w-full flex flex-col overflow-y-auto">
       <div class="bg-white rounded-lg border border-default-200 col-span-2">
-        <div class="p-4 border-b border-default-200">
+        <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
           <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
+          <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
         </div>
-        <app-giohangcommon (TongcongEmit)="Tinhtongcong($event)" [Donhang]="Donhang" [Giohangs]="Donhang?.Giohangs"></app-giohangcommon>
+
+        <app-giohangcommon (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang" [Giohangs]="Donhang?.Giohangs"></app-giohangcommon>
       </div>
     </div>
 
 
 
-    <div class="lg:w-2/5 w-full rounded-lg flex flex-col space-y-2">
+    <div class="lg:w-2/5 w-full rounded-lg flex flex-col space-y-2 {{Donhang?.Giohangs.length>0?'':'opacity-30'}}">
       <div class="w-full bg-white p-2 rounded-lg border border-default-200">
         <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
           <span class="!text-lg !font-semibold">Tóm Tắt Đơn Hàng</span>
@@ -24,8 +26,15 @@
              <span>{{Tong||0 |number:'1.0-2'}}đ</span>
            </div>
            <div class="flex flex-row justify-between space-x-2 font-bold">
-             <span>Phí Vận Chuyển</span>
-             <span>{{Donhang?.Vanchuyen?.Phivanchuyen||0 |number:'1.0-2'}}đ</span>
+              <p>Phí Vận Chuyển</p>
+              <p class="flex flex-col">
+                  <span>{{(Donhang?.Vanchuyen?.Phivanchuyen||'0'| number:'1.0-0')}}đ</span>
+                
+                  @if(Khoangcach&&Khoangcach.distance&&Khoangcach.distance.text)
+                  {
+                  <span class="text-xs italic text-red-500">({{Khoangcach?.distance?.text}})</span>
+                  }
+              </p>
            </div>
            <div class="flex flex-row justify-between space-x-2 font-bold">
              <span>Giảm Giá</span>
@@ -102,7 +111,7 @@
         <div class="p-2 border-b flex flex-row justify-between items-center">
           <span class="!text-lg !font-semibold text-default-800">Vận Chuyển</span>
           @if(isEditVanchuyen){
-            <button (click)="isEditVanchuyen=false;UpdateThongtin()" mat-icon-button><mat-icon>save</mat-icon></button>
+            <button (click)="isEditVanchuyen=false;UpdateThongtin();UpdatePhiship()" mat-icon-button><mat-icon>save</mat-icon></button>
           }
           @else {
             <button (click)="isEditVanchuyen=true" mat-icon-button><mat-icon>edit</mat-icon></button>
@@ -127,7 +136,7 @@
         <div class="p-2 border-b flex flex-row justify-between items-center">
           <span class="!text-lg !font-semibold text-default-800">Thanh Toán</span>
         </div>
-        <div class="bg-white p-2 rounded-lg mx-auto flex flex-col space-y-3">
+        <div class="bg-white p-2 rounded-lg mx-auto flex flex-col space-y-3 {{Donhang?.Giohangs.length>0?'':'hidden'}}">
           @if(isEditThanhtoan)
           {
           <div>
@@ -136,7 +145,7 @@
               <img loading="lazy" src="/assets/images/QR-Thanh toan-BANK.svg" class="w-40 mx-auto">
               <div class="flex flex-col max-w-xs space-y-2 text-center justify-center">
                 <span>Nội dung CK :</span>
-                <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{Donhang?.MaDonHang}}</span>
+                <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{this._DonhangsService.Donhang()?.MaDonHang}}</span>
                 <span>"Vui lòng ghi đúng nội dung chuyển khoản để chúng tôi có thể cập nhật đơn hàng nhanh
                   nhất"</span>
               </div>
@@ -148,7 +157,7 @@
               <img loading="lazy" src="/assets/images/QR-Thanh toan-MOMO.svg" class="w-40 mx-auto">
               <div class="flex flex-col max-w-xs space-y-2 text-center justify-center">
                 <span>Nội dung CK :</span>
-                <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{Donhang?.MaDonHang}}</span>
+                <span class="p-4 rounded-lg border-2 !font-extrabold text-2xl">{{this._DonhangsService.Donhang()?.MaDonHang}}</span>
                 <span>"Vui lòng ghi đúng nội dung chuyển khoản để chúng tôi có thể cập nhật đơn hàng nhanh
                   nhất"</span>
               </div>
@@ -164,25 +173,22 @@
             </span>
           </div>
 
-
-
-
-
           }
           @else {
 
           <div class="cursor-pointer grid grid-cols-3 gap-4 lg:p-4">
             <div (click)="ChooseMethod('COD')"
-              class="p-4 rounded-lg text-center items-center {{Donhang?.Thanhtoan?.Hinhthuc=='COD'?'text-white bg-[#A52167]':'bg-slate-100'}} hover:text-white hover:bg-[#A52167]">
+              class="flex p-4 rounded-lg text-center items-center justify-center {{Donhang?.Thanhtoan?.Hinhthuc=='COD'?'text-white bg-[#A52167]':'bg-slate-100'}} hover:text-white hover:bg-[#A52167]">
               Tiền Mặt
             </div>
             <div (click)="ChooseMethod('BANK')"
-              class="p-4 rounded-lg text-center  {{Donhang?.Thanhtoan?.Hinhthuc=='BANK'?'text-white bg-[#439c30]':'bg-slate-100'}} hover:text-white hover:bg-[#439c30]">
+              class="flex p-4 rounded-lg text-center items-center justify-center  {{Donhang?.Thanhtoan?.Hinhthuc=='BANK'?'text-white bg-[#439c30]':'bg-slate-100'}} hover:text-white hover:bg-[#439c30]">
               Chuyển Khoản
             </div>
             <div (click)="ChooseMethod('MOMO')"
-              class="p-4 rounded-lg text-center {{Donhang?.Thanhtoan?.Hinhthuc=='MOMO'?'text-white bg-[#ED860A]':'bg-slate-100'}} hover:text-white hover:bg-[#ED860A]">
-              MOMO</div>
+              class="flex p-4 rounded-lg text-center items-center justify-center {{Donhang?.Thanhtoan?.Hinhthuc=='MOMO'?'text-white bg-[#ED860A]':'bg-slate-100'}} hover:text-white hover:bg-[#ED860A]">
+             MOMO
+            </div>
           </div>
           <div class="cursor-pointer text-center">
             <span (click)="XacNhanThanhToan()" class="px-4 py-2 rounded-lg border border-[#A52167] text-[#A52167] hover:bg-[#A52167] hover:text-white">
@@ -203,7 +209,6 @@
   </div>
 </div>
 <ng-template #dialogXemFormin>
-  <!-- <div class="!relative lg:h-[90vh] lg:w-[90vw] p-4"> -->
   <div class="!relative lg:h-[90vh] lg:w-[90vw]">
     <div class="relative flex flex-col space-y-2">
       <app-formin-admin [Type]="'ADMIN'" [isShowAction]="true" [Donhang]="Donhang"></app-formin-admin>

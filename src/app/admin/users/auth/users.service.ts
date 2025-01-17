@@ -1,20 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Token } from '@angular/compiler';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { LocalStorageService } from '../../../shared/localstorage.service';
 import { environment } from '../../../../environments/environment';
 import {
   BehaviorSubject,
   Observable,
-  tap,
-  take,
-  switchMap,
-  map,
-  filter,
-  throwError,
-  of,
-  catchError,
-  ReplaySubject,
 } from 'rxjs';
 @Injectable({
   providedIn: 'root',
@@ -41,6 +30,7 @@ export class UsersService {
   get accessToken(): string {
     return this._LocalStorageService.getItem('token') ?? '';
   }
+  Profile = signal<any>({});
   getUsers() {
     return true
     // return this._httpClient.get<any[]>(`${this.APIURL}/userss`).pipe(
@@ -147,6 +137,7 @@ export class UsersService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
+      this.Profile.set(data);
       this._profile.next(data);
     } catch (error) {
       return console.error(error);

@@ -34,7 +34,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './myorder.component.scss'
 })
 export class MyorderComponent implements OnInit {
-  User: any = {}
+     User: any = {}
     Detail:any={}
     dataSource!: MatTableDataSource<any>;
     displayedColumns: string[] = [
@@ -57,20 +57,21 @@ export class MyorderComponent implements OnInit {
     @ViewChild(MatSort) sort!: MatSort;
  _UsersService: UsersService = inject(UsersService);
  _DonhangsService: DonhangsService = inject(DonhangsService);
-  constructor(private _snackBar: MatSnackBar) {
-      this._UsersService.getProfile()
-      this._UsersService.profile$.subscribe((data) => {
-        if (data) {
-          this.User = data
-          this._DonhangsService.getDonhangByidUser(data.id).then((data1)=>{
-            console.log(data1);
-          })
-         // console.log(this.User); 
-        }
-      })
-    }
+  constructor(private _snackBar: MatSnackBar) {}
   
   ngOnInit() {
+    this._UsersService.getProfile()
+    this._UsersService.profile$.subscribe((data) => {
+      if (data) {
+        this.User = data
+        console.log(data);
+        
+        this._DonhangsService.getDonhangByidUser(data.id).then((data1)=>{
+          console.log(data1);
+        })
+       // console.log(this.User); 
+      }
+    })
     this.dataSource = new MatTableDataSource(ListDonhang); 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

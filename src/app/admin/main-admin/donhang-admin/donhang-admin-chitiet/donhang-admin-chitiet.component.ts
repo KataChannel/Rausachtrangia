@@ -177,10 +177,10 @@ export class DonhangAdminChitietComponent implements OnInit {
         }
         else {
           this._snackBar.open('Đơn hàng chưa được huỷ do chưa nhập lý do.', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'danger',
-            duration: 1000,
+            panelClass: ['snackbar-warning'],
           });
         }
       });

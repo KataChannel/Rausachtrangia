@@ -75,7 +75,7 @@ export const appRoutes: Route[] = [
                 data: { breadcrumb:[
                     {title: 'Đơn hàng',Slug: 'don-hang'}
                 ]},
-                loadComponent: () => import('./admin/main-admin/website/donhang/donhang.component').then(comp => comp.DonhangComponent),
+                loadComponent: () => import('./admin/donhang/site/donhang/donhang.component').then(comp => comp.DonhangComponent),
                 title: 'Đơn Hàng'
             },
             {

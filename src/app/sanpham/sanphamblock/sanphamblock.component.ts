@@ -40,11 +40,11 @@ export class SanphamblockComponent implements OnInit {
     item.Image = data?.Image?.Hinhchinh?.src
     this._DonhangsService.addToCart(item).then(()=>
     {
-      this._snackBar.open('Thêm Vào Giỏ Hàng Thành Công','',{
+      this._snackBar.open('Thêm Vào Giỏ Hàng', '', {
+        duration: 1000,
         horizontalPosition: "end",
         verticalPosition: "top",
-        panelClass:'success',
-        duration: 1000,
+        panelClass: ['snackbar-success'],
       });
     })
   }

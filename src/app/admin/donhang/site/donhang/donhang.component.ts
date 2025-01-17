@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { GiohangService } from '../../website/giohang/giohang.service';
+import { GiohangService } from '../../../main-admin/website/giohang/giohang.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DiachiAdminComponent } from '../../../diachi/diachi-admin/diachi-admin.component';
 import { UsersService } from '../../../users/auth/users.service';
 import moment from 'moment';
-import { SanphamService } from '../../sanpham/sanpham.service';
+import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
 import { ForminAdminComponent } from '../../../../../formin/formin-admin/formin-admin.component';
 import { ListTrangThaiDonhang, ListHinhthucthanhtoan } from '../../../../shared/shared.utils';
 import { TelegramService } from '../../../../shared/telegram.service';
@@ -21,8 +21,8 @@ import { Detail } from './donhang';
 import { MatStepperModule } from '@angular/material/stepper';
 import { GiohangcommonComponent } from '../../../giohang/giohangcommon/giohangcommon.component';
 import { MatIconModule } from '@angular/material/icon';
-import { ChuongtrinhkhuyenmaiAdminService } from '../../admin-chuongtrinhkhuyenmai/admin-chuongtrinhkhuyenmai.service';
-import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.service';
+import { ChuongtrinhkhuyenmaiAdminService } from '../../../main-admin/admin-chuongtrinhkhuyenmai/admin-chuongtrinhkhuyenmai.service';
+import { DonhangsService } from '../../listdonhang/listdonhang.service';
 @Component({
   selector: 'app-donhang',
   standalone:true,
@@ -83,16 +83,21 @@ export class DonhangComponent implements OnInit {
       this.idSP = this.route.snapshot.params['id'];
   }
   async ngOnInit() {
-    console.log(Detail);
     this._DonhangsService.DonhangInit()
     this.Donhang = this._DonhangsService.Donhang()
-    console.log(this.Donhang);
+    if (this.Donhang?.Vanchuyen?.Diachi !== undefined && this.Donhang?.Vanchuyen?.Diachi !== '') {
+      this.UpdatePhiship();
+    }
     
-    this.Detail=Detail
+
     this._UsersService.getProfile()
     this._UsersService.profile$.subscribe((data) => {
       if (data) {
-        this.Profile = data
+        this.Profile = data  
+        this.Donhang.idKH = data.id
+        this.Donhang.Khachhang.Hoten = data.Hoten
+        this.Donhang.Khachhang.Email = data.email
+        this.Donhang.Khachhang.SDT = data.SDT
         switch (data.Role) {
           case "nhanvienbanhang":
             this.ListTrangThaiDonhang = ListTrangThaiDonhang.filter((v:any)=>v.id==1||v.id==2)
@@ -153,10 +158,6 @@ export class DonhangComponent implements OnInit {
   ChooseMethod(item: any) {
     this.Donhang.Thanhtoan.Hinhthuc = item
   }
-  UpdatePhiship()
-  {
-    
-  }
   CloseDrawer()
   {
     // this._DonhangAdminComponent.drawer.close()
@@ -215,10 +216,10 @@ export class DonhangComponent implements OnInit {
         }
         else {
           this._snackBar.open('Đơn hàng chưa được huỷ do chưa nhập lý do.', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'danger',
-            duration: 1000,
+            panelClass: ['snackbar-warning'],
           });
         }
       });
@@ -278,7 +279,10 @@ export class DonhangComponent implements OnInit {
     XacNhanThanhToan()
     {
      this._DonhangsService.createDonhang(this.Donhang).then((data)=>{
+      console.log(data);
+      
       this._DonhangsService.UpdateDonhang(data)
+    //  this._DonhangsService.ClearDonhang()   
       this.isEditThanhtoan = true
      }) 
     }
@@ -290,8 +294,8 @@ export class DonhangComponent implements OnInit {
               horizontalPosition: "end",
               verticalPosition: "top",
               panelClass: ['snackbar-success'],
-            });
-        window.location.href = `cam-on?MaDonHang=${this.Donhang.MaDonHang}`;
+            });  
+        window.location.href = `cam-on?MaDonHang=${this._DonhangsService.Donhang().MaDonHang}`;
       }, 1000);
     }
 
@@ -304,24 +308,122 @@ export class DonhangComponent implements OnInit {
       this.Tongcong = value.Tongcong
       this.Tong = value.Tong
     }
+    GetGiohangsEmit(value:any){ 
+      this.Donhang.Giohangs = value
+      this._DonhangsService.UpdateDonhang(this.Donhang)
+    }
+    Xoagiohang(){ 
+      this.Donhang.Giohangs = []
+      this._DonhangsService.UpdateDonhang(this.Donhang)
+      location.reload()
+    }
     MaKhuyenmai:any=''
     _ChuongtrinhkhuyenmaiAdminService:ChuongtrinhkhuyenmaiAdminService = inject(ChuongtrinhkhuyenmaiAdminService)
     async ApdungKhuyenmai() {
-      const Khuyenmai = await this._ChuongtrinhkhuyenmaiAdminService.getChuongtrinhkhuyenmaiByCode(this.MaKhuyenmai)
-      if (Khuyenmai) {
-        console.log(Khuyenmai);
-        this.Donhang.Khuyenmai =
-        {
-          "id": Khuyenmai.id,
-          "Title": Khuyenmai.Title,
-          "Code": Khuyenmai.Code,
-          "Value": Khuyenmai.Value,
-          "MinValue": Khuyenmai.MinValue,
-          "LoaiKM": Khuyenmai.LoaiKM,
-          "startDate": Khuyenmai.startDate,
-          "endDate": Khuyenmai.endDate,
-          "Type": Khuyenmai.Type,
+      if(this.MaKhuyenmai=='')
+      {
+        this._snackBar.open('Chưa Nhập Code', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-error'],
+        });
+      }
+      else {
+        const Khuyenmai = await this._ChuongtrinhkhuyenmaiAdminService.getChuongtrinhkhuyenmaiByCode(this.MaKhuyenmai)
+        if (Khuyenmai) {
+          console.log(Khuyenmai);
+          this.Donhang.Khuyenmai =
+          {
+            "id": Khuyenmai.id,
+            "Title": Khuyenmai.Title,
+            "Code": Khuyenmai.Code,
+            "Value": Khuyenmai.Value,
+            "MinValue": Khuyenmai.MinValue,
+            "LoaiKM": Khuyenmai.LoaiKM,
+            "startDate": Khuyenmai.startDate,
+            "endDate": Khuyenmai.endDate,
+            "Type": {
+                "Title": Khuyenmai.Type.Title,
+                "Value": Khuyenmai.Type.Value
+            },
+         }
+         if(Khuyenmai?.Type?.Value == 'free')
+          {
+           this.Donhang.Vanchuyen.Phivanchuyen = 0
+          }
+     
+         this._DonhangsService.UpdateDonhang(this.Donhang)
+          this._snackBar.open('Áp Dụng Thành Công', '', {
+            duration: 1000,
+            horizontalPosition: "end",
+            verticalPosition: "top",
+            panelClass: ['snackbar-success'],
+          });
+        }
+        else {
+          this._snackBar.open('Code Không Hợp Lệ', '', {
+            duration: 1000,
+            horizontalPosition: "end",
+            verticalPosition: "top",
+            panelClass: ['snackbar-error'],
+          });
         }
       }
+    }
+    Khoangcach:any
+    isThanhtoan:boolean=false
+    async UpdatePhiship() {
+      if (this.Donhang?.Vanchuyen?.Diachi == undefined || this.Donhang?.Vanchuyen?.Diachi == '') {
+        this._snackBar.open('Vui lòng nhập đại chỉ', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-error'],
+        });
+      }
+      else {
+        this.Khoangcach = await this._DonhangsService.getPhiship(this.Donhang?.Vanchuyen?.Diachi)
+        if (this.Khoangcach.status == "ZERO_RESULTS") {
+          this._snackBar.open('Không tìm được khoảng cách', '', {
+            duration: 1000,
+            horizontalPosition: "end",
+            verticalPosition: "top",
+            panelClass: ['snackbar-error'],
+          });
+        }
+        else {
+          if (this.Khoangcach.distance.value <= 4000) {
+            this.Donhang.Vanchuyen.Phivanchuyen = 20000
+            this.Donhang.Vanchuyen.value = this.Khoangcach.distance.value
+            this.Donhang.Vanchuyen.text = this.Khoangcach.distance.text
+            this._GiohangService.getDonhang()
+            // this._snackBar.open('Đã Cập Nhật Phí Ship', '', {
+            //   duration: 1000,
+            //   horizontalPosition: "end",
+            //   verticalPosition: "top",
+            //   panelClass: ['snackbar-success'],
+            // });
+            this.isThanhtoan = true
+          }
+          else {
+            this.Donhang.Vanchuyen.Phivanchuyen = (this.Khoangcach.distance.value * 5);
+            // this.Donhang.Vanchuyen.Phivanchuyen = ((((this.Khoangcach.distance.value - 2000) / 1000) * 5000) + 18000);
+            this.Donhang.Vanchuyen.value = this.Khoangcach.distance.value
+            this.Donhang.Vanchuyen.text = this.Khoangcach.distance.text
+            this._GiohangService.getDonhang()
+            // this._snackBar.open('Đã Cập Nhật Phí Ship', '', {
+            //   duration: 1000,
+            //   horizontalPosition: "end",
+            //   verticalPosition: "top",
+            //   panelClass: ['snackbar-success'],
+            // });
+            this.isThanhtoan = true
+          }
+        }
+        console.log(this.Donhang);
+        
+      }
+  
     }
 }

@@ -117,7 +117,7 @@ export class DonhangsService {
               this.router.navigate(['/errorserver'], { queryParams: {data:result}});
             }
           }
-          const data = await response.json();          
+          const data = await response.json();   
           this.ListDonhang.set(data.items)
           return data;
       } catch (error) {
@@ -152,7 +152,10 @@ export class DonhangsService {
         }
       }
       const data = await response.json();
+      console.log(data);
+      
       this.Donhang.set(data)
+      return data;
     } catch (error) {
       return console.error(error);
     }
@@ -186,6 +189,7 @@ export class DonhangsService {
       }
       const data = await response.json();
       this.Donhang.set(data)
+      return data;
     } catch (error) {
       return console.error(error);
     }
@@ -199,7 +203,7 @@ export class DonhangsService {
           },
           body: JSON.stringify(dulieu),
         };
-        const response = await fetch(`${environment.APIURL}/donhangs/${dulieu.id}`, options);
+        const response = await fetch(`${environment.APIURL}/donhang/${dulieu.id}`, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -223,6 +227,7 @@ export class DonhangsService {
           }
         }
         this.getAllDonhang()
+        this.Donhang.set(data)
         return data;
     } catch (error) {
         return console.error(error);
@@ -306,11 +311,37 @@ export class DonhangsService {
         Thanhtoan:{Hinhthuc:'COD'},
         Khuyenmai:{}
       }
+      
       this.Donhang.set(Donhang)
     }
     async UpdateDonhang(item: any): Promise<void> {
         this._StorageService.setItem('Donhang', item)
         this.Donhang.set(item)
+    }
+    async ClearDonhang(): Promise<void> {
+        this._StorageService.removeItem('Donhang')
+        this.Donhang.set({})
+    }
+
+    async getPhiship(to:any) {    
+      const from = "119 Lý Chính Thắng, Phường Võ Thị Sáu, Quận 3, TPHCM"
+      try {
+        const options = {
+          method:'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+            const response = await fetch(`https://api.distancematrix.ai/maps/api/distancematrix/json?origins=${from}&destinations=${to}&key=Dph8tdiphuew12KNWnm1gkfBRQJo2x89sBDfgEn9GAY7LEzhhiyxrbodoGhBw3BF`,options);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();  
+            console.log(data);
+            return data.rows[0].elements[0];         
+        } catch (error) {
+            return console.error(error);
+        }
     }
     
 }

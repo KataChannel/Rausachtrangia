@@ -135,7 +135,7 @@ export class DetailSanphamComponent implements OnInit {
         verticalPosition: "top",
         panelClass:"success",
         duration: 1000,
-      });
+      }); 
   }
   GiamSoluong()
   {

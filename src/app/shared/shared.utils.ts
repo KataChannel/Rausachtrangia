@@ -87,7 +87,8 @@ export const ListTrangThaiDonhang: any[] = [
     {id:2,Title:"Đang xử lý", color:'text-white', bg:'bg-[#632B85]', Class:"text-white bg-[#632B85]"},
     {id:3,Title:"Đang Giao",  color:'text-white', bg:'bg-[#FBCD18]', Class:"text-white bg-[#FBCD18]"},
     {id:4,Title:"Hoàn Thành", color:'text-white', bg:'bg-[#32A649]', Class:"text-white bg-[#32A649]"},
-    {id:5,Title:"Huỷ",        color:'text-white', bg:'bg-[#E1232A]', Class:"text-white bg-[#E1232A]"}
+    {id:5,Title:"Huỷ",        color:'text-white', bg:'bg-[#E1232A]', Class:"text-white bg-[#E1232A]"},
+    {id:99,Title:"Đã Xoá",    color:'text-white', bg:'bg-red-500', Class:"text-white bg-red-500"},
   ]
 export const ListRole: any[] =[
   {id:'admin',value:'Admin'},

@@ -43,20 +43,20 @@ export class KhuyenmaisiteComponent implements OnInit {
       if (this.Role == 'Site') {
         this._GiohangService.DonHangAdmin(this.Donhang).then(() => {
           this._snackBar.open('Áp Dụng Mã Khuyến Mãi', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'success',
-            duration: 1000,
+            panelClass: ['snackbar-success'],
           });
         })
       }
       else {
         this._GiohangService.DonHangAdmin(this.Donhang).then(() => {
           this._snackBar.open('Áp Dụng Mã Khuyến Mãi', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'success',
-            duration: 1000,
+            panelClass: ['snackbar-success'],
           });
         })
       }
@@ -69,20 +69,20 @@ export class KhuyenmaisiteComponent implements OnInit {
       if (this.Role == 'Site') {
         this._GiohangService.DonHangAdmin(this.Donhang).then(() => {
           this._snackBar.open('Mã Khuyến Mãi Không Đúng', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'danger',
-            duration: 1000,
+            panelClass: ['snackbar-warning'],
           });
         })
       }
       else {
         this._GiohangService.DonHangAdmin(this.Donhang).then(() => {
           this._snackBar.open('Mã Khuyến Mãi Không Đúng', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'danger',
-            duration: 1000,
+            panelClass: ['snackbar-warning'],
           });
         })
       }

@@ -113,7 +113,8 @@ export class GiohangComponent implements OnInit {
             "Title": Khuyenmai.Type.Title,
             "Value": Khuyenmai.Type.Value
         },
-    }
+     }
+
       this._GiohangService.UpdateGiamgia(this.Donhang).then(()=>
       {
         this._snackBar.open('Áp Dụng Mã Khuyến Mãi','',{

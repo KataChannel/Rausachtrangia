@@ -60,10 +60,14 @@ body {
 .mat-column-STT {
   width: 10px !important;
 }
-.mat-column-Tongtien {
+.mat-column-Tongtien,.mat-column-Soluong,.mat-column-SLTG,.mat-column-TongtienG,.mat-column-SLTN,.mat-column-TongtienN {
   text-align: right !important;
 }
 
+.text-md.mat-mdc-icon-button.mat-mdc-button-base {
+  --mdc-icon-button-state-layer-size: 32px;
+  padding: 4px;
+}
 
 .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
   // color: var(--mdc-snackbar-supporting-text-color, var(--mat-sys-inverse-on-surface));
@@ -75,16 +79,19 @@ body {
 .snackbar-success {
   background-color: #3f51b5; /* Green */
   color: white;
+  border-radius: 5px;
 }
 
 .snackbar-warning {
   background-color: #ff9800; /* Orange */
   color: white;
+  border-radius: 5px;
 }
 
 .snackbar-error {
   background-color: #f44336; /* Red */
   color: white;
+  border-radius: 5px;
 }
 // .danger .mdc-snackbar__surface{
 //   color: white !important;
@@ -118,7 +125,7 @@ body {
   padding: 15px;
 }
 .mdc-data-table__cell, .mdc-data-table__header-cell{
-  padding: 16px !important;
+  padding: 5px 10px !important;
 }
 // .mat-mdc-form-field-bottom-align
 // {
