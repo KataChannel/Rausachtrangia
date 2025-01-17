@@ -15,7 +15,7 @@ export class DonhangService {
   ) { }
   async create(data: any) {
     const Donhang:any=data
-    if(!data.hasOwnProperty('idKH')){
+    if(!data.hasOwnProperty('idKH')&&data.hasOwnProperty('Khachhang')){
       const Khachhang = await this._KhachhangService.create(data.Khachhang)
       Donhang.idKH = Khachhang.id
       Donhang.Khachhang = Khachhang
