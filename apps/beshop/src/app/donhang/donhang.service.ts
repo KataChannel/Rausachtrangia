@@ -47,12 +47,12 @@ export class DonhangService {
   }
   async findid(id: string) {
     const Donhang = await this.DonhangRepository.findOne({ where: { id: id } });
-    return Donhang
+    return Donhang ||{}
   }
   async findbyuser(id: string) {
     const Donhang:any = await this.DonhangRepository.find({ where: { idKH: id } });
     console.error(Donhang);
-    return Donhang
+    return Donhang||{}
   }
   async findSHD(data: any) {
     return await this.DonhangRepository.findOne({
@@ -113,19 +113,26 @@ export class DonhangService {
     return { items, totalCount };
   }
   async update(id: string, data: any) {
-    console.log(id,data);
-    if(data.Giohangs){await this._GiohangService.update(data.Giohangs.id,data.Giohangs)}
-    if(data.Khachhang){await this._KhachhangService.update(data.Khachhang.id,data.Khachhang)}
-    if(id)
-    {
-      await this.DonhangRepository.save(data);
-      const result = await this.DonhangRepository.findOne({ where: { id: id } });
-      return result
-    }
-    else return data
+    this.DonhangRepository.save(data);
+    const result = await this.DonhangRepository.findOne({ where: { id: id } });
+    console.error(result);
+    
+    return result
+  }
+  // async update(id: string, data: any) {
+  //   console.log(id,data);
+  //   if(data.Giohangs){await this._GiohangService.update(data.Giohangs.id,data.Giohangs)}
+  //   if(data.Khachhang){await this._KhachhangService.update(data.Khachhang.id,data.Khachhang)}
+  //   if(id)
+  //   {
+  //     await this.DonhangRepository.save(data);
+  //     const result = await this.DonhangRepository.findOne({ where: { id: id } });
+  //     return result
+  //   }
+  //   else return data
      
  
-  }
+  // }
   async remove(id: string, data: any) {
     if(data.Giohangs){await this._GiohangService.remove(data.Giohangs.id);}
     if(data.Khachhang){await this._KhachhangService.remove(data.Khachhang.id)}
