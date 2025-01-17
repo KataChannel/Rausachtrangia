@@ -10,14 +10,12 @@ export class UsersController {
     private readonly usersService: UsersService,
     private _UsergroupService: UsergroupService,
     ) {}
+
+  @UseGuards(AuthGuard('rausachtrangia'))
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.usersService.read(id);
-  // }
   @Get('findid/:id')
   async findid(@Param('id') id: string) {
     const user = await this.usersService.findid(id);
@@ -32,12 +30,13 @@ export class UsersController {
     user['Groups'] = Groups.find((v)=>v.id==user.idGroup)
     return user
   }
-  @Get('/get/admin')
-  @UseGuards(AuthGuard('tazaskin'))
+  @Get('admin')
+  @UseGuards(AuthGuard('rausachtrangia'))
   findAdmin() {
     return this.usersService.findAdmin();
   }
   @Patch(':id')
+  @UseGuards(AuthGuard('rausachtrangia'))
   update(@Param('id') id: string, @Body() data: any) {
     return this.usersService.update(id, data);
   }
@@ -46,11 +45,13 @@ export class UsersController {
     return await this.usersService.findQuery(SearchParams);
 }
   @Post('changepass')
+  @UseGuards(AuthGuard('rausachtrangia'))
   changepass(@Body() data: any)
   {
     return this.usersService.changepass(data);
   }
   @Delete(':id')
+  @UseGuards(AuthGuard('rausachtrangia'))
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
@@ -70,14 +71,6 @@ export class UsersController {
   async login(@Body() user: any) {
     return await this.usersService.login(user);
   }
-  // @Post('changepass')
-  // async changepass(@Body() dulieu: any) {
-  //   return await this.authService.changepass(dulieu);
-  // }
-  // @Post('randompass')
-  // async randompass(@Body() dulieu: any) {
-  //   return await this.authService.randompass(dulieu);
-  // }
   @UseGuards(AuthGuard('rausachtrangia'))
   @Get('profile')
   async getProfile(@Request() req:any) {

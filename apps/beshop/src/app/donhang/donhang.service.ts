@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
-import { CreateDonhangDto } from './dto/create-donhang.dto';
-import { UpdateDonhangDto } from './dto/update-donhang.dto';
 import { DonhangEntity } from './entities/donhang.entity';
 import { GiohangService } from '../giohang/giohang.service';
 import { KhachhangService } from '../khachhang/khachhang.service';
@@ -16,18 +14,12 @@ export class DonhangService {
     private _KhachhangService: KhachhangService,
   ) { }
   async create(data: any) {
-    const Khachhang = await this._KhachhangService.create(data.Khachhang)
-    const InitGiohang:any ={}  
-    InitGiohang.idKH = Khachhang.id
-    InitGiohang.Total =data.Giohangs.Sanpham.reduce((acc: any, item: any) => acc + item.Soluong * item.Giachon?.gia, 0) || 0;
-    InitGiohang.Sanpham = data.Giohangs.Sanpham
-    InitGiohang.Khachhang = data.Khachhang
-    const Giohang = await this._GiohangService.create(InitGiohang)
-    delete data.Giohangs
-    delete data.Khachhang
     const Donhang:any=data
-    Donhang.idKH = Khachhang.id
-    Donhang.idGiohang = Giohang.id
+    if(!data.hasOwnProperty('idKH')){
+      const Khachhang = await this._KhachhangService.create(data.Khachhang)
+      Donhang.idKH = Khachhang.id
+      Donhang.Khachhang = Khachhang
+    }
     const maxPrice = await this.DonhangRepository.createQueryBuilder('donhang')
     .select('MAX(donhang.Ordering)', 'maxOrdering')
     .getRawOne();
@@ -42,15 +34,24 @@ export class DonhangService {
     return highestOrderEntity?.Ordering ?? null;
   }
   async findAll() {
-    return await this.DonhangRepository.find();
+    const items = await this.DonhangRepository.find();
+    // items?.map(async (v: any) => {
+    //   v.Giohangs = await this._GiohangService.findid(v.idGiohang);
+    //   v.Khachhang = await this._KhachhangService.findid(v.idKH);
+    //   return v; 
+    // })
+    return items
   }
   async getSoluong() {
     return await this.DonhangRepository.findAndCount();
   }
   async findid(id: string) {
-    const Donhang:any = await this.DonhangRepository.findOne({ where: { id: id } });
-    Donhang.Giohangs = await this._GiohangService.findid(Donhang.idGiohang)
-    Donhang.Khachhang = await this._KhachhangService.findid(Donhang.idKH)
+    const Donhang = await this.DonhangRepository.findOne({ where: { id: id } });
+    return Donhang
+  }
+  async findbyuser(id: string) {
+    const Donhang:any = await this.DonhangRepository.find({ where: { idKH: id } });
+    console.error(Donhang);
     return Donhang
   }
   async findSHD(data: any) {
@@ -84,6 +85,7 @@ export class DonhangService {
   }
   async findQuery(params: any) {
     console.error(params);
+
     const queryBuilder = this.DonhangRepository.createQueryBuilder('donhang');
     if (params.Batdau && params.Ketthuc) {
       queryBuilder.andWhere('donhang.CreateAt BETWEEN :startDate AND :endDate', {
@@ -97,17 +99,17 @@ export class DonhangService {
     if (params.hasOwnProperty('isDelete')) {
       queryBuilder.andWhere('donhang.isDelete = :isDelete', { isDelete: `${params.isDelete}` });
     }
-    let [item, totalCount]:any = await queryBuilder
+    let [items, totalCount]:any = await queryBuilder
       .limit(params.pageSize || 10) // Set a default page size if not provided
       .offset(params.pageNumber * params.pageSize || 0)
       .getManyAndCount();
-      const items = await Promise.all(
-        item.map(async (v: any) => {
-          v.Giohangs = await this._GiohangService.findid(v.idGiohang);
-          v.Khachhang = await this._KhachhangService.findid(v.idKH);
-          return v; 
-        })
-      );         
+      // const items = await Promise.all(
+      //   item.map(async (v: any) => {
+      //     v.Giohangs = await this._GiohangService.findid(v.idGiohang);
+      //     v.Khachhang = await this._KhachhangService.findid(v.idKH);
+      //     return v; 
+      //   })
+      // );         
     return { items, totalCount };
   }
   async update(id: string, data: any) {

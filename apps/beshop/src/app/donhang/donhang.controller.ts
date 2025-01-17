@@ -1,7 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import {DonhangService } from './donhang.service';
-import { CreateDonhangDto } from './dto/create-donhang.dto';
-import { UpdateDonhangDto } from './dto/update-donhang.dto';
 @Controller('donhang')
 export class DonhangController {
   constructor(private readonly donhangService:DonhangService) {}
@@ -21,6 +19,10 @@ export class DonhangController {
   @Get('findid/:id')
   async findOne(@Param('id') id: string) {
     return await this.donhangService.findid(id);
+  }
+  @Get('findbyuser/:id')
+  async findbyuser(@Param('id') id: string) {
+    return await this.donhangService.findbyuser(id);
   }
   @Get('findslug/:slug')
   async findslug(@Param('slug') slug: string) {

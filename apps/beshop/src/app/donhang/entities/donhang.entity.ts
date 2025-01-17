@@ -21,9 +21,13 @@ export class DonhangEntity {
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
   Thanhtoan: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
+  Khachhang: string;
+  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
   Vanchuyen: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
   Khuyenmai: string;
+  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
+  Giohangs: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
   TimePrint: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
