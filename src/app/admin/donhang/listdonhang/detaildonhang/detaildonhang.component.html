@@ -50,7 +50,7 @@
               <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
               <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
             </div>
-            @if(Donhang?.Giohangs?.length>0){
+            @if(Donhang?.Giohangs?.length>=0){
             <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
             }
           </div>

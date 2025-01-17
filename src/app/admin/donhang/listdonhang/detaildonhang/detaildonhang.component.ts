@@ -77,26 +77,24 @@ export class DetailDonhangComponent implements OnInit {
   isEditVanchuyen:boolean=false
   isEditThanhtoan:boolean=false
   isEditGhichu:boolean=false
-  Donhang:any={}
+  Donhang:any={Giohangs:[],Thanhtoan:{Hinhthuc:'COD'}}
   constructor(
      private dialog:MatDialog,
      private _snackBar: MatSnackBar,
-     ) {
-      this.idDonhang = this.route.snapshot.params['id'];    
-  }
+     ) {}
   async ngOnInit() {
-    await this._DonhangsService.getDonhangByid(this.idDonhang).then((data)=>
-    {
-      if(data){
-        this._ListdonhangComponent.drawer.open();
-        this.Donhang = this._DonhangsService.Donhang() || {};
-        if (this.Donhang?.Giohangs?.length>0 && this.Donhang?.Vanchuyen?.Diachi !== undefined && this.Donhang?.Vanchuyen?.Diachi !== '') {
-          this.UpdatePhiship();
-        }
-        console.log(this.Donhang);
-        
-      }  
-    })
+    this.idDonhang = this.route.snapshot.params['id'];
+      await this._DonhangsService.getDonhangByid(this.idDonhang).then((data)=>
+        {
+          if(data){
+            this._ListdonhangComponent.drawer.open();
+            this.Donhang = this._DonhangsService.Donhang() || {};
+            if (this.Donhang?.Giohangs?.length>0 && this.Donhang?.Vanchuyen?.Diachi !== undefined && this.Donhang?.Vanchuyen?.Diachi !== '') {
+              this.UpdatePhiship();
+            }
+            console.log(this.Donhang);    
+          }  
+      })
     this._SanphamService.getAllSanpham()
     this._SanphamService.sanphams$.subscribe((data:any)=>{if(data){
       this.FilterSanphams = this.Sanphams=data.map((v:any)=>({
@@ -383,7 +381,6 @@ export class DetailDonhangComponent implements OnInit {
     }
   goBack()
   {
-
     this._router.navigate(['admin/donhang'])
     this._ListdonhangComponent.drawer.close()
   }

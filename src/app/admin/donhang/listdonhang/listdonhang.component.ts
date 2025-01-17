@@ -99,8 +99,8 @@ export class ListdonhangComponent implements AfterViewInit {
       SDT:v?.Khachhang?.SDT,
       Ghichu:v.Ghichu,
       CreateAt:moment(v.CreateAt).format('HH:ss:mm DD/MM/YYYY'),
-      Status:`<span class="${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Class} p-2 rounded-lg">${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Title}</span>`,
-      Thanhtoan:`<span class="${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Class} p-2 rounded-lg">${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Title}</span>`,
+      Status:`<span class="whitespace-nowrap ${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Class} p-2 rounded-lg">${ListTrangThaiDonhang.find((v1)=>v1.id==v.Status)?.Title}</span>`,
+      Thanhtoan:`<span class="whitespace-nowrap ${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Class} p-2 rounded-lg">${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Title}</span>`,
     }))
   
   ); 
@@ -159,8 +159,11 @@ export class ListdonhangComponent implements AfterViewInit {
   }
   Create()
   {
-    this.drawer.open();
-    this._router.navigate(['admin/donhang', 0])
+    this._DonhangsService.createDonhang({Giohangs:[],Thanhtoan:{Hinhthuc:'COD'}}).then((v:any)=>{
+      console.log(v);
+      this.drawer.open();
+     this._router.navigate(['admin/donhang', v.id])
+    })
   }
   // goToDetail(item:any)
   // {
