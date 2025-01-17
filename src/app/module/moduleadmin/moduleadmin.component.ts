@@ -187,10 +187,10 @@ export class moduleadminComponent implements OnInit {
        item.Status=item1.id
         this._GiohangService.UpdateDonhang(item).then(() => {
           this._snackBar.open('Cập Nhật Thành Công', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'success',
-            duration: 1000,
+            panelClass: ['snackbar-success'],
           });
         })
        }

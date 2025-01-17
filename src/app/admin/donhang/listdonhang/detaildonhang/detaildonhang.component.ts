@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { DiachiAdminComponent } from '../../../diachi/diachi-admin/diachi-admin.component';
 import { UsersService } from '../../../users/auth/users.service';
-import moment from 'moment';
 import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
 import { ForminAdminComponent } from '../../../../../formin/formin-admin/formin-admin.component';
 import { ListTrangThaiDonhang, ListHinhthucthanhtoan } from '../../../../shared/shared.utils';
@@ -78,51 +77,25 @@ export class DetailDonhangComponent implements OnInit {
   isEditVanchuyen:boolean=false
   isEditThanhtoan:boolean=false
   isEditGhichu:boolean=false
-  Donhang:any;
+  Donhang:any={}
   constructor(
      private dialog:MatDialog,
      private _snackBar: MatSnackBar,
      ) {
-      this.idDonhang = this.route.snapshot.params['id'];      
+      this.idDonhang = this.route.snapshot.params['id'];    
   }
   async ngOnInit() {
-    await this._DonhangsService.getDonhangByid(this.idDonhang).then((data:any) => {
-      if(data)
-      {
-        console.log(data);
-        
+    await this._DonhangsService.getDonhangByid(this.idDonhang).then((data)=>
+    {
+      if(data){
         this._ListdonhangComponent.drawer.open();
-      }
-    })
-    this.Donhang = this._DonhangsService.Donhang()
-    if (this.Donhang?.Giohangs.length>0 && this.Donhang?.Vanchuyen?.Diachi !== undefined && this.Donhang?.Vanchuyen?.Diachi !== '') {
-      this.UpdatePhiship();
-    }
-    this._UsersService.getProfile()
-    this._UsersService.profile$.subscribe((data) => {
-      if (data) {
-        this.Profile = data  
-        this.Donhang.idKH = data.id
-        this.Donhang.Khachhang.Hoten = data.Hoten
-        this.Donhang.Khachhang.Email = data.email
-        this.Donhang.Khachhang.SDT = data.SDT
-        switch (data.Role) {
-          case "nhanvienbanhang":
-            this.ListTrangThaiDonhang = ListTrangThaiDonhang.filter((v:any)=>v.id==1||v.id==2)
-            break;
-          case "nhanvienkho":
-            this.ListTrangThaiDonhang = ListTrangThaiDonhang.filter((v:any)=>v.id==3)
-            break;
-          case "nhanvienketoan":
-            this.ListTrangThaiDonhang = ListTrangThaiDonhang.filter((v:any)=>v.id==4)
-            break;
-          case "admin":
-            this.ListTrangThaiDonhang=ListTrangThaiDonhang
-            break;
-          default:this.ListTrangThaiDonhang=[]
-            break;
-        }        
-      }
+        this.Donhang = this._DonhangsService.Donhang() || {};
+        if (this.Donhang?.Giohangs?.length>0 && this.Donhang?.Vanchuyen?.Diachi !== undefined && this.Donhang?.Vanchuyen?.Diachi !== '') {
+          this.UpdatePhiship();
+        }
+        console.log(this.Donhang);
+        
+      }  
     })
     this._SanphamService.getAllSanpham()
     this._SanphamService.sanphams$.subscribe((data:any)=>{if(data){
@@ -182,6 +155,16 @@ export class DetailDonhangComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(() => {
     });
+  }
+  CoppyDon()
+  {
+    delete this.Donhang.id
+    this._DonhangsService.createDonhang(this.Donhang).then((data:any)=>{
+     setTimeout(() => {
+      window.location.href = `admin/donhang/${data.id}`;
+     }, 1000);
+
+    })
   }
   GetStatus(item:any,field:any)
   {

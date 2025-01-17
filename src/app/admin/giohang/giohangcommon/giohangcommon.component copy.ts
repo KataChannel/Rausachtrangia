@@ -34,7 +34,8 @@ import { UsersService } from '../../users/auth/users.service';
   styleUrl: './giohangcommon.component.scss'
 })
 export class GiohangcommonComponent {
-  @Input() Donhang:any={Giohangs:[]}
+  @Input() Giohangs:any[]=[]
+  @Input() Donhang:any={}
   @Input() isEdit:boolean=false
   @Input() isAdmin:boolean=false
   @Output() TongcongEmit = new EventEmitter();
@@ -69,6 +70,7 @@ export class GiohangcommonComponent {
   @ViewChild('ChonSanphamDialog') ChonSanphamDialog!: TemplateRef<any>;
       _SanphamService:SanphamService = inject(SanphamService)
       _UsersService:UsersService = inject(UsersService)
+    Profile = signal<any>({});
     constructor(
       private dialog:MatDialog,
       private _snackBar:MatSnackBar  
@@ -92,9 +94,14 @@ export class GiohangcommonComponent {
           'Soluong':'Số Lượng',
           'Tongtien':'Tổng Tiền', 
         }
-      }    
-      console.log(this.Donhang.Giohangs);
-      this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
+
+
+
+
+
+      }
+        await this._UsersService.getProfile()       
+        this.dataSource = new MatTableDataSource(this.Giohangs); 
         await this._SanphamService.getAllSanpham()
          this._SanphamService.sanphams$.subscribe((data:any)=>{if(data){
           // data.forEach((item: any) => {
@@ -133,45 +140,45 @@ export class GiohangcommonComponent {
         const input = value.target as HTMLInputElement;
         if(Number(input.value)<1)
           {
-            this.Donhang.Giohangs[idx].Soluong = 1
+            this.Giohangs[idx].Soluong = 1
             this._snackBar.open(`${fieldSL} Phải Từ 1 Trở Lên`, '', {
               duration: 1000,
               horizontalPosition: "end",
               verticalPosition: "top",
               panelClass: ['snackbar-error'],
             });
-            console.log(this.Donhang.Giohangs[idx].Soluong);
+            console.log(this.Giohangs[idx].Soluong);
             
           }
           else {
-            this.Donhang.Giohangs[idx].Soluong=Number(input.value)
-            this.Donhang.Giohangs[idx].Tongtien = Number(input.value)*this.Donhang.Giohangs[idx].GiaCoSo
+            this.Giohangs[idx].Soluong=Number(input.value)
+            this.Giohangs[idx].Tongtien = Number(input.value)*this.Giohangs[idx].GiaCoSo
           }
-          this.GiohangsEmit.emit(this.Donhang.Giohangs)
+          this.GiohangsEmit.emit(this.Giohangs)
       }
       ChangeSoluong(idx:any,method:any,fieldTong:any,fieldSL:any){
-        this.Donhang.Giohangs[idx][fieldSL]=Number(this.Donhang.Giohangs[idx][fieldSL])||0
-        if (this.Donhang.Giohangs[idx][fieldSL] <= 1 && method === 'giam') {
+        this.Giohangs[idx][fieldSL]=Number(this.Giohangs[idx][fieldSL])||0
+        if (this.Giohangs[idx][fieldSL] <= 1 && method === 'giam') {
           this._snackBar.open(`${fieldSL} phải từ 1 trở lên`, '', {
             duration: 1000,
             horizontalPosition: 'end',
             verticalPosition: 'top',
             panelClass: ['snackbar-error'],
           });
-          this.Donhang.Giohangs[idx][fieldSL] = 1;
+          this.Giohangs[idx][fieldSL] = 1;
         }
         else {
           if(method=='giam'){
-            this.Donhang.Giohangs[idx][fieldSL]--
-            this.Donhang.Giohangs[idx][fieldTong] = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
+            this.Giohangs[idx][fieldSL]--
+            this.Giohangs[idx][fieldTong] = this.Giohangs[idx][fieldSL]*this.Giohangs[idx].GiaCoSo
           }
           else {
-            this.Donhang.Giohangs[idx][fieldSL]++
-            this.Donhang.Giohangs[idx][fieldTong] = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
+            this.Giohangs[idx][fieldSL]++
+            this.Giohangs[idx][fieldTong] = this.Giohangs[idx][fieldSL]*this.Giohangs[idx].GiaCoSo
           }
         }
-        console.log(this.Donhang.Giohangs);
-        this.GiohangsEmit.emit(this.Donhang.Giohangs)
+        console.log(this.Giohangs);
+        this.GiohangsEmit.emit(this.Giohangs)
       }
       AddSanpham()
       {
@@ -197,6 +204,7 @@ export class GiohangcommonComponent {
       Chonsanpham(data:any,giagoc:any)
       {
         console.log(data);     
+        console.log(giagoc);     
           let item:any={}
           item = giagoc
           if(item.MaSP=='-1')
@@ -212,11 +220,11 @@ export class GiohangcommonComponent {
           item.Soluong=1
           item.Title = data.Title
           item.Image = data?.Image?.Hinhchinh?.src
-          const existingItemIndex =  this.Donhang.Giohangs?.findIndex((v: any) => v.MaSP === data.MaSP);
+          const existingItemIndex =  this.Giohangs?.findIndex((v: any) => v.MaSP === data.MaSP);
           if (existingItemIndex !== -1) {
-                 this.Donhang.Giohangs[existingItemIndex].Soluong += Number(item.Soluong);
-                 this.Donhang.Giohangs[existingItemIndex].SLTT += Number(item.Soluong) * parseFloat(Number(item.khoiluong).toFixed(2));
-                 this.Donhang.Giohangs[existingItemIndex].Tongtien = this.Donhang.Giohangs[existingItemIndex].SLTT*this.Donhang.Giohangs[existingItemIndex].GiaCoSo
+                 this.Giohangs[existingItemIndex].Soluong += Number(item.Soluong);
+                 this.Giohangs[existingItemIndex].SLTT += Number(item.Soluong) * parseFloat(Number(item.khoiluong).toFixed(2));
+                 this.Giohangs[existingItemIndex].Tongtien = this.Giohangs[existingItemIndex].SLTT*this.Giohangs[existingItemIndex].GiaCoSo
            } else {
                  item.SLTT = Number(item.khoiluong)
                  item.Tongtien = item.SLTT*item.GiaCoSo
@@ -224,13 +232,13 @@ export class GiohangcommonComponent {
                  item.TongtienG = 0
                  item.SLTN = 0
                  item.TongtienN = 0
-                 this.Donhang.Giohangs.push(item);
+                 this.Giohangs.push(item);
            }
           console.log(item);
         
-          console.log(this.Donhang.Giohangs);
-          this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
-            this.GiohangsEmit.emit(this.Donhang.Giohangs)
+          console.log(this.Giohangs);
+          this.dataSource = new MatTableDataSource(this.Giohangs); 
+            this.GiohangsEmit.emit(this.Giohangs)
           this.dialog.closeAll()
         } 
 
@@ -238,22 +246,22 @@ export class GiohangcommonComponent {
       }
       Xoasanpham(item:any){
         console.log(item);
-        this.Donhang.Giohangs = this.Donhang.Giohangs.filter((v:any)=>v.MaSP!=item.MaSP)
-        this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
-        this.GiohangsEmit.emit(this.Donhang.Giohangs)
+        this.Giohangs = this.Giohangs.filter((v)=>v.MaSP!=item.MaSP)
+        this.dataSource = new MatTableDataSource(this.Giohangs); 
+        this.GiohangsEmit.emit(this.Giohangs)
       }
       Xoagiohang(){ 
-        this.Donhang.Giohangs = []
-        this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
-        this.GiohangsEmit.emit(this.Donhang.Giohangs)
+        this.Giohangs = []
+        this.dataSource = new MatTableDataSource(this.Giohangs); 
+        this.GiohangsEmit.emit(this.Giohangs)
       }
-      TinhTong(items:any,fieldTong:any){  
-        const subtotal = items?.reduce((sum:any, item:any) => sum + (item['Tongtien'] || 0), 0) || 0;
-        const shippingFee = this.Donhang?.Vanchuyen?.Phivanchuyen || 0;
-        const discount = this.Donhang?.Khuyenmai?.value || 0;
-        const tax = this.Donhang?.Thue || 0;
-        const grandTotal = subtotal + shippingFee + discount + tax;
-        this.TongcongEmit.emit({Tongcong:grandTotal,Tong:subtotal})
-        return items?.reduce((sum:any, item:any) => sum + item[fieldTong], 0);
+      TinhTong(items:any,fieldTong:any){
+        const Tong =items.reduce((sum:any, item:any) => sum + item[fieldTong], 0);
+        const Tongcong = items.reduce((sum:any, item:any) => sum + item[fieldTong], 0)+
+        (this.Donhang?.Vanchuyen?.Phivanchuyen||0)+
+        (this.Donhang?.Khuyenmai?.value||0) +
+        (this.Donhang?.Thue||0)
+        this.TongcongEmit.emit({Tongcong:Tongcong,Tong:Tong})
+        return items.reduce((sum:any, item:any) => sum + item[fieldTong], 0);
       }
     }

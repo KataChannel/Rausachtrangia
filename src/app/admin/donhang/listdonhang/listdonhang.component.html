@@ -52,6 +52,10 @@
                         {
                            {{idx + 1}}
                         }
+                        @else if(column === 'MaDonHang')
+                        {
+                          <a [routerLink]="[row.id]" class="hover:text-blue-500">{{row[column]}}</a>
+                        }
                         @else {
                           <div [innerHTML]="row[column]"></div>
                         }
@@ -59,7 +63,7 @@
                  </ng-container>
                 }
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-slate-100 {{Detail?.id==row.id?'!bg-slate-300':''}}" (click)="goToDetail(row)"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-slate-100 {{Detail?.id==row.id?'!bg-slate-300':''}}" [routerLink]="[row.id]"></tr>
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell p-4" colspan="4">Không tìm thấy "{{input.value}}"</td>
                 </tr>

@@ -7,7 +7,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DonhangsService } from './listdonhang.service';
@@ -34,7 +34,8 @@ import { ListHinhthucthanhtoan, ListTrangThaiDonhang } from '../../../shared/sha
     MatButtonModule,
     MatSelectModule,
     FormsModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    RouterLink
   ],
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -89,7 +90,7 @@ export class ListdonhangComponent implements AfterViewInit {
   async ngOnInit(): Promise<void> {
     await this._DonhangsService.SearchDonhang(this.SearchParams)
     this.ListDonhang = this._DonhangsService.ListDonhang
-    this.dataSource = new MatTableDataSource(this.ListDonhang()
+    this.dataSource = new MatTableDataSource(this.ListDonhang().sort((a:any,b:any)=>b.Ordering-a.Ordering)
     .map((v:any)=>({
       id:v?.id,
       MaDonHang:v?.MaDonHang,
@@ -118,14 +119,12 @@ export class ListdonhangComponent implements AfterViewInit {
     
   }
   ngAfterViewInit() { 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
-    this.paginator._intl.nextPageLabel = 'Tiếp Theo';
-    this.paginator._intl.previousPageLabel = 'Về Trước';
-    this.paginator._intl.firstPageLabel = 'Trang Đầu';
-    this.paginator._intl.lastPageLabel = 'Trang Cuối';
-    this.paginator.pageSize = 30
+      this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
+      this.paginator._intl.nextPageLabel = 'Tiếp Theo';
+      this.paginator._intl.previousPageLabel = 'Về Trước';
+      this.paginator._intl.firstPageLabel = 'Trang Đầu';
+      this.paginator._intl.lastPageLabel = 'Trang Cuối';
+      this.paginator.pageSize = 30
   }
   onSelectionChange(event: MatSelectChange) {
     switch (event.value) {
@@ -163,10 +162,10 @@ export class ListdonhangComponent implements AfterViewInit {
     this.drawer.open();
     this._router.navigate(['admin/donhang', 0])
   }
-  goToDetail(item:any)
-  {
-    this.drawer.open();
-    this.Detail=item
-    this._router.navigate(['admin/donhang', item.id])  
-  }
+  // goToDetail(item:any)
+  // {
+  //   this.drawer.open();
+  //   this.Detail=item
+  //   this._router.navigate(['admin/donhang', item.id])  
+  // }
 }

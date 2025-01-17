@@ -3,7 +3,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { GiohangService } from '../../../main-admin/website/giohang/giohang.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -17,15 +17,14 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
 import { ForminAdminComponent } from '../../../../../formin/formin-admin/formin-admin.component';
 import { ListTrangThaiDonhang, ListHinhthucthanhtoan } from '../../../../shared/shared.utils';
 import { TelegramService } from '../../../../shared/telegram.service';
-import { Detail } from './donhang';
 import { MatStepperModule } from '@angular/material/stepper';
 import { GiohangcommonComponent } from '../../../giohang/giohangcommon/giohangcommon.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ChuongtrinhkhuyenmaiAdminService } from '../../../main-admin/admin-chuongtrinhkhuyenmai/admin-chuongtrinhkhuyenmai.service';
 import { DonhangsService } from '../../listdonhang/listdonhang.service';
+import { ListdonhangComponent } from '../listdonhang.component';
 @Component({
-  selector: 'app-donhang',
-  standalone:true,
+  selector: 'app-detaildonhang',
   imports:[
     InputTextModule,
     MatSelectModule,
@@ -44,22 +43,24 @@ import { DonhangsService } from '../../listdonhang/listdonhang.service';
     FormsModule,
     MatInputModule,
     CommonModule,
-   DiachiAdminComponent,
-   GiohangcommonComponent,
-   MatIconModule
+    DiachiAdminComponent,
+    GiohangcommonComponent,
+    MatIconModule
   ],
-  templateUrl: './donhang.component.html',
-  styleUrls: ['./donhang.component.css']
+  templateUrl: './detaildonhang.component.html',
+  styleUrl: './detaildonhang.component.scss'
 })
-
-export class DonhangComponent implements OnInit {
+export class DetailDonhangComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   // _DonhangAdminComponent: DonhangAdminComponent = inject(DonhangAdminComponent);
   _GiohangService:GiohangService = inject(GiohangService)
   _SanphamService:SanphamService = inject(SanphamService)
   _DonhangsService:DonhangsService = inject(DonhangsService)
-  idSP:any;
+  _router: Router = inject(Router)
+  idDonhang:any;
   Detail:any;
+  isEdit:boolean=false
+  isDelete:boolean=false
   Giohangs: any[] = []
   ListTrangThaiDonhang:any=ListTrangThaiDonhang
   ListHinhthucthanhtoan:any=ListHinhthucthanhtoan
@@ -68,6 +69,7 @@ export class DonhangComponent implements OnInit {
   @ViewChild('ChonSanphamDialog') ChonSanphamDialog!: TemplateRef<any>;
   _UsersService: UsersService = inject(UsersService)
   _TelegramService: TelegramService = inject(TelegramService)
+  _ListdonhangComponent:ListdonhangComponent = inject(ListdonhangComponent)
   Sanphams:any[]=[]
   FilterSanphams:any[]=[]
   Sanpham:any={}
@@ -75,29 +77,35 @@ export class DonhangComponent implements OnInit {
   isEditKhachhang:boolean=false
   isEditVanchuyen:boolean=false
   isEditThanhtoan:boolean=false
-  Donhang:any;
+  isEditGhichu:boolean=false
+ Donhang = signal<any>({});
   constructor(
      private dialog:MatDialog,
      private _snackBar: MatSnackBar,
      ) {
-      this.idSP = this.route.snapshot.params['id'];
+      this.idDonhang = this.route.snapshot.params['id'];    
   }
   async ngOnInit() {
-    this._DonhangsService.DonhangInit()
-    this.Donhang = this._DonhangsService.Donhang()
-    if (this.Donhang?.Vanchuyen?.Diachi !== undefined && this.Donhang?.Vanchuyen?.Diachi !== '') {
+    await this._DonhangsService.getDonhangByid(this.idDonhang).then((data)=>
+    {
+      if(data){
+        this._ListdonhangComponent.drawer.open();
+      }  
+    })
+    this.Donhang = this._DonhangsService.Donhang
+
+
+    if (this.Donhang()?.Giohangs.length>0 && this.Donhang()?.Vanchuyen?.Diachi !== undefined && this.Donhang()?.Vanchuyen?.Diachi !== '') {
       this.UpdatePhiship();
     }
-    
-
     this._UsersService.getProfile()
     this._UsersService.profile$.subscribe((data) => {
       if (data) {
         this.Profile = data  
-        this.Donhang.idKH = data.id
-        this.Donhang.Khachhang.Hoten = data.Hoten
-        this.Donhang.Khachhang.Email = data.email
-        this.Donhang.Khachhang.SDT = data.SDT
+        this.Donhang().idKH = data.id
+        this.Donhang().Khachhang.Hoten = data.Hoten
+        this.Donhang().Khachhang.Email = data.email
+        this.Donhang().Khachhang.SDT = data.SDT
         switch (data.Role) {
           case "nhanvienbanhang":
             this.ListTrangThaiDonhang = ListTrangThaiDonhang.filter((v:any)=>v.id==1||v.id==2)
@@ -116,18 +124,6 @@ export class DonhangComponent implements OnInit {
         }        
       }
     })
-    if(this.idSP)
-    {
-     await this._GiohangService.getAdDonhangByid(this.idSP)
-      this._GiohangService.addonhang$.subscribe((data:any)=>{
-        if(data)
-        {    
-          console.log(data);     
-          this.Detail=Detail
-        }
-      })
-      // this._DonhangAdminComponent.drawer.open()
-    }
     this._SanphamService.getAllSanpham()
     this._SanphamService.sanphams$.subscribe((data:any)=>{if(data){
       this.FilterSanphams = this.Sanphams=data.map((v:any)=>({
@@ -150,34 +146,34 @@ export class DonhangComponent implements OnInit {
     console.log(this.FilterSanphams);
     
   }
+  SaveData()
+  {
+    if(this.idDonhang=='0')
+    {
+      //ListDonhang.push(this.Detail.Data)
+    }
+    else
+    {
+     // ListDonhang[this.idDonhang]=this.Detail.Data
+    }
+    this.isEdit=false
+  }
+  XoaDonhang()
+  {
+    this.Donhang().Status=99
+    this._DonhangsService.updateOneDonhang(this.Donhang).then((data:any) => {
+      window.location.href = `admin/donhang`;
+      this._ListdonhangComponent.drawer.close()
+    })
+  }
   UpdateThongtin()
   {
-    this._DonhangsService.UpdateDonhang(this.Donhang)
+    this._DonhangsService.updateOneDonhang(this.Donhang)
   }
   // Donhang:any= {Thanhtoan:{Hinhthuc:'BANK'}}
   ChooseMethod(item: any) {
-    this.Donhang.Thanhtoan.Hinhthuc = item
-  }
-  CloseDrawer()
-  {
-    // this._DonhangAdminComponent.drawer.close()
-  }
-  GetSubTotal(data: any, field: any, field1: any) {    
-    return this._GiohangService.getSum(data,field,field1)
-  }
-  GetSubTotalThucte(data: any, field: any, field1: any) {    
-    const items = data?.map((v:any)=>(v.Giachon))    
-    return this._GiohangService.getSumThucte(items,field,field1)
-  }
-  GetTotalThucte(donhang:any,giohang:any,soluong:any,gia:any,thue:any)
-  {    
-    const result = (this.GetSubTotalThucte(giohang, soluong, gia) + Number(donhang.Vanchuyen.Phivanchuyen||0) - Number(donhang.Giamgia||0) + this.GetSubTotal(giohang, thue, ''))
-    return result
-  }
-  GetTotal(donhang:any,giohang:any,soluong:any,gia:any,thue:any)
-  {
-    const result = (this.GetSubTotal(giohang, soluong, gia) + Number(donhang.Vanchuyen.Phivanchuyen||0) - Number(donhang.Giamgia||0) + this.GetSubTotal(giohang, thue, ''))
-    return result
+    this.Donhang().Thanhtoan.Hinhthuc = item
+    this._DonhangsService.updateOneDonhang(this.Donhang)
   }
   XemFormin(teamplate: TemplateRef<any>): void {
     const Lanin = this.Detail.TimePrint.length+1
@@ -185,8 +181,17 @@ export class DonhangComponent implements OnInit {
     const dialogRef = this.dialog.open(teamplate, {
     });
     dialogRef.afterClosed().subscribe(() => {
-
     });
+  }
+  CoppyDon()
+  {
+    delete this.Donhang().id
+    this._DonhangsService.createDonhang(this.Donhang()).then((data:any)=>{
+     setTimeout(() => {
+      window.location.href = `admin/donhang/${data.id}`;
+     }, 1000);
+
+    })
   }
   GetStatus(item:any,field:any)
   {
@@ -203,9 +208,7 @@ export class DonhangComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result == 'true') {
           this.Detail.Status=5
-          this._GiohangService.UpdateDonhang(this.Detail).then((data:any) => {
-            const telegram = `Đơn Hàng : <b>${data.MaDonHang} </b> TT :  <b>${ListTrangThaiDonhang.find((v)=>v.id==data.Status)?.Title||data.Status} </b> - <b>${moment().format("HH:mm:ss DD/MM/YYYY")} </b>`
-            this._TelegramService.SendNoti(telegram)
+          this._DonhangsService.updateOneDonhang(this.Donhang).then((data:any) => {
             this._snackBar.open('Cập Nhật Thành Công', '', {
               horizontalPosition: "end",
               verticalPosition: "top",
@@ -221,6 +224,12 @@ export class DonhangComponent implements OnInit {
             verticalPosition: "top",
             panelClass: ['snackbar-warning'],
           });
+          this._snackBar.open('Cập Nhật Thành Công', '', {
+            duration: 1000,
+            horizontalPosition: "end",
+            verticalPosition: "top",
+            panelClass: ['snackbar-success'],
+          });
         }
       });
   } 
@@ -231,26 +240,24 @@ export class DonhangComponent implements OnInit {
     }
     else{
       item.Status=item1.id
-      this._GiohangService.UpdateDonhang(item).then((data:any) => {
-      const telegram = `Đơn Hàng : <b>${data.MaDonHang} </b> TT :  <b>${ListTrangThaiDonhang.find((v)=>v.id==data.Status)?.Title||data.Status} </b> - <b>${moment().format("HH:mm:ss DD/MM/YYYY")} </b>`
-      this._TelegramService.SendNoti(telegram)
+      this._DonhangsService.updateOneDonhang(item).then((data:any) => {
         this._snackBar.open('Cập Nhật Thành Công', '', {
+          duration: 1000,
           horizontalPosition: "end",
           verticalPosition: "top",
-          panelClass: 'success',
-          duration: 1000,
+          panelClass: ['snackbar-success'],
         });
       })
     }
   }
   UpdateDonhang()
   {
-    this._GiohangService.UpdateDonhang(this.Detail).then(() => {
+    this._DonhangsService.updateOneDonhang(this.Detail).then(() => {
       this._snackBar.open('Cập Nhật Thành Công', '', {
+        duration: 1000,
         horizontalPosition: "end",
         verticalPosition: "top",
-        panelClass: 'success',
-        duration: 1000,
+        panelClass: ['snackbar-success'],
       });
     })
   }
@@ -258,7 +265,7 @@ export class DonhangComponent implements OnInit {
       console.log(item,item1);
       
         item.Thanhtoan.Hinhthuc=item1.id
-        this._GiohangService.UpdateDonhang(item).then(() => {
+        this._DonhangsService.updateOneDonhang(item).then(() => {
           this._snackBar.open('Cập Nhật Thành Công', '', {
             duration: 1000,
             horizontalPosition: "end",
@@ -274,31 +281,6 @@ export class DonhangComponent implements OnInit {
       const Diachi = value.find((v: any) => v.Active == true)
       this.Donhang.Vanchuyen.Diachi = `${Diachi.Diachi ? Diachi.Diachi + ', ' : ''}${Diachi.Phuong ? Diachi.Phuong + ', ' : ''}${Diachi.Quan ? Diachi.Quan + ', ' : ''}${Diachi.Tinh || ''}`;  
     }
-
-
-    XacNhanThanhToan()
-    {
-     this._DonhangsService.createDonhang(this.Donhang).then((data)=>{
-      console.log(data);
-      
-      this._DonhangsService.UpdateDonhang(data)
-    //  this._DonhangsService.ClearDonhang()   
-      this.isEditThanhtoan = true
-     }) 
-    }
-    Hoanthanhdonhang()
-    {
-        setTimeout(() => {
-            this._snackBar.open('Hoàn Thành Đơn Hàng', '', {
-              duration: 1000,
-              horizontalPosition: "end",
-              verticalPosition: "top",
-              panelClass: ['snackbar-success'],
-            });  
-        window.location.href = `cam-on?MaDonHang=${this._DonhangsService.Donhang().MaDonHang}`;
-      }, 1000);
-    }
-
     TinhTong(items:any){
       return items.reduce((sum:any, item:any) => sum + item.Tongtien, 0);
     }
@@ -310,11 +292,11 @@ export class DonhangComponent implements OnInit {
     }
     GetGiohangsEmit(value:any){ 
       this.Donhang.Giohangs = value
-      this._DonhangsService.UpdateDonhang(this.Donhang)
+      this._DonhangsService.updateOneDonhang(this.Donhang)
     }
     Xoagiohang(){ 
       this.Donhang.Giohangs = []
-      this._DonhangsService.UpdateDonhang(this.Donhang)
+      this._DonhangsService.updateOneDonhang(this.Donhang)
       location.reload()
     }
     MaKhuyenmai:any=''
@@ -353,7 +335,7 @@ export class DonhangComponent implements OnInit {
            this.Donhang.Vanchuyen.Phivanchuyen = 0
           }
      
-         this._DonhangsService.UpdateDonhang(this.Donhang)
+         this._DonhangsService.updateOneDonhang(this.Donhang)
           this._snackBar.open('Áp Dụng Thành Công', '', {
             duration: 1000,
             horizontalPosition: "end",
@@ -426,4 +408,10 @@ export class DonhangComponent implements OnInit {
       }
   
     }
+  goBack()
+  {
+
+    this._router.navigate(['admin/donhang'])
+    this._ListdonhangComponent.drawer.close()
+  }
 }

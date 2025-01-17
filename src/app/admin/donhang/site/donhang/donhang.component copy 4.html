@@ -8,7 +8,7 @@
           <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
         </div>
 
-        <app-giohangcommon (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
+        <app-giohangcommon (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang" [Giohangs]="Donhang?.Giohangs"></app-giohangcommon>
       </div>
     </div>
 

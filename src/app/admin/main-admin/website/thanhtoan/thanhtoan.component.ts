@@ -326,10 +326,10 @@ export class ThanhtoanComponent implements OnInit {
           this.Donhang.Vanchuyen.text = this.Khoangcach.distance.text
           this._GiohangService.getDonhang()
           this._snackBar.open('Đã Cập Nhật Phí Ship', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'success',
-            duration: 1000,
+            panelClass: ['snackbar-success'],
           });
           this.isThanhtoan = true
         }
@@ -340,10 +340,10 @@ export class ThanhtoanComponent implements OnInit {
           this.Donhang.Vanchuyen.text = this.Khoangcach.distance.text
           this._GiohangService.getDonhang()
           this._snackBar.open('Đã Cập Nhật Phí Ship', '', {
+            duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: 'success',
-            duration: 1000,
+            panelClass: ['snackbar-success'],
           });
           this.isThanhtoan = true
         }
