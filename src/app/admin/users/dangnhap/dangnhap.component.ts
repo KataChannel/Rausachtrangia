@@ -4,13 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Config } from './login';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dangnhap',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule
   ],
   templateUrl: './dangnhap.component.html',
   styleUrls: ['./dangnhap.component.css']
@@ -19,6 +26,7 @@ export class DangnhapComponent implements OnInit {
 
   constructor(private _snackBar: MatSnackBar) { }
   User: any = {}
+  Config:any=Config
   _AuthService: AuthService = inject(AuthService)
   _ActivatedRoute: ActivatedRoute = inject(ActivatedRoute);
   _Router: Router = inject(Router);
@@ -30,7 +38,7 @@ export class DangnhapComponent implements OnInit {
       this._snackBar.open('Vui lòng nhập Số Điện Thoại', '', {
         horizontalPosition: "end",
         verticalPosition: "top",
-        panelClass: 'danger',
+        panelClass: ['snackbar-warning'],
         duration: 2000,
       });
     }
@@ -38,7 +46,7 @@ export class DangnhapComponent implements OnInit {
       this._snackBar.open('Số Điện Thoại Không Hợp Lệ', '', {
         horizontalPosition: "end",
         verticalPosition: "top",
-        panelClass: 'danger',
+        panelClass: ['snackbar-warning'],
         duration: 2000,
       });
     }
@@ -46,7 +54,7 @@ export class DangnhapComponent implements OnInit {
       this._snackBar.open('Vui lòng nhập Mật Khẩu', '', {
         horizontalPosition: "end",
         verticalPosition: "top",
-        panelClass: 'danger',
+        panelClass: ['snackbar-warning'],
         duration: 2000,
       });
     }
@@ -64,7 +72,7 @@ export class DangnhapComponent implements OnInit {
         this._snackBar.open(result[1], '', {
           horizontalPosition: "end",
           verticalPosition: "top",
-          panelClass: 'danger',
+          panelClass: ['snackbar-warning'],
           duration: 2000,
         });
       }

@@ -43,6 +43,16 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('../formin/formin-admin/chitietin/chitietin.component').then(comp => comp.ChitietinComponent)
     },
     {
+        path: 'dangnhap',
+        canActivate: [GuestGuard],
+        component: DangnhapComponent,
+    },
+    {
+        path: 'dangky',
+        canActivate: [GuestGuard],
+        component: DangkyComponent,
+    },
+    {
         path: '',
         component: MainComponent,
         children: [
@@ -124,16 +134,6 @@ export const appRoutes: Route[] = [
                 path: 'tra-cuu-don',
                 title: 'Tra Cứu Đơn',
                 loadComponent: () => import('./admin/main-admin/website/tracuudon/tracuudon.component').then(comp => comp.TracuudonComponent)
-            },
-            {
-                path: 'dangnhap',
-                canActivate: [GuestGuard],
-                component: DangnhapComponent,
-            },
-            {
-                path: 'dangky',
-                canActivate: [GuestGuard],
-                component: DangkyComponent,
             },
             {
                 path: 'profile',

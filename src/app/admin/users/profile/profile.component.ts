@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit {
     {id:2,Title:'Đổi Mật Khẩu', Slug:'changepassword',Ordering:2},
     {id:3,Title:'Mạng Xã Hội', Slug:'social',Ordering:3},
     {id:4,Title:'Đơn hàng Của Tôi', Slug:'myorder',Ordering:3},
+    {id:4,Title:'Admin', Slug:'/admin',Ordering:4},
   ]
   breadcrumb = [
     { title: 'Trang Chủ', Slug: '/' },
