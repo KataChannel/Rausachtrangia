@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { UsersService } from '../auth/users.service';
 import { Router } from '@angular/router';
+import { Config } from '../dangnhap/login';
 
 @Component({
   selector: 'app-dangky',
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
 export class DangkyComponent implements OnInit {
 
   constructor() { }
+  Config:any=Config
   User:any={}
   _AuthService:AuthService=inject(AuthService)
   _UsersService:UsersService=inject(UsersService)
