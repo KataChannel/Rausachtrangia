@@ -101,7 +101,8 @@ export class GiohangcommonComponent implements OnInit {
       }    
       this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
         await this._SanphamService.getAllSanpham()
-         this._SanphamService.sanphams$.subscribe((data:any)=>{if(data){
+         this._SanphamService.sanphams$.subscribe((data:any)=>{
+          if(data){
           // data.forEach((item: any) => {
           //   item.GiaCoSo = parseFloat(item.GiaCoSo) || 0;
           //   if (item.Giagoc && Array.isArray(item.Giagoc)) {
@@ -114,7 +115,7 @@ export class GiohangcommonComponent implements OnInit {
           //   console.log(item);  
           //   this._SanphamService.UpdateSanpham(item).then((data:any)=>{if(data){console.log(data);}}) 
           // });
-          this.FilterSanphams = this.Sanphams = data.map((v:any)=>({
+          this.FilterSanphams = this.Sanphams = data.filter((v1:any)=>v1.Status==1).map((v:any)=>({
           id: v.id,
           id_cat: v.id_cat,
           Title: v.Title,
