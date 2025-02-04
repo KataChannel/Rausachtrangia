@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, EventEmitter, inject, Input, Output, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -33,7 +33,7 @@ import { UsersService } from '../../users/auth/users.service';
   templateUrl: './giohangcommon.component.html',
   styleUrl: './giohangcommon.component.scss'
 })
-export class GiohangcommonComponent {
+export class GiohangcommonComponent implements OnInit {
   @Input() Donhang:any={Giohangs:[]}
   @Input() isEdit:boolean=false
   @Input() isAdmin:boolean=false
@@ -42,6 +42,7 @@ export class GiohangcommonComponent {
   Sanphams:any[]=[]
   FilterSanphams:any[]=[]
   dataSource!: MatTableDataSource<any>;
+  dialogRef:any;
   displayedColumns: string[] = [
       'STT',
       'Image', 
@@ -73,7 +74,10 @@ export class GiohangcommonComponent {
       private dialog:MatDialog,
       private _snackBar:MatSnackBar  
     ) {}
-    async ngOnInit(): Promise<void> {
+    async ngOnInit() {
+      console.log(this.Donhang);
+      
+
       if(!this.isAdmin)
       {
         this.displayedColumns = [
@@ -175,8 +179,8 @@ export class GiohangcommonComponent {
       }
       AddSanpham()
       {
-        const dialogRef = this.dialog.open(this.ChonSanphamDialog);
-        dialogRef.afterClosed().subscribe((result) => {
+        this.dialogRef = this.dialog.open(this.ChonSanphamDialog);
+        this.dialogRef.afterClosed().subscribe((result:any) => {
           if (result == 'true') {
             // this.Detail.Giohangs.Sanpham.push(this.Sanpham)
             this._snackBar.open('Thêm Thành Công', '', {
@@ -230,8 +234,8 @@ export class GiohangcommonComponent {
         
           console.log(this.Donhang.Giohangs);
           this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
-            this.GiohangsEmit.emit(this.Donhang.Giohangs)
-          this.dialog.closeAll()
+          this.GiohangsEmit.emit(this.Donhang.Giohangs)
+          this.dialogRef.close()
         } 
 
 

@@ -32,10 +32,10 @@ export const serverRoutes: ServerRoute[] = [
     path: 'admin/donhang/:id',
     renderMode: RenderMode.Server,
   },
-  {
-    path: 'admin/giohang/:id',
-    renderMode: RenderMode.Server,
-  },
+  // {
+  //   path: 'admin/giohang/:id',
+  //   renderMode: RenderMode.Server,
+  // },
   {
     path: 'admin/slide/:id',
     renderMode: RenderMode.Server,

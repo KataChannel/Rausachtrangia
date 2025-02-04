@@ -1,238 +1,264 @@
-<div class="container relative p-4 w-full h-full md:h-auto">
-  <div class="flex flex-row justify-between items-center space-x-2 p-2">
-      <button mat-icon-button color="primary" (click)="goBack()">
-          <mat-icon>arrow_back</mat-icon>
-      </button>
-      <div class="font-bold">{{Donhang?.MaDonHang||'Không có dữ liệu'}}</div>
-      <div class="flex flex-row space-x-2 items-center">
-        <!-- <div class="flex flex-col justify-between space-y-2 items-center whitespace-nowrap">
-           <span class="p-2 rounded-lg 
-            {{GetStatus(Donhang?.Status,'Class')}}" [matMenuTriggerFor]="menuTrangthai">
-            {{GetStatus(Donhang?.Status,'Title')}}
-          </span>
-        </div>
-        <mat-menu #menuTrangthai="matMenu">
-          <div class="cursor-pointer flex flex-col space-y-2 p-3">
-            @for (item1 of ListTrangThaiDonhang; track item1) {
-            <span class="p-2 text-xs rounded-lg {{item1.Class}}" (click)="ChangeStatus(Detail,item1)">
-              {{item1.Title}}
+
+
+
+@defer () {
+  <div class="container relative p-4 w-full h-full md:h-auto">
+    <div class="flex flex-row justify-between items-center space-x-2 p-2">
+        <button mat-icon-button color="primary" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="font-bold">{{Donhang?.MaDonHang||'Không có dữ liệu'}}</div>
+        <div class="flex flex-row space-x-2 items-center">
+          <!-- <div class="flex flex-col justify-between space-y-2 items-center whitespace-nowrap">
+             <span class="p-2 rounded-lg 
+              {{GetStatus(Donhang?.Status,'Class')}}" [matMenuTriggerFor]="menuTrangthai">
+              {{GetStatus(Donhang?.Status,'Title')}}
             </span>
-            }
           </div>
-        </mat-menu> -->
-          <button mat-icon-button color="primary" (click)="CoppyDon()">
-              <mat-icon>content_copy</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="isDelete=true">
-              <mat-icon>delete</mat-icon>
-          </button>
-      </div>
-    </div>
-
-    @if(isDelete==true){
-      <div class="relative flex flex-row space-x-2 items-center justify-center">
-      <div>Bạn chắc chắn muốn xoá không?</div>
-      <div class="flex flex-row space-x-2 items-center justify-center">
-        <button mat-flat-button color="primary" (click)="XoaDonhang()">
-          Đồng Ý
-        </button>
-        <button mat-flat-button color="warn" (click)="isDelete=false">
-          Huỷ Bỏ
-        </button>
-      </div>
-      </div>
-    }
-    @else {
-      <div class="relative flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2">
-        <div class="w-full flex flex-col overflow-y-auto">
-          <div class="bg-white rounded-lg border border-default-200 col-span-2">
-            <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
-              <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
-              <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
+          <mat-menu #menuTrangthai="matMenu">
+            <div class="cursor-pointer flex flex-col space-y-2 p-3">
+              @for (item1 of ListTrangThaiDonhang; track item1) {
+              <span class="p-2 text-xs rounded-lg {{item1.Class}}" (click)="ChangeStatus(Detail,item1)">
+                {{item1.Title}}
+              </span>
+              }
             </div>
-            @if(Donhang?.Giohangs?.length>=0){
-            <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
-            }
-          </div>
+          </mat-menu> -->
+            <button mat-icon-button color="primary" (click)="CoppyDon()">
+                <mat-icon>content_copy</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="isDelete=true">
+                <mat-icon>delete</mat-icon>
+            </button>
         </div>
-    
-    
-    
-        <div class="lg:w-2/5 w-full rounded-lg flex flex-col space-y-2">
-          <div class="w-full bg-white p-2 rounded-lg border border-default-200">
-            <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
-              <span class="!text-lg !font-semibold">Tóm Tắt Đơn Hàng</span>
-            </div>
-    
-            <div class="p-4 flex flex-col space-y-4">
-               <div class="flex flex-row justify-between space-x-2 font-bold">
-                 <span>Tổng</span>
-                 <span>{{Tong||0 |number:'1.0-2'}}đ</span>
-               </div>
-               <div class="flex flex-row justify-between space-x-2 font-bold">
-                  <p>Phí Vận Chuyển</p>
-                  <p class="flex flex-col">
-                      <span>{{(Donhang?.Vanchuyen?.Phivanchuyen||'0'| number:'1.0-0')}}đ</span>
-                    
-                      @if(Khoangcach&&Khoangcach.distance&&Khoangcach.distance.text)
-                      {
-                      <span class="text-xs italic text-red-500">({{Khoangcach?.distance?.text}})</span>
-                      }
-                  </p>
-               </div>
-               <div class="flex flex-row justify-between space-x-2 font-bold">
-                 <span>Giảm Giá</span>
-                 <span>{{Donhang?.Khuyenmai?.value||0 |number:'1.0-2'}}đ</span>
-               </div>
-               <div class="flex flex-row justify-between space-x-2 font-bold">
-                 <span>Thuế</span>
-                 <span>{{Donhang?.Thue||0 |number:'1.0-2'}}đ</span>
-               </div>
-               <div class="flex flex-row justify-between space-x-2 font-bold">
-                 <span>Tổng Cộng</span>
-                 <span>{{Tongcong||0 |number:'1.0-2'}}đ</span>
-               </div>
-            </div>
-          </div>
-
-
-          <div class="w-full bg-white p-2 rounded-lg border border-default-200">
-            <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
-              <span class="!text-lg !font-semibold">Ghi Chú</span>
-              @if(isEditGhichu){
-                <button (click)="isEditGhichu=false;UpdateThongtin()" mat-icon-button><mat-icon>save</mat-icon></button>
-              }
-              @else {
-                <button (click)="isEditGhichu=true" mat-icon-button><mat-icon>edit</mat-icon></button>
-              }
-            </div>
-    
-            <div class="p-4 flex flex-col space-y-4">
-              @if(isEditGhichu){
-                <mat-form-field appearance="outline" class="w-full">
-                  <textarea matInput [(ngModel)]="Donhang.Ghichu" [ngModelOptions]="{standalone: true}"
-                    cols="3" rows="3" [placeholder]="'Ghi Chú'"></textarea>
-                </mat-form-field>
-              }
-              @else {
-                <div [innerHTML]="Donhang?.Ghichu||'Không có ghi chú'"></div>
-              }
-            </div>
-          </div>
-
-
-
-
-
-
-          <div class="w-full bg-white p-2 rounded-lg border border-default-200">
-            <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
-              <span class="!text-lg !font-semibold">Khuyến Mãi</span>
-            </div>
-    
-            <div class="p-4 flex flex-col space-y-4">
-              <div class="w-full p-4 flex flex-row items-center space-x-2">
-                  <input [(ngModel)]="MaKhuyenmai" [ngModelOptions]="{standalone: true}" class="w-full rounded-lg" type="text" placeholder="Nhập Mã Khuyến Mãi">
-                      <span (click)="ApdungKhuyenmai()"
-                          class="cursor-pointer px-4 py-2 whitespace-nowrap rounded-lg border border-[#A52167] text-[#A52167] hover:bg-[#A52167] hover:text-white">
-                          Áp dụng</span>
-              </div>
-            </div>
-          </div>
-
-
-
-          <div class="w-full bg-white p-2 rounded-lg border border-default-200">
-            <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
-              <span class="!text-lg !font-semibold">Thông Tin</span>
-              @if(isEditKhachhang){
-                <button (click)="isEditKhachhang=false;UpdateThongtin()" mat-icon-button><mat-icon>save</mat-icon></button>
-              }
-              @else {
-                <button (click)="isEditKhachhang=true" mat-icon-button><mat-icon>edit</mat-icon></button>
-              }
-            </div>
-    
-            <div class="p-4 flex flex-col space-y-4">
-              @if(isEditKhachhang){
-              <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-                <mat-label>Họ Tên <span class="text-red-500">*</span></mat-label>
-                <input matInput [(ngModel)]="Donhang?.Khachhang.Hoten" [ngModelOptions]="{ standalone: true }"
-                  placeholder="Vui lòng Nhập Họ Tên" />
-              </mat-form-field>
-    
-              <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-                <mat-label>Số Điện Thoại <span class="text-red-500">*</span></mat-label>
-                <input matInput [(ngModel)]="Donhang?.Khachhang.SDT" [ngModelOptions]="{ standalone: true }"
-                  placeholder="Vui lòng Nhập Số Điện Thoại" />
-              </mat-form-field>
-    
-              <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-                <mat-label>Email</mat-label>
-                <input matInput [(ngModel)]="Donhang?.Khachhang.Email" [ngModelOptions]="{ standalone: true }"
-                  placeholder="Vui lòng Nhập Email" />
-              </mat-form-field>
-              }
-              @else {
-              <span>Họ Tên : <span class="font-bold">{{Donhang?.Khachhang?.Hoten}}</span></span>
-              <span>Số Điện Thoại : <span class="font-bold">{{Donhang?.Khachhang?.SDT}}</span></span>
-              <span>Email : <span class="font-bold">{{Donhang?.Khachhang?.Email}}</span></span>
-              }
-            </div>
-          </div>
-    
-    
-    
-    
-    
-          <div class="w-full bg-white p-2 rounded-lg border border-default-200">
-            <div class="p-2 border-b flex flex-row justify-between items-center">
-              <span class="!text-lg !font-semibold text-default-800">Vận Chuyển</span>
-              @if(isEditVanchuyen){
-                <button (click)="isEditVanchuyen=false;UpdateThongtin();UpdatePhiship()" mat-icon-button><mat-icon>save</mat-icon></button>
-              }
-              @else {
-                <button (click)="isEditVanchuyen=true" mat-icon-button><mat-icon>edit</mat-icon></button>
-              }
-            </div>
-            <div class="p-4 flex flex-col space-y-4">
-              @if(isEditVanchuyen){
-              <app-diachi-admin [isSingle]="false" [Diachis]="Donhang.Diachis" (diachiEmit)="GetDiachi($event)"
-                class="lg:col-span-6"></app-diachi-admin>
-              }
-              @else {
-              <div>
-                {{Donhang?.Vanchuyen?.Diachi ||'Chưa Nhập Địa Chỉ'}}
-              </div>
-    
-              }
-            </div>
-          </div>  
-          <div class="w-full bg-white p-2 rounded-lg border border-default-200">
-            <div class="p-2 border-b flex flex-row justify-between items-center">
-              <span class="!text-lg !font-semibold text-default-800">Thanh Toán</span>
-            </div>
-            <div class="bg-white p-2 rounded-lg mx-auto flex flex-col space-y-3 {{Donhang?.Giohangs?.length>0?'':'hidden'}}">     
-              <div class="cursor-pointer grid grid-cols-3 gap-4 lg:p-4">
-                <div (click)="ChooseMethod('COD')"
-                  class="flex p-4 rounded-lg text-center items-center justify-center {{Donhang?.Thanhtoan?.Hinhthuc=='COD'?'text-white bg-[#A52167]':'bg-slate-100'}} hover:text-white hover:bg-[#A52167]">
-                  Tiền Mặt
-                </div>
-                <div (click)="ChooseMethod('BANK')"
-                  class="flex p-4 rounded-lg text-center items-center justify-center  {{Donhang?.Thanhtoan?.Hinhthuc=='BANK'?'text-white bg-[#439c30]':'bg-slate-100'}} hover:text-white hover:bg-[#439c30]">
-                  Chuyển Khoản
-                </div>
-                <div (click)="ChooseMethod('MOMO')"
-                  class="flex p-4 rounded-lg text-center items-center justify-center {{Donhang?.Thanhtoan?.Hinhthuc=='MOMO'?'text-white bg-[#ED860A]':'bg-slate-100'}} hover:text-white hover:bg-[#ED860A]">
-                 MOMO
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>      
       </div>
-    }
-</div>
+  
+      @if(isDelete==true){
+        <div class="relative flex flex-row space-x-2 items-center justify-center">
+        <div>Bạn chắc chắn muốn xoá không?</div>
+        <div class="flex flex-row space-x-2 items-center justify-center">
+          <button mat-flat-button color="primary" (click)="XoaDonhang()">
+            Đồng Ý
+          </button>
+          <button mat-flat-button color="warn" (click)="isDelete=false">
+            Huỷ Bỏ
+          </button>
+        </div>
+        </div>
+      }
+      @else {
+        <div class="relative flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2">
+          <div class="w-full flex flex-col overflow-y-auto">
+            <div class="bg-white rounded-lg border border-default-200 col-span-2">
+              <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
+                <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
+                <div class="flex flex-row space-x-1">
+                  <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
+                  <button (click)="openFullScreen(FullScreenDialog)" color="primary" mat-icon-button><mat-icon>fullscreen</mat-icon></button>
+                </div>
+  
+              </div>
+              @defer () {
+                <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
+              } @loading() {
+                <div class="flex flex-row space-x-2 items-center justify-center p-4">
+                  <span>Đang Tải Dữ Liệu </span>
+                  <mat-spinner></mat-spinner>
+                </div>
+  
+              } @error {
+                <p>Error loading About Component</p>
+              }
+            </div>
+          </div>
+      
+      
+      
+          <div class="lg:w-2/5 w-full rounded-lg flex flex-col space-y-2">
+            <div class="w-full bg-white p-2 rounded-lg border border-default-200">
+              <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
+                <span class="!text-lg !font-semibold">Tóm Tắt Đơn Hàng</span>
+              </div>
+      
+              <div class="p-4 flex flex-col space-y-4">
+                 <div class="flex flex-row justify-between space-x-2 font-bold">
+                   <span>Tổng</span>
+                   <span>{{Tong||0 |number:'1.0-2'}}đ</span>
+                 </div>
+                 <div class="flex flex-row justify-between space-x-2 font-bold">
+                    <p>Phí Vận Chuyển</p>
+                    <p class="flex flex-col">
+                        <span>{{(Donhang?.Vanchuyen?.Phivanchuyen||'0'| number:'1.0-0')}}đ</span>
+                      
+                        @if(Khoangcach&&Khoangcach.distance&&Khoangcach.distance.text)
+                        {
+                        <span class="text-xs italic text-red-500">({{Khoangcach?.distance?.text}})</span>
+                        }
+                    </p>
+                 </div>
+                 <div class="flex flex-row justify-between space-x-2 font-bold">
+                   <span>Giảm Giá</span>
+                   <span>{{Donhang?.Khuyenmai?.value||0 |number:'1.0-2'}}đ</span>
+                 </div>
+                 <div class="flex flex-row justify-between space-x-2 font-bold">
+                   <span>Thuế</span>
+                   <span>{{Donhang?.Thue||0 |number:'1.0-2'}}đ</span>
+                 </div>
+                 <div class="flex flex-row justify-between space-x-2 font-bold">
+                   <span>Tổng Cộng</span>
+                   <span>{{Tongcong||0 |number:'1.0-2'}}đ</span>
+                 </div>
+              </div>
+            </div>
+  
+  
+            <div class="w-full bg-white p-2 rounded-lg border border-default-200">
+              <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
+                <span class="!text-lg !font-semibold">Ghi Chú</span>
+                @if(isEditGhichu){
+                  <button (click)="isEditGhichu=false;UpdateThongtin()" mat-icon-button><mat-icon>save</mat-icon></button>
+                }
+                @else {
+                  <button (click)="isEditGhichu=true" mat-icon-button><mat-icon>edit</mat-icon></button>
+                }
+              </div>
+      
+              <div class="p-4 flex flex-col space-y-4">
+                @if(isEditGhichu){
+                  <mat-form-field appearance="outline" class="w-full">
+                    <textarea matInput [(ngModel)]="Donhang.Ghichu" [ngModelOptions]="{standalone: true}"
+                      cols="3" rows="3" [placeholder]="'Ghi Chú'"></textarea>
+                  </mat-form-field>
+                }
+                @else {
+                  <div [innerHTML]="Donhang?.Ghichu||'Không có ghi chú'"></div>
+                }
+              </div>
+            </div>
+  
+  
+  
+  
+  
+  
+            <div class="w-full bg-white p-2 rounded-lg border border-default-200">
+              <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
+                <span class="!text-lg !font-semibold">Khuyến Mãi</span>
+              </div>
+      
+              <div class="p-4 flex flex-col space-y-4">
+                <div class="w-full p-4 flex flex-row items-center space-x-2">
+                    <input [(ngModel)]="MaKhuyenmai" [ngModelOptions]="{standalone: true}" class="w-full rounded-lg" type="text" placeholder="Nhập Mã Khuyến Mãi">
+                        <span (click)="ApdungKhuyenmai()"
+                            class="cursor-pointer px-4 py-2 whitespace-nowrap rounded-lg border border-[#A52167] text-[#A52167] hover:bg-[#A52167] hover:text-white">
+                            Áp dụng</span>
+                </div>
+              </div>
+            </div>
+  
+  
+  
+            <div class="w-full bg-white p-2 rounded-lg border border-default-200">
+              <div class="w-full p-2 border-b border-default-200 flex flex-row justify-between items-center">
+                <span class="!text-lg !font-semibold">Thông Tin</span>
+                @if(isEditKhachhang){
+                  <button (click)="isEditKhachhang=false;UpdateThongtin()" mat-icon-button><mat-icon>save</mat-icon></button>
+                }
+                @else {
+                  <button (click)="isEditKhachhang=true" mat-icon-button><mat-icon>edit</mat-icon></button>
+                }
+              </div>
+      
+              <div class="p-4 flex flex-col space-y-4">
+                @if(isEditKhachhang){
+                <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+                  <mat-label>Họ Tên <span class="text-red-500">*</span></mat-label>
+                  <input matInput [(ngModel)]="Donhang?.Khachhang.Hoten" [ngModelOptions]="{ standalone: true }"
+                    placeholder="Vui lòng Nhập Họ Tên" />
+                </mat-form-field>
+      
+                <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+                  <mat-label>Số Điện Thoại <span class="text-red-500">*</span></mat-label>
+                  <input matInput [(ngModel)]="Donhang?.Khachhang.SDT" [ngModelOptions]="{ standalone: true }"
+                    placeholder="Vui lòng Nhập Số Điện Thoại" />
+                </mat-form-field>
+      
+                <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+                  <mat-label>Email</mat-label>
+                  <input matInput [(ngModel)]="Donhang?.Khachhang.Email" [ngModelOptions]="{ standalone: true }"
+                    placeholder="Vui lòng Nhập Email" />
+                </mat-form-field>
+                }
+                @else {
+                <span>Họ Tên : <span class="font-bold">{{Donhang?.Khachhang?.Hoten}}</span></span>
+                <span>Số Điện Thoại : <span class="font-bold">{{Donhang?.Khachhang?.SDT}}</span></span>
+                <span>Email : <span class="font-bold">{{Donhang?.Khachhang?.Email}}</span></span>
+                }
+              </div>
+            </div>
+      
+      
+      
+      
+      
+            <div class="w-full bg-white p-2 rounded-lg border border-default-200">
+              <div class="p-2 border-b flex flex-row justify-between items-center">
+                <span class="!text-lg !font-semibold text-default-800">Vận Chuyển</span>
+                @if(isEditVanchuyen){
+                  <button (click)="isEditVanchuyen=false;UpdateThongtin();UpdatePhiship()" mat-icon-button><mat-icon>save</mat-icon></button>
+                }
+                @else {
+                  <button (click)="isEditVanchuyen=true" mat-icon-button><mat-icon>edit</mat-icon></button>
+                }
+              </div>
+              <div class="p-4 flex flex-col space-y-4">
+                @if(isEditVanchuyen){
+                <app-diachi-admin [isSingle]="false" [Diachis]="Donhang.Diachis" (diachiEmit)="GetDiachi($event)"
+                  class="lg:col-span-6"></app-diachi-admin>
+                }
+                @else {
+                <div>
+                  {{Donhang?.Vanchuyen?.Diachi ||'Chưa Nhập Địa Chỉ'}}
+                </div>
+      
+                }
+              </div>
+            </div>  
+            <div class="w-full bg-white p-2 rounded-lg border border-default-200">
+              <div class="p-2 border-b flex flex-row justify-between items-center">
+                <span class="!text-lg !font-semibold text-default-800">Thanh Toán</span>
+              </div>
+              <div class="bg-white p-2 rounded-lg mx-auto flex flex-col space-y-3 {{Donhang?.Giohangs?.length>0?'':'hidden'}}">     
+                <div class="cursor-pointer grid grid-cols-3 gap-4 lg:p-4">
+                  <div (click)="ChooseMethod('COD')"
+                    class="flex p-4 rounded-lg text-center items-center justify-center {{Donhang?.Thanhtoan?.Hinhthuc=='COD'?'text-white bg-[#A52167]':'bg-slate-100'}} hover:text-white hover:bg-[#A52167]">
+                    Tiền Mặt
+                  </div>
+                  <div (click)="ChooseMethod('BANK')"
+                    class="flex p-4 rounded-lg text-center items-center justify-center  {{Donhang?.Thanhtoan?.Hinhthuc=='BANK'?'text-white bg-[#439c30]':'bg-slate-100'}} hover:text-white hover:bg-[#439c30]">
+                    Chuyển Khoản
+                  </div>
+                  <div (click)="ChooseMethod('MOMO')"
+                    class="flex p-4 rounded-lg text-center items-center justify-center {{Donhang?.Thanhtoan?.Hinhthuc=='MOMO'?'text-white bg-[#ED860A]':'bg-slate-100'}} hover:text-white hover:bg-[#ED860A]">
+                   MOMO
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>      
+        </div>
+      }
+  </div>
+} @loading() {
+  <div class="flex flex-row space-x-2 items-center justify-center p-4">
+    <span>Đang Tải Dữ Liệu </span>
+    <mat-spinner></mat-spinner>
+  </div>
+} @error {
+  <p>Error loading About Component</p>
+}
+
+
 <ng-template #dialogXemFormin>
   <div class="!relative lg:h-[90vh] lg:w-[90vw]">
     <div class="relative flex flex-col space-y-2">
@@ -258,6 +284,33 @@
         <button mat-flat-button color="primary" mat-dialog-close="true">Đồng Ý</button>
         }
       </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #FullScreenDialog>
+  <div class="w-screen h-screen flex flex-col space-y-2">
+    <div mat-dialog-title class="flex flex-row justify-between items-center space-x-2 p-2">
+      <div class="flex flex-row space-x-2 justify-between items-center">
+        <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
+        <div class="flex flex-row space-x-1">
+          <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
+          <button mat-dialog-close="true" color="primary" mat-icon-button><mat-icon>close</mat-icon></button>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-content class="bg-white !max-h-[80vh] rounded-lg border border-default-200 col-span-2">
+      @defer () {
+        <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
+      } @loading() {
+        <div class="flex flex-row space-x-2 items-center justify-center p-4">
+          <span>Đang Tải Dữ Liệu </span>
+          <mat-spinner></mat-spinner>
+        </div>
+      } @error {
+        <p>Error loading About Component</p>
+      }
     </div>
   </div>
 </ng-template>

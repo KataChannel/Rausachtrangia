@@ -211,16 +211,16 @@ export const appRoutes: Route[] = [
                     },
                 ]
             },
-            {
-                path: 'giohang',
-                component: DonhangAdminComponent,
-                children: [
-                    {
-                        path: ':id',
-                        component: DonhangAdminChitietComponent,
-                    },
-                ]
-            },
+            // {
+            //     path: 'giohang',
+            //     component: DonhangAdminComponent,
+            //     children: [
+            //         {
+            //             path: ':id',
+            //             component: DonhangAdminChitietComponent,
+            //         },
+            //     ]
+            // },
             {
                 path: 'slide',
                 component: SlideadminComponent,

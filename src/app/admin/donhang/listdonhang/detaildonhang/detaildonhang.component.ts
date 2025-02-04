@@ -16,12 +16,12 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
 import { ForminAdminComponent } from '../../../../../formin/formin-admin/formin-admin.component';
 import { ListTrangThaiDonhang, ListHinhthucthanhtoan } from '../../../../shared/shared.utils';
 import { TelegramService } from '../../../../shared/telegram.service';
-import { MatStepperModule } from '@angular/material/stepper';
 import { GiohangcommonComponent } from '../../../giohang/giohangcommon/giohangcommon.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ChuongtrinhkhuyenmaiAdminService } from '../../../main-admin/admin-chuongtrinhkhuyenmai/admin-chuongtrinhkhuyenmai.service';
 import { DonhangsService } from '../../listdonhang/listdonhang.service';
 import { ListdonhangComponent } from '../listdonhang.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-detaildonhang',
   imports:[
@@ -32,26 +32,22 @@ import { ListdonhangComponent } from '../listdonhang.component';
     MatButtonModule,
     MatDialogModule,
     ForminAdminComponent,
-    //TimelineDonhangComponent,
     MatButtonModule,
     MatMenuModule,
     MatInputModule,
-    // KhuyenmaisiteComponent,
-    //StepperComponent,
-    // MatStepperModule,
     FormsModule,
     MatInputModule,
     CommonModule,
     DiachiAdminComponent,
     GiohangcommonComponent,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './detaildonhang.component.html',
   styleUrl: './detaildonhang.component.scss'
 })
 export class DetailDonhangComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
-  // _DonhangAdminComponent: DonhangAdminComponent = inject(DonhangAdminComponent);
   _GiohangService:GiohangService = inject(GiohangService)
   _SanphamService:SanphamService = inject(SanphamService)
   _DonhangsService:DonhangsService = inject(DonhangsService)
@@ -77,7 +73,9 @@ export class DetailDonhangComponent implements OnInit {
   isEditVanchuyen:boolean=false
   isEditThanhtoan:boolean=false
   isEditGhichu:boolean=false
-  Donhang:any={Giohangs:[],Thanhtoan:{Hinhthuc:'COD'}}
+  Donhang:any
+  isFullScreen:boolean=false
+  // Donhang:any={Giohangs:[],Thanhtoan:{Hinhthuc:'COD'},Vanchuyen:{Phivanchuyen:0}}
   constructor(
      private dialog:MatDialog,
      private _snackBar: MatSnackBar,
@@ -116,6 +114,13 @@ export class DetailDonhangComponent implements OnInit {
     this.FilterSanphams = this.Sanphams.filter((v)=>v.Title.includes(filterValue.trim().toLowerCase()))
     console.log(this.FilterSanphams);
     
+  }
+  openFullScreen(teamplate: TemplateRef<any>): void {
+    const dialogRef = this.dialog.open(teamplate, {
+    });
+    dialogRef.afterClosed().subscribe(() => {
+
+    });
   }
   SaveData()
   {
@@ -374,10 +379,8 @@ export class DetailDonhangComponent implements OnInit {
             this.isThanhtoan = true
           }
         }
-        console.log(this.Donhang);
-        
+      //  console.log(this.Donhang);      
       }
-  
     }
   goBack()
   {

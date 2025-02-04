@@ -10,7 +10,6 @@
             <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
             <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
           </div>
-  
           <app-giohangcommon (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
         </div>
       </div>

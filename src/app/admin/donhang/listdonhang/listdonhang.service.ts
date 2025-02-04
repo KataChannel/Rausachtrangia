@@ -355,7 +355,7 @@ export class DonhangsService {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();  
-            console.log(data);
+            // console.log(data);
             return data.rows[0].elements[0];         
         } catch (error) {
             return console.error(error);
