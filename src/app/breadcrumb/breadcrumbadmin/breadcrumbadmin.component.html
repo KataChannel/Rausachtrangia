@@ -23,7 +23,7 @@
           Cảm Ơn
         </li> -->
         <!-- {{Breadcrumb|json}} -->
-        @for (item of Breadcrumb; track item.id) {
+        @for (item of Breadcrumb; track item) {
           @if ($index==(Breadcrumb.length-1)) {
             <li aria-current="page" class="text-sm font-medium text-primary truncate leading-none hover:text-primary-500">
               <span>

@@ -15,7 +15,6 @@ export class BreadcrumbadminComponent implements OnInit {
   constructor() { }
   ngOnInit() {
     console.log(this.Breadcrumb);
-    
   }
 
 }

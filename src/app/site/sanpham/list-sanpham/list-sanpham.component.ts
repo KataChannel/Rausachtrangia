@@ -21,6 +21,7 @@ import { SlideSanphamComponent } from '../../../admin/main-admin/website/slide-s
 import { DanhmucsanphamsiteComponent } from '../../../danhmucsanpham/danhmucsanphamsite/danhmucsanphamsite.component';
 import { BreadcrumbadminComponent } from '../../../breadcrumb/breadcrumbadmin/breadcrumbadmin.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DonhangsService } from '../../../admin/donhang/listdonhang/listdonhang.service';
 @Component({
   selector: 'app-list-sanpham',
   standalone: true,
@@ -44,7 +45,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 export class ListSanphamComponent implements OnInit {
   isSticky: boolean = false
   _SanphamService: SanphamService = inject(SanphamService);
-  _GiohangService: GiohangService = inject(GiohangService);
   _DanhmucService: DanhmucService = inject(DanhmucService);
   ListSanpham: any = {}
   FilterSanpham: any[] = []
@@ -91,8 +91,8 @@ export class ListSanphamComponent implements OnInit {
     this.ListDanhmuc = await this._DanhmucService.SearchDanhmuc(this.SearchParamsDanhmuc)
     this.FilterSanpham = this.ListSanpham.items
     this.FilterDanhmuc = this.ListDanhmuc.items.map((v: any) => ({ ...v, isChecked: false }))
-    console.log(this.FilterDanhmuc);
-    console.log(this.FilterSanpham);
+    // console.log(this.FilterDanhmuc);
+    // console.log(this.FilterSanpham);
     // console.log(this.FilterSanpham.map((v)=>({MaSP:v.MaSP,id:v.id,Title:v.Title,Danhmuc:v.DMOrdering})).sort((a:any,b:any)=> Number(a.DMOrdering)||0 - Number(b.DMOrdering)||0));
     this.FilterSanpham.sort((a: any, b: any) => Number(a.DMOrdering) || 0 - Number(b.DMOrdering) || 0)
     const breadcrumb = this.route.snapshot.data['breadcrumb'];
@@ -136,21 +136,19 @@ export class ListSanphamComponent implements OnInit {
     this.FilterSanpham = this.ListSanpham.items
   }
   async onFilterChange() {
-    this.ChosenFilterDM = this.FilterDanhmuc.filter((v) => (v.isChecked == true))
-    console.log(this.ChosenFilterDM);
-    
+    this.ChosenFilterDM = this.FilterDanhmuc.filter((v) => (v.isChecked == true))    
     this.SearchParams.Danhmuc = this.ChosenFilterDM.map((v) => (v.id))
     if (this.SearchParams.Danhmuc.length > 0) {
       this.ListSanpham = await this._SanphamService.SearchSanpham(this.SearchParams)
       this.FilterSanpham = this.ListSanpham.items
-      console.log(this.FilterSanpham);
+      //console.log(this.FilterSanpham);
 
     }
     else {
       delete this.SearchParams.Danhmuc
       this.ListSanpham = await this._SanphamService.SearchSanpham(this.SearchParams)
       this.FilterSanpham = this.ListSanpham.items
-      console.log(this.FilterSanpham);
+      //console.log(this.FilterSanpham);
     }
   }
   RemoveFilter(item: any) {
@@ -192,21 +190,4 @@ export class ListSanphamComponent implements OnInit {
       this.FilterSanpham = this.ListSanpham.items
     }
   }
-
-  AddtoCart(data: any) {
-    let item: any = {}
-    item = data
-    item.Giachon = data.Giagoc[0]
-    item.Giachon.SLTT = data.Giagoc[0].khoiluong
-    item.Soluong = 1
-    this._GiohangService.addToCart(item).then(() => {
-      this._snackBar.open('Thêm Vào Giỏ Hàng Thành Công', '', {
-        horizontalPosition: "end",
-        verticalPosition: "top",
-        panelClass: 'success',
-        duration: 1000,
-      });
-    })
-  }
-
 }

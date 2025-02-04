@@ -47,7 +47,6 @@ export class SlideSanphamComponent implements OnInit, AfterViewInit {
   @Input() Type = 'NGANG';
   @Input() Ordering = 0;
   _SanphamService: SanphamService = inject(SanphamService);
-  _GiohangService: GiohangService = inject(GiohangService);
   Lists: any = {};
   FilterLists: any[] = [];
   FilterListsDesk: any[] = [];
@@ -126,21 +125,6 @@ export class SlideSanphamComponent implements OnInit, AfterViewInit {
   }
   LitmitSanpham(items: any, soluong: any) {
     return items?.slice(0, soluong);
-  }
-  AddtoCart(data: any) {
-    let item: any = {};
-    item = data;
-    item.Giachon = data.Giagoc[0];
-    item.Giachon.SLTT = data.Giagoc[0].khoiluong;
-    item.Soluong = 1;
-    this._GiohangService.addToCart(item).then(() => {
-      this._snackBar.open('Thêm Vào Giỏ Hàng Thành Công', '', {
-        horizontalPosition: 'end',
-        verticalPosition: 'top',
-        panelClass: 'success',
-        duration: 1000,
-      });
-    });
   }
   ngAfterViewInit() {
     if (this.isLoading == false) {

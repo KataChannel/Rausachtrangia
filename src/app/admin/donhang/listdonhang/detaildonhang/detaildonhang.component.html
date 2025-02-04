@@ -60,7 +60,7 @@
               </div>
               @defer () {
                 <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
-              } @loading() {
+              } @loading(minimum 500ms) {
                 <div class="flex flex-row space-x-2 items-center justify-center p-4">
                   <span>Đang Tải Dữ Liệu </span>
                   <mat-spinner></mat-spinner>
@@ -303,7 +303,7 @@
     <div mat-dialog-content class="bg-white !max-h-[80vh] rounded-lg border border-default-200 col-span-2">
       @defer () {
         <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
-      } @loading() {
+      } @loading(minimum 500ms) {
         <div class="flex flex-row space-x-2 items-center justify-center p-4">
           <span>Đang Tải Dữ Liệu </span>
           <mat-spinner></mat-spinner>

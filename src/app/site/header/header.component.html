@@ -203,11 +203,11 @@
                     </a>
                     <span
                         class="absolute font-bold -top-1 right-0 !bg-[#E1232A] text-white text-xs px-2 py-1 rounded-full">
-                        {{(Soluong| number:'1.0-0')||0}}
+                        {{(Donhang()?.Giohangs?.length||0| number:'1.0-0')}}
                     </span>
                 </div>
                 <a href="don-hang" class="!text-[#E1232A]">
-                    {{(Tongcong | number:'1.0-0')||'0'}}đ
+                    {{(GetTongCong()||0 | number:'1.0-0')}}đ
                 </a>
             </div>
         </div>

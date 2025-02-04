@@ -58,7 +58,6 @@ export class HeaderComponent implements OnInit {
   _AppService: AppService = inject(AppService);
   _MainComponent: MainComponent = inject(MainComponent);
   _DanhmucService: DanhmucService = inject(DanhmucService);
-  _GiohangService: GiohangService = inject(GiohangService);
   _DonhangsService: DonhangsService = inject(DonhangsService);
   _UsersService: UsersService = inject(UsersService);
   _AuthService: AuthService = inject(AuthService);
@@ -208,22 +207,5 @@ export class HeaderComponent implements OnInit {
     else {
       this.Timkiems = []
     }
-  }
-  AddtoCart(data:any)
-  { 
-    let item:any={}
-    item = data
-    item.Giachon = data.Giagoc[0]
-    item.Giachon.SLTT = data.Giagoc[0].khoiluong
-    item.Soluong=1    
-    this._GiohangService.addToCart(item).then(()=>
-    {
-      this._snackBar.open('Thêm Vào Giỏ Hàng Thành Công','',{
-        horizontalPosition: "end",
-        verticalPosition: "top",
-        panelClass:'success',
-        duration: 1000,
-      });
-    })
   }
 }

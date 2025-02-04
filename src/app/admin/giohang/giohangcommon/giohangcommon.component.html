@@ -84,17 +84,17 @@
             }
             @if(column === 'Tongtien'){
               <div class="flex flex-col space-y-2 font-bold text-right">
-                <span>{{TinhTong(this.Donhang.Giohangs,'Tongtien')||0 |number:'1.0-2'}}đ</span>
+                <span>{{TinhTong(this.Donhang?.Giohangs,'Tongtien')||0 |number:'1.0-2'}}đ</span>
               </div>
             }  
             @if(column === 'TongtienG'){
               <div class="flex flex-col space-y-2 font-bold text-right">
-                <span>{{TinhTong(this.Donhang.Giohangs,'TongtienG')||0 |number:'1.0-2'}}đ</span>
+                <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienG')||0 |number:'1.0-2'}}đ</span>
               </div>
             }  
             @if(column === 'TongtienN'){
               <div class="flex flex-col space-y-2 font-bold text-right">
-                <span>{{TinhTong(this.Donhang.Giohangs,'TongtienN')||0 |number:'1.0-2'}}đ</span>
+                <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienN')||0 |number:'1.0-2'}}đ</span>
               </div>
             }  
           </td>
@@ -104,7 +104,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
       </table>
-
 </div>
 <div class="flex flex-row space-x-2 justify-between items-center p-4">
   <div (click)="AddSanpham()" class="cursor-pointer flex-row inline-flex space-x-2 

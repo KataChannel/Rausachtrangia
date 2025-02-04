@@ -29,10 +29,8 @@ import { SlideadminComponent } from './slide/slideadmin/slideadmin.component';
 import { SlideadminChitietComponent } from './slide/slideadmin/slideadmindetail/slideadmindetail.component';
 import { UsergroupadminComponent } from './usergroup/usergroupadmin/usergroupadmin.component';
 import { UsergroupChitietComponent } from './usergroup/usergroupadmin/usergroupadmindetail/usergroupadmindetail.component';
-import { ProfileComponent } from './admin/users/profile/profile.component';
 export const appRoutes: Route[] = [
     // { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
-    { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
     {
         path: 'demoteamplate',
         data: { breadcrumb:[{title: 'Trang Chủ'}]},
@@ -173,12 +171,14 @@ export const appRoutes: Route[] = [
             },
         ]
     },
+    { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
     {
         path: 'admin',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
         loadComponent: () => import('./admin/main-admin/main-admin.component').then(c => c.MainAdminComponent),
         children: [
+            
             {
                 path: 'menu',
                 loadComponent: () => import('./admin/menu/menu-admin/menu-admin.component').then(c => c.MenuAdminComponent),

@@ -18,6 +18,7 @@ import { BreadcrumbadminComponent } from '../../../breadcrumb/breadcrumbadmin/br
 import { TabViewModule } from 'primeng/tabview';
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { DonhangsService } from '../../../admin/donhang/listdonhang/listdonhang.service';
 Swiper.use([Navigation, Pagination, Autoplay]); // Khai báo các module đã import
 @Component({
   selector: 'app-detail-sanpham',
@@ -59,7 +60,8 @@ export class DetailSanphamComponent implements OnInit {
     }
 ];
   _SanphamService: SanphamService = inject(SanphamService);
-  _GiohangService: GiohangService = inject(GiohangService);
+  // _GiohangService: GiohangService = inject(GiohangService);
+  _DonhangsService: DonhangsService = inject(DonhangsService);
   _TonkhoAdminService: TonkhoAdminService = inject(TonkhoAdminService);
   route: ActivatedRoute = inject(ActivatedRoute);
   breadcrumb: any[] = []
@@ -124,16 +126,24 @@ export class DetailSanphamComponent implements OnInit {
   AddtoCart(data:any)
   {
     console.log(data);
+    // let item:any={}
+    // item = data
+    // item.Giachon = this.Giachon
+    // item.Giachon.SLTT = (Number(this.Soluong)*Number(this.Giachon.khoiluong)).toFixed(2)
+    // item.Soluong=this.Soluong   
+
     let item:any={}
-    item = data
-    item.Giachon = this.Giachon
-    item.Giachon.SLTT = (Number(this.Soluong)*Number(this.Giachon.khoiluong)).toFixed(2)
+    item = this.Giachon
     item.Soluong=this.Soluong   
-    this._GiohangService.addToCart(item)
+    item.Title = data.Title
+    item.Image = data?.Image?.Hinhchinh?.src
+    console.log(item);
+    
+    this._DonhangsService.addToCart(item)
       this._snackBar.open("Thêm Vào Giỏ Hàng Thành Công","", {
         horizontalPosition: "end",
         verticalPosition: "top",
-        panelClass:"success",
+        panelClass: ['snackbar-success'],
         duration: 1000,
       }); 
   }

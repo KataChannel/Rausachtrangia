@@ -15,6 +15,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SanphamService } from '../../../sanpham/sanpham.service';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../users/auth/users.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-giohangcommon',
   imports: [
@@ -29,6 +30,7 @@ import { UsersService } from '../../users/auth/users.service';
    FormsModule,
    MatDialogModule,
    CommonModule,
+   MatProgressSpinnerModule
   ],
   templateUrl: './giohangcommon.component.html',
   styleUrl: './giohangcommon.component.scss'
@@ -97,7 +99,6 @@ export class GiohangcommonComponent implements OnInit {
           'Tongtien':'Tổng Tiền', 
         }
       }    
-      console.log(this.Donhang.Giohangs);
       this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
         await this._SanphamService.getAllSanpham()
          this._SanphamService.sanphams$.subscribe((data:any)=>{if(data){
