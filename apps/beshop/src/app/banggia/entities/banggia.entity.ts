@@ -16,9 +16,9 @@ import {
     ListSP: string;
     @Column({ default: '' })
     Type: string;
-    @Column({ default: 0 })
+    @Column()
     Batdau: Date;
-    @Column({ default: 0 })
+    @Column()
     Ketthuc: Date;
     @Column({ default: 1 })
     Ordering: number;
