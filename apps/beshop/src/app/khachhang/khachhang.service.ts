@@ -30,9 +30,10 @@ export class KhachhangService {
   }
   async findSDT(data: any) {
     return await this.KhachhangRepository.findOne({
-      where: {
-        SDT: data.SDT
-      },
+      where:[
+        {SDT: data.SDT},
+        {MaKH: data.MaKH},
+      ],
     });
   }
   async findslug(SDT: any) {
