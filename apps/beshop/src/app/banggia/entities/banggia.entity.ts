@@ -16,10 +16,10 @@ import {
     ListSP: string;
     @Column({ default: '' })
     Type: string;
-    @Column()
-    NgayBD: Date;
-    @Column()
-    NgayKT: Date;
+    @Column({ default: 0 })
+    Batdau: Date;
+    @Column({ default: 0 })
+    Ketthuc: Date;
     @Column({ default: 1 })
     Ordering: number;
     @Column({ default: 0 })
