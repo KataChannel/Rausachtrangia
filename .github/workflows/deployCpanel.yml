@@ -1,0 +1,28 @@
+on: push
+name:  Deploy Backend Taza Skin Clinic
+jobs:
+  web-deploy:
+    name:  Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name:  Get latest code
+        uses: actions/checkout@v3
+
+      # - name: Use Node.js 16
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16'
+
+      - name:  Build Project
+        run: |
+          npm install --force
+          npm run build
+
+      - name:  Sync build folder only
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ghv54-25032.azdigihost.com
+          username: zbhykhog
+          password: '3bS77hZda5'
+          local-dir: ./dist/apps/beshop # <-- Specify the local "build" folder
+          server-dir: sandbox/api/  # Destination on server
