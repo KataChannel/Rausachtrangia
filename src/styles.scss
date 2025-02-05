@@ -60,6 +60,9 @@ body {
 .mat-column-STT {
   width: 10px !important;
 }
+.mat-column-id {
+  display: none !important;
+}
 .mat-column-Tongtien,.mat-column-Soluong,.mat-column-SLTG,.mat-column-TongtienG,.mat-column-SLTN,.mat-column-TongtienN {
   text-align: right !important;
 }

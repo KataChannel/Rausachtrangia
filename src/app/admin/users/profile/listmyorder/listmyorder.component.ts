@@ -101,8 +101,7 @@ export class ListmyorderComponent implements AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this._UsersService.getProfile();
-    this._UsersService.profile$.subscribe((data) => {
+this._UsersService.getProfile().then((data) => {
       if (data) {
         this.User = data;
         console.log(data);
@@ -127,7 +126,7 @@ export class ListmyorderComponent implements AfterViewInit {
       }
     });
 
-    this.Detail.id ? this.drawer.open() : this.drawer.close();
+
     this._breakpointObserver
       .observe([Breakpoints.Handset])
       .subscribe((result) => {

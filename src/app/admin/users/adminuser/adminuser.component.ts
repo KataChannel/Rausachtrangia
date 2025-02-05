@@ -55,7 +55,7 @@ export class AdminuserComponent implements OnInit {
   ) {
   }
   async ngOnInit(): Promise<void> {
-    this.Lists = await this._UsersService.SearchUser(this.SearchParams)
+    this.Lists = await this._UsersService.getUsers()
     this.FilterLists = this.Lists.items
     this.pageSizeOptions = [10, 20, this.Lists.totalCount].filter(v => v <= this.Lists.totalCount);
     //  console.log(this.FilterLists);
@@ -74,7 +74,7 @@ export class AdminuserComponent implements OnInit {
     console.log(event);
     this.SearchParams.pageSize=event.pageSize
      this.SearchParams.pageNumber=event.pageIndex
-     this.Lists = await this._UsersService.SearchUser(this.SearchParams)
+     this.Lists = await this._UsersService.getUsers()
      this.FilterLists = this.Lists.items
   }
   openDialog(teamplate: TemplateRef<any>): void {
@@ -82,7 +82,7 @@ export class AdminuserComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result=="true") {
-        this._UsersService.CreateUser(this.Detail).then((data)=>
+        this._UsersService.Dangky(this.Detail).then((data)=>
         {
           if(data[0])
           {
@@ -127,7 +127,7 @@ export class AdminuserComponent implements OnInit {
           const Image:any = {Main:v.photo,Thumb:v.thumb}
           item.id = v.id
           item.Giagoc = groupByfield(Giagoc).find((gg:any)=>gg.idSP==v.id).children||[]
-           this._UsersService.UpdateUser(item)
+           this._UsersService.updateOneUser(item)
           // this._UsersService.CreateUsers(item)
           console.log(item);
         }, 100*k);
@@ -137,7 +137,6 @@ export class AdminuserComponent implements OnInit {
     };
     fileReader.readAsArrayBuffer(file);
   }
-
   writeExcelFile() {
     let Giagoc:any=[]
     let item:any={}

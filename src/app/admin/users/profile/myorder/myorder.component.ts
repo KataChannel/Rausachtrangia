@@ -60,8 +60,7 @@ export class MyorderComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar) {}
   
   ngOnInit() {
-    this._UsersService.getProfile()
-    this._UsersService.profile$.subscribe((data) => {
+this._UsersService.getProfile().then((data) => {
       if (data) {
         this.User = data
         console.log(data);
@@ -114,7 +113,7 @@ export class MyorderComponent implements OnInit {
     console.log(e.src);
     
     this.User.Image.Main = e.src
-    this._UsersService.UpdateUser(this.User).then(()=>{
+    this._UsersService.updateOneUser(this.User).then(()=>{
       this._snackBar.open('Cập Nhật Thành Công','',{
         horizontalPosition: "end",
         verticalPosition: "top",
@@ -125,7 +124,7 @@ export class MyorderComponent implements OnInit {
   }
   UpdateProfile()
   {
-    this._UsersService.UpdateUser(this.User).then(()=>{
+    this._UsersService.updateOneUser(this.User).then(()=>{
       this._snackBar.open('Cập Nhật Thành Công','',{
         horizontalPosition: "end",
         verticalPosition: "top",

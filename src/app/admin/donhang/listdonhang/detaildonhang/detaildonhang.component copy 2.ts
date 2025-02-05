@@ -98,8 +98,7 @@ export class DetailDonhangComponent implements OnInit {
     if (this.Donhang()?.Giohangs.length>0 && this.Donhang()?.Vanchuyen?.Diachi !== undefined && this.Donhang()?.Vanchuyen?.Diachi !== '') {
       this.UpdatePhiship();
     }
-    this._UsersService.getProfile()
-    this._UsersService.profile$.subscribe((data) => {
+this._UsersService.getProfile().then((data) => {
       if (data) {
         this.Profile = data  
         this.Donhang().idKH = data.id

@@ -66,8 +66,7 @@ export class DonhangAdminChitietComponent implements OnInit {
       this.idSP = this.route.snapshot.params['id'];
   }
   async ngOnInit() {
-    this._UsersService.getProfile()
-    this._UsersService.profile$.subscribe((data) => {
+this._UsersService.getProfile().then((data) => {
       if (data) {
         this.Profile = data
         switch (data.Role) {

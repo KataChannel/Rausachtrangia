@@ -46,23 +46,28 @@ export class GuestGuard implements CanActivate {
     
     return this._check();
   }
-  private _check() {
-    // const check = this._authService.checkDangnhap()
-    //     if (check) {
-    //       //this._notifierService.notify('error','Đang Đăng Nhập Tài Khoản')
-    //       this._router.navigate(['']);
-    //       return false;
-    //     }
-    //     return true;
+  private _check(): Observable<boolean> {
     return this._authService.checkDangnhap().pipe(
       switchMap((authenticated) => {
+        console.log(authenticated);
         if (authenticated) {
-          //this._notifierService.notify('error','Đang Đăng Nhập Tài Khoản')
-         // this._router.navigate(['/dangnhap'], { queryParams: { redirectURL } });
+         this._router.navigate(['']);
           return of(false);
         }
         return of(true);
       })
     );
   }
+  // private _check() {
+  //   return this._authService.checkDangnhap().pipe(
+  //     switchMap((authenticated) => {
+  //       if (authenticated) {
+  //         //this._notifierService.notify('error','Đang Đăng Nhập Tài Khoản')
+  //        // this._router.navigate(['/dangnhap'], { queryParams: { redirectURL } });
+  //         return of(false);
+  //       }
+  //       return of(true);
+  //     })
+  //   );
+  // }
 }

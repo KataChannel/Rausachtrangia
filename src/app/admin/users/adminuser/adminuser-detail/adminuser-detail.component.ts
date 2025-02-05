@@ -75,11 +75,11 @@ export class AdminuserDetailComponent implements OnInit {
     console.log(e);
     this.Detail.ListImage[i] = e
     console.log(this.Detail);
-    this._UsersService.UpdateUser(this.Detail);
+    this._UsersService.updateOneUser(this.Detail);
   }
   UpdateUseradmin()
   {
-    this._UsersService.UpdateUser(this.Detail).then(()=>
+    this._UsersService.updateOneUser(this.Detail).then(()=>
     {
         this._snackBar.open('Cập Nhật Thành Công','',{
           horizontalPosition: "end",

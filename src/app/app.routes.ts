@@ -41,16 +41,6 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('../formin/formin-admin/chitietin/chitietin.component').then(comp => comp.ChitietinComponent)
     },
     {
-        path: 'dangnhap',
-        canActivate: [GuestGuard],
-        component: DangnhapComponent,
-    },
-    {
-        path: 'dangky',
-        canActivate: [GuestGuard],
-        component: DangkyComponent,
-    },
-    {
         path: '',
         component: MainComponent,
         children: [
@@ -171,11 +161,10 @@ export const appRoutes: Route[] = [
             },
         ]
     },
-    { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
+    //{ path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
     {
         path: 'admin',
         canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
         loadComponent: () => import('./admin/main-admin/main-admin.component').then(c => c.MainAdminComponent),
         children: [
             
@@ -202,13 +191,48 @@ export const appRoutes: Route[] = [
                 component: PageadminComponent,
             },
             {
+                path: 'sanpham',
+                loadComponent: () => import('./admin/sanpham/listsanpham/listsanpham.component').then(c => c.ListsanphamComponent),
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/sanpham/listsanpham/detailsanpham/detailsanpham.component').then(c => c.DetailSanphamComponent),
+                    },
+                ]
+
+            },
+            {
                 path: 'donhang',
                 loadComponent: () => import('./admin/donhang/listdonhang/listdonhang.component').then(c => c.ListdonhangComponent),
                 children: [
                     {
-                        path: ':id',
-                        loadComponent: () => import('./admin/donhang/listdonhang/detaildonhang/detaildonhang.component').then(c => c.DetailDonhangComponent),
+                        path: 'donsi/:id',
+                        loadComponent: () => import('./admin/donhang/listdonhang/listdonsi/detaildonsi/detaildonsi.component').then(c => c.DetaildonsiComponent),
                     },
+                    {
+                        path: 'donle/:id',
+                        loadComponent: () => import('./admin/donhang/listdonhang/listdonle/listdonle.component').then(c => c.ListdonleComponent),
+                    },
+                ]
+            },
+            {
+                path: 'banggia',
+                loadComponent: () => import('./admin/banggia/listbanggia/listbanggia.component').then(c => c.ListBanggiaComponent),
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/banggia/listbanggia/detailbanggia/detailbanggia.component').then(c => c.DetailBanggiaComponent),
+                    },
+                ]
+            },
+            {
+                path: 'khachhang',
+                loadComponent:() => import('./admin/khachhang/listkhachhang/listkhachhang.component').then(c => c.ListkhachhangComponent),
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/khachhang/listkhachhang/detailkhachhang/detailkhachhang.component').then(c => c.DetailKhachhangComponent),
+                    }
                 ]
             },
             // {
@@ -231,26 +255,16 @@ export const appRoutes: Route[] = [
                     },
                 ]
             },
-            {
-                path: 'khachhang',
-                component: AdminKhachhangComponent,
-                children: [
-                    {
-                        path: ':id',
-                        component: DonhangAdminChitietComponent,
-                    },
-                ]
-            },
-            {
-                path: 'sanpham',
-                component: SanphamAdminComponent,
-                children: [
-                    {
-                        path: ':id',
-                        component: SanphamAdminDetailComponent,
-                    },
-                ]
-            },
+            // {
+            //     path: 'sanpham',
+            //     component: SanphamAdminComponent,
+            //     children: [
+            //         {
+            //             path: ':id',
+            //             component: SanphamAdminDetailComponent,
+            //         },
+            //     ]
+            // },
             {
                 path: 'danhmuc',
                 component: DanhmucComponent,
@@ -331,5 +345,15 @@ export const appRoutes: Route[] = [
                 ]
             },
         ]
+    },
+    {
+        path: 'dangnhap',
+        canActivate: [GuestGuard],
+        loadComponent: () => import('./admin/users/dangnhap/dangnhap.component').then((c) => c.DangnhapComponent),
+    },
+    {
+        path: 'dangky',
+        canActivate: [GuestGuard],
+        loadComponent: () => import('./admin/users/dangky/dangky.component').then((c) => c.DangkyComponent),
     },
 ];

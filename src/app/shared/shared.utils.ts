@@ -16,14 +16,25 @@ export function GetImage(data:any) {
 }
 
 export function ConvertDriveData(data:any){
-  return data.slice(1).map((row:any) => {
-    return {
-      Title: row[0],
-      Danhmuc: row[1],
-      SKU: row[2],
-    };
+  const keys = data[0];
+  const convertedData = data.slice(2).map((row:any) => {
+    return row.reduce((acc:any, value:any, index:any) => {
+      const key = keys[index];
+      acc[key] = (value === "null" ? null : value);
+      // acc[key] = key === "STT" ? parseInt(value, 10) : (value === "null" ? null : value);
+      return acc;
+    }, {});
   });
-} 
+  return convertedData
+}
+
+export function ConvertDriveColumnName(data:any){
+  const convertedData = data[0].reduce((acc:any, key:any, index:any) => {
+    acc[key] = data[1][index];
+    return acc;
+  }, {});
+  return convertedData
+}
 
 export function formatCurrency  (amount: number, currency: string, locale: string = 'en-US') {
   return new Intl.NumberFormat(locale, {

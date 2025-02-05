@@ -14,8 +14,20 @@
                     </div>
                 </div>
                 <span (click)="Create()" class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>
-                </div>
+              </div>
                 <div class="flex flex-row space-x-2 items-center justify-end">
+                  <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+                    <mat-label>Loại Đơn</mat-label>
+                    <mat-select [(ngModel)]="SearchParams.Type" [ngModelOptions]="{standalone: true}" (selectionChange)="onSelectionChange($event)">
+                      @for (item of [
+                        {id:1,Title:'Đơn Sỉ',value:'donsi'},
+                        {id:2,Title:'Đơn Lẻ',value:'donle'},
+                        ]; track item) {
+                        <mat-option [value]="item.value">{{item.Title}}</mat-option>
+                      }
+                    </mat-select>
+                 </mat-form-field>
+
                     <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
                         <mat-label>Chọn Thời Gian</mat-label>
                         <mat-select [(ngModel)]="Chonthoigian" [ngModelOptions]="{standalone: true}" (selectionChange)="onSelectionChange($event)">
@@ -24,7 +36,6 @@
                           }
                         </mat-select>
                      </mat-form-field>
-
                         <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
                             <mat-label>Khoảng Thời Gian</mat-label>
                             <mat-date-range-input [rangePicker]="picker">
@@ -41,34 +52,18 @@
                           </mat-form-field>
             </div>
         </div>
+        <div class="flex flex-row space-x-2 items-center bg-white rounded-lg p-2">
+          {{ListDonhang().length}} Đơn Hàng
+        </div>
         <div class="w-full overflow-auto">
-            <table class="!border w-full cursor-pointer" mat-table [dataSource]="dataSource" matSort>
-                @for (column of displayedColumns; track column) {
-                  <ng-container [matColumnDef]="column">
-                    <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header>{{ ColumnName[column] }}
-                    </th>
-                    <td class="lg:whitespace-normal whitespace-nowrap" mat-cell *matCellDef="let row;let idx = index">
-                        @if(column === 'STT')
-                        {
-                           {{idx + 1}}
-                        }
-                        @else if(column === 'MaDonHang')
-                        {
-                          <a [routerLink]="[row.id]" class="hover:text-blue-500">{{row[column]}}</a>
-                        }
-                        @else {
-                          <div [innerHTML]="row[column]"></div>
-                        }
-                   </td>
-                 </ng-container>
-                }
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-slate-100 {{Detail?.id==row.id?'!bg-slate-300':''}}" [routerLink]="[row.id]"></tr>
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell p-4" colspan="4">Không tìm thấy "{{input.value}}"</td>
-                </tr>
-            </table>
-            <mat-paginator #paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+          @if(SearchParams.Type === 'donsi')
+          {
+            <app-listdonsi></app-listdonsi>
+          }
+          @else {
+            <app-listdonle></app-listdonle>
+          }
+
         </div>
     </div>    
 </div>

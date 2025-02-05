@@ -1,0 +1,28 @@
+<!-- 
+<table class="!border w-full cursor-pointer" mat-table [dataSource]="dataSource" matSort>
+    @for (column of displayedColumns; track column) {
+      <ng-container [matColumnDef]="column">
+        <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header>{{ ColumnName[column] }}
+        </th>
+        <td class="lg:whitespace-normal whitespace-nowrap" mat-cell *matCellDef="let row;let idx = index">
+            @if(column === 'STT')
+            {
+               {{idx + 1}}
+            }
+            @else if(column === 'MaDonHang')
+            {
+              <a [routerLink]="[row.id]" class="hover:text-blue-500">{{row[column]}}</a>
+            }
+            @else {
+              <div [innerHTML]="row[column]"></div>
+            }
+       </td>
+     </ng-container>
+    }
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-slate-100 {{Detail?.id==row.id?'!bg-slate-300':''}}" [routerLink]="[row.id]"></tr>
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell p-4" colspan="4">Không tìm thấy "{{input.value}}"</td>
+    </tr>
+</table>
+<mat-paginator #paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->

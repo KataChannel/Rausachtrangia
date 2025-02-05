@@ -1,0 +1,82 @@
+<div class="flex flex-row justify-between items-center space-x-2 p-2">
+    <button mat-icon-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="font-bold text-lg">
+        @if(paramId==0){
+        Thêm Bảng Giá
+        }@else {
+        {{Detail?.MaDonHang||'Chưa Đặt Tên'}}
+        }
+    </div>
+    <div class="flex flex-row space-x-2 items-center">
+        @if(isEdit==true){
+        <button mat-icon-button color="primary" (click)="SaveData()">
+            <mat-icon>save</mat-icon>
+        </button>
+        }
+        @else{
+        <button mat-icon-button color="primary" (click)="isEdit=true">
+            <mat-icon>edit</mat-icon>
+        </button>
+        }
+        @if(paramId!='0'){
+        <button mat-icon-button color="warn" (click)="isDelete=true">
+            <mat-icon>delete</mat-icon>
+        </button>
+        }
+    </div>
+
+</div>
+
+<div class="relative flex flex-col w-full p-4 overflow-auto">
+    @if(isDelete==true){
+    <div class="flex flex-col space-y-4 items-center justify-center">
+        <div class="font-bold text-lg">Bạn chắc chắn muốn xoá không?</div>
+        <div class="flex flex-row space-x-2 items-center justify-center">
+            <button mat-flat-button color="primary" (click)="DeleteData()">
+                Đồng Ý
+            </button>
+            <button mat-flat-button color="warn" (click)="isDelete=false">
+                Huỷ Bỏ
+            </button>
+        </div>
+    </div>
+
+    }
+    @else {
+    <div class="w-full flex flex-col space-y-6 items-center p-2">
+
+    <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+         <mat-label>Tiêu Đề</mat-label>
+        <input matInput [(ngModel)]="Detail.Title"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Tiêu Đề" />
+    </mat-form-field> 
+    
+
+
+
+    <div class="w-full flex flex-col overflow-y-auto">
+        <div class="bg-white rounded-lg border border-default-200 col-span-2">
+          <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
+            <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
+            <div class="flex flex-row space-x-1">
+              <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
+            </div>
+
+          </div>
+          @defer () {
+            <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Detail"></app-giohangcommon>
+          } @loading(minimum 500ms) {
+            <div class="flex flex-row space-x-2 items-center justify-center p-4">
+              <span>Đang Tải Dữ Liệu </span>
+              <mat-spinner></mat-spinner>
+            </div>
+
+          } @error {
+            <p>Error loading About Component</p>
+          }
+        </div>
+      </div>
+    </div>
+    }
+</div>

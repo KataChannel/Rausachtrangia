@@ -131,8 +131,7 @@ export class HeaderComponent implements OnInit {
     this.Donhang = this._DonhangsService.Donhang  
     if(this.Token)
     {
-      this._UsersService.getProfile()
-      this._UsersService.profile$.subscribe((data) => {
+      this._UsersService.getProfile().then((data) => {
         if (data) {
           this.User = data
           // console.log(data); 

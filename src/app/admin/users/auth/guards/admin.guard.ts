@@ -9,17 +9,13 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, map, of, switchMap, take } from 'rxjs';
-import { AuthService } from '../auth.service';
-import { NotifierService } from 'angular-notifier';
 import { UsersService } from '../users.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
   constructor(
-    private _authService: AuthService, 
-    private _usersService: UsersService, 
-    private _notifierService: NotifierService, 
+    private _usersService: UsersService,
     private _router: Router
     ) {}
   canActivate(
@@ -27,27 +23,28 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
 
-    const redirectURL = state.url === '/dangxuat' ? '/' : state.url;
+    const redirectUrl = state.url === '/dangxuat' ? '/' : state.url;
     let checkLogin;
-    this._check(redirectURL).subscribe((data)=>{checkLogin =data});
+    this._check(redirectUrl).subscribe((data)=>{checkLogin =data});
     if(checkLogin)
     {
-      return this._usersService.getProfile().pipe(
-        take(1),
-        map((user:any) => {
-          if (user && user.Role === 'admin') {
-            return true;
-          } else {
-            this._notifierService.notify('error','Không Có Quyền Truy Cập')
-            this._router.navigate(['/']);
-            return false;
-          }
-        })
-      );
+      return true
+      // return this._usersService.getProfile().pipe(
+      //   take(1),
+      //   map((user:any) => {
+      //     if (user && user.Role === 'admin') {
+      //       return true;
+      //     } else {
+      //       this._notifierService.notify('error','Không Có Quyền Truy Cập')
+      //       this._router.navigate(['']);
+      //       return false;
+      //     }
+      //   })
+      // );
     }
     else
     {
-      this._router.navigate(['/dangnhap'], { queryParams: { redirectURL } });
+      this._router.navigate(['/dangnhap'], { queryParams: { redirectUrl } });
       return false;
     }
   }
@@ -59,9 +56,9 @@ export class AdminGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const redirectURL = state.url === '/dangxuat' ? '/' : state.url;
+    const redirectUrl = state.url === '/dangxuat' ? '/' : state.url;
 
-    return this._check(redirectURL);
+    return this._check(redirectUrl);
   }
   canLoad(
     route: Route,
@@ -70,7 +67,7 @@ export class AdminGuard implements CanActivate {
     return this._check('/');
   }
   private _check(redirectURL: string): Observable<boolean> {
-    return this._authService.checkDangnhap().pipe(
+    return this._usersService.checkDangnhap().pipe(
       switchMap((authenticated) => {
         if (!authenticated) {
           return of(false);

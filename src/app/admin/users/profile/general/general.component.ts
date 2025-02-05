@@ -29,8 +29,7 @@ _UsersService: UsersService = inject(UsersService);
   constructor(private _snackBar: MatSnackBar) {
     if(this.Token)
     {
-      this._UsersService.getProfile()
-      this._UsersService.profile$.subscribe((data) => {
+      this._UsersService.getProfile().then((data) => {
         if (data) {
           this.User = data
           this.User.Image.src = this.User.Image.Main
@@ -55,7 +54,7 @@ _UsersService: UsersService = inject(UsersService);
     console.log(e.src);
     
     this.User.Image.Main = e.src
-    this._UsersService.UpdateUser(this.User).then(()=>{
+    this._UsersService.updateOneUser(this.User).then(()=>{
       this._snackBar.open('Cập Nhật Thành Công','',{
         horizontalPosition: "end",
         verticalPosition: "top",
@@ -66,7 +65,7 @@ _UsersService: UsersService = inject(UsersService);
   }
   UpdateProfile()
   {
-    this._UsersService.UpdateUser(this.User).then(()=>{
+    this._UsersService.updateOneUser(this.User).then(()=>{
       this._snackBar.open('Cập Nhật Thành Công','',{
         horizontalPosition: "end",
         verticalPosition: "top",

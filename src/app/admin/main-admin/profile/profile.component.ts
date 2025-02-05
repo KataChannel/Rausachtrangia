@@ -19,8 +19,7 @@ export class ProfileComponent implements OnInit {
   _Router: Router = inject(Router)
   Profile: any = {}
   ngOnInit() {
-    this._UsersService.getProfile()
-    this._UsersService.profile$.subscribe((data) => {
+this._UsersService.getProfile().then((data) => {
       if (data) {
         this.Profile = data
       }

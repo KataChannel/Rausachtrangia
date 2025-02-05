@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ListHinhthucthanhtoan, ListTrangThaiDonhang } from '../../../shared/shared.utils';
+import { ListdonleComponent } from './listdonle/listdonle.component';
+import { ListdonsiComponent } from './listdonsi/listdonsi.component';
 @Component({
   selector: 'app-listdonhang',
   templateUrl: './listdonhang.component.html',
@@ -35,12 +37,14 @@ import { ListHinhthucthanhtoan, ListTrangThaiDonhang } from '../../../shared/sha
     MatSelectModule,
     FormsModule,
     MatDatepickerModule,
-    RouterLink
+    // RouterLink,
+    ListdonleComponent,
+    ListdonsiComponent
   ],
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListdonhangComponent implements AfterViewInit {
+export class ListdonhangComponent {
   Detail:any={}
   dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = [
@@ -66,22 +70,25 @@ export class ListdonhangComponent implements AfterViewInit {
     'CreateAt':'Ngày Tạo',
   }
   ListDate:any[]=[
-    {id:1,Title:'1 Tuần',value:'week'},
-    {id:2,Title:'1 Tháng',value:'month'},
-    {id:3,Title:'1 Năm',value:'year'},
+    {id:1,Title:'1 Ngày',value:'day'},
+    {id:2,Title:'1 Tuần',value:'week'},
+    {id:3,Title:'1 Tháng',value:'month'},
+    {id:4,Title:'1 Năm',value:'year'},
   ]
   @ViewChild(MatPaginator,{ static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
   _DonhangsService:DonhangsService= inject(DonhangsService)
   ListDonhang = signal<any[]>([]);
+  Donhang:any={Giohangs:[],Thanhtoan:{Hinhthuc:'COD'}}
   SearchParams: any = {
-    Batdau:moment().startOf('week').toDate(),
-    Ketthuc: moment().endOf('week').toDate(),
+    Batdau:moment().startOf('day').toDate(),
+    Ketthuc: moment().endOf('day').toDate(),
+    Type:'donsi',
     pageSize:9999,
     pageNumber:0
   };
-  Chonthoigian:any='week'
+  Chonthoigian:any='day'
   constructor(
     private _breakpointObserver: BreakpointObserver,
     private _router: Router,
@@ -103,11 +110,19 @@ export class ListdonhangComponent implements AfterViewInit {
       Thanhtoan:`<span class="whitespace-nowrap ${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Class} p-2 rounded-lg">${ListHinhthucthanhtoan.find((v1)=>v1.id==v?.Thanhtoan?.Hinhthuc)?.Title}</span>`,
     }))
   
-  ); 
-    // console.log(this.dataSource.data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.Detail.id?this.drawer.open():this.drawer.close()
+    ); 
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
+      this.paginator._intl.nextPageLabel = 'Tiếp Theo';
+      this.paginator._intl.previousPageLabel = 'Về Trước';
+      this.paginator._intl.firstPageLabel = 'Trang Đầu';
+      this.paginator._intl.lastPageLabel = 'Trang Cuối';
+    }
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+    
     this._breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
       if (result.matches) {
        this.drawer.mode = 'over';
@@ -117,14 +132,6 @@ export class ListdonhangComponent implements AfterViewInit {
       }
     });
     
-  }
-  ngAfterViewInit() { 
-      this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
-      this.paginator._intl.nextPageLabel = 'Tiếp Theo';
-      this.paginator._intl.previousPageLabel = 'Về Trước';
-      this.paginator._intl.firstPageLabel = 'Trang Đầu';
-      this.paginator._intl.lastPageLabel = 'Trang Cuối';
-      this.paginator.pageSize = 30
   }
   onSelectionChange(event: MatSelectChange) {
     switch (event.value) {
@@ -138,9 +145,14 @@ export class ListdonhangComponent implements AfterViewInit {
         this.SearchParams.Ketthuc = moment().endOf('year').toDate()   
         this.ngOnInit()    
         break;
-      default:
+      case 'week':
         this.SearchParams.Batdau = moment().startOf('week').toDate()
         this.SearchParams.Ketthuc = moment().endOf('week').toDate() 
+        this.ngOnInit()     
+        break;
+      default:
+        this.SearchParams.Batdau = moment().startOf('day').toDate()
+        this.SearchParams.Ketthuc = moment().endOf('day').toDate() 
         this.ngOnInit()      
         break;
     }
@@ -159,10 +171,11 @@ export class ListdonhangComponent implements AfterViewInit {
   }
   Create()
   {
-    this._DonhangsService.createDonhang({Giohangs:[],Thanhtoan:{Hinhthuc:'COD'}}).then((v:any)=>{
+    this.Donhang.Type=this.SearchParams.Type
+    this._DonhangsService.createDonhang(this.Donhang).then((v:any)=>{
       console.log(v);
       this.drawer.open();
-     this._router.navigate(['admin/donhang', v.id])
+     this._router.navigate(['admin/donhang/donsi', v.id])
     })
   }
   // goToDetail(item:any)
