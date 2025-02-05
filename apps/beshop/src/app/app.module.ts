@@ -21,6 +21,7 @@ import { CauhinhModule } from './cauhinh/cauhinh.module';
 import { DanhmucbaivietModule } from './danhmucbaiviet/danhmucbaiviet.module';
 import { SlideModule } from './slide/slide.module';
 import { VisitorModule } from './visitor/visitor.module';
+import { BanggiaModule } from './banggia/banggia.module';
 
 @Module({
   imports: [
@@ -65,7 +66,8 @@ import { VisitorModule } from './visitor/visitor.module';
      CauhinhModule,
      DanhmucbaivietModule,
      SlideModule,
-     VisitorModule
+     VisitorModule,
+     BanggiaModule
   ],
   controllers: [AppController],
   providers: [AppService],

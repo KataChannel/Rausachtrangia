@@ -11,11 +11,23 @@ export class KhachhangEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
+  idBanggia: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
+  MaKH: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
+  TenKH: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
+  Khachhang: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
   Hoten: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   Diachi: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
+  Quan: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
   SDT: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
+  MST: string;
   @Column({ default: '' })
   Email: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
