@@ -10,9 +10,16 @@ export class SanphamService {
     private SanphamRepository: Repository<SanphamEntity>,
     private _DanhmucService: DanhmucService
   ) {}
-  async create(CreateSanphamDto: any) {
-    this.SanphamRepository.create(CreateSanphamDto);
-    return await this.SanphamRepository.save(CreateSanphamDto);
+  async create(data: any) {
+    const checkSP = await this.SanphamRepository.findOne({ where: { MaSP: data.MaSP } });
+    if(!checkSP){
+      this.SanphamRepository.create(data);
+      return await this.SanphamRepository.save(data);      
+    }
+    else
+    {
+      return {error:1001,message:"Sản phẩm đã tồn tại"}
+    }
   }
   async sync(data: any) {
 
