@@ -1,5 +1,5 @@
 on: push
-name:  Deploy Backend Taza Skin Clinic
+name:  Deploy Backend Rau Sach Tran Gia
 jobs:
   web-deploy:
     name:  Deploy
@@ -24,5 +24,5 @@ jobs:
           server: ghv54-25032.azdigihost.com
           username: zbhykhog
           password: '3bS77hZda5'
-          local-dir: ./dist/apps/beshop # <-- Specify the local "build" folder
+          local-dir: ./dist/apps/beshop/ # <-- Specify the local "build" folder
           server-dir: sandbox/api/  # Destination on server
