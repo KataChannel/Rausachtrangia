@@ -50,14 +50,6 @@
         <div class="relative flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2">
           <div class="w-full flex flex-col overflow-y-auto">
             <div class="bg-white rounded-lg border border-default-200 col-span-2">
-              <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
-                <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
-                <div class="flex flex-row space-x-1">
-                  <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
-                  <button (click)="openFullScreen(FullScreenDialog)" color="primary" mat-icon-button><mat-icon>fullscreen</mat-icon></button>
-                </div>
-  
-              </div>
               @defer () {
                 <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Donhang"></app-giohangcommon>
               } @loading(minimum 500ms) {
@@ -65,11 +57,9 @@
                   <span>Đang Tải Dữ Liệu </span>
                   <mat-spinner></mat-spinner>
                 </div>
-  
               } @error {
                 <p>Error loading About Component</p>
-              }
-            </div>
+              }v>
           </div>
       
       

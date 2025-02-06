@@ -35,7 +35,7 @@ import { convertToSlug } from '../../../shared/shared.utils';
     CommonModule
   ],
 })
-export class ListsanphamComponent implements AfterViewInit {
+export class ListsanphamComponent {
   Detail: any = {};
   dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = [];
@@ -44,7 +44,7 @@ export class ListsanphamComponent implements AfterViewInit {
   FilterColumns: any[] = JSON.parse(localStorage.getItem('Sanpham_FilterColumns') || '[]');
   Columns: any[] = [];
   ListSanpham: any[] = ListSanpham;
-
+  CountItem: number =0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
@@ -95,8 +95,14 @@ export class ListsanphamComponent implements AfterViewInit {
         return obj;
       }, {})
     ));
+    this.CountItem = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
+    this.paginator._intl.nextPageLabel = 'Tiếp Theo';
+    this.paginator._intl.previousPageLabel = 'Về Trước';
+    this.paginator._intl.firstPageLabel = 'Trang Đầu';
+    this.paginator._intl.lastPageLabel = 'Trang Cuối';
   }
 
   private setupDrawer(): void {
@@ -134,21 +140,11 @@ export class ListsanphamComponent implements AfterViewInit {
     this.FilterColumns = this.Columns.filter(v => v.value.toLowerCase().includes(query));    
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
-    this.paginator._intl.nextPageLabel = 'Tiếp Theo';
-    this.paginator._intl.previousPageLabel = 'Về Trước';
-    this.paginator._intl.firstPageLabel = 'Trang Đầu';
-    this.paginator._intl.lastPageLabel = 'Trang Cuối';
-  }
-
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     console.log(this.dataSource);
-    
+    this.CountItem = this.dataSource.filteredData.length;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

@@ -1,137 +1,153 @@
-<div class="w-full overflow-auto">
-      <table class="w-full cursor-pointer" mat-table [dataSource]="dataSource">
-        @for (column of displayedColumns; track column) {
-        <ng-container [matColumnDef]="column">
-          <th class="whitespace-nowrap !bg-slate-300" mat-header-cell *matHeaderCellDef>{{ ColumnName[column] }}
-          </th>
-          <td class="whitespace-nowrap" mat-cell *matCellDef="let row;let idx = index">
-            @if( column === 'STT'){
-              <div class="flex flex-row items-center px-2">
-                <span> {{idx + 1}} </span>
-                <button (click)="Xoasanpham(row)" color="warn" mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
-              </div>
-          
-            }
-            @else if( column === 'Image'){
-            @if(row[column])
-            {
-            <img loading="lazy" [src]="row[column]" class="border rounded-lg h-20 w-20">
-            }
-            @else {
-            <img loading="lazy" src="assets/images/noimage.png" class="border h-20 w-20 rounded-lg">
-            }
-            }
-            @else if( column === 'Soluong'){
-              @if(isEdit){
-                <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
-                  <input matInput type="number" (change)="onValueChange($event,idx,'Soluong')" [(ngModel)]="Donhang.Giohangs[idx].Soluong"
-                    [ngModelOptions]="{ standalone: true }"/>
-                  <button class="text-md" (click)="ChangeSoluong(idx,'giam','Tongtien','Soluong')" color="primary" matPrefix
-                    mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
-                  <button class="text-md" (click)="ChangeSoluong(idx,'tang','Tongtien','Soluong')" color="primary" matSuffix
-                    mat-icon-button><mat-icon>add_circle</mat-icon></button>
-                </mat-form-field>
+  <div class="bg-white rounded-lg border border-default-200 col-span-2">
+    <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
+      <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
+      <div class="flex flex-row space-x-1">
+        <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
+      </div>
+    </div>
+    @defer () {
+      <div class="w-full overflow-auto">
+        <table class="w-full cursor-pointer" mat-table [dataSource]="dataSource">
+          @for (column of displayedColumns; track column) {
+          <ng-container [matColumnDef]="column">
+            <th class="whitespace-nowrap !bg-slate-300" mat-header-cell *matHeaderCellDef>{{ ColumnName[column] }}
+            </th>
+            <td class="whitespace-nowrap" mat-cell *matCellDef="let row;let idx = index">
+              @if( column === 'STT'){
+                <div class="flex flex-row items-center px-2">
+                  <span> {{idx + 1}} </span>
+                  <button (click)="Xoasanpham(row)" color="warn" mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
+                </div>
+            
+              }
+              @else if( column === 'Image'){
+              @if(row[column])
+              {
+              <img loading="lazy" [src]="row[column]" class="border rounded-lg h-20 w-20">
               }
               @else {
-                {{row[column]||0 |number:'1.0-2'}}
+              <img loading="lazy" src="assets/images/noimage.png" class="border h-20 w-20 rounded-lg">
               }
-            }
-            @else if(column === 'SLTG'){
-              @if(isEdit){
-                <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
-                  <input matInput type="number" (change)="onValueChange($event,idx,'SLTG')" [(ngModel)]="Donhang.Giohangs[idx].SLTG"
-                    [ngModelOptions]="{ standalone: true }"/>
-                  <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienG','SLTG')" color="primary" matPrefix
-                    mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
-                  <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienG','SLTG')" color="primary" matSuffix
-                    mat-icon-button><mat-icon>add_circle</mat-icon></button>
-                </mat-form-field>
+              }
+              @else if( column === 'Soluong'){
+                @if(isEdit){
+                  <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="number" (change)="onValueChange($event,idx,'Soluong')" [(ngModel)]="Donhang.Giohangs[idx].Soluong"
+                      [ngModelOptions]="{ standalone: true }"/>
+                    <button class="text-md" (click)="ChangeSoluong(idx,'giam','Tongtien','Soluong')" color="primary" matPrefix
+                      mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
+                    <button class="text-md" (click)="ChangeSoluong(idx,'tang','Tongtien','Soluong')" color="primary" matSuffix
+                      mat-icon-button><mat-icon>add_circle</mat-icon></button>
+                  </mat-form-field>
+                }
+                @else {
+                  {{row[column]||0 |number:'1.0-2'}}
+                }
+              }
+              @else if(column === 'SLTG'){
+                @if(isEdit){
+                  <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="number" (change)="onValueChange($event,idx,'SLTG')" [(ngModel)]="Donhang.Giohangs[idx].SLTG"
+                      [ngModelOptions]="{ standalone: true }"/>
+                    <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienG','SLTG')" color="primary" matPrefix
+                      mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
+                    <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienG','SLTG')" color="primary" matSuffix
+                      mat-icon-button><mat-icon>add_circle</mat-icon></button>
+                  </mat-form-field>
+                }
+                @else {
+                  {{row[column]||0 |number:'1.0-2'}}
+                }
+              }
+              @else if(column === 'SLTN'){
+                @if(isEdit){
+                  <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="number" (change)="onValueChange($event,idx,'SLTN')" [(ngModel)]="Donhang.Giohangs[idx].SLTN"
+                      [ngModelOptions]="{ standalone: true }"/>
+                    <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienN','SLTN')" color="primary" matPrefix
+                      mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
+                    <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienN','SLTN')" color="primary" matSuffix
+                      mat-icon-button><mat-icon>add_circle</mat-icon></button>
+                  </mat-form-field>
+                }
+                @else {
+                  {{row[column]||0 |number:'1.0-2'}}
+                }
+              }
+              @else if( column === 'Tongtien'||column === 'TongtienG'||column === 'TongtienN'){
+                {{row[column]||0 |number:'1.0-2'}}đ
+              }
+              @else if( column === 'Title'){
+                {{row.Title + ' (' + row.khoiluong + ' ' + row.dvt + ')'}}
               }
               @else {
-                {{row[column]||0 |number:'1.0-2'}}
+              {{row[column]}}
               }
-            }
-            @else if(column === 'SLTN'){
-              @if(isEdit){
-                <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
-                  <input matInput type="number" (change)="onValueChange($event,idx,'SLTN')" [(ngModel)]="Donhang.Giohangs[idx].SLTN"
-                    [ngModelOptions]="{ standalone: true }"/>
-                  <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienN','SLTN')" color="primary" matPrefix
-                    mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
-                  <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienN','SLTN')" color="primary" matSuffix
-                    mat-icon-button><mat-icon>add_circle</mat-icon></button>
-                </mat-form-field>
+            </td>
+            <td mat-footer-cell *matFooterCellDef="let row;let idx = index">
+              @if( column === 'Title'){
+              <div class="flex flex-col space-y-2 font-bold">
+                <span>Tổng</span>
+              </div>
               }
-              @else {
-                {{row[column]||0 |number:'1.0-2'}}
-              }
-            }
-            @else if( column === 'Tongtien'||column === 'TongtienG'||column === 'TongtienN'){
-              {{row[column]||0 |number:'1.0-2'}}đ
-            }
-            @else if( column === 'Title'){
-              {{row.Title + ' (' + row.khoiluong + ' ' + row.dvt + ')'}}
-            }
-            @else {
-            {{row[column]}}
-            }
-          </td>
-          <td mat-footer-cell *matFooterCellDef="let row;let idx = index">
-            @if( column === 'Title'){
-            <div class="flex flex-col space-y-2 font-bold">
-              <span>Tổng</span>
-            </div>
-            }
-            @if(column === 'Tongtien'){
-              <div class="flex flex-col space-y-2 font-bold text-right">
-                <span>{{TinhTong(this.Donhang?.Giohangs,'Tongtien')||0 |number:'1.0-2'}}đ</span>
-              </div>
-            }  
-            @if(column === 'TongtienG'){
-              <div class="flex flex-col space-y-2 font-bold text-right">
-                <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienG')||0 |number:'1.0-2'}}đ</span>
-              </div>
-            }  
-            @if(column === 'TongtienN'){
-              <div class="flex flex-col space-y-2 font-bold text-right">
-                <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienN')||0 |number:'1.0-2'}}đ</span>
-              </div>
-            }  
-          </td>
-        </ng-container>
-        }
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-      </table>
-</div>
-<div class="flex flex-row space-x-2 justify-between items-center p-4">
-  <div (click)="AddSanpham()" class="cursor-pointer flex-row inline-flex space-x-2 
-  bg-slate-200 text-blue-500 hover:bg-blue-500 hover:text-white justify-center items-center m-2  px-4 py-2 border rounded-lg">
-    <span>Mua Thêm</span>
-    <span class="material-symbols-outlined">
-      add_circle
-    </span>
+              @if(column === 'Tongtien'){
+                <div class="flex flex-col space-y-2 font-bold text-right">
+                  <span>{{TinhTong(this.Donhang?.Giohangs,'Tongtien')||0 |number:'1.0-2'}}đ</span>
+                </div>
+              }  
+              @if(column === 'TongtienG'){
+                <div class="flex flex-col space-y-2 font-bold text-right">
+                  <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienG')||0 |number:'1.0-2'}}đ</span>
+                </div>
+              }  
+              @if(column === 'TongtienN'){
+                <div class="flex flex-col space-y-2 font-bold text-right">
+                  <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienN')||0 |number:'1.0-2'}}đ</span>
+                </div>
+              }  
+            </td>
+          </ng-container>
+          }
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
   </div>
-  @if(isAdmin){
-    @if(isEdit){
-      <button (click)="isEdit=false" color="primary" mat-icon-button><mat-icon>save</mat-icon></button>
-    }
-    @else {
-      <button (click)="isEdit=true" color="primary" mat-icon-button><mat-icon>edit</mat-icon></button>
-    }
-
-  }
-  @else{
-    <a href="/danh-muc" class="cursor-pointer flex-row inline-flex space-x-2 
+  <div class="flex flex-row space-x-2 justify-between items-center p-4">
+    <div (click)="AddSanpham()" class="cursor-pointer flex-row inline-flex space-x-2 
     bg-slate-200 text-blue-500 hover:bg-blue-500 hover:text-white justify-center items-center m-2  px-4 py-2 border rounded-lg">
-      <span>Cửa Hàng</span>
-    </a>
-  }
+      <span>Thêm Sản Phẩm</span>
+      <span class="material-symbols-outlined">
+        add_circle
+      </span>
+    </div>
+    @if(isAdmin){
+      @if(isEdit){
+        <button (click)="isEdit=false" color="primary" mat-icon-button><mat-icon>save</mat-icon></button>
+      }
+      @else {
+        <button (click)="isEdit=true" color="primary" mat-icon-button><mat-icon>edit</mat-icon></button>
+      }
+  
+    }
+    @else{
+      <a href="/danh-muc" class="cursor-pointer flex-row inline-flex space-x-2 
+      bg-slate-200 text-blue-500 hover:bg-blue-500 hover:text-white justify-center items-center m-2  px-4 py-2 border rounded-lg">
+        <span>Cửa Hàng</span>
+      </a>
+    }
+  
+  </div>
+    } @loading(minimum 500ms) {
+    <div class="flex flex-row space-x-2 items-center justify-center p-4">
+      <span>Đang Tải Dữ Liệu </span>
+      <mat-spinner></mat-spinner>
+    </div>
 
-</div>
-
-
+    } @error {
+    <p>Error loading About Component</p>
+    }
+  </div>
 <ng-template #ChonSanphamDialog>
   <div class="lg:w-[70vw] w-[90vw] h-[90vh] p-4 flex flex-col space-y-3">
     <div class="px-4 flex flex-row items-center space-x-2 justify-between">
@@ -140,25 +156,39 @@
       </mat-form-field>
       <span class="cursor-pointer border p-2 rounded-lg hover:border-2" mat-dialog-close="false">ESC</span>
     </div>
-      <div class="overflow-auto flex flex-col w-full space-y-4 lg:p-4">
+      <div class="overflow-auto flex flex-col w-full space-y-2 lg:p-4">
         <span class="text-red-500">Tìm Thấy {{FilterSanphams.length||0}} Sản Phẩm</span>
-        <div class="grid lg:grid-cols-4 grid-cols-2 gap-4">
-          @for (items of FilterSanphams; track items) {
-          <div class="flex flex-col space-y-2 rounded-lg border p-2">
-            <img [src]="items?.Image?.Hinhchinh?.src" class="m-auto h-20 w-20">
-            <div>{{items.Title}}</div>
-            <div>{{items.MaSP}}</div>
-            <div class="cursor-pointer flex flex-row space-x-2">
-              @for(item of items.Giagoc;track item){
-              <div  (click)="Chonsanpham(items,item)"  class="p-2 rounded-lg bg-slate-100 hover:bg-slate-300 font-bold">{{item.khoiluong}} {{item.dvt}} -
-                {{item.gia}}</div>
-              
-              }
-            </div>
 
+        @if(Type=='banle'){
+          <div class="grid lg:grid-cols-4 grid-cols-2 gap-4">
+            @for (items of FilterSanphams; track items) {
+            <div class="flex flex-col space-y-2 rounded-lg border p-2">
+  
+              <img [src]="items?.Image?.Hinhchinh?.src" class="m-auto h-20 w-20">
+              <div>{{items.Title}}</div>
+              <div>{{items.MaSP}}</div>
+              <div class="cursor-pointer flex flex-row space-x-2">
+                @for(item of items.Giagoc;track item){
+                <div  (click)="Chonsanpham(items,item);$event.stopPropagation()"  class="p-2 rounded-lg bg-slate-100 hover:bg-slate-300 font-bold">
+                  {{item.khoiluong}} {{item.dvt}} -
+                  {{item.gia}}
+                </div>  
+                }
+              </div>
+  
+            </div>
+            }
+  
           </div>
-          }
-        </div>
+        }
+        @else {
+            @for (items of FilterSanphams; track items) {
+            <div (click)="ChonsanphamSi(items);$event.stopPropagation()"  class="cursor-pointer flex flex-row justify-between space-x-2 items-center border p-3 rounded-lg hover:bg-slate-300">
+              <div>({{items.Giagoc[0].MaSP}}) - {{items.Title}} - {{items.Giagoc[0].khoiluong}}{{items.Giagoc[0].dvt}}</div>
+              <div class="font-bold">{{items.Giagoc[0].gia|number:'1.0-2'}}đ</div>  
+            </div>
+            }
+        }
       </div>
   </div>
 </ng-template>

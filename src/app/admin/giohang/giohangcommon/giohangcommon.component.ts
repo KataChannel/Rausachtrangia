@@ -39,10 +39,13 @@ export class GiohangcommonComponent implements OnInit {
   @Input() Donhang:any={Giohangs:[]}
   @Input() isEdit:boolean=false
   @Input() isAdmin:boolean=false
+  @Input() Type:any='banle'
   @Output() TongcongEmit = new EventEmitter();
   @Output() GiohangsEmit = new EventEmitter();
   Sanphams:any[]=[]
   FilterSanphams:any[]=[]
+  SanphamsBansi:any[]=[]
+  FilterSanphamsBansi:any[]=[]
   dataSource!: MatTableDataSource<any>;
   dialogRef:any;
   displayedColumns: string[] = [
@@ -103,30 +106,21 @@ export class GiohangcommonComponent implements OnInit {
         await this._SanphamService.getAllSanpham()
          this._SanphamService.sanphams$.subscribe((data:any)=>{
           if(data){
-          // data.forEach((item: any) => {
-          //   item.GiaCoSo = parseFloat(item.GiaCoSo) || 0;
-          //   if (item.Giagoc && Array.isArray(item.Giagoc)) {
-          //     item.Giagoc.forEach((nestedItem: any) => {
-          //       nestedItem.khoiluong = parseFloat(nestedItem.khoiluong) || 0;
-          //       nestedItem.gia = parseFloat(nestedItem.gia) || 0;
-          //       nestedItem.GiaCoSo = parseFloat(nestedItem.GiaCoSo) || 0;
-          //     });
-          //   }
-          //   console.log(item);  
-          //   this._SanphamService.UpdateSanpham(item).then((data:any)=>{if(data){console.log(data);}}) 
-          // });
-          this.FilterSanphams = this.Sanphams = data.filter((v1:any)=>v1.Status==1).map((v:any)=>({
-          id: v.id,
-          id_cat: v.id_cat,
-          Title: v.Title,
-          Danhmuc: v.Danhmuc,
-          Slug: v.Slug,
-          Giachon: v.Giachon,
-          Giagoc: v.Giagoc,
-          Image: v.Image,
-          Soluong: v.Soluong,
-        }))
-      }})   
+           this.FilterSanphams = this.Sanphams = data.filter((v1:any)=>v1.Status==1).map((v:any)=>({
+              id: v.id,
+              Title: v.Title,
+              Slug: v.Slug,
+              Giagoc: v.Giagoc,
+              Image: v.Image,
+              Soluong: v.Soluong,
+            }))
+          }}) 
+          this.FilterSanphams = this.Sanphams.filter(v => 
+            !this.Donhang.Giohangs.some((v1: any) => 
+                v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
+            )
+           );
+          
       }
      ngAfterViewInit() {} 
       applyFilter(event: Event) {
@@ -137,10 +131,10 @@ export class GiohangcommonComponent implements OnInit {
       onValueChange(value:any,idx:any,fieldSL:any)
       {
         const input = value.target as HTMLInputElement;
-        if(Number(input.value)<1)
+        if(Number(input.value)<=0)
           {
             this.Donhang.Giohangs[idx].Soluong = 1
-            this._snackBar.open(`${fieldSL} Phải Từ 1 Trở Lên`, '', {
+            this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
               duration: 1000,
               horizontalPosition: "end",
               verticalPosition: "top",
@@ -157,8 +151,8 @@ export class GiohangcommonComponent implements OnInit {
       }
       ChangeSoluong(idx:any,method:any,fieldTong:any,fieldSL:any){
         this.Donhang.Giohangs[idx][fieldSL]=Number(this.Donhang.Giohangs[idx][fieldSL])||0
-        if (this.Donhang.Giohangs[idx][fieldSL] <= 1 && method === 'giam') {
-          this._snackBar.open(`${fieldSL} phải từ 1 trở lên`, '', {
+        if (this.Donhang.Giohangs[idx][fieldSL] <= 0 && method === 'giam') {
+          this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
             duration: 1000,
             horizontalPosition: 'end',
             verticalPosition: 'top',
@@ -197,9 +191,13 @@ export class GiohangcommonComponent implements OnInit {
       DoSearchSanpham(event: Event)
       {
         const filterValue = (event.target as HTMLInputElement).value;
-        this.FilterSanphams = this.Sanphams.filter((v)=>v.Title.toLowerCase().includes(filterValue.toLowerCase()))
+        this.FilterSanphams = this.Sanphams.filter((v)=>
+          v.Title.toLowerCase().includes(filterValue.toLowerCase())||
+          v.MaSP.toLowerCase().includes(filterValue.toLowerCase())
+      )
         console.log(this.FilterSanphams);     
       }
+
       Chonsanpham(data:any,giagoc:any)
       {
         console.log(data);     
@@ -233,14 +231,38 @@ export class GiohangcommonComponent implements OnInit {
                  this.Donhang.Giohangs.push(item);
            }
           console.log(item);
-        
           console.log(this.Donhang.Giohangs);
           this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
           this.GiohangsEmit.emit(this.Donhang.Giohangs)
-          this.dialogRef.close()
+          // this.dialogRef.close()
         } 
-
-
+      }
+      ChonsanphamSi(data:any)
+      {
+        console.log(data);
+        
+        let item:any={}
+          item = data.Giagoc[0]
+          item.id=data.id
+          item.Soluong=1
+          item.Title = data.Title
+          item.SLTT = Number(item.khoiluong)
+          item.Tongtien = item.SLTT*item.GiaCoSo
+          item.SLTG = 0
+          item.TongtienG = 0
+          item.SLTN = 0
+          item.TongtienN = 0
+          this.Donhang.Giohangs.push(item);
+          console.log(item);
+          console.log(this.Donhang.Giohangs);
+          this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
+          this.GiohangsEmit.emit(this.Donhang.Giohangs)
+          this.FilterSanphams = this.Sanphams.filter(v => 
+            !this.Donhang.Giohangs.some((v1: any) => 
+                v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
+            )
+        );
+          // const data3 = data2.filter(item2 => !data1.some(item1 => item1.id === item2.id));
       }
       Xoasanpham(item:any){
         console.log(item);

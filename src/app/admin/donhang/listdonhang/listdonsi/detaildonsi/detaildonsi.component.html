@@ -1,82 +1,182 @@
 <div class="flex flex-row justify-between items-center space-x-2 p-2">
-    <button mat-icon-button color="primary" (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
+  <button mat-icon-button color="primary" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="font-bold text-lg">
+    @if(paramId==0){
+    Thêm Bảng Giá
+    }@else {
+    {{Detail?.MaDonHang||'Chưa Đặt Tên'}}
+    }
+  </div>
+  <div class="flex flex-row space-x-2 items-center">
+    <button mat-icon-button color="primary" (click)="printContent()">
+      <mat-icon>print</mat-icon>
     </button>
-    <div class="font-bold text-lg">
-        @if(paramId==0){
-        Thêm Bảng Giá
-        }@else {
-        {{Detail?.MaDonHang||'Chưa Đặt Tên'}}
-        }
-    </div>
-    <div class="flex flex-row space-x-2 items-center">
-        @if(isEdit==true){
-        <button mat-icon-button color="primary" (click)="SaveData()">
-            <mat-icon>save</mat-icon>
-        </button>
-        }
-        @else{
-        <button mat-icon-button color="primary" (click)="isEdit=true">
-            <mat-icon>edit</mat-icon>
-        </button>
-        }
-        @if(paramId!='0'){
-        <button mat-icon-button color="warn" (click)="isDelete=true">
-            <mat-icon>delete</mat-icon>
-        </button>
-        }
-    </div>
+    @if(isEdit==true){
+    <button mat-icon-button color="primary" (click)="SaveData()">
+      <mat-icon>save</mat-icon>
+    </button>
+    }
+    @else{
+    <button mat-icon-button color="primary" (click)="isEdit=true">
+      <mat-icon>edit</mat-icon>
+    </button>
+    }
+    @if(paramId!='0'){
+    <button mat-icon-button color="warn" (click)="isDelete=true">
+      <mat-icon>delete</mat-icon>
+    </button>
+    }
+  </div>
 
 </div>
 
 <div class="relative flex flex-col w-full p-4 overflow-auto">
-    @if(isDelete==true){
-    <div class="flex flex-col space-y-4 items-center justify-center">
-        <div class="font-bold text-lg">Bạn chắc chắn muốn xoá không?</div>
-        <div class="flex flex-row space-x-2 items-center justify-center">
-            <button mat-flat-button color="primary" (click)="DeleteData()">
-                Đồng Ý
-            </button>
-            <button mat-flat-button color="warn" (click)="isDelete=false">
-                Huỷ Bỏ
-            </button>
-        </div>
+  @if(isDelete==true){
+  <div class="flex flex-col space-y-4 items-center justify-center">
+    <div class="font-bold text-lg">Bạn chắc chắn muốn xoá không?</div>
+    <div class="flex flex-row space-x-2 items-center justify-center">
+      <button mat-flat-button color="primary" (click)="DeleteData()">
+        Đồng Ý
+      </button>
+      <button mat-flat-button color="warn" (click)="isDelete=false">
+        Huỷ Bỏ
+      </button>
     </div>
+  </div>
 
-    }
-    @else {
-    <div class="w-full flex flex-col space-y-6 items-center p-2">
-
-    <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-         <mat-label>Tiêu Đề</mat-label>
-        <input matInput [(ngModel)]="Detail.Title"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Tiêu Đề" />
-    </mat-form-field> 
+  }
+  @else {
+  <div id="printContent" class="min-w-[800px] flex flex-col space-y-6 items-center p-2 border rounded-lg">
+    <div class="w-full flex flex-col space-y-4 items-center justify-center">
+      @if(isEdit==true){
+        <div class="flex flex-row items-center space-x-2">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Khách Hàng</mat-label>
+            <mat-select [(ngModel)]="Detail.idKH" [ngModelOptions]="{ standalone: true }"
+              (selectionChange)="SelectKhachhang($event)">
+              <div class="w-full flex flex-col">
+                <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                  <input matInput (input)="DoFindKhachhang($event)" placeholder="Tìm Kiếm" />
+                </mat-form-field>
+                <div class="overflow-y-auto max-h-44">
+                  @for (item of FilterKhachhang; track item.id) {
+                  <mat-option [value]="item.id">{{item.TenKH}}</mat-option>
+                  }
+                </div>
+              </div>
+            </mat-select>
+          </mat-form-field>
     
-
-
-
-    <div class="w-full flex flex-col overflow-y-auto">
-        <div class="bg-white rounded-lg border border-default-200 col-span-2">
-          <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
-            <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
-            <div class="flex flex-row space-x-1">
-              <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
-            </div>
-
-          </div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Bảng Giá</mat-label>
+            <mat-select [(ngModel)]="Detail.idBanggia" [ngModelOptions]="{ standalone: true }"
+              (selectionChange)="SelectBanggia($event)">
+              <div class="w-full flex flex-col">
+                <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                  <input matInput (input)="DoFindBanggia($event)" placeholder="Tìm Kiếm" />
+                </mat-form-field>
+                <div class="overflow-y-auto max-h-44">
+                  @for (item of ListBanggia; track item.id) {
+                  <mat-option [value]="item.id">{{item.Title}}</mat-option>
+                  }
+                </div>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="w-full flex flex-col overflow-y-auto">
           @defer () {
-            <app-giohangcommon [isAdmin]="true" (TongcongEmit)="Tinhtongcong($event)" (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Detail"></app-giohangcommon>
-          } @loading(minimum 500ms) {
+            <app-giohangcommon [isAdmin]="true" [Type]="'bansi'" (TongcongEmit)="Tinhtongcong($event)"
+              (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Detail"></app-giohangcommon>
+            } @loading(minimum 500ms) {
             <div class="flex flex-row space-x-2 items-center justify-center p-4">
               <span>Đang Tải Dữ Liệu </span>
               <mat-spinner></mat-spinner>
             </div>
-
-          } @error {
+  
+            } @error {
             <p>Error loading About Component</p>
-          }
+            }
         </div>
+        
+
+      }
+      @else{
+        <div class="w-full flex flex-row space-x-2 items-center justify-between">
+          <img src="/assets/images/logo-full.png" class="h-20 mx-auto">
+          <div class="w-2/3 flex flex-col space-y-2">
+            <div class="font-bold text-[18px]">CÔNG TY TNHH NÔNG SẢN THỰC PHẨM TRẦN GIA</div>
+            <div>Hợp tác xã: Ấp Lộc Tiến, Xã Mỹ Lộc, Huyện Cần Giuộc, Tỉnh Long An</div>
+            <div>Văn phòng: Tòa nhà An Phú Plaza, 117-119 Lý Chính Thắng, P.7, Q.3, TP.HCM</div>
+            <div>Kho sơ chế: 30 Kha Vạn Cân, P. Hiệp Bình Chánh, TP. Thủ Đức, TP.HCM</div>
+            <div>Website: http://rausachtrangia.com - Hotline: 090.245.8081</div>
+          </div>
+        </div>
+        <div class="font-bold text-[18px] uppercase">Bảng Sao Kê Hàng Ngày</div>
+      <div class="font-bold text-[18px] uppercase {{Detail?.Khachhang?.TenKH?'':'text-red-700 italic'}}">{{Detail?.Khachhang?.TenKH||"Chưa Chọn Khách Hàng"}}</div>
+      <div class="w-full flex items-start"><strong>Địa Chỉ : </strong> {{Detail?.Khachhang?.Diachi}}</div>
+      <div class="w-full flex items-start"><strong>Ghi Chú : </strong> {{Detail?.Ghichu}}</div>
+      <div class="w-full flex items-start"><strong>Số Điện Thoại : </strong> {{Detail?.Khachhang?.SDT}}</div>
+      <div class="w-full flex items-start"><strong>Tổng khối lượng  : </strong> </div>
+      <table class="w-full border-collapse border mt-4">
+        <thead>
+          <tr class="border">
+            <th class="border p-2">STT</th>
+            <th class="border p-2">Tên sản phẩm</th>
+            <th class="border p-2">ĐVT</th>
+            <th class="border p-2">Số lượng</th>
+            <th class="border p-2">Đơn giá</th>
+            <th class="border p-2">Thành tiền</th>
+            <th class="border p-2">Số lượng nhận</th>
+            <th class="border p-2">Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of Detail.Giohangs; track item.id; let idx = $index) {
+            <tr class="border">
+              <td class="border p-2 text-center">{{idx+1}}</td>
+              <td class="border p-2">{{item.Title}}</td>
+              <td class="border p-2 text-center">{{item.dvt}}</td>
+              <td class="border p-2 text-end">{{item.Soluong|number:'1.0-2'}}</td>
+              <td class="border p-2 text-end">{{item.gia|number:'1.0-2'}}đ</td>
+              <td class="border p-2 text-end">{{item.Tongtien|number:'1.0-2'}}đ</td>
+              <td class="border p-2 text-end">{{item.SLTN|number:'1.0-2'}}</td>
+              <td class="border p-2">{{item.Ghichu}}</td>
+            </tr>
+          }
+          <tr class="border">
+            <td colspan="3" class="border p-2 text-start">Tổng:</td>
+            <td class="border p-2 text-end">{{TinhTong(Detail.Giohangs,'Soluong')|number:'1.0-2'}}</td>
+            <td class="border p-2 text-end"></td>
+            <td class="border p-2 text-end">{{TinhTong(Detail.Giohangs,'Tongtien')|number:'1.0-2'}}đ</td>
+            <td class="border p-2 text-end">{{TinhTong(Detail.Giohangs,'SLTN')|number:'1.0-2'}}</td>
+            <td class="border p-2 text-end"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="w-full text-end font-bold p-2">Ngày In: 01/01/2025</div>
+      <div class="w-full flex justify-between items-center text-center mt-6 p-2">
+        <p><strong>Người vận chuyển</strong></p>
+        <p><strong>Người nhận hàng</strong></p>
+        <p><strong>Thủ kho</strong></p>
+        <p><strong>Người lập</strong></p>
       </div>
+      <div class="w-full flex justify-between items-center text-center !mt-20 p-2">
+        <p><strong>Nguyễn Văn A</strong></p>
+        <p><strong>Nguyễn Thị B</strong></p>
+        <p><strong>Lê Văn C</strong></p>
+        <p><strong>Ngô Thị D</strong></p>
+      </div>
+     }
+      @if(isEdit==true){
+
+      }
+      @else {
+ 
+      }
     </div>
-    }
+  </div>
+  }
 </div>
