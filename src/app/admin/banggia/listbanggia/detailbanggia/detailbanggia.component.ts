@@ -123,40 +123,52 @@ import { CommonModule } from '@angular/common';
       window.location.href=`/admin/banggia`;
     }
     SaveData()
-    {
-      if(this.idBanggia=='0')
+    { 
+      if(this.Detail.Title==''||this.Detail.Title==null)
       {
-        this.Detail.ListSP = this.Detail.ListSP.map((item: any) => ({
-          id: item.id,
-          giaban: item.giaban,
-        }));
-        this._BanggiasService.CreateBanggia(this.Detail).then(()=>
-          {
-            this._snackBar.open('Thêm Mới Thành Công', '', {
-              duration: 1000,
-              horizontalPosition: "end",
-              verticalPosition: "top",
-              panelClass: ['snackbar-success'],
-            });
-            window.location.href=`/admin/banggia`;
-          })
+        this._snackBar.open('Vui lòng nhập tiêu đề', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-warning'],
+        });
       }
       else
       {
-        this.Detail.ListSP = this.Detail.ListSP.map((item: any) => ({
-          id: item.id,
-          giaban: item.giaban,
-        }));
-        this._BanggiasService.updateOneBanggia(this.Detail).then((data:any)=>{
-            this._snackBar.open('Cập Nhật Thành Công', '', {
-              duration: 1000,
-              horizontalPosition: "end",
-              verticalPosition: "top",
-              panelClass: ['snackbar-success'],
-            });
-          })
+        if(this.idBanggia=='0')
+          {
+            this.Detail.ListSP = this.Detail.ListSP.map((item: any) => ({
+              id: item.id,
+              giaban: item.giaban,
+            }));
+            this._BanggiasService.CreateBanggia(this.Detail).then(()=>
+              {
+                this._snackBar.open('Thêm Mới Thành Công', '', {
+                  duration: 1000,
+                  horizontalPosition: "end",
+                  verticalPosition: "top",
+                  panelClass: ['snackbar-success'],
+                });
+                window.location.href=`/admin/banggia`;
+              })
+          }
+          else
+          {
+            this.Detail.ListSP = this.Detail.ListSP.map((item: any) => ({
+              id: item.id,
+              giaban: item.giaban,
+            }));
+            this._BanggiasService.updateOneBanggia(this.Detail).then((data:any)=>{
+                this._snackBar.open('Cập Nhật Thành Công', '', {
+                  duration: 1000,
+                  horizontalPosition: "end",
+                  verticalPosition: "top",
+                  panelClass: ['snackbar-success'],
+                });
+              })
+          }
+          this.isEdit=false  
       }
-      this.isEdit=false  
     }
     DeleteData()
     {
