@@ -54,6 +54,7 @@ import { CommonModule } from '@angular/common';
     isDelete:boolean=false
     idBanggia:any
     ListSanpham:any[]=[]
+    CountItem:number=0
     dataSource!: MatTableDataSource<any>;
     displayedColumns: string[] = ['id','STT','MaSP','Title', 'giagoc', 'giaban'];
     ColumnName: any = { 'id':'ID','STT': 'STT','MaSP':'Mã Sản Phẩm','Title': 'Tên Sản Phẩm', 'giagoc': 'Giá Gốc', 'giaban': 'Giá Bán' };
@@ -106,7 +107,7 @@ import { CommonModule } from '@angular/common';
         const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
         return `${startIndex + 1} - ${endIndex} của ${length}`;
       };
-      console.log(this.Detail.ListSP);
+      this.CountItem = this.dataSource.data.length;
       
     }
     updateGiaBan( item: any,event: any) {
@@ -168,6 +169,15 @@ import { CommonModule } from '@angular/common';
               })
           }
           this.isEdit=false  
+      }
+    }
+    applyFilter(event: Event): void {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      console.log(this.dataSource);
+      this.CountItem = this.dataSource.filteredData.length;
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
       }
     }
     DeleteData()
