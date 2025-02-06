@@ -8,6 +8,7 @@
 # dependencies
 node_modules
 katabe-schematic/node_modules
+createdynamic/node_modules
 
 # IDEs and editors
 /.idea

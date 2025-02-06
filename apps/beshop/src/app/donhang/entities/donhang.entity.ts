@@ -13,6 +13,8 @@ export class DonhangEntity {
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   idKH: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
+  idBanggia: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
   MaDonHang: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   idGiohang: string;
@@ -32,8 +34,6 @@ export class DonhangEntity {
   TimePrint: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
   Diachis: string;
-  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
-  Banggia: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   Ghichu: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
