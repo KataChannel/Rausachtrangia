@@ -16,6 +16,9 @@ import { SanphamService } from '../../../sanpham/sanpham.service';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../users/auth/users.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import * as XLSX from 'xlsx';
+import { DonhangsService } from '../../donhang/listdonhang/listdonhang.service';
+import { ConvertDriveColumnName, ConvertDriveData } from '../../../shared/shared.utils';
 @Component({
   selector: 'app-giohangcommon',
   imports: [
@@ -39,7 +42,9 @@ export class GiohangcommonComponent implements OnInit {
   @Input() Donhang:any={Giohangs:[]}
   @Input() isEdit:boolean=false
   @Input() isAdmin:boolean=false
+  @Input() isShowCrease:boolean=true
   @Input() Type:any='banle'
+  @Input() HideColumns:any[]=[]
   @Output() TongcongEmit = new EventEmitter();
   @Output() GiohangsEmit = new EventEmitter();
   Sanphams:any[]=[]
@@ -74,14 +79,18 @@ export class GiohangcommonComponent implements OnInit {
     }
   @ViewChild('ChonSanphamDialog') ChonSanphamDialog!: TemplateRef<any>;
       _SanphamService:SanphamService = inject(SanphamService)
+      _DonhangsService:DonhangsService = inject(DonhangsService)
       _UsersService:UsersService = inject(UsersService)
     constructor(
       private dialog:MatDialog,
       private _snackBar:MatSnackBar  
     ) {}
     async ngOnInit() {
-      console.log(this.Donhang);
-      
+      this.displayedColumns = this.displayedColumns.filter(col => !this.HideColumns.includes(col));
+      this.ColumnName = Object.fromEntries(
+        Object.entries(this.ColumnName).filter(([key]) => !this.HideColumns.includes(key))
+      ); 
+     // console.log(ColumnName);
 
       if(!this.isAdmin)
       {
@@ -120,7 +129,27 @@ export class GiohangcommonComponent implements OnInit {
                 v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
             )
            );
-          
+           this.FilterSanphamsBansi = this.Sanphams.filter(v => 
+            !this.Donhang.Giohangs.some((v1: any) => 
+                v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
+            )).map((v:any)=>({
+              id: v.id,
+              MaSP: v.Giagoc[0].MaSP,
+              gia: v.Giagoc[0].gia,
+              dvt: v.Giagoc[0].dvt,
+              GiaCoSo: v.Giagoc[0].GiaCoSo,
+              khoiluong: v.Giagoc[0].khoiluong,
+              Soluong: 1,
+              Title: v.Title,
+              SLTT: Number(v.Giagoc[0].khoiluong),
+              Tongtien: v.SLTT*Number(v.Giagoc[0].GiaCoSo),
+              SLTG: 0,
+              TongtienG: 0,
+              SLTN: 0,
+              TongtienN: 0,
+            }))  
+            console.log(this.FilterSanphamsBansi);
+                       
       }
      ngAfterViewInit() {} 
       applyFilter(event: Event) {
@@ -128,50 +157,93 @@ export class GiohangcommonComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
  
       }
-      onValueChange(value:any,idx:any,fieldSL:any)
+      onValueChange(value:any,idx:any,fieldSL:any,fieldTong:any)
       {
         const input = value.target as HTMLInputElement;
-        if(Number(input.value)<=0)
-          {
-            this.Donhang.Giohangs[idx].Soluong = 1
-            this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
-              duration: 1000,
-              horizontalPosition: "end",
-              verticalPosition: "top",
-              panelClass: ['snackbar-error'],
-            });
-            console.log(this.Donhang.Giohangs[idx].Soluong);
-            
-          }
-          else {
-            this.Donhang.Giohangs[idx].Soluong=Number(input.value)
-            this.Donhang.Giohangs[idx].Tongtien = Number(input.value)*this.Donhang.Giohangs[idx].GiaCoSo
-          }
-          this.GiohangsEmit.emit(this.Donhang.Giohangs)
-      }
-      ChangeSoluong(idx:any,method:any,fieldTong:any,fieldSL:any){
-        this.Donhang.Giohangs[idx][fieldSL]=Number(this.Donhang.Giohangs[idx][fieldSL])||0
-        if (this.Donhang.Giohangs[idx][fieldSL] <= 0 && method === 'giam') {
-          this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
-            duration: 1000,
-            horizontalPosition: 'end',
-            verticalPosition: 'top',
-            panelClass: ['snackbar-error'],
-          });
-          this.Donhang.Giohangs[idx][fieldSL] = 1;
+        if(fieldSL=='Soluong')
+        {
+          if(Number(input.value)<=0)
+            {
+              this.Donhang.Giohangs[idx].Soluong = this.Donhang.Giohangs[idx].SLTG = this.Donhang.Giohangs[idx].SLTN= 1
+              this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
+                duration: 1000,
+                horizontalPosition: "end",
+                verticalPosition: "top",
+                panelClass: ['snackbar-error'],
+              }); 
+            }
+            else {
+              this.Donhang.Giohangs[idx].Soluong = this.Donhang.Giohangs[idx].SLTG = this.Donhang.Giohangs[idx].SLTN =Number(input.value)
+              this.Donhang.Giohangs[idx].Tongtien = this.Donhang.Giohangs[idx].TongtienG = this.Donhang.Giohangs[idx].TongtienN = Number(input.value)*this.Donhang.Giohangs[idx].GiaCoSo
+            }
         }
         else {
-          if(method=='giam'){
-            this.Donhang.Giohangs[idx][fieldSL]--
-            this.Donhang.Giohangs[idx][fieldTong] = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
-          }
-          else {
-            this.Donhang.Giohangs[idx][fieldSL]++
-            this.Donhang.Giohangs[idx][fieldTong] = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
+          if(Number(input.value)<=0)
+            {
+              this.Donhang.Giohangs[idx][fieldSL] = 1
+              this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
+                duration: 1000,
+                horizontalPosition: "end",
+                verticalPosition: "top",
+                panelClass: ['snackbar-error'],
+              }); 
+            }
+            else {
+              this.Donhang.Giohangs[idx][fieldSL]=Number(input.value)
+              this.Donhang.Giohangs[idx][fieldTong] = Number(input.value)*this.Donhang.Giohangs[idx].GiaCoSo
           }
         }
-        console.log(this.Donhang.Giohangs);
         this.GiohangsEmit.emit(this.Donhang.Giohangs)
+      }
+      ChangeSoluong(idx:any,method:any,fieldTong:any,fieldSL:any){
+        if(fieldSL=='Soluong')
+          {
+            this.Donhang.Giohangs[idx].Soluong=Number(this.Donhang.Giohangs[idx][fieldSL])||0
+            if (this.Donhang.Giohangs[idx][fieldSL] <= 0 && method === 'giam') {
+              this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
+                duration: 1000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top',
+                panelClass: ['snackbar-error'],
+              });
+              this.Donhang.Giohangs[idx][fieldSL] = 1;
+            }
+            else {
+              if(method=='giam'){
+                this.Donhang.Giohangs[idx].Soluong = this.Donhang.Giohangs[idx].SLTG = this.Donhang.Giohangs[idx].SLTN = Number(this.Donhang.Giohangs[idx][fieldSL])-1
+                this.Donhang.Giohangs[idx].Tongtien = this.Donhang.Giohangs[idx].TongtienG = this.Donhang.Giohangs[idx].TongtienN = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
+              }
+              else {
+                this.Donhang.Giohangs[idx].Soluong = this.Donhang.Giohangs[idx].SLTG = this.Donhang.Giohangs[idx].SLTN = Number(this.Donhang.Giohangs[idx][fieldSL])+1
+                this.Donhang.Giohangs[idx].Tongtien = this.Donhang.Giohangs[idx].TongtienG = this.Donhang.Giohangs[idx].TongtienN = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
+              }
+            }
+
+          }
+          else{
+            this.Donhang.Giohangs[idx][fieldSL]=Number(this.Donhang.Giohangs[idx][fieldSL])||0
+            if (this.Donhang.Giohangs[idx][fieldSL] <= 0 && method === 'giam') {
+              this._snackBar.open(`Giá trị phải lớn hơn 0`, '', {
+                duration: 1000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top',
+                panelClass: ['snackbar-error'],
+              });
+              this.Donhang.Giohangs[idx][fieldSL] = 1;
+            }
+            else {
+              if(method=='giam'){
+                this.Donhang.Giohangs[idx][fieldSL]--
+                this.Donhang.Giohangs[idx][fieldTong] = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
+              }
+              else {
+                this.Donhang.Giohangs[idx][fieldSL]++
+                this.Donhang.Giohangs[idx][fieldTong] = this.Donhang.Giohangs[idx][fieldSL]*this.Donhang.Giohangs[idx].GiaCoSo
+              }
+            }
+       }
+       console.log(this.Donhang.Giohangs);
+       this.GiohangsEmit.emit(this.Donhang.Giohangs)
       }
       AddSanpham()
       {
@@ -192,8 +264,8 @@ export class GiohangcommonComponent implements OnInit {
       {
         const filterValue = (event.target as HTMLInputElement).value;
         this.FilterSanphams = this.Sanphams.filter((v)=>
-          v.Title.toLowerCase().includes(filterValue.toLowerCase())||
-          v.MaSP.toLowerCase().includes(filterValue.toLowerCase())
+          v?.Title?.toLowerCase().includes(filterValue.toLowerCase())||
+          v?.Giagoc[0]?.MaSP?.toLowerCase().includes(filterValue.toLowerCase())
       )
         console.log(this.FilterSanphams);     
       }
@@ -241,7 +313,7 @@ export class GiohangcommonComponent implements OnInit {
       {
         console.log(data);
         
-        let item:any={}
+         let item:any={}
           item = data.Giagoc[0]
           item.id=data.id
           item.Soluong=1
@@ -252,6 +324,8 @@ export class GiohangcommonComponent implements OnInit {
           item.TongtienG = 0
           item.SLTN = 0
           item.TongtienN = 0
+
+
           this.Donhang.Giohangs.push(item);
           console.log(item);
           console.log(this.Donhang.Giohangs);
@@ -270,6 +344,7 @@ export class GiohangcommonComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
         this.GiohangsEmit.emit(this.Donhang.Giohangs)
       }
+
       Xoagiohang(){ 
         this.Donhang.Giohangs = []
         this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
@@ -284,4 +359,36 @@ export class GiohangcommonComponent implements OnInit {
         this.TongcongEmit.emit({Tongcong:grandTotal,Tong:subtotal})
         return items?.reduce((sum:any, item:any) => sum + item[fieldTong], 0);
       }
+      async LoadDrive()
+      {
+        const DriveInfo ={
+          IdSheet:'1actXVZD5yQRh5YcpRIxAB-Wf38PNKSIU0LR1AeyR-6s',
+          SheetName:'Maudonhang',
+          ApiKey:'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao'
+        }
+      const result:any =  await this._DonhangsService.getDrive(DriveInfo) 
+      console.log(result);
+      const data =  ConvertDriveData(result.values);   
+      console.log(data);
+      data.forEach((v:any)=>{
+        v.gia = Number(v.gia),
+        v.GiaCoSo = Number(v.GiaCoSo),
+        v.khoiluong = Number(v.khoiluong),
+        v.Soluong = Number(v.Soluong),
+        v.SLTT = Number(v.SLTT),
+        v.Tongtien = Number(v.Tongtien),
+        v.SLTG = Number(v.SLTG),
+        v.TongtienG = Number(v.TongtienG),
+        v.SLTN = Number(v.SLTN),
+        v.TongtienN = Number(v.TongtienN)
+      }) 
+      this.Donhang.Giohangs = data
+      
+      this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
+      this.GiohangsEmit.emit(this.Donhang.Giohangs)
+      console.log(this.Donhang.Giohangs);
+      
+      }
     }
+
+

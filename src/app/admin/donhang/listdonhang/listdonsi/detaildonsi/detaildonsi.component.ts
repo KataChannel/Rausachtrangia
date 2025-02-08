@@ -11,7 +11,7 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ListBanggiaComponent } from '../../../../banggia/listbanggia/listbanggia.component';
 import { BanggiasService } from '../../../../banggia/listbanggia/listbanggia.service';
 import { SanphamsService } from '../../../../sanpham/listsanpham/listsanpham.service';
@@ -50,9 +50,10 @@ export class DetaildonsiComponent {
     _KhachhangsService:KhachhangsService = inject(KhachhangsService)
     _BanggiasService:BanggiasService = inject(BanggiasService)
     _router:ActivatedRoute = inject(ActivatedRoute)
+    _route:Router = inject(Router)
     _snackBar: MatSnackBar = inject(MatSnackBar)
     constructor() {}
-    Detail:any={}
+    Detail:any={Giohangs:[]}
     isEdit:boolean=false
     isDelete:boolean=false
     paramId:any
@@ -71,19 +72,20 @@ export class DetaildonsiComponent {
           this._BanggiasService.getAllBanggia().then((data:any)=>{
             this.ListBanggia = this.FilterBanggia =data
           })
-        }
-        this.isEdit = this.paramId === '0';   
-        if (this.paramId&&this.paramId !== '0') {
-          this._DonhangsService.getDonhangByid(this.paramId).then((data:any)=>{
-            if(data){
-              this.Detail = data
-              console.log(this.Detail);        
-              this._ListdonhangComponent.drawer.open();   
-            }
-          })  
-        } else if(this.paramId === '0') {
-          this._ListdonhangComponent.drawer.open();   
-        }
+          if(this.paramId === '0') {
+            this.isEdit = this.paramId === '0'; 
+            this._ListdonhangComponent.drawer.open();   
+          }
+          else {
+            this._DonhangsService.getDonhangByid(this.paramId).then((data:any)=>{
+              if(data){
+                this.Detail = data
+                console.log(this.Detail);        
+                this._ListdonhangComponent.drawer.open();   
+              }
+            })  
+          }
+        }  
         else {
           this._ListdonhangComponent.drawer.close();   
         }
@@ -97,7 +99,7 @@ export class DetaildonsiComponent {
     }
     GetGiohangsEmit(value:any){ 
       this.Detail.Giohangs = value
-      this._DonhangsService.updateOneDonhang(this.Detail)
+     // this._DonhangsService.updateOneDonhang(this.Detail)
     }
     DoFindKhachhang(event:any){
       const query = event.target.value.toLowerCase();
@@ -162,26 +164,35 @@ export class DetaildonsiComponent {
       });
     }
     goBack(){
-      window.location.href=`/admin/donhang`;
+      // window.location.href=`/admin/donhang`;
+      this._route.navigate(['admin/donhang']);
     }
     SaveData()
     {
       if(this.paramId=='0')
       {
-        this.Detail.ListSP = this.Detail.ListSP.map((item: any) => ({
-          id: item.id,
-          giaban: item.giaban,
-        }));
-        this._DonhangsService.createDonhang(this.Detail).then(()=>
-          {
-            this._snackBar.open('Thêm Mới Thành Công', '', {
-              duration: 1000,
-              horizontalPosition: "end",
-              verticalPosition: "top",
-              panelClass: ['snackbar-success'],
-            });
-            window.location.href=`/admin/banggia`;
-          })
+        if(!this.Detail.idKH || this.Detail.idKH === '')
+        {
+          this._snackBar.open('Vui lòng chọn khách hàng', '', {
+            duration: 1000,
+            horizontalPosition: "end",
+            verticalPosition: "top",
+            panelClass: ['snackbar-warning'],
+          });
+        }
+        else {
+          this._DonhangsService.createDonhang(this.Detail).then((data)=>
+            {
+              this._snackBar.open('Thêm Mới Thành Công', '', {
+                duration: 1000,
+                horizontalPosition: "end",
+                verticalPosition: "top",
+                panelClass: ['snackbar-success'],
+              });
+              this._route.navigate(['admin/donhang/donsi', data.id])
+            })
+            this.isEdit=false 
+        }
       }
       else
       {
@@ -193,8 +204,24 @@ export class DetaildonsiComponent {
               panelClass: ['snackbar-success'],
             });
           })
-      }
-      this.isEdit=false  
+          this.isEdit=false 
+      } 
+    }
+    Coppy()
+    {
+      this._snackBar.open('Đang Coppy Đơn Hàng', '', {
+        duration: 1000,
+        horizontalPosition: "end",
+        verticalPosition: "top",
+        panelClass: ['snackbar-warning'],
+      });
+        delete this.Detail.id
+        this._DonhangsService.createDonhang(this.Detail).then((data:any)=>{
+         setTimeout(() => {
+          window.location.href = `admin/donhang/donsi/${data.id}`;
+         }, 1000);
+    
+        })
     }
     DeleteData()
     {
@@ -207,6 +234,6 @@ export class DetaildonsiComponent {
             panelClass: ['snackbar-success'], 
           });
         }) 
-        window.location.href=`/admin/banggia`;
+        // window.location.href=`/admin/donhang`;
     } 
 }

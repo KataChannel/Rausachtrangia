@@ -1,10 +1,13 @@
 <div class="flex flex-row justify-between items-center space-x-2 p-2">
-  <button mat-icon-button color="primary" (click)="_ListkhachhangComponent.drawer.close()">
+  <button mat-icon-button color="primary" (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
   </button>
-  <div class="font-bold">{{Detail?.Hoten||'Không có dữ liệu'}}</div>
+  <div class="font-bold">{{Detail()?.TenKH||Detail()?.Hoten||'Không có dữ liệu'}}</div>
   <div class="flex flex-row space-x-2 items-center">
-    @if(isEdit==true){
+    <button mat-icon-button color="primary" (click)="SaveData()">
+      <mat-icon>save</mat-icon>
+  </button>
+    <!-- @if(isEdit==true){
       <button mat-icon-button color="primary" (click)="SaveData()">
           <mat-icon>save</mat-icon>
       </button>
@@ -14,7 +17,7 @@
           <mat-icon>edit</mat-icon>
 
       </button>
-    }
+    } -->
       <button mat-icon-button color="warn" (click)="isDelete=true">
           <mat-icon>delete</mat-icon>
       </button>
@@ -33,14 +36,34 @@
     </div>
   }
   @else {
-    @for (item of Detail?.Forms; track item.id; let idx = $index) {
+    <div class="grid lg:grid-cols-2 gap-3">
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>{{item.Title}}</mat-label>
-        <input matInput [(ngModel)]="Detail?.Data[item.value]" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" [placeholder]="item.Title">
+        <mat-label>Tên Khách Hàng</mat-label>
+        <input matInput [(ngModel)]="Detail().TenKH"  [ngModelOptions]="{standalone: true}" [placeholder]="'Tên Khách Hàng'">
       </mat-form-field>
-    }
-    @empty {
-      <span class="p-2 text-center">There are no items.</span>
-     }
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Họ Tên</mat-label>
+        <input matInput [(ngModel)]="Detail().Hoten"  [ngModelOptions]="{standalone: true}" [placeholder]="'Họ Tên'">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Địa Chỉ</mat-label>
+        <input matInput [(ngModel)]="Detail().Diachi"  [ngModelOptions]="{standalone: true}" [placeholder]="'Địa Chỉ'">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Số Điện Thoại</mat-label>
+        <input matInput [(ngModel)]="Detail().SDT"  [ngModelOptions]="{standalone: true}" [placeholder]="'Số Điện Thoại'">
+      </mat-form-field>
+      <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+        <mat-label>Loại Khách Hàng</mat-label>
+        <mat-select [(ngModel)]="Detail().Type" [ngModelOptions]="{standalone: true}">
+          @for (item of [{id:1,Title:'Khách Sỉ',value:'khachsi'},
+            {id:2,Title:'Khách Lẻ',value:'khachle'},
+            ]; track item) {
+            <mat-option [value]="item.value">{{item.Title}}</mat-option>
+          }
+        </mat-select>
+     </mat-form-field>
+    </div>
+
   }
 </div>

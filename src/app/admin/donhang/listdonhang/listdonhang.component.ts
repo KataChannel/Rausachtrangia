@@ -171,12 +171,15 @@ export class ListdonhangComponent {
   }
   Create()
   {
-    this.Donhang.Type=this.SearchParams.Type
-    this._DonhangsService.createDonhang(this.Donhang).then((v:any)=>{
-      console.log(v);
-      this.drawer.open();
-     this._router.navigate(['admin/donhang/donsi', v.id])
-    })
+    this.drawer.open();
+    this._router.navigate(['admin/donhang/donsi', 0]);
+
+    // this.Donhang.Type=this.SearchParams.Type
+    // this._DonhangsService.createDonhang(this.Donhang).then((v:any)=>{
+    //   console.log(v);
+    //   this.drawer.open();
+    //  this._router.navigate(['admin/donhang/donsi', v.id])
+    // })
   }
   // goToDetail(item:any)
   // {

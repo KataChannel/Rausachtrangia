@@ -135,7 +135,7 @@ export class KhachhangsService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/khachhang/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/khachhang/findid/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })

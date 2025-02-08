@@ -72,6 +72,7 @@ body {
   padding: 4px;
 }
 
+
 .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
   // color: var(--mdc-snackbar-supporting-text-color, var(--mat-sys-inverse-on-surface));
   // border-radius: var(--mdc-snackbar-container-shape, var(--mat-sys-corner-extra-small));
@@ -151,6 +152,16 @@ body {
 }
 .PDFVIEW .mat-mdc-dialog-content{
   max-height: 100vh !important;
+}
+
+.text-sm .mdc-text-field--outlined .mat-mdc-form-field-infix, .mdc-text-field--no-label .mat-mdc-form-field-infix
+{
+  min-height: 0 !important;
+  padding: 0.5rem 0.75rem !important;
+}
+.text-sm .mdc-text-field--outlined
+{
+  padding: 0 !important;
 }
 
 @media print {

@@ -53,11 +53,57 @@
   @else {
   <div id="printContent" class="min-w-[800px] flex flex-col space-y-6 items-center p-2 border rounded-lg">
     <div class="w-full flex flex-col space-y-4 items-center justify-center">
+      @if(isEdit==true){
+        <div class="flex flex-row items-center space-x-2">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Khách Hàng</mat-label>
+            <mat-select [(ngModel)]="Detail.idKH" [ngModelOptions]="{ standalone: true }"
+              (selectionChange)="SelectKhachhang($event)">
+              <div class="w-full flex flex-col">
+                <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                  <input matInput (input)="DoFindKhachhang($event)" placeholder="Tìm Kiếm" />
+                </mat-form-field>
+                <div class="overflow-y-auto max-h-44">
+                  @for (item of FilterKhachhang; track item.id) {
+                  <mat-option [value]="item.id">{{item.TenKH}}</mat-option>
+                  }
+                </div>
+              </div>
+            </mat-select>
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Bảng Giá</mat-label>
+            <mat-select [(ngModel)]="Detail.idBanggia" [ngModelOptions]="{ standalone: true }"
+              (selectionChange)="SelectBanggia($event)">
+              <div class="w-full flex flex-col">
+                <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                  <input matInput (input)="DoFindBanggia($event)" placeholder="Tìm Kiếm" />
+                </mat-form-field>
+                <div class="overflow-y-auto max-h-44">
+                  @for (item of ListBanggia; track item.id) {
+                  <mat-option [value]="item.id">{{item.Title}}</mat-option>
+                  }
+                </div>
+              </div>
+            </mat-select>
+          </mat-form-field>
 
- 
+            <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+              <mat-label>Ngày Giao Hàng</mat-label>
+              <input matInput [matDatepicker]="datepicker" [(ngModel)]="Detail.Ngaygiao" [ngModelOptions]="{ standalone: true }" />
+              <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+              <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                  <button mat-button color="warn" matDatepickerCancel>Hủy</button>
+                  <button mat-raised-button color="primary" matDatepickerApply>Đồng Ý</button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+            </mat-form-field>
 
-       
-        <!-- <div class="w-full flex flex-col overflow-y-auto">
+
+        </div>
+        <div class="w-full flex flex-col overflow-y-auto">
           @defer () {
             <app-giohangcommon [isAdmin]="true" [Type]="'bansi'" [HideColumns]="['Image','TongtienG','TongtienN']" [isShowCrease]="false" [isEdit]="true" (TongcongEmit)="Tinhtongcong($event)"
               (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Detail"></app-giohangcommon>
@@ -70,9 +116,11 @@
             } @error {
             <p>Error loading About Component</p>
             }
-        </div>      -->
+        </div>
+        
 
- 
+      }
+      @else{
         <div class="w-full flex flex-row space-x-2 items-center justify-between">
           <img src="/assets/images/logo-full.png" class="h-20 mx-auto">
           <div class="w-2/3 flex flex-col space-y-2">
@@ -85,86 +133,20 @@
         </div>
         <div class="font-bold text-[18px] uppercase">Bảng Sao Kê Hàng Ngày</div>
       <div class="font-bold text-[18px] uppercase {{Detail?.Khachhang?.TenKH?'':'text-red-700 italic'}}">{{Detail?.Khachhang?.TenKH||"Chưa Chọn Khách Hàng"}}</div>
-
-      <div *ngIf="isEdit" class="flex flex-row items-center space-x-2">
-        <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Khách Hàng</mat-label>
-          <mat-select [(ngModel)]="Detail.idKH" [ngModelOptions]="{ standalone: true }"
-            (selectionChange)="SelectKhachhang($event)">
-            <div class="w-full flex flex-col">
-              <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
-                <input matInput (input)="DoFindKhachhang($event)" placeholder="Tìm Kiếm" />
-              </mat-form-field>
-              <div class="overflow-y-auto max-h-44">
-                @for (item of FilterKhachhang; track item.id) {
-                <mat-option [value]="item.id">{{item.TenKH}}</mat-option>
-                }
-              </div>
-            </div>
-          </mat-select>
-        </mat-form-field>
-  
-        <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Bảng Giá</mat-label>
-          <mat-select [(ngModel)]="Detail.idBanggia" [ngModelOptions]="{ standalone: true }"
-            (selectionChange)="SelectBanggia($event)">
-            <div class="w-full flex flex-col">
-              <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
-                <input matInput (input)="DoFindBanggia($event)" placeholder="Tìm Kiếm" />
-              </mat-form-field>
-              <div class="overflow-y-auto max-h-44">
-                @for (item of ListBanggia; track item.id) {
-                <mat-option [value]="item.id">{{item.Title}}</mat-option>
-                }
-              </div>
-            </div>
-          </mat-select>
-        </mat-form-field>
-
-          <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
-            <mat-label>Ngày Giao Hàng</mat-label>
-            <input matInput [matDatepicker]="datepicker" [(ngModel)]="Detail.Ngaygiao" [ngModelOptions]="{ standalone: true }" />
-            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-              <mat-datepicker-actions>
-                <button mat-button color="warn" matDatepickerCancel>Hủy</button>
-                <button mat-raised-button color="primary" matDatepickerApply>Đồng Ý</button>
-              </mat-datepicker-actions>
-            </mat-datepicker>
-          </mat-form-field>
-
-
-      </div>
-
       <div class="w-full flex items-start"><strong>Địa Chỉ : </strong> {{Detail?.Khachhang?.Diachi}}</div>
       <div class="w-full flex items-start"><strong>Ghi Chú : </strong> {{Detail?.Ghichu}}</div>
       <div class="w-full flex items-start"><strong>Số Điện Thoại : </strong> {{Detail?.Khachhang?.SDT}}</div>
       <div class="w-full flex items-start"><strong>Tổng khối lượng  : </strong> </div>
-     
-      <div *ngIf="isEdit" class="w-full flex flex-col overflow-y-auto">
-        @defer () {
-          <app-giohangcommon [isAdmin]="true" [Type]="'bansi'" [HideColumns]="['Image','TongtienG','TongtienN']" [isShowCrease]="false" [isEdit]="true" (TongcongEmit)="Tinhtongcong($event)"
-            (GiohangsEmit)="GetGiohangsEmit($event)" [Donhang]="Detail"></app-giohangcommon>
-          } @loading(minimum 500ms) {
-          <div class="flex flex-row space-x-2 items-center justify-center p-4">
-            <span>Đang Tải Dữ Liệu </span>
-            <mat-spinner></mat-spinner>
-          </div>
-
-          } @error {
-          <p>Error loading About Component</p>
-          }
-      </div>   
-     
-      <table *ngIf="!isEdit" class="w-full border-collapse border mt-4">
+      <table class="w-full border-collapse border mt-4">
         <thead>
           <tr class="border">
             <th class="border p-2">STT</th>
             <th class="border p-2">Tên sản phẩm</th>
             <th class="border p-2">ĐVT</th>
             <th class="border p-2">Số lượng</th>
-            <th class="border p-2">Số Lượng Giao</th>
-            <th class="border p-2">Số lượng Nhận</th>
+            <th class="border p-2">Đơn giá</th>
+            <th class="border p-2">Thành tiền</th>
+            <th class="border p-2">Số lượng nhận</th>
             <th class="border p-2">Ghi chú</th>
           </tr>
         </thead>
@@ -175,16 +157,18 @@
               <td class="border p-2">{{item.Title}}</td>
               <td class="border p-2 text-center">{{item.dvt}}</td>
               <td class="border p-2 text-end">{{item.Soluong|number:'1.0-2'}}</td>
-              <td class="border p-2 text-end">{{item.SLTG|number:'1.0-2'}}</td>
+              <td class="border p-2 text-end">{{item.gia|number:'1.0-2'}}đ</td>
+              <td class="border p-2 text-end">{{item.Tongtien|number:'1.0-2'}}đ</td>
               <td class="border p-2 text-end">{{item.SLTN|number:'1.0-2'}}</td>
               <td class="border p-2">{{item.Ghichu}}</td>
             </tr>
           }
           <tr class="border">
             <td colspan="3" class="border p-2 text-start">Tổng:</td>
-            <td class="border p-2 text-end font-bold">{{TinhTong(Detail.Giohangs,'Soluong')|number:'1.0-2'}}</td>
-            <td class="border p-2 text-end font-bold">{{TinhTong(Detail.Giohangs,'SLTG')|number:'1.0-2'}}</td>
-            <td class="border p-2 text-end font-bold">{{TinhTong(Detail.Giohangs,'SLTN')|number:'1.0-2'}}</td>
+            <td class="border p-2 text-end">{{TinhTong(Detail.Giohangs,'Soluong')|number:'1.0-2'}}</td>
+            <td class="border p-2 text-end"></td>
+            <td class="border p-2 text-end">{{TinhTong(Detail.Giohangs,'Tongtien')|number:'1.0-2'}}đ</td>
+            <td class="border p-2 text-end">{{TinhTong(Detail.Giohangs,'SLTN')|number:'1.0-2'}}</td>
             <td class="border p-2 text-end"></td>
           </tr>
         </tbody>
@@ -202,7 +186,13 @@
         <p><strong>Lê Văn C</strong></p>
         <p><strong>Ngô Thị D</strong></p>
       </div>
-  
+     }
+      @if(isEdit==true){
+
+      }
+      @else {
+ 
+      }
     </div>
   </div>
   }

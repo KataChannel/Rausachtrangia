@@ -2,6 +2,7 @@
     <div class="p-4 border-b border-default-200 flex flex-row space-x-2 justify-between items-center">
       <span class="!text-lg !font-semibold text-default-800">Giỏ Hàng</span>
       <div class="flex flex-row space-x-1">
+        <button (click)="LoadDrive()" color="primary" mat-icon-button><mat-icon>cloud_download</mat-icon></button>
         <button (click)="Xoagiohang()" color="warn" mat-icon-button><mat-icon>delete</mat-icon></button>
       </div>
     </div>
@@ -31,13 +32,15 @@
               }
               @else if( column === 'Soluong'){
                 @if(isEdit){
-                  <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
-                    <input matInput type="number" (change)="onValueChange($event,idx,'Soluong')" [(ngModel)]="Donhang.Giohangs[idx].Soluong"
+                  <mat-form-field class="!w-20 text-sm" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="number" (change)="onValueChange($event,idx,'Soluong','Tongtien')" [(ngModel)]="Donhang.Giohangs[idx].Soluong"
                       [ngModelOptions]="{ standalone: true }"/>
-                    <button class="text-md" (click)="ChangeSoluong(idx,'giam','Tongtien','Soluong')" color="primary" matPrefix
+                      <ng-container *ngIf="isShowCrease">
+                      <button class="text-md" (click)="ChangeSoluong(idx,'giam','Tongtien','Soluong')" color="primary" matPrefix
                       mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
                     <button class="text-md" (click)="ChangeSoluong(idx,'tang','Tongtien','Soluong')" color="primary" matSuffix
                       mat-icon-button><mat-icon>add_circle</mat-icon></button>
+                      </ng-container>
                   </mat-form-field>
                 }
                 @else {
@@ -46,14 +49,16 @@
               }
               @else if(column === 'SLTG'){
                 @if(isEdit){
-                  <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
-                    <input matInput type="number" (change)="onValueChange($event,idx,'SLTG')" [(ngModel)]="Donhang.Giohangs[idx].SLTG"
+                  <mat-form-field class="!w-20 text-sm" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="number" (change)="onValueChange($event,idx,'SLTG','TongtienG')" [(ngModel)]="Donhang.Giohangs[idx].SLTG"
                       [ngModelOptions]="{ standalone: true }"/>
-                    <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienG','SLTG')" color="primary" matPrefix
-                      mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
-                    <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienG','SLTG')" color="primary" matSuffix
-                      mat-icon-button><mat-icon>add_circle</mat-icon></button>
-                  </mat-form-field>
+                      <ng-container *ngIf="isShowCrease">
+                        <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienG','SLTG')" color="primary" matPrefix
+                        mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
+                      <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienG','SLTG')" color="primary" matSuffix
+                        mat-icon-button><mat-icon>add_circle</mat-icon></button>
+                        </ng-container>
+                    </mat-form-field>
                 }
                 @else {
                   {{row[column]||0 |number:'1.0-2'}}
@@ -61,13 +66,15 @@
               }
               @else if(column === 'SLTN'){
                 @if(isEdit){
-                  <mat-form-field class="!w-32" appearance="outline" subscriptSizing="dynamic">
-                    <input matInput type="number" (change)="onValueChange($event,idx,'SLTN')" [(ngModel)]="Donhang.Giohangs[idx].SLTN"
-                      [ngModelOptions]="{ standalone: true }"/>
-                    <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienN','SLTN')" color="primary" matPrefix
-                      mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
-                    <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienN','SLTN')" color="primary" matSuffix
-                      mat-icon-button><mat-icon>add_circle</mat-icon></button>
+                  <mat-form-field class="!w-20 text-sm" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="number" (change)="onValueChange($event,idx,'SLTN','TongtienN')" [(ngModel)]="Donhang.Giohangs[idx].SLTN"
+                      [ngModelOptions]="{ standalone: true }"/> 
+                      <ng-container *ngIf="isShowCrease">
+                        <button class="text-md" (click)="ChangeSoluong(idx,'giam','TongtienN','SLTN')" color="primary" matPrefix
+                        mat-icon-button><mat-icon>do_not_disturb_on</mat-icon></button>
+                      <button class="text-md" (click)="ChangeSoluong(idx,'tang','TongtienN','SLTN')" color="primary" matSuffix
+                        mat-icon-button><mat-icon>add_circle</mat-icon></button>
+                      </ng-container>
                   </mat-form-field>
                 }
                 @else {
@@ -122,12 +129,12 @@
       </span>
     </div>
     @if(isAdmin){
-      @if(isEdit){
+      <!-- @if(isEdit){
         <button (click)="isEdit=false" color="primary" mat-icon-button><mat-icon>save</mat-icon></button>
       }
       @else {
         <button (click)="isEdit=true" color="primary" mat-icon-button><mat-icon>edit</mat-icon></button>
-      }
+      } -->
   
     }
     @else{

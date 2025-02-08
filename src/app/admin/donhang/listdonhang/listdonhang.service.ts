@@ -239,7 +239,7 @@ export class DonhangsService {
               'Content-Type': 'application/json',
             },
           };
-          const response = await fetch(`${environment.APIURL}/donhangs/${item.id}`, options);
+          const response = await fetch(`${environment.APIURL}/donhang/${item.id}`, options);
           if (!response.ok) {
             if (response.status === 401) {
               const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -357,6 +357,23 @@ export class DonhangsService {
             const data = await response.json();  
             // console.log(data);
             return data.rows[0].elements[0];         
+        } catch (error) {
+            return console.error(error);
+        }
+    }
+
+    async getDrive(DriveInfo:any) {
+      try {
+        const options = {
+          method:'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${DriveInfo.IdSheet}/values/${DriveInfo.SheetName}?key=${DriveInfo.ApiKey}`,options);
+      const data = await response.json();
+     // console.log(data);
+      return data;
         } catch (error) {
             return console.error(error);
         }

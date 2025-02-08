@@ -195,6 +195,10 @@ export const appRoutes: Route[] = [
                 loadComponent: () => import('./admin/sanpham/listsanpham/listsanpham.component').then(c => c.ListsanphamComponent),
                 children: [
                     {
+                        path: '',
+                        loadComponent: () => import('./admin/sanpham/listsanpham/listsanpham.component').then(c => c.ListsanphamComponent),
+                    },
+                    {
                         path: ':id',
                         loadComponent: () => import('./admin/sanpham/listsanpham/detailsanpham/detailsanpham.component').then(c => c.DetailSanphamComponent),
                     },
@@ -205,6 +209,10 @@ export const appRoutes: Route[] = [
                 path: 'donhang',
                 loadComponent: () => import('./admin/donhang/listdonhang/listdonhang.component').then(c => c.ListdonhangComponent),
                 children: [
+                    {
+                        path: '',
+                        loadComponent: () => import('./admin/donhang/listdonhang/listdonhang.component').then(c => c.ListdonhangComponent),
+                    },
                     {
                         path: 'donsi/:id',
                         loadComponent: () => import('./admin/donhang/listdonhang/listdonsi/detaildonsi/detaildonsi.component').then(c => c.DetaildonsiComponent),
@@ -229,6 +237,10 @@ export const appRoutes: Route[] = [
                 path: 'khachhang',
                 loadComponent:() => import('./admin/khachhang/listkhachhang/listkhachhang.component').then(c => c.ListkhachhangComponent),
                 children: [
+                    {
+                        path: '',
+                        loadComponent:() => import('./admin/khachhang/listkhachhang/listkhachhang.component').then(c => c.ListkhachhangComponent),
+                    },
                     {
                         path: ':id',
                         loadComponent: () => import('./admin/khachhang/listkhachhang/detailkhachhang/detailkhachhang.component').then(c => c.DetailKhachhangComponent),

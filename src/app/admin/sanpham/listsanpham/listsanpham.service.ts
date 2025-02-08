@@ -135,7 +135,7 @@ export class SanphamsService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/sanpham/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/sanpham/findid/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -160,7 +160,7 @@ export class SanphamsService {
       return console.error(error);
     }
   }
-  async updateOneSanpham(dulieu: any) {
+  async updateOneSanpham(dulieu: any) {    
     try {
       const options = {
           method:'PATCH',

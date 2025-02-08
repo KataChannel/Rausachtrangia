@@ -8,7 +8,12 @@ import { Forms, ListKhachhang } from './listkhachhang';
 import { MatMenuModule } from '@angular/material/menu';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { KhachhangsService } from './listkhachhang.service';
@@ -31,16 +36,46 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatButtonModule,
     MatSelectModule,
-    CommonModule
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
   ],
 })
-export class ListkhachhangComponent implements AfterViewInit {
+export class ListkhachhangComponent {
   Detail: any = {};
   dataSource!: MatTableDataSource<any>;
-  displayedColumns: string[] = [];
-  ColumnName: any = { 'STT': 'STT' };
+  displayedColumns: string[] = [
+    'MaKH',
+    'TenKH',
+    'TenNN',
+    'Diachi',
+    'Quan',
+    'Email',
+    'SDT',
+    'MST',
+    'GioNhanhang',
+    'idBanggia',
+    'LoaiKH',
+    'Ghichu',
+  ];
+  ColumnName: any = {
+    MaKH: 'MÃ KH/NCC',
+    TenKH: 'TÊN KHÁCH HÀNG (VT)',
+    TenNN: 'TÊN NƯỚC NGOÀI',
+    Diachi: 'ĐỊA CHỈ',
+    Quan: 'QUẬN/HUYỆN',
+    Email: 'Email',
+    SDT: 'SỐ ĐIỆN THOẠI',
+    MST: 'MÃ SỐ THUẾ',
+    GioNhanhang: 'GIỜ NHẬN HÀNG',
+    idBanggia: 'BẢNG GIÁ',
+    LoaiKH: 'LOẠI KH/NCC',
+    Ghichu: 'GHI CHÚ',
+  };
   Forms: any[] = Forms;
-  FilterColumns: any[] = JSON.parse(localStorage.getItem('KhachHang_FilterColumns') || '[]');
+  FilterColumns: any[] = JSON.parse(
+    localStorage.getItem('KhachHang_FilterColumns') || '[]'
+  );
   Columns: any[] = [];
   ListKhachhang: any[] = ListKhachhang;
 
@@ -52,84 +87,44 @@ export class ListkhachhangComponent implements AfterViewInit {
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
-    private _router: Router,
+    private _router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this._KhachhangsService.getAllKhachhang();
     this._KhachhangsService.ListKhachhang();
-
     this.initializeColumns();
     this.setupDataSource();
     this.setupDrawer();
   }
 
   private initializeColumns(): void {
-    this.Columns = Object.keys(this.ListKhachhang[0]).map(key => ({
+    this.Columns = Object.keys(this.ListKhachhang[0]).map((key) => ({
       key,
       value: this.ListKhachhang[0][key],
-      isShow: true
+      isShow: true,
     }));
     if (this.FilterColumns.length === 0) {
       this.FilterColumns = this.Columns;
     } else {
-      localStorage.setItem('KhachHang_FilterColumns', JSON.stringify(this.FilterColumns));
+      localStorage.setItem(
+        'KhachHang_FilterColumns',
+        JSON.stringify(this.FilterColumns)
+      );
     }
-
-    this.displayedColumns = this.FilterColumns.filter(v => v.isShow).map(item => item.key);
+    this.displayedColumns = this.FilterColumns.filter((v) => v.isShow).map(
+      (item) => item.key
+    );
     this.ColumnName = this.FilterColumns.reduce((obj, item) => {
       if (item.isShow) obj[item.key] = item.value;
       return obj;
     }, {} as Record<string, string>);
+    console.log(this.Columns);
+    console.log(this.displayedColumns);
   }
 
   private setupDataSource(): void {
-    this.dataSource = new MatTableDataSource(this._KhachhangsService.ListKhachhang().map(v =>
-      this.FilterColumns.filter(item => item.isShow).reduce((obj, item) => {
-        obj[item.key] = v[item.key];
-        return obj;
-      }, {})
-    ));
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  private setupDrawer(): void {
-
-    this._breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
-      if (result.matches) {
-        this.drawer.mode = 'over';
-        this.paginator.hidePageSize = true;
-      } else {
-        this.drawer.mode = 'side';
-      }
-    });
-  }
-
-  toggleColumn(item: any): void {
-    const column = this.FilterColumns.find(v => v.key === item.key);
-    if (column) {
-      column.isShow = !column.isShow;
-      this.updateDisplayedColumns();
-    }
-  }
-
-  private updateDisplayedColumns(): void {
-    this.displayedColumns = this.FilterColumns.filter(v => v.isShow).map(item => item.key);
-    this.ColumnName = this.FilterColumns.reduce((obj, item) => {
-      if (item.isShow) obj[item.key] = item.value;
-      return obj;
-    }, {} as Record<string, string>);
-    this.setupDataSource();
-    localStorage.setItem('KhachHang_FilterColumns', JSON.stringify(this.FilterColumns));
-  }
-
-  doFilterColumns(event: any): void {
-    const query = event.target.value.toLowerCase();
-    this.FilterColumns = this.Columns.filter(v => v.value.toLowerCase().includes(query));    
-  }
-
-  ngAfterViewInit(): void {
+    this.dataSource = new MatTableDataSource(this._KhachhangsService.ListKhachhang());
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
@@ -137,8 +132,51 @@ export class ListkhachhangComponent implements AfterViewInit {
     this.paginator._intl.previousPageLabel = 'Về Trước';
     this.paginator._intl.firstPageLabel = 'Trang Đầu';
     this.paginator._intl.lastPageLabel = 'Trang Cuối';
-    this.paginator.pageSize = 20;
   }
+
+  private setupDrawer(): void {
+    this._breakpointObserver
+      .observe([Breakpoints.Handset])
+      .subscribe((result) => {
+        if (result.matches) {
+          this.drawer.mode = 'over';
+          this.paginator.hidePageSize = true;
+        } else {
+          this.drawer.mode = 'side';
+        }
+      });
+  }
+
+  toggleColumn(item: any): void {
+    const column = this.FilterColumns.find((v) => v.key === item.key);
+    if (column) {
+      column.isShow = !column.isShow;
+      this.updateDisplayedColumns();
+    }
+  }
+
+  private updateDisplayedColumns(): void {
+    this.displayedColumns = this.FilterColumns.filter((v) => v.isShow).map(
+      (item) => item.key
+    );
+    this.ColumnName = this.FilterColumns.reduce((obj, item) => {
+      if (item.isShow) obj[item.key] = item.value;
+      return obj;
+    }, {} as Record<string, string>);
+    this.setupDataSource();
+    localStorage.setItem(
+      'KhachHang_FilterColumns',
+      JSON.stringify(this.FilterColumns)
+    );
+  }
+
+  doFilterColumns(event: any): void {
+    const query = event.target.value.toLowerCase();
+    this.FilterColumns = this.Columns.filter((v) =>
+      v.value.toLowerCase().includes(query)
+    );
+  }
+
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
