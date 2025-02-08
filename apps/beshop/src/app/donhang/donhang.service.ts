@@ -47,12 +47,12 @@ export class DonhangService {
   }
   async findid(id: string) {
     const Donhang = await this.DonhangRepository.findOne({ where: { id: id } });
-    return Donhang ||{}
+    return Donhang
   }
   async findbyuser(id: string) {
     const Donhang:any = await this.DonhangRepository.find({ where: { idKH: id } });
     console.error(Donhang);
-    return Donhang||{}
+    return Donhang
   }
   async findSHD(data: any) {
     return await this.DonhangRepository.findOne({
