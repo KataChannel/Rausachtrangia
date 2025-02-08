@@ -46,7 +46,7 @@ export class DonhangController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string,@Body() data: any) {
-    return this.donhangService.remove(id, data);
+  remove(@Param('id') id: string) {
+    return this.donhangService.remove(id);
   }
 }

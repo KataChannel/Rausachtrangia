@@ -133,9 +133,7 @@ export class DonhangService {
      
  
   // }
-  async remove(id: string, data: any) {
-    if(data.Giohangs){await this._GiohangService.remove(data.Giohangs.id);}
-    if(data.Khachhang){await this._KhachhangService.remove(data.Khachhang.id)}
+  async remove(id: string) {
     await this.DonhangRepository.delete(id);
     return { deleted: true };
   }
