@@ -48,6 +48,8 @@ export class DonhangEntity {
   TotalTT: number;
   @Column({ type: 'bigint' })
   SubTotalTT: number;
+  @Column()
+  Ngaygiao: Date;
   @Column({ default: '' })
   Type: string;
   @Column({ default: 1 })
