@@ -18,6 +18,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule, MatDateRangeInput } from '@angular/material/datepicker';
 import moment from 'moment';
 import { CommonModule } from '@angular/common';
+import { ConvertDriveData } from '../../../../shared/shared.utils';
+import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.service';
   @Component({
     selector: 'app-detailbanggia',
     imports: [
@@ -42,6 +44,7 @@ import { CommonModule } from '@angular/common';
     _ListbanggiaComponent:ListBanggiaComponent = inject(ListBanggiaComponent)
     _BanggiasService:BanggiasService = inject(BanggiasService)
     _SanphamsService:SanphamsService = inject(SanphamsService)
+    _DonhangsService:DonhangsService = inject(DonhangsService)
     _router:ActivatedRoute = inject(ActivatedRoute)
     _Router: Router = inject(Router)
     _snackBar: MatSnackBar = inject(MatSnackBar)
@@ -68,6 +71,8 @@ import { CommonModule } from '@angular/common';
           this._ListbanggiaComponent.drawer.open();     
           await this._BanggiasService.getBanggiaByid(this.idBanggia);
           this.Detail = this._BanggiasService.Banggia();
+          console.log(this.Detail);
+          
           this.MappingListSanpham();
         } else if(this.idBanggia === '0') {
           this.MappingListSanpham();
@@ -193,4 +198,34 @@ import { CommonModule } from '@angular/common';
         }) 
         window.location.href=`/admin/banggia`;
     } 
+    async LoadDrive()
+          {
+            const DriveInfo ={
+              IdSheet:'1actXVZD5yQRh5YcpRIxAB-Wf38PNKSIU0LR1AeyR-6s',
+              SheetName:'banggiaimport',
+              ApiKey:'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao'
+            }
+          const result:any =  await this._DonhangsService.getDrive(DriveInfo) 
+          console.log(result);
+          const data =  ConvertDriveData(result.values);   
+          console.log(data);
+          data.forEach((v:any)=>{
+            v.gia = Number(v.gia),
+            v.GiaCoSo = Number(v.GiaCoSo),
+            v.khoiluong = Number(v.khoiluong),
+            v.Soluong = Number(v.Soluong),
+            v.SLTT = Number(v.SLTT),
+            v.Tongtien = Number(v.Tongtien),
+            v.SLTG = Number(v.SLTG),
+            v.TongtienG = Number(v.TongtienG),
+            v.SLTN = Number(v.SLTN),
+            v.TongtienN = Number(v.TongtienN)
+          }) 
+          console.log(data);
+          this.Detail.ListSP = data;
+          this.dataSource = new MatTableDataSource(this.Detail.ListSP);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          
+        }
   }
