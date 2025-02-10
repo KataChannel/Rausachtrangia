@@ -13,11 +13,7 @@ export class SanphamEntity {
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   idDM: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
-  id_cat: string;
-  @Column({ type: 'text', collation: 'utf8_general_ci' })
   Title: string;
-  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
-  Danhmuc: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   MaSP: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
@@ -32,14 +28,10 @@ export class SanphamEntity {
   Lienhe: string;
   @Column({ default: '' })
   Slug: string;
-  @Column({ type: 'bigint' })
-  GiaCoSo: number;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
   Giachon: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
-  Giagoc: number;
-  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
-  Giaban: number;
+  Giagoc: string;
   @Column({ type: 'bigint' })
   View: number;
   @Column({ default: 0 })
