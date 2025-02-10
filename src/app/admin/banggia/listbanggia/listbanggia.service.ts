@@ -154,6 +154,7 @@ export class BanggiasService {
       }
       const data = await response.json();
       this.Banggia.set(data)
+      return data
     } catch (error) {
       return console.error(error);
     }

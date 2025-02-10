@@ -6,7 +6,7 @@
     @if(idBanggia==0){
     Thêm Bảng Giá
     }@else {
-    {{Detail?.Title||'Chưa Đặt Tên'}}
+    {{Detail()?.Title||'Chưa Đặt Tên'}}
     }
   </div>
   <div class="flex flex-row space-x-2 items-center">
@@ -40,13 +40,13 @@
     <div class="w-full flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-4 items-center">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
         <mat-label>Tiêu Đề</mat-label>
-        <input matInput [(ngModel)]="Detail.Title" [ngModelOptions]="{ standalone: true }"
+        <input matInput [(ngModel)]="Detail().Title" [ngModelOptions]="{ standalone: true }"
           placeholder="Vui lòng Nhập Tiêu Đề" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
         <mat-label>Loại</mat-label>
-        <mat-select [(ngModel)]="Detail.Type" [ngModelOptions]="{ standalone: true }">
+        <mat-select [(ngModel)]="Detail().Type" [ngModelOptions]="{ standalone: true }">
           @for (item of [
             {key:'bansi',value:'Bán Sỉ'},
             {key:'banle',value:'Bán Lẻ'},
@@ -59,8 +59,8 @@
       <mat-form-field class="w-full" [appearance]="'outline'" [subscriptSizing]="'dynamic'">
              <mat-label>Khoảng Thời Gian</mat-label>
              <mat-date-range-input [rangePicker]="picker">
-               <input matStartDate  [(ngModel)]="Detail.Batdau" [ngModelOptions]="{standalone: true}" placeholder="Ngày Bắt Đầu">
-               <input matEndDate [(ngModel)]="Detail.Ketthuc" [ngModelOptions]="{standalone: true}" placeholder="Ngày Kết Thúc">
+               <input matStartDate  [(ngModel)]="Detail().Batdau" [ngModelOptions]="{standalone: true}" placeholder="Ngày Bắt Đầu">
+               <input matEndDate [(ngModel)]="Detail().Ketthuc" [ngModelOptions]="{standalone: true}" placeholder="Ngày Kết Thúc">
              </mat-date-range-input>
              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
              <mat-date-range-picker touchUi #picker>
@@ -80,8 +80,8 @@
     </div>
 
     <div class="w-full flex flex-col space-y-2 items-center">
-      <div class="flex flex-row space-x-2 items-center">
-        <span class="font-bold">Danh Sách Sản Phẩm ({{Detail?.ListSP?.length}})</span>
+      <div class="flex flex-row space-x-2 items-center cursor-pointer">
+        <span class="font-bold">Danh Sách Sản Phẩm ({{Detail()?.ListSP?.length}})</span>
         <div class="relative">
           <input type="text" placeholder="Tìm Kiếm..." #input (keyup)="applyFilter($event)"
               class="block pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40">
@@ -89,7 +89,16 @@
               <span class="material-symbols-outlined text-gray-500">search</span>
           </div>
       </div>
-      <button (click)="LoadDrive()" color="primary" mat-icon-button><mat-icon>cloud_download</mat-icon></button>
+      <div (click)="writeExcelFile()" class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+        <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_download</span>
+        <span class="text-xs">Download</span>
+      </div>
+      <div (click)="uploadfile.click()" class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+        <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+        <span class="text-xs">Upload</span>
+        <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+      </div>
+        <button (click)="LoadDrive()" color="primary" mat-icon-button><mat-icon>cloud_download</mat-icon></button>
       </div>
 
       <div class="w-full overflow-auto">
@@ -111,7 +120,7 @@
                      @case ('giaban') {
                       <mat-form-field appearance="outline" subscriptSizing="dynamic">
                         <mat-label>Giá Bán</mat-label>
-                        <input matInput [(ngModel)]="row.giaban" type="number" (ngModelChange)="updateGiaBan(row, $event)" [ngModelOptions]="{ standalone: true }"
+                        <input matInput [(ngModel)]="Detail()!.ListSP[idx].giaban" type="number" (ngModelChange)="updateGiaBan(row, $event)" [ngModelOptions]="{ standalone: true }"
                           placeholder="Vui lòng Nhập Tiêu Đề" />
                       </mat-form-field>
                       }    

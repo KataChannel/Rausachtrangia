@@ -151,4 +151,6 @@ export class ListBanggiaComponent{
     this.drawer.open();
     this._router.navigate(['admin/banggia', 0]);
   }
+
+  
 }

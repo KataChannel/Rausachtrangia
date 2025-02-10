@@ -73,18 +73,13 @@ import * as XLSX from 'xlsx';
         this.isEdit = this.idBanggia === '0';   
         if (this.idBanggia&&this.idBanggia !== '0') {
           this._ListbanggiaComponent.drawer.open();     
-          await this._BanggiasService.getBanggiaByid(this.idBanggia).then((data:any)=>{ 
-            if(data){
-              this.Detail = this._BanggiasService.Banggia;
-              console.log(this.Detail());
-              this._KhachhangsService.getKhachhangByidBanggia(this.idBanggia).then((data:any)=>{
-                this.ListKhachhang = data;
-              })
-              this.MappingListSanpham();
-            }
-
+          await this._BanggiasService.getBanggiaByid(this.idBanggia);
+          this.Detail = this._BanggiasService;
+          console.log(this.Detail());
+          this._KhachhangsService.getKhachhangByidBanggia(this.idBanggia).then((data:any)=>{
+            this.ListKhachhang = data;
           })
-
+          this.MappingListSanpham();
         } else if(this.idBanggia === '0') {
           this.MappingListSanpham();
           this._ListbanggiaComponent.drawer.open();   
@@ -154,11 +149,11 @@ import * as XLSX from 'xlsx';
       {
         if(this.idBanggia=='0')
           {
-            this.Detail().ListSP = this.Detail().ListSP.map((item: any) => ({
+            this.Detail.ListSP = this.Detail.ListSP.map((item: any) => ({
               id: item.id,
               giaban: item.giaban,
             }));
-            this._BanggiasService.CreateBanggia(this.Detail()).then(()=>
+            this._BanggiasService.CreateBanggia(this.Detail).then(()=>
               {
                 this._snackBar.open('Thêm Mới Thành Công', '', {
                   duration: 1000,
@@ -171,11 +166,11 @@ import * as XLSX from 'xlsx';
           }
           else
           {
-            this.Detail().ListSP = this.Detail().ListSP.map((item: any) => ({
+            this.Detail.ListSP = this.Detail.ListSP.map((item: any) => ({
               id: item.id,
               giaban: item.giaban,
             }));
-            this._BanggiasService.updateOneBanggia(this.Detail()).then((data:any)=>{
+            this._BanggiasService.updateOneBanggia(this.Detail).then((data:any)=>{
                 this._snackBar.open('Cập Nhật Thành Công', '', {
                   duration: 1000,
                   horizontalPosition: "end",
@@ -198,7 +193,7 @@ import * as XLSX from 'xlsx';
     }
     DeleteData()
     {
-      this._BanggiasService.DeleteBanggia(this.Detail()).then((data:any)=>{
+      this._BanggiasService.DeleteBanggia(this.Detail).then((data:any)=>{
         if(data)
           this._snackBar.open('Xóa Thành Công', '', {
             duration: 1000,
@@ -233,8 +228,8 @@ import * as XLSX from 'xlsx';
             v.TongtienN = Number(v.TongtienN)
           }) 
           console.log(data);
-          this.Detail().ListSP = data;
-          this.dataSource = new MatTableDataSource(this.Detail().ListSP);
+          this.Detail.ListSP = data;
+          this.dataSource = new MatTableDataSource(this.Detail.ListSP);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           
@@ -259,13 +254,13 @@ import * as XLSX from 'xlsx';
         giaban: Number(v.giaban),
       }));
       console.log(transformedData);
-      this.Detail().ListSP = transformedData; 
+      this.Detail.ListSP = transformedData; 
     };
     fileReader.readAsArrayBuffer(file);
   }
 
   writeExcelFile() {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.Detail().ListSP);
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.Detail.ListSP);
     const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, 'data');
