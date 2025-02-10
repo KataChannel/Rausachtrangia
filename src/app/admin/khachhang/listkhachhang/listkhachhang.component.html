@@ -48,9 +48,23 @@
                             </span>
                         </th>
                         <td class="" mat-cell *matCellDef="let row;let idx = index">
-                            <span class="max-w-40 line-clamp-4">
-                                {{ column === 'STT' ? idx + 1 : row[column] }}
-                            </span>
+                            @if(column === 'STT')
+                            {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{idx + 1}}
+                                </span>
+                            }
+                            @if(column === 'idBanggia')
+                            {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{getTitleBanggia(row[column])}}
+                                </span>
+                            }
+                            @else {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{row[column]}}
+                                </span>
+                            }       
                         </td>
                      </ng-container>
                 }

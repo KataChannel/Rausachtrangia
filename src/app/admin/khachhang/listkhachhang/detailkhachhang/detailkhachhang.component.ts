@@ -9,6 +9,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { KhachhangsService } from '../listkhachhang.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { BanggiasService } from '../../../banggia/listbanggia/listbanggia.service';
   @Component({
     selector: 'app-detailkhachhang',
     imports: [
@@ -28,11 +29,13 @@ import { MatSelectModule } from '@angular/material/select';
     _route:Router = inject(Router)
     _snackBar:MatSnackBar = inject(MatSnackBar)
     _KhachhangsService:KhachhangsService = inject(KhachhangsService)
+    _BanggiasService:BanggiasService = inject(BanggiasService)
     constructor(){}
     Detail:any= signal<any>({});
     isEdit:boolean=false
     isDelete:boolean=false
     idKhachhang:any
+    ListBanggia:any[]=[]
     ngOnInit(): void {
       this._router.paramMap.subscribe(async (data: any) => {
         this.idKhachhang = data.get('id')
@@ -41,6 +44,11 @@ import { MatSelectModule } from '@angular/material/select';
           this._ListkhachhangComponent.drawer.open();
           await this._KhachhangsService.getKhachhangByid(this.idKhachhang);     
           this.Detail = this._KhachhangsService.Khachhang
+          await this._BanggiasService.getAllBanggia().then().then((banggias:any)=>{
+            if(banggias){
+              this.ListBanggia = banggias
+            }
+          })
         } 
       });   
     }

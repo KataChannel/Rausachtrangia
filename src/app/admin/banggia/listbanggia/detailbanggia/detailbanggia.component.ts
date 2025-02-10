@@ -20,6 +20,7 @@ import moment from 'moment';
 import { CommonModule } from '@angular/common';
 import { ConvertDriveData } from '../../../../shared/shared.utils';
 import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.service';
+import { KhachhangsService } from '../../../khachhang/listkhachhang/listkhachhang.service';
   @Component({
     selector: 'app-detailbanggia',
     imports: [
@@ -45,6 +46,7 @@ import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.servic
     _BanggiasService:BanggiasService = inject(BanggiasService)
     _SanphamsService:SanphamsService = inject(SanphamsService)
     _DonhangsService:DonhangsService = inject(DonhangsService)
+    _KhachhangsService:KhachhangsService = inject(KhachhangsService)
     _router:ActivatedRoute = inject(ActivatedRoute)
     _Router: Router = inject(Router)
     _snackBar: MatSnackBar = inject(MatSnackBar)
@@ -57,6 +59,7 @@ import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.servic
     isDelete:boolean=false
     idBanggia:any
     ListSanpham:any[]=[]
+    ListKhachhang:any[]=[]
     CountItem:number=0
     dataSource!: MatTableDataSource<any>;
     displayedColumns: string[] = ['id','STT','MaSP','Title', 'giagoc', 'giaban'];
@@ -72,7 +75,9 @@ import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.servic
           await this._BanggiasService.getBanggiaByid(this.idBanggia);
           this.Detail = this._BanggiasService.Banggia();
           console.log(this.Detail);
-          
+          this._KhachhangsService.getKhachhangByidBanggia(this.idBanggia).then((data:any)=>{
+            this.ListKhachhang = data;
+          })
           this.MappingListSanpham();
         } else if(this.idBanggia === '0') {
           this.MappingListSanpham();

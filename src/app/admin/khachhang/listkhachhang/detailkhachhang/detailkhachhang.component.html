@@ -63,6 +63,15 @@
           }
         </mat-select>
      </mat-form-field>
+
+      <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+        <mat-label>Bảng Giá</mat-label>
+        <mat-select [(ngModel)]="Detail().idBanggia" [ngModelOptions]="{standalone: true}">
+          @for (item of ListBanggia; track item) {
+            <mat-option [value]="item.id">{{item.Title}}</mat-option>
+          }
+        </mat-select>
+     </mat-form-field>
     </div>
 
   }

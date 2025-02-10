@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { KhachhangsService } from './listkhachhang.service';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { BanggiasService } from '../../banggia/listbanggia/listbanggia.service';
 
 @Component({
   selector: 'app-listkhachhang',
@@ -78,12 +79,14 @@ export class ListkhachhangComponent {
   );
   Columns: any[] = [];
   ListKhachhang: any[] = ListKhachhang;
+  ListBanggia: any[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
 
   private _KhachhangsService: KhachhangsService = inject(KhachhangsService);
+  private _BanggiasService: BanggiasService = inject(BanggiasService);
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
@@ -93,6 +96,11 @@ export class ListkhachhangComponent {
   async ngOnInit(): Promise<void> {
     await this._KhachhangsService.getAllKhachhang();
     this._KhachhangsService.ListKhachhang();
+    await this._BanggiasService.getAllBanggia().then().then((banggias:any)=>{
+      if(banggias){
+        this.ListBanggia = banggias
+      }
+    })
     this.initializeColumns();
     this.setupDataSource();
     this.setupDrawer();
@@ -154,7 +162,10 @@ export class ListkhachhangComponent {
       this.updateDisplayedColumns();
     }
   }
-
+  getTitleBanggia(id:any){
+    const banggia = this.ListBanggia.find(v => v.id === id)
+    return banggia?.Title
+  }
   private updateDisplayedColumns(): void {
     this.displayedColumns = this.FilterColumns.filter((v) => v.isShow).map(
       (item) => item.key

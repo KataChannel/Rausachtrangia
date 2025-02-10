@@ -91,6 +91,11 @@ export class DetaildonsiComponent {
         }
       });   
     }
+    NgaygiaoFilter = (d: Date | null): boolean => {
+      const today = new Date();
+      today.setDate(today.getDate());
+      return d ? d > today : false;
+    };
     Tongcong:any=0
     Tong:any=0
     Tinhtongcong(value:any){      
@@ -106,9 +111,7 @@ export class DetaildonsiComponent {
        this.FilterKhachhang = this.ListKhachhang.filter(v => v.TenKH.toLowerCase().includes(query));      
     }
     SelectKhachhang(event:any){     
-      const selectedKhachhang = this.ListKhachhang.find(v => v.id === event.value);
-      console.log(selectedKhachhang);
-      
+      const selectedKhachhang = this.ListKhachhang.find(v => v.id === event.value);      
       if (selectedKhachhang) {
         this.Detail.Khachhang = {
           ...this.Detail.Khachhang,
@@ -116,6 +119,7 @@ export class DetaildonsiComponent {
           SDT: selectedKhachhang.SDT,
           Diachi: selectedKhachhang.Diachi
         };
+        this.Detail.idBanggia = selectedKhachhang.idBanggia
       }
     }
 
@@ -123,9 +127,8 @@ export class DetaildonsiComponent {
       const query = event.target.value.toLowerCase();
        this.FilterBanggia = this.ListBanggia.filter(v => v.Title.toLowerCase().includes(query));      
     }
-    SelectBanggia(event:any){
-      console.log(event.value);  
-      const Banggia = this.ListBanggia.find(v => v.id === event.value) 
+    UpdateBangia(){
+      const Banggia = this.ListBanggia.find(v => v.id === this.Detail.idBanggia) 
       const valueMap = new Map(Banggia.ListSP.map(({ id, giaban }:any) => [id, giaban]));
       this.Detail.Giohangs = this.Detail.Giohangs
           .filter(({ id }:any) => valueMap.has(id)) // Chỉ giữ lại phần tử có trong data2
@@ -135,6 +138,21 @@ export class DetaildonsiComponent {
               Tongtien: valueMap.get(item.id)?? item.gia // Cập nhật giá trị value từ data2
           }));
       console.log(this.Detail.Giohangs);
+    }
+    SelectBanggia(event:any){
+      console.log(event.value);  
+      this.Detail.idBanggia = event.value
+      this.UpdateBangia()
+      // const Banggia = this.ListBanggia.find(v => v.id === event.value) 
+      // const valueMap = new Map(Banggia.ListSP.map(({ id, giaban }:any) => [id, giaban]));
+      // this.Detail.Giohangs = this.Detail.Giohangs
+      //     .filter(({ id }:any) => valueMap.has(id)) // Chỉ giữ lại phần tử có trong data2
+      //     .map((item:any) => ({
+      //         ...item,  // Giữ lại tất cả các thuộc tính từ data1
+      //         gia: valueMap.get(item.id)?? item.gia, // Cập nhật giá trị value từ data2
+      //         Tongtien: valueMap.get(item.id)?? item.gia // Cập nhật giá trị value từ data2
+      //     }));
+      // console.log(this.Detail.Giohangs);
     }
     TinhTong(items:any,fieldTong:any){  
       return items?.reduce((sum:any, item:any) => sum + (item[fieldTong] || 0), 0) || 0;

@@ -123,7 +123,7 @@
 
           <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
             <mat-label>Ngày Giao Hàng</mat-label>
-            <input matInput [matDatepicker]="datepicker" [(ngModel)]="Detail.Ngaygiao" [ngModelOptions]="{ standalone: true }" />
+            <input matInput [matDatepickerFilter]="NgaygiaoFilter" [matDatepicker]="datepicker" [(ngModel)]="Detail.Ngaygiao" [ngModelOptions]="{ standalone: true }" />
             <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker>
               <mat-datepicker-actions>
