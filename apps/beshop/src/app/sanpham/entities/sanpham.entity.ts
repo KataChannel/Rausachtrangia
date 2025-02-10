@@ -32,8 +32,8 @@ export class SanphamEntity {
   Giachon: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
   Bienthe: string;
-  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
-  Giagoc: string;
+  @Column({ type: 'bigint' })
+  giagoc: number;
   @Column({ type: 'bigint' })
   View: number;
   @Column({ default: 0 })
