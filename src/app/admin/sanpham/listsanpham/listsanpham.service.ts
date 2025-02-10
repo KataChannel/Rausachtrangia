@@ -161,6 +161,7 @@ export class SanphamsService {
     }
   }
   async updateOneSanpham(dulieu: any) {    
+    
     try {
       const options = {
           method:'PATCH',

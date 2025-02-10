@@ -35,16 +35,20 @@
   @else {
     <div class="flex flex-row space-x-2 items-center">
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Tiêu Đề</mat-label>
-        <input matInput [(ngModel)]="Detail().Title"  [ngModelOptions]="{standalone: true}" [placeholder]="'Tiêu Đề'">
+        <mat-label>Tên Sản Phẩm</mat-label>
+        <input matInput [(ngModel)]="Detail().Title"  [ngModelOptions]="{standalone: true}" [placeholder]="'Tên Sản Phẩm'">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Mã Sản Phẩm</mat-label>
         <input matInput [(ngModel)]="Detail().MaSP"  [ngModelOptions]="{standalone: true}" [placeholder]="'Mã Sản Phẩm'">
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Giá Cơ Sở</mat-label>
-        <input matInput [(ngModel)]="Detail().GiaCoSo" type="number" [ngModelOptions]="{standalone: true}" [placeholder]="'Giá Cơ Sở'">
+        <mat-label>Giá Gốc</mat-label>
+        <input matInput [(ngModel)]="Detail().giagoc" type="number" [ngModelOptions]="{standalone: true}" [placeholder]="'Giá Gốc'">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Đơn Vị Tính</mat-label>
+        <input matInput [(ngModel)]="Detail().dvt" [ngModelOptions]="{standalone: true}" [placeholder]="'Đơn Vị Tính'">
       </mat-form-field>
     </div>
 

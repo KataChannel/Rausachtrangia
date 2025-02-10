@@ -63,8 +63,8 @@ import * as XLSX from 'xlsx';
     ListKhachhang:any[]=[]
     CountItem:number=0
     dataSource!: MatTableDataSource<any>;
-    displayedColumns: string[] = ['id','STT','MaSP','Title', 'giagoc', 'giaban'];
-    ColumnName: any = { 'id':'ID','STT': 'STT','MaSP':'Mã Sản Phẩm','Title': 'Tên Sản Phẩm', 'giagoc': 'Giá Gốc', 'giaban': 'Giá Bán' };
+    displayedColumns: string[] = ['id','STT','MaSP','Title','dvt', 'giagoc', 'giaban'];
+    ColumnName: any = { 'id':'ID','STT': 'STT','MaSP':'Mã Sản Phẩm','Title': 'Tên Sản Phẩm','dvt': 'Đơn Vị Tính', 'giagoc': 'Giá Gốc', 'giaban': 'Giá Bán' };
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
     ngOnInit(): void {
@@ -103,8 +103,9 @@ import * as XLSX from 'xlsx';
           id: item.id,
           Title: item.Title,
           MaSP: item.MaSP,
-          giagoc: item.Giagoc[0].gia,
-          giaban: existingItem && existingItem.giaban > 0 ? existingItem.giaban : item.Giagoc[0].gia,
+          giagoc: item.giagoc,
+          dvt: item.dvt,
+          giaban: existingItem && existingItem.giaban > 0 ? existingItem.giaban : item.giagoc,
         };
       });
 
@@ -209,38 +210,46 @@ import * as XLSX from 'xlsx';
         }) 
         window.location.href=`/admin/banggia`;
     } 
+
     async LoadDrive()
           {
             const DriveInfo ={
-              IdSheet:'1actXVZD5yQRh5YcpRIxAB-Wf38PNKSIU0LR1AeyR-6s',
+              IdSheet:'15npo25qyH5FmfcEjl1uyqqyFMS_vdFnmxM_kt0KYmZk',
               SheetName:'banggiaimport',
               ApiKey:'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao'
             }
           const result:any =  await this._DonhangsService.getDrive(DriveInfo) 
-          console.log(result);
           const data =  ConvertDriveData(result.values);   
-          console.log(data);
-          data.forEach((v:any)=>{
-            v.gia = Number(v.gia),
-            v.GiaCoSo = Number(v.GiaCoSo),
-            v.khoiluong = Number(v.khoiluong),
-            v.Soluong = Number(v.Soluong),
-            v.SLTT = Number(v.SLTT),
-            v.Tongtien = Number(v.Tongtien),
-            v.SLTG = Number(v.SLTG),
-            v.TongtienG = Number(v.TongtienG),
-            v.SLTN = Number(v.SLTN),
-            v.TongtienN = Number(v.TongtienN)
-          }) 
-          console.log(data);
-          this.Detail().ListSP = data;
-          this.dataSource = new MatTableDataSource(this.Detail().ListSP);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+         const transformedData = data.map((v: any) => ({
+            Title: v.Title.trim(),
+            MaSP: v.MaSP.trim(),
+            dvt :v.dvt,
+            giagoc: Number(v.giagoc),
+            giaban: Number(v.giaban),
+          }));    
+        const updatePromises = transformedData.map(async (v:any) => {
+          const item = this._SanphamsService.ListSanpham().find((v1) => v1.MaSP === v.MaSP);
+          console.log(item);
           
-        }
-
-
+          if (item) {
+          item.Title = v.Title;
+          item.MaSP = v.MaSP;
+          item.giagoc = Number(v.giagoc);
+          item.giaban = Number(v.giaban),
+          item.dvt = v.dvt;
+          await this._SanphamsService.updateOneSanpham(item);
+          }
+        });
+        Promise.all(updatePromises).then(() => {
+          this._snackBar.open('Cập Nhật Thành Công', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-success'],
+          });
+          window.location.reload();
+        }); 
+    }
   readExcelFile(event: any) {
     const file = event.target.files[0];
     const fileReader = new FileReader();
@@ -252,9 +261,9 @@ import * as XLSX from 'xlsx';
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       console.log(jsonData);
       const transformedData = jsonData.map((v:any, k) => ({
-        id: v.id,
-        Title: v.Title,
-        MaSP: v.MaSP,
+        Title: v.Title.trim(),
+        MaSP: v.MaSP.trim(),
+        dvt :v.dvt,
         giagoc: Number(v.giagoc),
         giaban: Number(v.giaban),
       }));
@@ -268,7 +277,7 @@ import * as XLSX from 'xlsx';
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.Detail().ListSP);
     const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    this.saveAsExcelFile(excelBuffer, 'data');
+    this.saveAsExcelFile(excelBuffer, 'banggia_'+ moment().format("DD_MM_YYYY"));
   }
   saveAsExcelFile(buffer: any, fileName: string) {
     const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });

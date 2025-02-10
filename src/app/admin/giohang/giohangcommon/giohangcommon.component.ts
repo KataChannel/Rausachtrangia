@@ -19,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import * as XLSX from 'xlsx';
 import { DonhangsService } from '../../donhang/listdonhang/listdonhang.service';
 import { ConvertDriveColumnName, ConvertDriveData } from '../../../shared/shared.utils';
+import moment from 'moment';
 @Component({
   selector: 'app-giohangcommon',
   imports: [
@@ -114,35 +115,33 @@ export class GiohangcommonComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
         await this._SanphamService.getAllSanpham()
          this._SanphamService.sanphams$.subscribe((data:any)=>{
-          if(data){
+          if(data){                       
            this.FilterSanphams = this.Sanphams = data.filter((v1:any)=>v1.Status==1).map((v:any)=>({
               id: v.id,
               Title: v.Title,
               Slug: v.Slug,
-              Giagoc: v.Giagoc,
+              MaSP: v.MaSP,
+              giagoc: Number(v.giagoc),
+              dvt: v.dvt,
               Image: v.Image,
-              Soluong: v.Soluong,
+              Soluong: 1,
             }))
           }}) 
-          this.FilterSanphams = this.Sanphams.filter(v => 
-            !this.Donhang.Giohangs.some((v1: any) => 
-                v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
-            )
-           );
+          // this.FilterSanphams = this.Sanphams.filter(v => 
+          //   !this.Donhang.Giohangs.some((v1: any) => 
+          //       v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
+          //   )
+          //  );           
            this.FilterSanphamsBansi = this.Sanphams.filter(v => 
-            !this.Donhang.Giohangs.some((v1: any) => 
-                v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
-            )).map((v:any)=>({
+            !this.Donhang.Giohangs.some((v1: any) => v1.MaSP === v.MaSP)).map((v:any)=>({
               id: v.id,
-              MaSP: v.Giagoc[0].MaSP,
-              gia: v.Giagoc[0].gia,
-              dvt: v.Giagoc[0].dvt,
-              GiaCoSo: v.Giagoc[0].GiaCoSo,
-              khoiluong: v.Giagoc[0].khoiluong,
+              MaSP: v.MaSP,
+              giagoc: Number(v.giagoc),
+              dvt: v.dvt,
               Soluong: 1,
               Title: v.Title,
-              SLTT: Number(v.Giagoc[0].khoiluong),
-              Tongtien: v.SLTT*Number(v.Giagoc[0].GiaCoSo),
+              SLTT: Number(v.Soluong),
+              Tongtien: v.Soluong*Number(v.giagoc),
               SLTG: 0,
               TongtienG: 0,
               SLTN: 0,
@@ -242,7 +241,6 @@ export class GiohangcommonComponent implements OnInit {
               }
             }
        }
-       console.log(this.Donhang.Giohangs);
        this.GiohangsEmit.emit(this.Donhang.Giohangs)
       }
       AddSanpham()
@@ -324,16 +322,14 @@ export class GiohangcommonComponent implements OnInit {
           item.TongtienG = 0
           item.SLTN = 0
           item.TongtienN = 0
-
-
           this.Donhang.Giohangs.push(item);
           console.log(item);
           console.log(this.Donhang.Giohangs);
           this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
           this.GiohangsEmit.emit(this.Donhang.Giohangs)
-          this.FilterSanphams = this.Sanphams.filter(v => 
+          this.FilterSanphamsBansi = this.Sanphams.filter(v => 
             !this.Donhang.Giohangs.some((v1: any) => 
-                v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP
+                v1.MaSP === v.MaSP
             )
         );
           // const data3 = data2.filter(item2 => !data1.some(item1 => item1.id === item2.id));
@@ -362,7 +358,7 @@ export class GiohangcommonComponent implements OnInit {
       async LoadDrive()
       {
         const DriveInfo ={
-          IdSheet:'1actXVZD5yQRh5YcpRIxAB-Wf38PNKSIU0LR1AeyR-6s',
+          IdSheet:'15npo25qyH5FmfcEjl1uyqqyFMS_vdFnmxM_kt0KYmZk',
           SheetName:'Giohangimport',
           ApiKey:'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao'
         }
@@ -387,8 +383,67 @@ export class GiohangcommonComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
       this.GiohangsEmit.emit(this.Donhang.Giohangs)
       console.log(this.Donhang.Giohangs);
-      
       }
+
+     readExcelFile(event: any) {
+            const file = event.target.files[0];
+            const fileReader = new FileReader();
+            fileReader.onload = (e) => {
+              const data = new Uint8Array((e.target as any).result);
+              const workbook = XLSX.read(data, { type: 'array' });
+              const sheetName = workbook.SheetNames[0];
+              const worksheet = workbook.Sheets[sheetName];
+              const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+              console.log(jsonData);
+              const transformedData = jsonData.map((v:any)=>{
+                v.gia = Number(v.gia),
+                v.GiaCoSo = Number(v.GiaCoSo),
+                v.khoiluong = Number(v.khoiluong),
+                v.Soluong = Number(v.Soluong),
+                v.SLTT = Number(v.SLTT),
+                v.Tongtien = Number(v.Tongtien),
+                v.SLTG = Number(v.SLTG),
+                v.TongtienG = Number(v.TongtienG),
+                v.SLTN = Number(v.SLTN),
+                v.TongtienN = Number(v.TongtienN)
+              }) 
+              this.Donhang.Giohangs = transformedData
+              console.log(transformedData);
+              
+            };
+            fileReader.readAsArrayBuffer(file);
+          }
+
+          writeExcelFile() {
+            const data = this.Donhang.Giohangs.map((v:any)=>({
+              gia: Number(v.gia),
+              GiaCoSo: Number(v.GiaCoSo),
+              khoiluong: Number(v.khoiluong),
+              Soluong: Number(v.Soluong),
+              SLTT: Number(v.SLTT),
+              Tongtien: Number(v.Tongtien),
+              SLTG: Number(v.SLTG),
+              TongtienG: Number(v.TongtienG),
+              SLTN: Number(v.SLTN),
+              TongtienN: Number(v.TongtienN)
+            }))
+            const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+            const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };
+            const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+            this.saveAsExcelFile(excelBuffer, 'giohang_'+ moment().format("DD_MM_YYYY"));
+          }
+          saveAsExcelFile(buffer: any, fileName: string) {
+            const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });
+            const url: string = window.URL.createObjectURL(data);
+            const link: HTMLAnchorElement = document.createElement('a');
+            link.href = url;
+            link.download = `${fileName}.xlsx`;
+            link.click();
+            window.URL.revokeObjectURL(url);
+            link.remove();
+          }
+
+
     }
 
 

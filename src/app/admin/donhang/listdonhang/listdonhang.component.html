@@ -1,70 +1,122 @@
 <mat-drawer-container [@.disabled]="true" class="w-full h-full" autosize>
-  <mat-drawer #drawer class="flex flex-col !w-full h-full" [position]="'end'">    
+  <mat-drawer #drawer class="flex flex-col !w-full h-full" [position]="'end'">
     <router-outlet></router-outlet>
   </mat-drawer>
-<div class="flex flex-col space-y-2 h-screen-12 w-full justify-between p-2">
+  <div class="flex flex-col space-y-2 h-screen-12 w-full justify-between p-2">
     <div class="flex flex-col space-y-2 w-full p-2">
-        <div class="cursor-pointer w-full relative grid lg:grid-cols-2 gap-2 justify-between items-center bg-white rounded-lg p-2">
-                <div class="flex flex-row space-x-2 items-center">
-                <div class="relative">
-                    <input type="text" placeholder="Tìm Kiếm..." #input (keyup)="applyFilter($event)"
-                        class="block pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <span class="material-symbols-outlined text-gray-500">search</span>
-                    </div>
-                </div>
-                <span (click)="Create()" class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>
-              </div>
-                <div class="flex flex-row space-x-2 items-center justify-end">
-                  <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
-                    <mat-label>Loại Đơn</mat-label>
-                    <mat-select [(ngModel)]="SearchParams.Type" [ngModelOptions]="{standalone: true}" (selectionChange)="onSelectionChange($event)">
-                      @for (item of [
-                        {id:1,Title:'Đơn Sỉ',value:'donsi'},
-                        {id:2,Title:'Đơn Lẻ',value:'donle'},
-                        ]; track item) {
-                        <mat-option [value]="item.value">{{item.Title}}</mat-option>
-                      }
-                    </mat-select>
-                 </mat-form-field>
-
-                    <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
-                        <mat-label>Chọn Thời Gian</mat-label>
-                        <mat-select [(ngModel)]="Chonthoigian" [ngModelOptions]="{standalone: true}" (selectionChange)="onSelectionChange($event)">
-                          @for (item of ListDate; track item) {
-                            <mat-option [value]="item.value">{{item.Title}}</mat-option>
-                          }
-                        </mat-select>
-                     </mat-form-field>
-                        <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
-                            <mat-label>Khoảng Thời Gian</mat-label>
-                            <mat-date-range-input [rangePicker]="picker">
-                              <input matStartDate  [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}" placeholder="Start date">
-                              <input matEndDate [(ngModel)]="SearchParams.Ketthuc" [ngModelOptions]="{standalone: true}" placeholder="End date">
-                            </mat-date-range-input>
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-date-range-picker touchUi #picker>
-                                <mat-date-range-picker-actions>
-                                    <button mat-stroked-button color="warn" matDateRangePickerCancel>Huỷ Bỏ</button>
-                                    <button mat-stroked-button color="primary" matDateRangePickerApply (click)="ApplyDate()">Đồng Ý</button>
-                                  </mat-date-range-picker-actions>
-                            </mat-date-range-picker>
-                          </mat-form-field>
+      <div
+        class="cursor-pointer w-full relative grid lg:grid-cols-2 gap-2 justify-between items-center bg-white rounded-lg p-2">
+        <div class="flex flex-row space-x-2 items-center">
+          <div class="relative">
+            <input type="text" placeholder="Tìm Kiếm..." #input (keyup)="applyFilter($event)"
+              class="block pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <span class="material-symbols-outlined text-gray-500">search</span>
             </div>
+          </div>
+          <span (click)="Create()"
+            class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>
         </div>
-        <div class="flex flex-row space-x-2 items-center bg-white rounded-lg p-2">
-          {{ListDonhang().length}} Đơn Hàng
-        </div>
-        <div class="w-full overflow-auto">
-          @if(SearchParams.Type === 'donsi')
-          {
-            <app-listdonsi></app-listdonsi>
-          }
-          @else {
-            <app-listdonle></app-listdonle>
-          }
+        <div class="flex flex-row space-x-2 items-center justify-end">
+          <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+            <mat-label>Loại Đơn</mat-label>
+            <mat-select [(ngModel)]="SearchParams.Type" [ngModelOptions]="{standalone: true}"
+              (selectionChange)="onSelectionChange($event)">
+              @for (item of [
+              {id:1,Title:'Đơn Sỉ',value:'donsi'},
+              {id:2,Title:'Đơn Lẻ',value:'donle'},
+              ]; track item) {
+              <mat-option [value]="item.value">{{item.Title}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
 
+          <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+            <mat-label>Chọn Thời Gian</mat-label>
+            <mat-select [(ngModel)]="Chonthoigian" [ngModelOptions]="{standalone: true}"
+              (selectionChange)="onSelectionChange($event)">
+              @for (item of ListDate; track item) {
+              <mat-option [value]="item.value">{{item.Title}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+            <mat-label>Khoảng Thời Gian</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}"
+                placeholder="Start date">
+              <input matEndDate [(ngModel)]="SearchParams.Ketthuc" [ngModelOptions]="{standalone: true}"
+                placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker touchUi #picker>
+              <mat-date-range-picker-actions>
+                <button mat-stroked-button color="warn" matDateRangePickerCancel>Huỷ Bỏ</button>
+                <button mat-stroked-button color="primary" matDateRangePickerApply (click)="ApplyDate()">Đồng Ý</button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+          </mat-form-field>
         </div>
-    </div>    
-</div>
+      </div>
+      <div class="flex flex-row space-x-2 items-center bg-white rounded-lg p-2">
+        {{ListDonhang().length}} Đơn Hàng
+      </div>
+      <div class="w-full overflow-auto">
+        @if(SearchParams.Type === 'donsi')
+        {
+        <!-- <app-listdonsi [listDonhang]="ListDonhang"></app-listdonsi> -->
+
+        <table class="!border w-full cursor-pointer" mat-table [dataSource]="dataSource" matSort>
+          @for (column of displayedColumns; track column) {
+          <ng-container [matColumnDef]="column">
+            <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header>{{ ColumnName[column] }}
+            </th>
+            <td class="lg:whitespace-normal whitespace-nowrap" mat-cell *matCellDef="let row;let idx = index">
+              <a [routerLink]="['donsi',row.id]" class="hover:text-blue-500">
+                @if(column === 'STT')
+                {
+                {{idx + 1}}
+                }
+                @else if(column === 'TenKH')
+                {
+                {{row.Khachhang.TenKH}}
+                }
+                @else if(column === 'SDT')
+                {
+                {{row.Khachhang.SDT}}
+                }
+                @else if(column === 'Diachi')
+                {
+                {{row.Khachhang.Diachi}}
+                }
+                @else if(column === 'Ngaygiao')
+                {
+                {{row[column] | date: 'dd/MM/yyyy'}}
+                }
+                @else if(column === 'CreateAt')
+                {
+                {{row[column] | date: 'dd/MM/yyyy'}}
+                }
+                @else {
+                <div [innerHTML]="row[column]"></div>
+                }
+              </a>
+            </td>
+          </ng-container>
+          }
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-slate-100"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell p-4" colspan="4">Không tìm thấy</td>
+          </tr>
+        </table>
+        <mat-paginator #paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        }
+        @else {
+        <app-listdonle></app-listdonle>
+        }
+
+      </div>
+    </div>
+  </div>
 </mat-drawer-container>
