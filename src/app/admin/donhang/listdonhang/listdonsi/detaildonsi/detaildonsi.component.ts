@@ -105,10 +105,18 @@ export class DetaildonsiComponent {
       const query = event.target.value.toLowerCase();
        this.FilterKhachhang = this.ListKhachhang.filter(v => v.TenKH.toLowerCase().includes(query));      
     }
-    SelectKhachhang(event:any){
-      this.Detail.Khachhang.TenKH = this.ListKhachhang.find(v => v.id === event.value)?.TenKH||''
-      this.Detail.Khachhang.SDT = this.ListKhachhang.find(v => v.id === event.value)?.SDT||''
-      this.Detail.Khachhang.Diachi = this.ListKhachhang.find(v => v.id === event.value)?.Diachi||'' 
+    SelectKhachhang(event:any){     
+      const selectedKhachhang = this.ListKhachhang.find(v => v.id === event.value);
+      console.log(selectedKhachhang);
+      
+      if (selectedKhachhang) {
+        this.Detail.Khachhang = {
+          ...this.Detail.Khachhang,
+          TenKH: selectedKhachhang.TenKH,
+          SDT: selectedKhachhang.SDT,
+          Diachi: selectedKhachhang.Diachi
+        };
+      }
     }
 
     DoFindBanggia(event:any){
