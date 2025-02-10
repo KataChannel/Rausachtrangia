@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-listdonsi',
   imports: [
@@ -31,6 +32,7 @@ import { Router, RouterLink } from '@angular/router';
     MatSelectModule,
     FormsModule,
     MatDatepickerModule,
+    CommonModule
   ],
   templateUrl: './listdonsi.component.html',
   styleUrl: './listdonsi.component.scss'
@@ -53,6 +55,7 @@ export class ListdonsiComponent {
       'SDT',
       'Diachi',
       'Ghichu',
+      'Ngaygiao',
       'CreateAt',
     ];
     ColumnName:any={
@@ -62,6 +65,7 @@ export class ListdonsiComponent {
       'SDT':'SDT',
       'Diachi':'Địa Chỉ',
       'Ghichu':'Ghi Chú',
+      'Ngaygiao':'Ngày Giao',
       'CreateAt':'Ngày Tạo',
     }
     ListDate:any[]=[
@@ -92,15 +96,15 @@ export class ListdonsiComponent {
       await this._DonhangsService.SearchDonhang(this.SearchParams)
       this.ListDonhang = this._DonhangsService.ListDonhang
       this.dataSource = new MatTableDataSource(this.ListDonhang().sort((a:any,b:any)=>b.Ordering-a.Ordering)
-      .map((v:any)=>({
-        id:v?.id,
-        MaDonHang:v?.MaDonHang,
-        Diachi:v?.Khachhang?.Diachi,
-        Hoten:v?.Khachhang?.Hoten,
-        SDT:v?.Khachhang?.SDT,
-        Ghichu:v.Ghichu,
-        CreateAt:moment(v.CreateAt).format('HH:ss:mm DD/MM/YYYY'),
-      }))
+      // .map((v:any)=>({
+      //   id:v?.id,
+      //   MaDonHang:v?.MaDonHang,
+      //   Diachi:v?.Khachhang?.Diachi,
+      //   Hoten:v?.Khachhang?.Hoten,
+      //   SDT:v?.Khachhang?.SDT,
+      //   Ghichu:v.Ghichu,
+      //   CreateAt:moment(v.CreateAt).format('HH:mm:ss DD/MM/YYYY'),
+      // }))
     
     ); 
       // console.log(this.dataSource.data);
