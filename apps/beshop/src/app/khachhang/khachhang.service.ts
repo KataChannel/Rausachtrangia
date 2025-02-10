@@ -28,6 +28,9 @@ export class KhachhangService {
   async findid(id: string) {
     return await this.KhachhangRepository.findOne({ where: { id: id } });
   }
+  async findidbanggia(id: string) {
+    return await this.KhachhangRepository.find({ where: { idBanggia: id } });
+  }
   async findSDT(data: any) {
     return await this.KhachhangRepository.findOne({
       where:[

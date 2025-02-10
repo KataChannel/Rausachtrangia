@@ -18,6 +18,10 @@ export class KhachhangController {
   async findOne(@Param('id') id: string) {
     return await this.khachhangService.findid(id);
   }
+  @Get('findidbanggia/:id')
+  async findidbanggia(@Param('id') id: string) {
+    return await this.khachhangService.findidbanggia(id);
+  }
   @Get('findslug/:slug')
   async findslug(@Param('slug') slug: string) {
     return await this.khachhangService.findslug(slug);
