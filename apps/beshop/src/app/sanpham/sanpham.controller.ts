@@ -13,11 +13,8 @@ export class SanphamController {
     return this.sanphamService.sync(data);
   }
   @Get()
-  async findAll(  
-  @Query('limit') limit: number = 50,
-  @Query('offset') offset: number = 0) 
-  {
-    return await this.sanphamService.findAll(Number(limit), Number(offset));
+  async findAll() {
+    return await this.sanphamService.findAll();
   }
   @Get('findid/:id')
   async findOne(@Param('id') id: string) {

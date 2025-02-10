@@ -37,11 +37,8 @@ export class SanphamService {
     }   
   }
 
-  async findAll(limit: number, offset: number) {
-    return await this.SanphamRepository.find({
-      take: limit,
-      skip: offset,
-    });
+  async findAll() {
+    return await this.SanphamRepository.find();
   }
   async findid(id: string) {
     const Sanpham:any =  await this.SanphamRepository.findOne({where: { id: id }});
