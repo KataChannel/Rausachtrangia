@@ -5,7 +5,7 @@
 
 <div class="flex flex-col space-y-2 h-screen-12 w-full justify-between p-2">
     <div class="flex flex-col space-y-2 w-full p-2">
-        <div class="cursor-pointer w-full relative grid lg:grid-cols-2 gap-2 justify-between items-center">
+        <div class="cursor-pointer w-full relative flex lg:flex-row lg:space-y-2 space-y-0 flex-col space-x-2 justify-between items-center">
             <div class="w-full flex flex-row space-x-2 items-center">
                 <div class="relative">
                     <input type="text" placeholder="Tìm Kiếm..." #input (keyup)="applyFilter($event)"
@@ -15,27 +15,48 @@
                     </div>
                 </div>
                 <span (click)="create()"
-                    class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>
-                  
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>     
+            </div>
+            <div class="flex flex-row space-x-2 items-center">
+                <span class="whitespace-nowrap p-2 rounded-lg bg-slate-200">
+                    {{CountItem}} Sản Phẩm
+                </span>
+                <!-- <div (click)="writeExcelFile()"
+                    class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+                    <span class="material-symbols-outlined text-xl"
+                        matTooltip="Upload File">file_download</span>
+                    <span class="text-xs">Download</span>
+                </div> -->
+                <button (click)="writeExcelFile()" color="primary"  mat-icon-button><mat-icon>file_download</mat-icon></button>
+                <button (click)="uploadfile.click()" color="primary"  mat-icon-button><mat-icon>file_upload</mat-icon></button>
+                <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+                <!-- <div (click)="uploadfile.click()"
+                    class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
+                    <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
+                    <span class="text-xs">Upload</span>
+                    <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
+                </div> -->
+                <button (click)="LoadDrive()" color="primary"  mat-icon-button><mat-icon>cloud_download</mat-icon></button>
+                    <button mat-icon-button color="primary" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                         <mat-icon>tune</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu">
+                    </button>
+                    <mat-menu #menu="matMenu">
                         <div class="p-4">
                             <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-                                <input (input)="doFilterColumns($event)" (click)="$event.stopPropagation()" matInput placeholder="Tìm Kiếm" />
+                                <input (input)="doFilterColumns($event)" (click)="$event.stopPropagation()" matInput
+                                    placeholder="Tìm Kiếm" />
                                 <mat-icon matPrefix>search</mat-icon>
-                             </mat-form-field> 
+                            </mat-form-field>
                         </div>
                         <div class="flex flex-col max-h-80 overflow-auto">
-                        @for (item of FilterColumns; track item.key) {
+                            @for (item of FilterColumns; track item.key) {
                             <button mat-menu-item (click)="toggleColumn(item);$event.stopPropagation()">
                                 <mat-icon>{{item.isShow?'check_box':'check_box_outline_blank'}}</mat-icon>
                                 <span>{{item.value}}</span>
                             </button>
-                         }
+                            }
                         </div>
-                      </mat-menu>    
+                    </mat-menu>
             </div>
         </div>
         <div class="w-full overflow-auto">
