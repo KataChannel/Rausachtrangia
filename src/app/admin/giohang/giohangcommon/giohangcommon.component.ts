@@ -59,6 +59,7 @@ export class GiohangcommonComponent implements OnInit {
       'Image', 
       'MaSP', 
       'Title',
+      'dvt',
       'Soluong', 
       'Tongtien', 
       'SLTG', 
@@ -71,6 +72,7 @@ export class GiohangcommonComponent implements OnInit {
       'Image':'Hình Ảnh', 
       'MaSP':'Mã Sản Phẩm', 
       'Title':'Tên Sản Phẩm', 
+      'dvt':'Đơn Vị Tính', 
       'Soluong':'Số Lượng',
       'Tongtien':'Tổng Tiền', 
       'SLTG':'SL Giao', 
@@ -378,9 +380,8 @@ export class GiohangcommonComponent implements OnInit {
         {
           v.id = item.id,
           v.MaSP = v.MaSP,
-          v.gia = Number(v.gia),
-          v.GiaCoSo = Number(v.GiaCoSo),
-          v.khoiluong = Number(v.khoiluong),
+          v.dvt = v.dvt,
+          v.giagoc = Number(v.giagoc),
           v.Soluong = Number(v.Soluong),
           v.SLTT = Number(v.SLTT),
           v.Tongtien = Number(v.Tongtien),
@@ -389,7 +390,8 @@ export class GiohangcommonComponent implements OnInit {
           v.SLTN = Number(v.SLTN),
           v.TongtienN = Number(v.TongtienN)
         }
-      })       
+      })    
+      
       this.Donhang.Giohangs = data
       this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
       this.GiohangsEmit.emit(this.Donhang.Giohangs)
@@ -415,20 +417,19 @@ export class GiohangcommonComponent implements OnInit {
               jsonData.forEach((v:any)=>{
                 const item = this.Sanphams.find((v1) => v1.MaSP === v.MaSP);
                 if(item)
-                {
-                  v.id = item.id,
-                  v.MaSP = v.MaSP,
-                  v.gia = Number(v.gia),
-                  v.GiaCoSo = Number(v.GiaCoSo),
-                  v.khoiluong = Number(v.khoiluong),
-                  v.Soluong = Number(v.Soluong),
-                  v.SLTT = Number(v.SLTT),
-                  v.Tongtien = Number(v.Tongtien),
-                  v.SLTG = Number(v.SLTG),
-                  v.TongtienG = Number(v.TongtienG),
-                  v.SLTN = Number(v.SLTN),
-                  v.TongtienN = Number(v.TongtienN)
-                }
+                  {
+                    v.id = item.id,
+                    v.MaSP = v.MaSP,
+                    v.dvt = v.dvt,
+                    v.giagoc = Number(v.giagoc),
+                    v.Soluong = Number(v.Soluong),
+                    v.SLTT = Number(v.SLTT),
+                    v.Tongtien = Number(v.Tongtien),
+                    v.SLTG = Number(v.SLTG),
+                    v.TongtienG = Number(v.TongtienG),
+                    v.SLTN = Number(v.SLTN),
+                    v.TongtienN = Number(v.TongtienN)
+                  }
               }) 
               console.log(jsonData);
               this.Donhang.Giohangs = jsonData
@@ -447,9 +448,8 @@ export class GiohangcommonComponent implements OnInit {
           writeExcelFile() {
             const data = this.Donhang.Giohangs.map((v:any)=>({
               MaSP: v.MaSP,
-              gia: Number(v.gia),
-              GiaCoSo: Number(v.GiaCoSo),
-              khoiluong: Number(v.khoiluong),
+              dvt: v.dvt,
+              giagoc: Number(v.giagoc),
               Soluong: Number(v.Soluong),
               SLTT: Number(v.SLTT),
               Tongtien: Number(v.Tongtien),
@@ -458,7 +458,7 @@ export class GiohangcommonComponent implements OnInit {
               SLTN: Number(v.SLTN),
               TongtienN: Number(v.TongtienN)
             }))
-            const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+             const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
             const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };
             const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             this.saveAsExcelFile(excelBuffer, 'giohang_'+ moment().format("DD_MM_YYYY"));
