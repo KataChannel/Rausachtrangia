@@ -79,9 +79,10 @@ export class GiohangcommonComponent implements OnInit {
       'TongtienN':'TT Nhận', 
     }
   @ViewChild('ChonSanphamDialog') ChonSanphamDialog!: TemplateRef<any>;
-      _SanphamService:SanphamService = inject(SanphamService)
-      _DonhangsService:DonhangsService = inject(DonhangsService)
-      _UsersService:UsersService = inject(UsersService)
+  _SanphamService:SanphamService = inject(SanphamService)
+  _DonhangsService:DonhangsService = inject(DonhangsService)
+  _UsersService:UsersService = inject(UsersService)
+  @ViewChild(MatSort) sort!: MatSort;
     constructor(
       private dialog:MatDialog,
       private _snackBar:MatSnackBar  
@@ -112,7 +113,13 @@ export class GiohangcommonComponent implements OnInit {
           'Tongtien':'Tổng Tiền', 
         }
       }    
-      this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
+      this.dataSource = new MatTableDataSource(this.Donhang.Giohangs);
+      this.dataSource.sort = this.sort;
+      if (this.sort) {
+        this.dataSource.sort = this.sort;
+        console.log(this.dataSource.sort);
+        
+      }
         await this._SanphamService.getAllSanpham()
          this._SanphamService.sanphams$.subscribe((data:any)=>{
           if(data){                       
@@ -367,22 +374,33 @@ export class GiohangcommonComponent implements OnInit {
       const data =  ConvertDriveData(result.values);   
       console.log(data);
       data.forEach((v:any)=>{
-        v.gia = Number(v.gia),
-        v.GiaCoSo = Number(v.GiaCoSo),
-        v.khoiluong = Number(v.khoiluong),
-        v.Soluong = Number(v.Soluong),
-        v.SLTT = Number(v.SLTT),
-        v.Tongtien = Number(v.Tongtien),
-        v.SLTG = Number(v.SLTG),
-        v.TongtienG = Number(v.TongtienG),
-        v.SLTN = Number(v.SLTN),
-        v.TongtienN = Number(v.TongtienN)
-      }) 
+        const item = this.Sanphams.find((v1) => v1.MaSP === v.MaSP);
+        if(item)
+        {
+          v.id = item.id,
+          v.MaSP = v.MaSP,
+          v.gia = Number(v.gia),
+          v.GiaCoSo = Number(v.GiaCoSo),
+          v.khoiluong = Number(v.khoiluong),
+          v.Soluong = Number(v.Soluong),
+          v.SLTT = Number(v.SLTT),
+          v.Tongtien = Number(v.Tongtien),
+          v.SLTG = Number(v.SLTG),
+          v.TongtienG = Number(v.TongtienG),
+          v.SLTN = Number(v.SLTN),
+          v.TongtienN = Number(v.TongtienN)
+        }
+      })       
       this.Donhang.Giohangs = data
-      
       this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
       this.GiohangsEmit.emit(this.Donhang.Giohangs)
       console.log(this.Donhang.Giohangs);
+      this._snackBar.open('Cập Nhật Thành Công', '', {
+        duration: 1000,
+        horizontalPosition: "end",
+        verticalPosition: "top",
+        panelClass: ['snackbar-success'],
+        });
       }
 
      readExcelFile(event: any) {
@@ -395,27 +413,41 @@ export class GiohangcommonComponent implements OnInit {
               const worksheet = workbook.Sheets[sheetName];
               const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
               console.log(jsonData);
-              const transformedData = jsonData.map((v:any)=>{
-                v.gia = Number(v.gia),
-                v.GiaCoSo = Number(v.GiaCoSo),
-                v.khoiluong = Number(v.khoiluong),
-                v.Soluong = Number(v.Soluong),
-                v.SLTT = Number(v.SLTT),
-                v.Tongtien = Number(v.Tongtien),
-                v.SLTG = Number(v.SLTG),
-                v.TongtienG = Number(v.TongtienG),
-                v.SLTN = Number(v.SLTN),
-                v.TongtienN = Number(v.TongtienN)
+              jsonData.forEach((v:any)=>{
+                const item = this.Sanphams.find((v1) => v1.MaSP === v.MaSP);
+                if(item)
+                {
+                  v.id = item.id,
+                  v.MaSP = v.MaSP,
+                  v.gia = Number(v.gia),
+                  v.GiaCoSo = Number(v.GiaCoSo),
+                  v.khoiluong = Number(v.khoiluong),
+                  v.Soluong = Number(v.Soluong),
+                  v.SLTT = Number(v.SLTT),
+                  v.Tongtien = Number(v.Tongtien),
+                  v.SLTG = Number(v.SLTG),
+                  v.TongtienG = Number(v.TongtienG),
+                  v.SLTN = Number(v.SLTN),
+                  v.TongtienN = Number(v.TongtienN)
+                }
               }) 
-              this.Donhang.Giohangs = transformedData
-              console.log(transformedData);
-              
+              console.log(jsonData);
+              this.Donhang.Giohangs = jsonData
+              this.dataSource = new MatTableDataSource(this.Donhang.Giohangs); 
+              this.GiohangsEmit.emit(this.Donhang.Giohangs)
+              this._snackBar.open('Cập Nhật Thành Công', '', {
+                duration: 1000,
+                horizontalPosition: "end",
+                verticalPosition: "top",
+                panelClass: ['snackbar-success'],
+                });              
             };
             fileReader.readAsArrayBuffer(file);
           }
 
           writeExcelFile() {
             const data = this.Donhang.Giohangs.map((v:any)=>({
+              MaSP: v.MaSP,
               gia: Number(v.gia),
               GiaCoSo: Number(v.GiaCoSo),
               khoiluong: Number(v.khoiluong),
