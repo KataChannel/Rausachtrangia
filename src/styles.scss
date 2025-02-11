@@ -63,9 +63,19 @@ body {
 .mat-column-id {
   display: none !important;
 }
-.mat-column-Tongtien,.mat-column-Soluong,.mat-column-SLTG,.mat-column-TongtienG,.mat-column-SLTN,.mat-column-TongtienN {
+.mat-column-Soluong,
+.mat-column-SLTG,
+.mat-column-SLTN
+{
+  text-align: right !important;
+  max-width: 40px !important;
+}
+.mat-column-Tongtien,
+.mat-column-TongtienG,
+.mat-column-TongtienN {
   text-align: right !important;
 }
+
 
 .text-md.mat-mdc-icon-button.mat-mdc-button-base {
   --mdc-icon-button-state-layer-size: 32px;

@@ -155,6 +155,7 @@ export class GiohangcommonComponent implements OnInit {
               TongtienG: 0,
               SLTN: 0,
               TongtienN: 0,
+              Ghichu: ''
             }))  
             console.log(this.FilterSanphamsBansi);
                        
@@ -379,16 +380,17 @@ export class GiohangcommonComponent implements OnInit {
         if(item)
         {
           v.id = item.id,
+          v.Title = item.Title,
           v.MaSP = v.MaSP,
           v.dvt = v.dvt,
           v.giagoc = Number(v.giagoc),
           v.Soluong = Number(v.Soluong),
-          v.SLTT = Number(v.SLTT),
           v.Tongtien = Number(v.Tongtien),
           v.SLTG = Number(v.SLTG),
           v.TongtienG = Number(v.TongtienG),
           v.SLTN = Number(v.SLTN),
           v.TongtienN = Number(v.TongtienN)
+          v.Ghichu = v.Ghichu||''
         }
       })    
       
@@ -419,16 +421,17 @@ export class GiohangcommonComponent implements OnInit {
                 if(item)
                   {
                     v.id = item.id,
+                    v.Title = item.Title,
                     v.MaSP = v.MaSP,
                     v.dvt = v.dvt,
                     v.giagoc = Number(v.giagoc),
                     v.Soluong = Number(v.Soluong),
-                    v.SLTT = Number(v.SLTT),
                     v.Tongtien = Number(v.Tongtien),
                     v.SLTG = Number(v.SLTG),
                     v.TongtienG = Number(v.TongtienG),
                     v.SLTN = Number(v.SLTN),
-                    v.TongtienN = Number(v.TongtienN)
+                    v.TongtienN = Number(v.TongtienN),
+                    v.Ghichu = v.Ghichu||''
                   }
               }) 
               console.log(jsonData);
@@ -451,12 +454,12 @@ export class GiohangcommonComponent implements OnInit {
               dvt: v.dvt,
               giagoc: Number(v.giagoc),
               Soluong: Number(v.Soluong),
-              SLTT: Number(v.SLTT),
               Tongtien: Number(v.Tongtien),
               SLTG: Number(v.SLTG),
               TongtienG: Number(v.TongtienG),
               SLTN: Number(v.SLTN),
-              TongtienN: Number(v.TongtienN)
+              TongtienN: Number(v.TongtienN),
+              Ghichu: v.Ghichu||''
             }))
              const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
             const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };
