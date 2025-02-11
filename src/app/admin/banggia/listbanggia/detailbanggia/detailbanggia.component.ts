@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { ConvertDriveData } from '../../../../shared/shared.utils';
 import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.service';
 import { KhachhangsService } from '../../../khachhang/listkhachhang/listkhachhang.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import * as XLSX from 'xlsx';
   @Component({
     selector: 'app-detailbanggia',
@@ -36,7 +37,8 @@ import * as XLSX from 'xlsx';
       MatSortModule,
       FormsModule,
       MatDatepickerModule,
-      CommonModule
+      CommonModule,
+      MatProgressSpinnerModule
     ],
     providers: [provideNativeDateAdapter()],
     templateUrl: './detailbanggia.component.html',
@@ -197,6 +199,29 @@ import * as XLSX from 'xlsx';
         this.dataSource.paginator.firstPage();
       }
     }
+    CoppyBanggia()
+    {
+      this._snackBar.open('Đang Coppy', '', {
+        duration: 1000,
+        horizontalPosition: "end",
+        verticalPosition: "top",
+        panelClass: ['snackbar-warning'], 
+      });
+      this.Detail().ListSP = this.Detail().ListSP.map((item: any) => ({
+        id: item.id,
+        giaban: item.giaban,
+      }));
+      delete this.Detail().id
+      this.Detail().Title = this.Detail().Title + ' - Coppy';
+      this._BanggiasService.CreateBanggia(this.Detail()).then((data:any)=>{        
+        if(data)
+        {
+          setTimeout(() => {
+            window.location.href = `admin/banggia/${data.id}`;
+           }, 1000);
+        }
+      })
+    }
     DeleteData()
     {
       this._BanggiasService.DeleteBanggia(this.Detail()).then((data:any)=>{
@@ -211,70 +236,113 @@ import * as XLSX from 'xlsx';
         window.location.href=`/admin/banggia`;
     } 
 
-    async LoadDrive()
-          {
-            const DriveInfo ={
-              IdSheet:'15npo25qyH5FmfcEjl1uyqqyFMS_vdFnmxM_kt0KYmZk',
-              SheetName:'banggiaimport',
-              ApiKey:'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao'
-            }
-          const result:any =  await this._DonhangsService.getDrive(DriveInfo) 
-          const data =  ConvertDriveData(result.values);   
-         const transformedData = data.map((v: any) => ({
-            Title: v.Title.trim(),
-            MaSP: v.MaSP.trim(),
-            dvt :v.dvt,
-            giagoc: Number(v.giagoc),
-            giaban: Number(v.giaban),
-          }));    
-        const updatePromises = transformedData.map(async (v:any) => {
-          const item = this._SanphamsService.ListSanpham().find((v1) => v1.MaSP === v.MaSP);
-          console.log(item);
-          
-          if (item) {
-          item.Title = v.Title;
-          item.MaSP = v.MaSP;
-          item.giagoc = Number(v.giagoc);
-          item.giaban = Number(v.giaban),
-          item.dvt = v.dvt;
-          await this._SanphamsService.updateOneSanpham(item);
-          }
-        });
-        Promise.all(updatePromises).then(() => {
-          this._snackBar.open('Cập Nhật Thành Công', '', {
+    async LoadDrive() {
+      this.isLoading = true; // Hiển thị progress bar
+      this._snackBar.open('Đang Tải', '', {
+      duration: 1000,
+      horizontalPosition: "end",
+      verticalPosition: "top",
+      panelClass: ['snackbar-warning'],
+      });
+      const DriveInfo = {
+      IdSheet: '15npo25qyH5FmfcEjl1uyqqyFMS_vdFnmxM_kt0KYmZk',
+      SheetName: 'banggiaimport',
+      ApiKey: 'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao'
+      }
+      const result: any = await this._DonhangsService.getDrive(DriveInfo)
+      const data = ConvertDriveData(result.values);
+      const transformedData = data.map((v: any) => ({
+      MaSP: v.MaSP.trim(),
+      giaban: Number(v.giaban),
+      }));
+      console.log(transformedData);
+
+      if (typeof Worker !== 'undefined') {
+      const worker = new Worker(new URL('../../workers/excel-worker.ts', import.meta.url), { type: 'module' });
+
+      worker.postMessage({
+        sanphams: this._SanphamsService.ListSanpham(),
+        transformedData: transformedData
+      });
+
+      worker.onmessage = ({ data }) => {
+        if (data.status === 'success') {
+        this.Detail().ListSP = data.updatedSanphams;
+        this.dataSource = new MatTableDataSource(data.updatedSanphams);
+        this._snackBar.open('Cập Nhật Thành Công', '', {
           duration: 1000,
           horizontalPosition: "end",
           verticalPosition: "top",
           panelClass: ['snackbar-success'],
-          });
-          window.location.reload();
-        }); 
+        });
+        } else {
+        this._snackBar.open('Lỗi cập nhật: ' + data.message, '', { duration: 3000, panelClass: ['snackbar-error'] });
+        }
+        this.isLoading = false; // Ẩn progress bar
+        worker.terminate();
+      };
+      } else {
+      this._snackBar.open('Trình duyệt không hỗ trợ Web Worker!', '', { duration: 3000, panelClass: ['snackbar-error'] });
+      this.isLoading = false; // Ẩn progress bar
+      }
     }
+
+
+
+  isLoading = false;
   readExcelFile(event: any) {
+    
     const file = event.target.files[0];
+    if (!file) return;
+    this.isLoading = true; // Hiển thị progress bar
+
     const fileReader = new FileReader();
     fileReader.onload = (e) => {
       const data = new Uint8Array((e.target as any).result);
-      const workbook = XLSX.read(data, { type: 'array' });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      console.log(jsonData);
-      const transformedData = jsonData.map((v:any, k) => ({
-        Title: v.Title.trim(),
-        MaSP: v.MaSP.trim(),
-        dvt :v.dvt,
-        giagoc: Number(v.giagoc),
-        giaban: Number(v.giaban),
-      }));
-      console.log(transformedData);
-      this.Detail().ListSP = transformedData; 
+
+      // Kiểm tra trình duyệt có hỗ trợ Web Worker không
+      if (typeof Worker !== 'undefined') {
+        const worker = new Worker(new URL('../../workers/excel-worker.ts', import.meta.url), { type: 'module' });
+
+        worker.postMessage(data); // Gửi dữ liệu file vào Worker
+
+        worker.onmessage = ({ data }) => {
+          if (data.status === 'success') {
+            this.processData(data.data); // Xử lý dữ liệu nhận từ Worker
+          } else {
+            this._snackBar.open('Lỗi đọc file: ' + data.message, '', { duration: 3000, panelClass: ['snackbar-error'] });
+          }
+          this.isLoading = false; // Ẩn progress bar
+          worker.terminate(); // Kết thúc Worker sau khi xong
+        };
+      } else {
+        this._snackBar.open('Trình duyệt không hỗ trợ Web Worker!', '', { duration: 3000, panelClass: ['snackbar-error'] });
+        this.isLoading = false;
+      }
     };
     fileReader.readAsArrayBuffer(file);
   }
+  processData(jsonData: any[]) {
+    // Chuyển đổi dữ liệu Excel thành định dạng cần thiết
+    const transformedData = jsonData.map((v: any) => ({
+      MaSP: v.MaSP.trim(),
+      giaban: Number(v.giaban),
+    }));
+    const updatePromises = this._SanphamsService.ListSanpham().map(v => {
+      const match = transformedData.find((v1:any) => v1.MaSP === v.MaSP);
+      return match ? { ...v, ...match } : v;
+      });
+      this.Detail().ListSP = updatePromises; 
+    this.dataSource = new MatTableDataSource(transformedData);
+    this._snackBar.open('Upload Thành Công!', '', { duration: 2000, panelClass: ['snackbar-success'] });
+  }
 
   writeExcelFile() {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.Detail().ListSP);
+    const data = this.Detail().ListSP.map((v: any) => ({
+      MaSP: v.MaSP,
+      giaban: v.giaban,
+    }));
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, 'banggia_'+ moment().format("DD_MM_YYYY"));

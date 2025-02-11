@@ -247,6 +247,10 @@ export const appRoutes: Route[] = [
                     }
                 ]
             },
+            {
+                path: 'vandon',
+                loadComponent: () => import('./admin/donhang/vandon/vandon.component').then(c => c.VandonComponent),
+            },
             // {
             //     path: 'giohang',
             //     component: DonhangAdminComponent,

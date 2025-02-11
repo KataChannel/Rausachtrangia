@@ -172,7 +172,7 @@ export class DetaildonsiComponent {
         printWindow.document.write(`
           <html>
             <head>
-              <title>In Bảng Kê</title>
+              <title>${this.Detail?.MaDonHang}</title>
             </head>
             <body style="text-align: center;">
               <img src="${imageData}" style="max-width: 100%;"/>

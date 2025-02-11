@@ -57,15 +57,15 @@ body {
 // .info .mdc-snackbar__surface{
 //   color: 5BC0DE !important;
 // }
-.mat-column-STT {
+.input-edit.mat-column-STT {
   width: 10px !important;
 }
 .mat-column-id {
   display: none !important;
 }
-.mat-column-Soluong,
-.mat-column-SLTG,
-.mat-column-SLTN
+.input-edit.mat-column-Soluong,
+.input-edit.mat-column-SLTG,
+.input-edit.mat-column-SLTN
 {
   text-align: right !important;
   max-width: 40px !important;

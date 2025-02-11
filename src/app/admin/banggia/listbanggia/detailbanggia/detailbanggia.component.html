@@ -10,6 +10,9 @@
     }
   </div>
   <div class="flex flex-row space-x-2 items-center">
+    <button mat-icon-button color="primary" (click)="CoppyBanggia()">
+      <mat-icon>content_copy</mat-icon>
+  </button>
     <button mat-icon-button color="primary" (click)="SaveData()">
       <mat-icon>save</mat-icon>
     </button>
@@ -98,6 +101,8 @@
         <span class="text-xs">Upload</span>
         <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
       </div>
+      <!-- <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar> -->
+      <mat-progress-spinner class="w-10 h-10" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
         <button (click)="LoadDrive()" color="primary" mat-icon-button><mat-icon>cloud_download</mat-icon></button>
       </div>
 

@@ -103,27 +103,26 @@
               {{row[column]}}
               }
             </td>
-            <td mat-footer-cell *matFooterCellDef="let row;let idx = index">
-              @if( column === 'Title'){
-              <div class="flex flex-col space-y-2 font-bold">
-                <span>Tổng</span>
-              </div>
+
+            <td class="font-bold" mat-footer-cell *matFooterCellDef>
+              @if(column === 'STT')
+              {
+                Tổng Cộng
               }
-              @if(column === 'Tongtien'){
-                <div class="flex flex-col space-y-2 font-bold text-right">
-                  <span>{{TinhTong(this.Donhang?.Giohangs,'Tongtien')||0 |number:'1.0-2'}}đ</span>
-                </div>
-              }  
-              @if(column === 'TongtienG'){
-                <div class="flex flex-col space-y-2 font-bold text-right">
-                  <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienG')||0 |number:'1.0-2'}}đ</span>
-                </div>
-              }  
-              @if(column === 'TongtienN'){
-                <div class="flex flex-col space-y-2 font-bold text-right">
-                  <span>{{TinhTong(this.Donhang?.Giohangs,'TongtienN')||0 |number:'1.0-2'}}đ</span>
-                </div>
-              }  
+              @else if(column === 'Soluong')
+              {
+                {{TinhTongSub(Donhang.Giohangs,'Soluong')|number:'1.0-2'}}
+              }
+              @else if(column === 'SLTN')
+              {
+                {{TinhTongSub(Donhang.Giohangs,'SLTN')|number:'1.0-2'}}
+              }
+              @else if(column === 'SLTG')
+              {
+                {{TinhTongSub(Donhang.Giohangs,'SLTG')|number:'1.0-2'}}
+              }
+              @else {
+              }
             </td>
           </ng-container>
           }

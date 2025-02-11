@@ -33,7 +33,7 @@ import { convertToSlug } from '../../../shared/shared.utils';
     MatButtonModule,
     MatSelectModule,
     CommonModule,
-    RouterLink
+    RouterLink,
   ],
 })
 export class ListBanggiaComponent{
