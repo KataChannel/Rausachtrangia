@@ -206,7 +206,7 @@
         @else {
             @for (items of FilterSanphamsBansi; track items) {
             <div (click)="ChonsanphamSi(items);$event.stopPropagation()"  class="cursor-pointer flex flex-row justify-between space-x-2 items-center border p-3 rounded-lg hover:bg-slate-300">
-              <div>({{items.MaSP}}) - {{items.Title}} - {{items.khoiluong}}{{items.dvt}}</div>
+              <div>({{items.MaSP}}) - {{items.Title}} - {{items.dvt}}</div>
               <div class="font-bold">{{items.giagoc|number:'1.0-2'}}đ</div>  
             </div>
             }

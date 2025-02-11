@@ -319,16 +319,15 @@ export class GiohangcommonComponent implements OnInit {
         console.log(data);
         
          let item:any={}
-          item = data.Giagoc[0]
-          item.id=data.id
+          item = data
           item.Soluong=1
           item.Title = data.Title
-          item.SLTT = Number(item.khoiluong)
-          item.Tongtien = item.SLTT*item.GiaCoSo
-          item.SLTG = 0
-          item.TongtienG = 0
-          item.SLTN = 0
-          item.TongtienN = 0
+          item.SLTT = 1
+          item.Tongtien = Number(item.Soluong)*Number(item.giagoc)
+          item.SLTG = 1
+          item.TongtienG = Number(item.Soluong)*Number(item.giagoc)
+          item.SLTN = 1
+          item.TongtienN = Number(item.Soluong)*Number(item.giagoc)
           this.Donhang.Giohangs.push(item);
           console.log(item);
           console.log(this.Donhang.Giohangs);

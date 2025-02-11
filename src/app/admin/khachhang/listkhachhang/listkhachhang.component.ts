@@ -141,6 +141,7 @@ export class ListkhachhangComponent {
     this.dataSource = new MatTableDataSource(this._KhachhangsService.ListKhachhang());
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.CountItem = this.dataSource.data.length;
     this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
     this.paginator._intl.nextPageLabel = 'Tiếp Theo';
     this.paginator._intl.previousPageLabel = 'Về Trước';
@@ -198,7 +199,7 @@ export class ListkhachhangComponent {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
+    this.CountItem = this.dataSource.filteredData.length;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
