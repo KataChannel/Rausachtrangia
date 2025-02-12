@@ -7,6 +7,9 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { DatePipe } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
+import { LocalStorageService } from '../../shared/localstorage.service';
+import { ButtonModule } from 'primeng/button';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-main-admin',
   standalone:true,
@@ -18,7 +21,9 @@ import { ProfileComponent } from './profile/profile.component';
     RouterOutlet,
     DatePipe,
     ProfileComponent,
-    RouterLinkActive
+    RouterLinkActive,
+    ButtonModule,
+    MatIconModule
   ],
   templateUrl: './main-admin.component.html',
   styleUrls: ['./main-admin.component.css']
@@ -85,6 +90,7 @@ export class MainAdminComponent implements OnInit {
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
   constructor(
     private breakpointObserver: BreakpointObserver,
+    private _LocalStorageService: LocalStorageService,
     // private _UsersService: UsersService,
   ) { }
   ngOnInit() {
@@ -104,6 +110,12 @@ export class MainAdminComponent implements OnInit {
   }
   applyFilter(query: any) {
 
+  }
+  Hardreset() {
+    this._LocalStorageService.removeItem('Banggia_FilterColumns')
+    this._LocalStorageService.removeItem('KhachHang_FilterColumns')
+    this._LocalStorageService.removeItem('Sanpham_FilterColumns')
+    this._LocalStorageService.removeItem('Vandon_FilterColumns')
   }
   ChoosenMenu()
   {

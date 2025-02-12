@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { ConvertDriveData } from '../../../../shared/shared.utils';
 import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.service';
 import { KhachhangsService } from '../../../khachhang/listkhachhang/listkhachhang.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressBarModule} from '@angular/material/progress-bar';
 import * as XLSX from 'xlsx';
   @Component({
     selector: 'app-detailbanggia',
@@ -38,7 +38,7 @@ import * as XLSX from 'xlsx';
       FormsModule,
       MatDatepickerModule,
       CommonModule,
-      MatProgressSpinnerModule
+      MatProgressBarModule
     ],
     providers: [provideNativeDateAdapter()],
     templateUrl: './detailbanggia.component.html',

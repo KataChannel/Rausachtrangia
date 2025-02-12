@@ -92,18 +92,12 @@
               <span class="material-symbols-outlined text-gray-500">search</span>
           </div>
       </div>
-      <div (click)="writeExcelFile()" class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
-        <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_download</span>
-        <span class="text-xs">Download</span>
-      </div>
-      <div (click)="uploadfile.click()" class="flex flex-col items-center p-2 hover:bg-gray-200 rounded-lg">
-        <span class="material-symbols-outlined text-xl" matTooltip="Upload File">file_upload</span>
-        <span class="text-xs">Upload</span>
-        <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
-      </div>
-      <!-- <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar> -->
-      <mat-progress-spinner class="w-10 h-10" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+      <button (click)="writeExcelFile()" color="primary"  mat-icon-button><mat-icon>file_download</mat-icon></button>
+      <button (click)="uploadfile.click()" color="primary"  mat-icon-button><mat-icon>file_upload</mat-icon></button>
+      <input class="hidden" (change)="readExcelFile($event)" type="file" #uploadfile>
         <button (click)="LoadDrive()" color="primary" mat-icon-button><mat-icon>cloud_download</mat-icon></button>
+      
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
       </div>
 
       <div class="w-full overflow-auto">

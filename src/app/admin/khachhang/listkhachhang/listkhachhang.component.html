@@ -14,8 +14,10 @@
                         <span class="material-symbols-outlined text-gray-500">search</span>
                     </div>
                 </div>
-                <span (click)="create()"
-                    class="cursor-pointer material-symbols-outlined p-2 rounded-lg hover:bg-slate-100">add_circle</span>     
+                <button mat-flat-button color="primary" (click)="create()">
+                    <span>Thêm</span>
+                    <mat-icon>add_circle</mat-icon>
+                </button>    
             </div>
             <div class="flex flex-row space-x-2 items-center">
                 <span class="whitespace-nowrap p-2 rounded-lg bg-slate-200">

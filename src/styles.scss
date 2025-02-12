@@ -76,6 +76,10 @@ body {
   text-align: right !important;
 }
 
+.admin .mat-mdc-row
+{
+  height: 30px;
+}
 
 .text-md.mat-mdc-icon-button.mat-mdc-button-base {
   --mdc-icon-button-state-layer-size: 32px;

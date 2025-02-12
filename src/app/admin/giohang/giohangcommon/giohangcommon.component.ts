@@ -86,7 +86,7 @@ export class GiohangcommonComponent implements OnInit {
     MaSP: 'Mã Sản Phẩm',
     Title: 'Tên Sản Phẩm',
     dvt: 'Đơn Vị Tính',
-    Soluong: 'Số Lượng',
+    Soluong: 'SL Đặt',
     Tongtien: 'Tổng Tiền',
     SLTG: 'SL Giao',
     TongtienG: 'TT Giao',

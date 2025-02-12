@@ -47,7 +47,7 @@
               }
               @else if( column === 'Soluong'){
                 @if(isEdit){
-                  <mat-form-field class="!w-full text-sm" appearance="outline" subscriptSizing="dynamic">
+                  <mat-form-field class="!w-24 text-sm" appearance="outline" subscriptSizing="dynamic">
                     <input matInput type="number" (change)="onValueChange($event,idx,'Soluong','Tongtien')" [(ngModel)]="Donhang.Giohangs[idx].Soluong"
                       [ngModelOptions]="{ standalone: true }"/>
                       <ng-container *ngIf="isShowCrease">
@@ -64,7 +64,7 @@
               }
               @else if(column === 'SLTG'){
                 @if(isEdit){
-                  <mat-form-field class="!w-full text-sm" appearance="outline" subscriptSizing="dynamic">
+                  <mat-form-field class="!w-24 text-sm" appearance="outline" subscriptSizing="dynamic">
                     <input matInput type="number" (change)="onValueChange($event,idx,'SLTG','TongtienG')" [(ngModel)]="Donhang.Giohangs[idx].SLTG"
                       [ngModelOptions]="{ standalone: true }"/>
                       <ng-container *ngIf="isShowCrease">
@@ -81,7 +81,7 @@
               }
               @else if(column === 'SLTN'){
                 @if(isEdit){
-                  <mat-form-field class="!w-full text-sm" appearance="outline" subscriptSizing="dynamic">
+                  <mat-form-field class="!w-24 text-sm" appearance="outline" subscriptSizing="dynamic">
                     <input matInput type="number" (change)="onValueChange($event,idx,'SLTN','TongtienN')" [(ngModel)]="Donhang.Giohangs[idx].SLTN"
                       [ngModelOptions]="{ standalone: true }"/> 
                       <ng-container *ngIf="isShowCrease">

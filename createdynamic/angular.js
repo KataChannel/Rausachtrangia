@@ -298,7 +298,7 @@ import { Component, inject } from '@angular/core';
                   </div>                 
               </div>
 
-          <div class="w-full opverflow-auto">
+          <div class="w-full overflow-auto">
               <table class="!border w-full cursor-pointer" mat-table [dataSource]="dataSource" matSort>
                   @for (column of displayedColumns; track column) {
                       <ng-container [matColumnDef]="column">
