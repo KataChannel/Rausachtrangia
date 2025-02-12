@@ -16,7 +16,6 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { ListHinhthucthanhtoan, ListTrangThaiDonhang } from '../../../shared/shared.utils';
 import { ListdonleComponent } from './listdonle/listdonle.component';
 import { ListdonsiComponent } from './listdonsi/listdonsi.component';
 import { CommonModule } from '@angular/common';
@@ -79,6 +78,7 @@ export class ListdonhangComponent {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
+  FilterColumns: any[] = JSON.parse(localStorage.getItem('ListDonhang_FilterColumns') || '[]');
   private _DonhangsService: DonhangsService = inject(DonhangsService);
   ListDonhang = signal<any[]>([]);
   SearchParams: any = {
@@ -89,7 +89,8 @@ export class ListdonhangComponent {
     pageNumber: 0
   };
   Chonthoigian: any = 'day';
-
+  Columns: any[] = [];
+  CountItem: number =0;
   constructor(
     private _breakpointObserver: BreakpointObserver,
     private _router: Router,
@@ -98,6 +99,7 @@ export class ListdonhangComponent {
   async ngOnInit(): Promise<void> {
     await this.loadData();
     this.setupBreakpointObserver();
+    this.initializeColumns();
   }
   ApplyDate(): void {
     this.loadData();
@@ -106,8 +108,10 @@ export class ListdonhangComponent {
     await this._DonhangsService.SearchDonhang(this.SearchParams);
     this.ListDonhang = this._DonhangsService.ListDonhang;
     this.dataSource = new MatTableDataSource(this.ListDonhang().sort((a: any, b: any) => b.Ordering - a.Ordering));
+    this.CountItem = this.dataSource.data.length;
     if (this.sort) {
       this.dataSource.sort = this.sort;
+      
     }
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
@@ -129,6 +133,25 @@ export class ListdonhangComponent {
         this.drawer.mode = 'over';
       }
     });
+  }
+
+  private initializeColumns(): void {
+    this.Columns = Object.keys(this.ColumnName).map(key => ({
+      key,
+      value: this.ColumnName[key],
+      isShow: true
+    }));
+    if (this.FilterColumns.length === 0) {
+      this.FilterColumns = this.Columns;
+    } else {
+      localStorage.setItem('Vandon_FilterColumns', JSON.stringify(this.FilterColumns));
+    }
+
+    this.displayedColumns = this.FilterColumns.filter(v => v.isShow).map(item => item.key);
+    this.ColumnName = this.FilterColumns.reduce((obj, item) => {
+      if (item.isShow) obj[item.key] = item.value;
+      return obj;
+    }, {} as Record<string, string>);    
   }
 
   onSelectionChange(event: MatSelectChange): void {
@@ -158,7 +181,7 @@ export class ListdonhangComponent {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
+    this.CountItem = this.dataSource.filteredData.length;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -167,5 +190,38 @@ export class ListdonhangComponent {
   Create(): void {
     this.drawer.open();
     this._router.navigate(['admin/donhang/donsi', 0]);
+  }
+
+  doFilterColumns(event: any): void {
+    const query = event.target.value.toLowerCase();
+    this.FilterColumns = this.Columns.filter(v => v.value.toLowerCase().includes(query));    
+  }
+
+  toggleColumn(item: any): void {
+    const column = this.FilterColumns.find(v => v.key === item.key);
+    if (column) {
+      column.isShow = !column.isShow;
+      this.updateDisplayedColumns();
+    }
+  }
+  private updateDisplayedColumns(): void {
+    this.displayedColumns = this.FilterColumns.filter(v => v.isShow).map(item => item.key);
+    this.ColumnName = this.FilterColumns.reduce((obj, item) => {
+      if (item.isShow) obj[item.key] = item.value;
+      return obj;
+    }, {} as Record<string, string>);
+    this.setupDataSource();
+    localStorage.setItem('Vandon_FilterColumns', JSON.stringify(this.FilterColumns));
+  }
+  private setupDataSource(): void {
+    this.dataSource = new MatTableDataSource(this.ListDonhang())
+    this.CountItem = this.dataSource.data.length;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
+    this.paginator._intl.nextPageLabel = 'Tiếp Theo';
+    this.paginator._intl.previousPageLabel = 'Về Trước';
+    this.paginator._intl.firstPageLabel = 'Trang Đầu';
+    this.paginator._intl.lastPageLabel = 'Trang Cuối';
   }
 }

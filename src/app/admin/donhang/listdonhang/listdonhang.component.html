@@ -5,8 +5,8 @@
   <div class="flex flex-col space-y-2 h-screen-12 w-full justify-between p-2">
     <div class="flex flex-col space-y-2 w-full p-2">
       <div
-        class="cursor-pointer w-full relative grid lg:grid-cols-2 gap-2 justify-between items-center bg-white rounded-lg p-2">
-        <div class="flex flex-row space-x-2 items-center">
+        class="cursor-pointer w-full relative flex flex-col space-y-2 justify-between items-center bg-white rounded-lg p-2">
+        <div class="flex flex-row space-x-2 items-center w-full">
           <div class="relative">
             <input type="text" placeholder="Tìm Kiếm..." #input (keyup)="applyFilter($event)"
               class="block pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40">
@@ -18,11 +18,32 @@
               <span>Thêm</span>
               <mat-icon>add_circle</mat-icon>
           </button>
-          <span class="flex flex-row space-x-2 items-center bg-white rounded-lg p-2">
+          <span class="p-2 rounded-lg bg-slate-200">
             {{ListDonhang().length}} Đơn Hàng
-          </span>
+         </span>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>tune</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <div class="p-4">
+              <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+                <input (input)="doFilterColumns($event)" (click)="$event.stopPropagation()" matInput
+                  placeholder="Tìm Kiếm" />
+                <mat-icon matPrefix>search</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="flex flex-col max-h-80 overflow-auto">
+              @for (item of FilterColumns; track item.key) {
+              <button mat-menu-item (click)="toggleColumn(item);$event.stopPropagation()">
+                <mat-icon>{{item.isShow?'check_box':'check_box_outline_blank'}}</mat-icon>
+                <span>{{item.value}}</span>
+              </button>
+              }
+            </div>
+          </mat-menu>
+
         </div>
-        <div class="flex flex-row space-x-2 items-center justify-end">
+        <div class="w-full grid lg:grid-cols-4 grid-cols-2 items-center">
           <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
             <mat-label>Loại Đơn</mat-label>
             <mat-select [(ngModel)]="SearchParams.Type" [ngModelOptions]="{standalone: true}"
@@ -46,6 +67,20 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+            <mat-label>Bắt Đầu</mat-label>
+            <input matInput [matDatepicker]="pickerBatdau" [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerBatdau"></mat-datepicker-toggle>
+            <mat-datepicker #pickerBatdau></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+            <mat-label>Kết Thúc</mat-label>
+            <input matInput [matDatepicker]="pickerKetthuc" [(ngModel)]="SearchParams.Ketthuc" [ngModelOptions]="{standalone: true}">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerKetthuc"></mat-datepicker-toggle>
+            <mat-datepicker #pickerKetthuc></mat-datepicker>
+          </mat-form-field>
+
+          <!-- <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
             <mat-label>Khoảng Thời Gian</mat-label>
             <mat-date-range-input [rangePicker]="picker">
               <input matStartDate [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}"
@@ -60,7 +95,7 @@
                 <button mat-stroked-button color="primary" matDateRangePickerApply (click)="ApplyDate()">Đồng Ý</button>
               </mat-date-range-picker-actions>
             </mat-date-range-picker>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
       </div>
       <div class="w-full overflow-auto">
