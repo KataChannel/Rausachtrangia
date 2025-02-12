@@ -57,7 +57,7 @@ export class ListdonhangComponent {
     'SDT',
     'Diachi',
     'Ghichu',
-    'CreateAt',
+    'Ngaygiao',
     'Status',
   ];
   ColumnName: any = {
@@ -68,7 +68,7 @@ export class ListdonhangComponent {
     'Diachi': 'Địa Chỉ',
     'Ghichu': 'Ghi Chú',
     'Status': 'Trạng Thái',
-    'CreateAt': 'Ngày Tạo',
+    'Ngaygiao': 'Ngày Giao',
   };
   ListDate: any[] = [
     { id: 1, Title: '1 Ngày', value: 'day' },

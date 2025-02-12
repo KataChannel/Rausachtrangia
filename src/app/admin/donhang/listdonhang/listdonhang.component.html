@@ -18,6 +18,9 @@
               <span>Thêm</span>
               <mat-icon>add_circle</mat-icon>
           </button>
+          <span class="flex flex-row space-x-2 items-center bg-white rounded-lg p-2">
+            {{ListDonhang().length}} Đơn Hàng
+          </span>
         </div>
         <div class="flex flex-row space-x-2 items-center justify-end">
           <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
@@ -59,9 +62,6 @@
             </mat-date-range-picker>
           </mat-form-field>
         </div>
-      </div>
-      <div class="flex flex-row space-x-2 items-center bg-white rounded-lg p-2">
-        {{ListDonhang().length}} Đơn Hàng
       </div>
       <div class="w-full overflow-auto">
         @if(SearchParams.Type === 'donsi')
