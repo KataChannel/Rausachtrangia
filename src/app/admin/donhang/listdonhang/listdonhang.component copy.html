@@ -43,7 +43,7 @@
           </mat-menu>
 
         </div>
-        <div class="w-full grid lg:grid-cols-4 grid-cols-2 gap-2 items-center">
+        <div class="w-full grid lg:grid-cols-4 grid-cols-2 items-center">
           <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
             <mat-label>Loại Đơn</mat-label>
             <mat-select [(ngModel)]="SearchParams.Type" [ngModelOptions]="{standalone: true}"
@@ -150,7 +150,7 @@
         <mat-paginator #paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
         }
         @else {
-        <!-- <app-listdonle></app-listdonle> -->
+        <app-listdonle></app-listdonle>
         }
 
       </div>

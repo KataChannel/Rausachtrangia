@@ -3,7 +3,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../shared/localstorage.service';
 import { environment } from '../../../../environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -306,10 +305,6 @@ export class DonhangsService {
           item.TongtienN = 0
           Donhang.Giohangs.push(item);
     }
-
-
-
-
         this._StorageService.setItem('Donhang', Donhang)
         this.Donhang.set(Donhang)
     }
