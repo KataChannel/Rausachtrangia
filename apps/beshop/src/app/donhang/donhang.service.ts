@@ -88,7 +88,7 @@ export class DonhangService {
 
     const queryBuilder = this.DonhangRepository.createQueryBuilder('donhang');
     if (params.Batdau && params.Ketthuc) {
-      queryBuilder.andWhere('donhang.Ngaytao BETWEEN :startDate AND :endDate', {
+      queryBuilder.andWhere('donhang.Ngaygiao BETWEEN :startDate AND :endDate', {
         startDate: params.Batdau,
         endDate: params.Ketthuc,
       });
