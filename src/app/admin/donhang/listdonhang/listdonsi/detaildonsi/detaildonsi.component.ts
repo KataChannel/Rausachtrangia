@@ -21,6 +21,7 @@ import { GiohangcommonComponent } from '../../../../giohang/giohangcommon/giohan
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { KhachhangsService } from '../../../../khachhang/listkhachhang/listkhachhang.service';
 import html2canvas from 'html2canvas';
+import moment from 'moment';
 
 @Component({
   selector: 'app-detaildonsi',
@@ -53,7 +54,7 @@ export class DetaildonsiComponent {
     _route:Router = inject(Router)
     _snackBar: MatSnackBar = inject(MatSnackBar)
     constructor() {}
-    Detail:any={Giohangs:[]}
+    Detail:any={Giohangs:[],Ngaygiao:moment().add(1, 'days').format('YYYY-MM-DD')}
     isEdit:boolean=false
     isDelete:boolean=false
     paramId:any

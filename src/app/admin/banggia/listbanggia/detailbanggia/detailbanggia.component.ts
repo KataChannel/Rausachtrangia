@@ -23,6 +23,7 @@ import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.servic
 import { KhachhangsService } from '../../../khachhang/listkhachhang/listkhachhang.service';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
 import * as XLSX from 'xlsx';
+import { MatMenuModule } from '@angular/material/menu';
   @Component({
     selector: 'app-detailbanggia',
     imports: [
@@ -38,7 +39,8 @@ import * as XLSX from 'xlsx';
       FormsModule,
       MatDatepickerModule,
       CommonModule,
-      MatProgressBarModule
+      MatProgressBarModule,
+      MatMenuModule
     ],
     providers: [provideNativeDateAdapter()],
     templateUrl: './detailbanggia.component.html',
@@ -63,6 +65,8 @@ import * as XLSX from 'xlsx';
     idBanggia:any
     ListSanpham:any[]=[]
     ListKhachhang:any[]=[]
+    FilterKhachhang:any[]=[]
+    ExistsKhachhang:any[]=[]
     CountItem:number=0
     dataSource!: MatTableDataSource<any>;
     displayedColumns: string[] = ['id','STT','MaSP','Title','dvt', 'giagoc', 'giaban'];
@@ -75,16 +79,14 @@ import * as XLSX from 'xlsx';
         this.isEdit = this.idBanggia === '0';   
         if (this.idBanggia&&this.idBanggia !== '0') {
           this._ListbanggiaComponent.drawer.open();     
-          await this._BanggiasService.getBanggiaByid(this.idBanggia).then((data:any)=>{ 
+          await this._BanggiasService.getBanggiaByid(this.idBanggia).then(async (data:any)=>{ 
             if(data){
               this.Detail = this._BanggiasService.Banggia;
-              console.log(this.Detail());
-              this._KhachhangsService.getKhachhangByidBanggia(this.idBanggia).then((data:any)=>{
-                this.ListKhachhang = data;
-              })
+             await this._KhachhangsService.getAllKhachhang()
+             this.ExistsKhachhang = this._KhachhangsService.ListKhachhang().filter(v => v.idBanggia === this.idBanggia);
+             this.FilterKhachhang =  this.ListKhachhang = this._KhachhangsService.ListKhachhang().filter(v => !this.ExistsKhachhang.some(v1 => v1.id === v.id));             
               this.MappingListSanpham();
             }
-
           })
 
         } else if(this.idBanggia === '0') {
@@ -141,6 +143,44 @@ import * as XLSX from 'xlsx';
      }
     goBack(){
       window.location.href=`/admin/banggia`;
+    }
+    doFilterKhachhang(event: any): void {
+      const query = event.target.value.toLowerCase();
+      this.FilterKhachhang = this.ListKhachhang.filter(v => v.value.toLowerCase().includes(query));    
+    }
+    ChosenKhachhang(item: any): void {
+      item.idBanggia = this.idBanggia;
+      this._KhachhangsService.updateOneKhachhang(item).then((data: any) => {
+      this._snackBar.open('Cập Nhật Thành Công', '', {
+        duration: 1000,
+        horizontalPosition: 'end',
+        verticalPosition: 'top',
+        panelClass: ['snackbar-success'],
+      });
+      }).catch((error: any) => {
+      this._snackBar.open('Cập Nhật Thất Bại', '', {
+        duration: 1000,
+        horizontalPosition: 'end',
+        verticalPosition: 'top',
+        panelClass: ['snackbar-error'],
+      });
+      console.error('Error updating Khachhang:', error);
+      });
+      this.ExistsKhachhang = this._KhachhangsService.ListKhachhang().filter(v => v.idBanggia === this.idBanggia);
+      this.FilterKhachhang = this.ListKhachhang.filter(v => !this.ExistsKhachhang.some(v1 => v1.id === v.id));
+    }
+    RemoveKhachhang(item:any){
+      item.idBanggia = "";
+      this._KhachhangsService.updateOneKhachhang(item).then((data:any)=>{
+        this._snackBar.open('Cập Nhật Thành Công', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-success'],
+        });
+      })
+      this.ExistsKhachhang = this._KhachhangsService.ListKhachhang().filter(v => v.idBanggia === this.idBanggia);
+      this.FilterKhachhang = this.ListKhachhang.filter(v => this.ExistsKhachhang.some((v1)=>!v1.id==v.id));
     }
     SaveData()
     { 
@@ -255,10 +295,9 @@ import * as XLSX from 'xlsx';
       MaSP: v.MaSP.trim(),
       giaban: Number(v.giaban),
       }));
-      console.log(transformedData);
 
       if (typeof Worker !== 'undefined') {
-      const worker = new Worker(new URL('../../workers/excel-worker.ts', import.meta.url), { type: 'module' });
+      const worker = new Worker(new URL('../../workers/drive-worker.ts', import.meta.url), { type: 'module' });
 
       worker.postMessage({
         sanphams: this._SanphamsService.ListSanpham(),
@@ -266,17 +305,13 @@ import * as XLSX from 'xlsx';
       });
 
       worker.onmessage = ({ data }) => {
+        console.log(data);
         if (data.status === 'success') {
-        this.Detail().ListSP = data.updatedSanphams;
-        this.dataSource = new MatTableDataSource(data.updatedSanphams);
-        this._snackBar.open('Cập Nhật Thành Công', '', {
-          duration: 1000,
-          horizontalPosition: "end",
-          verticalPosition: "top",
-          panelClass: ['snackbar-success'],
-        });
+        this.processData(data.data.transformedData);
         } else {
         this._snackBar.open('Lỗi cập nhật: ' + data.message, '', { duration: 3000, panelClass: ['snackbar-error'] });
+        console.log(data.message);
+        
         }
         this.isLoading = false; // Ẩn progress bar
         worker.terminate();
@@ -322,19 +357,23 @@ import * as XLSX from 'xlsx';
     };
     fileReader.readAsArrayBuffer(file);
   }
-  processData(jsonData: any[]) {
+  async processData(jsonData: any[]) {
     // Chuyển đổi dữ liệu Excel thành định dạng cần thiết
+    console.log(jsonData);
+    
     const transformedData = jsonData.map((v: any) => ({
       MaSP: v.MaSP.trim(),
       giaban: Number(v.giaban),
     }));
-    const updatePromises = this._SanphamsService.ListSanpham().map(v => {
+    const updatePromises = this.Detail().ListSP.map((v:any) => {
       const match = transformedData.find((v1:any) => v1.MaSP === v.MaSP);
       return match ? { ...v, ...match } : v;
       });
-      this.Detail().ListSP = updatePromises; 
-    this.dataSource = new MatTableDataSource(transformedData);
-    this._snackBar.open('Upload Thành Công!', '', { duration: 2000, panelClass: ['snackbar-success'] });
+    this.Detail().ListSP = updatePromises;
+       console.log(this.Detail().ListSP);
+       
+    this.dataSource = new MatTableDataSource( this.Detail().ListSP);
+    this._snackBar.open('Upload Thành Công!', '', { duration: 1000, panelClass: ['snackbar-success'] });
   }
 
   writeExcelFile() {
