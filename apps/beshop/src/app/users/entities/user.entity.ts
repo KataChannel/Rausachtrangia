@@ -11,6 +11,8 @@ import { Role } from '../dto/create-user.dto';
  export class UsersEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
+  @Column({collation: "utf8_general_ci"})
+  gid: string;
   @Column({ nullable: true,default:'0'})
   ref_id: string;
   @Column()

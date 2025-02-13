@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersEntity } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { GenId } from '../shared.utils';
 @Injectable()
 export class UsersService {
   constructor(
@@ -113,6 +114,50 @@ export class UsersService {
     //   return [false,'Tài Khoản Đã Bị Khóa']
     // }
   } 
+
+  async loginsocial(data: any) {
+    const userByEmail = await this.usersRepository.findOne({
+      where: { email: data.email },
+    });
+    const userByGid = await this.usersRepository.findOne({
+      where: { gid: data.uid },
+    });
+
+    let user = userByGid || userByEmail;
+
+    if (user) {
+      // If email exists but gid is missing, update gid
+      if (!user.gid) {
+        user.gid = data.uid;
+        await this.usersRepository.save(user);
+      }
+
+      const token = this.jwtService.sign({
+        SDT: user.SDT,
+        email: user.email,
+        gid: user.gid,
+      });
+      return [true, { access_token: token, user }];
+    }
+
+    // Create new user if no matching user is found
+    data.gid = data.uid;
+    data.password = await bcrypt.hash(GenId(8, false), 10);
+    data.Code = Math.floor(100000 + Math.random() * 900000);
+
+    const newUser: any = await this.usersRepository.save(
+      this.usersRepository.create(data),
+    );
+    const token = this.jwtService.sign({
+      SDT: newUser.SDT,
+      email: newUser.email,
+      gid: newUser.gid,
+    });
+
+    return [true, { access_token: token, newUser }];
+  }
+
+
   async findQuery(params: any) {
     const queryBuilder = this.usersRepository.createQueryBuilder('users');
     if (params.Batdau && params.Ketthuc) {

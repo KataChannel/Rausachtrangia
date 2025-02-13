@@ -71,6 +71,10 @@ export class UsersController {
   async login(@Body() user: any) {
     return await this.usersService.login(user);
   }
+  @Post('loginbygoogle')
+  async loginbygoogle(@Body() user: any) {    
+    return await this.usersService.loginsocial(user);
+  }
   @UseGuards(AuthGuard('rausachtrangia'))
   @Get('profile')
   async getProfile(@Request() req:any) {
