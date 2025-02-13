@@ -28,7 +28,8 @@
               "@babel/runtime",
               "core-js/modules",
               "raf",
-              "rgbcolor"
+              "rgbcolor",
+              "undici"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",

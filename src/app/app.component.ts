@@ -1,11 +1,7 @@
 import { Component, HostBinding, HostListener, effect, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MainComponent } from './site/main/main.component';
 import { CommonModule } from '@angular/common';
 import { NotifierModule } from 'angular-notifier';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthService } from './admin/users/auth/auth.service';
-import { UsersInterceptor } from './admin/users/auth/users.interceptor';
 import { AuthModule } from './admin/users/auth/auth.module';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AppService } from './app.service';

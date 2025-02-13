@@ -13,13 +13,13 @@ export const environment = {
   telegram_group:"@NopTuibWPYc0NDU1",
     //APIURL:'https://api.tazaskinclinic.com',
   firebaseConfig : {
-    apiKey: "AIzaSyC1s1lnZqlFJZTkqXmbRZYcza1JyOS4RIg",
-    authDomain: "rausachtrangia-808fe.firebaseapp.com",
-    projectId: "rausachtrangia-808fe",
-    storageBucket: "rausachtrangia-808fe.appspot.com",
-    messagingSenderId: "372837233241",
-    appId: "1:372837233241:web:380d270269671f26e63748",
-    measurementId: "G-1YG96JT0S7",
-    name: 'rausachtrangia-808fe'
+    apiKey: "AIzaSyDEIrBOewbTockuGNDln807lMywPYoV0oE",
+    authDomain: "rausachtrangia-e5284.firebaseapp.com",
+    projectId: "rausachtrangia-e5284",
+    storageBucket: "rausachtrangia-e5284.firebasestorage.app",
+    messagingSenderId: "615911915401",
+    appId: "1:615911915401:web:85d174db9736bac843ab58",
+    measurementId: "G-RV41DS7YYS",
+    name: 'rausachtrangia-e5284'
   }
 };

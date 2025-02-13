@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,10 @@ import { Config } from './login';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-
+import * as Auth from 'firebase/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { UsersService } from '../auth/users.service';
+import { getAuth } from 'firebase/auth';
 @Component({
   selector: 'app-dangnhap',
   standalone: true,
@@ -24,15 +27,26 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class DangnhapComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(
+    private auth: AngularFireAuth,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private _snackBar: MatSnackBar,
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.token = localStorage.getItem('token') || null;
+    }
+   }
+  token: any;
   User: any = {}
   Config:any=Config
   _AuthService: AuthService = inject(AuthService)
   _ActivatedRoute: ActivatedRoute = inject(ActivatedRoute);
   _Router: Router = inject(Router);
+  _UsersService: UsersService = inject(UsersService);
   // emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   phoneRegex = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
   ngOnInit() { }
+  
   async Dangnhap() {
     if (!this.User.SDT) {
       this._snackBar.open('Vui lòng nhập Số Điện Thoại', '', {
@@ -78,5 +92,30 @@ export class DangnhapComponent implements OnInit {
       }
       
     }
+  }
+  async loginWithGoogle() {
+    const GoogleAuthProvider = new Auth.GoogleAuthProvider();
+    try {
+      const result = await this.auth.signInWithPopup(GoogleAuthProvider);
+      console.log('Logged in:', result.user);
+      console.log('Logged in:', result.user?.providerData[0]);
+      this._UsersService.LoginByGoogle(result.user?.providerData[0]).then((data:any) => {
+        if (data[0]) {
+        //  console.log(data);
+          //this.postMessage(data[1]);
+          if (isPlatformBrowser(this.platformId)) {
+           // this.postMessage(data[1]);
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+            
+          }
+        }
+      });
+    } catch (error) {
+      // Handle errors (e.g., display an error message)
+      console.error('Login error:', error);
+    }
+
   }
 }

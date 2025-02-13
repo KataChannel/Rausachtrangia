@@ -22,8 +22,8 @@
     <span class="text-base font-bold line-clamp-2 h-12">{{Detail.Title}}</span>
     <div class="cursor-pointer flex flex-row space-x-1 items-center justify-between">
       <div class="flex flex-row items-center">
-        <span class="text-[#E1232A] font-bold text-base"> {{Detail?.Giagoc[0]?.gia| number:'1.0-0'}}đ</span>
-        <span class="text-xs italic">/{{Detail?.Giagoc[0]?.khoiluong}}{{Detail?.Giagoc[0]?.dvt}}</span>
+        <span class="text-[#E1232A] font-bold text-base"> {{Detail?.giagoc| number:'1.0-0'}}đ</span>
+        <span class="text-xs italic">/1 {{Detail?.dvt}}</span>
       </div>
       @if(isMuangay){
         <div (click)="AddtoCart(Detail);$event.preventDefault()" class="hidden lg:block">

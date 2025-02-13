@@ -58,9 +58,9 @@ export class MainAdminComponent implements OnInit {
     // ]
     // },
 
-    //{id:3,pid:0,Title:"User" ,Slug:"user"},
-    //{id:3,pid:0,Title:"Usergroup" ,Slug:"usergroup"},
-    //{id:3,pid:0,Title:"Cấu hình" ,Slug:"cauhinh"},
+    {id:3,pid:0,Title:"User" ,Slug:"user"},
+    {id:3,pid:0,Title:"Usergroup" ,Slug:"usergroup"},
+    {id:3,pid:0,Title:"Cấu hình" ,Slug:"cauhinh"},
   ]
   Today:any=new Date()
   

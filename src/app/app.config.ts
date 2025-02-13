@@ -12,6 +12,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { UsersInterceptor } from './admin/users/auth/users.interceptor';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',
@@ -25,6 +27,7 @@ export const MY_DATE_FORMATS = {
 };
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
     { provide: MAT_DATE_LOCALE, useValue: 'vi-VN' }, // Ngôn ngữ tiếng Việt
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
     AuthService,
@@ -44,7 +47,8 @@ export const appConfig: ApplicationConfig = {
         }
     },
     AuthService,
-    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }, provideServiceWorker('ngsw-worker.js', {
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }, 
+    provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
           }),
