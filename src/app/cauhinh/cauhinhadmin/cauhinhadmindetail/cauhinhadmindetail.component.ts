@@ -100,7 +100,7 @@ export class CauhinhadmindetailComponent implements OnInit {
   }
   UpdateCauhinh()
   {
-    this.Detail.Giagoc =  this.Detail.Giagoc.filter((v:any)=>v.khoiluong!==''&&v.gia!==''&&v.dvt!=='')
+    this.Detail.Giagoc =  this.Detail.Bienthe.filter((v:any)=>v.khoiluong!==''&&v.gia!==''&&v.dvt!=='')
     this._CauhinhService.UpdateCauhinh(this.Detail).then(()=>
     {
         this._snackBar.open('Cập Nhật Thành Công','',{
@@ -113,8 +113,8 @@ export class CauhinhadmindetailComponent implements OnInit {
   }
   AddBienthe()
   {
-      this.Detail.Giagoc.push({
-        MaSP:this.Detail.MaSP+'-'+Number(Number(this.Detail.Giagoc.length)+1),
+      this.Detail.Bienthe.push({
+        MaSP:this.Detail.MaSP+'-'+Number(Number(this.Detail.Bienthe.length)+1),
         khoiluong:'',
         gia:'',
         dvt:'',
@@ -165,8 +165,8 @@ export class CauhinhadmindetailComponent implements OnInit {
   };
   UpdateGia()
   {
-    this.Detail.Giagoc.forEach((v:any,key:any) => {
-      this.Detail.Giagoc[key].gia = this.Detail.Giagoc[key].khoiluong*this.Detail.GiaCoSo
+    this.Detail.Bienthe.forEach((v:any,key:any) => {
+      this.Detail.Bienthe[key].gia = this.Detail.Bienthe[key].khoiluong*this.Detail.GiaCoSo
     });
   }
 }

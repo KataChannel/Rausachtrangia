@@ -77,26 +77,26 @@
                 <mat-hint class="text-red-500">{{Detail.GiaCoSo|number:'1.0-2'||0}}đ</mat-hint>
             </mat-form-field>
           </div>
-          @for (item of Detail.Giagoc; track item.id) {
+          @for (item of Detail.Bienthe; track item.id) {
           <mat-form-field appearance="outline" class="w-full text-xs">
             <mat-label>Mã Sản Phẩm</mat-label>
-            <input disabled [(ngModel)]="Detail.Giagoc[$index].MaSP" [ngModelOptions]="{standalone: true}" type="text" matInput
+            <input disabled [(ngModel)]="Detail.Bienthe[$index].MaSP" [ngModelOptions]="{standalone: true}" type="text" matInput
               class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Mã Sản Phẩm'">
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-full text-xs">
             <mat-label>Khối Lượng</mat-label>
-            <input (input)="Detail.Giagoc[$index].gia = Detail.Giagoc[$index].khoiluong*Detail.GiaCoSo" [(ngModel)]="Detail.Giagoc[$index].khoiluong" [ngModelOptions]="{standalone: true}" type="text" matInput
+            <input (input)="Detail.Bienthe[$index].gia = Detail.Bienthe[$index].khoiluong*Detail.GiaCoSo" [(ngModel)]="Detail.Bienthe[$index].khoiluong" [ngModelOptions]="{standalone: true}" type="text" matInput
               class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Khối Lượng'">
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-full text-xs">
             <mat-label>Giá</mat-label>
-            <input disabled [(ngModel)]="Detail.Giagoc[$index].gia" [ngModelOptions]="{standalone: true}" type="text" matInput
+            <input disabled [(ngModel)]="Detail.Bienthe[$index].gia" [ngModelOptions]="{standalone: true}" type="text" matInput
               class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Giá'">
-            <mat-hint class="text-red-500">{{Detail.Giagoc[$index].gia|number:'1.0-2'||0}}đ</mat-hint>
+            <mat-hint class="text-red-500">{{Detail.Bienthe[$index].gia|number:'1.0-2'||0}}đ</mat-hint>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-full text-xs">
             <mat-label>Đơn Vị Tính</mat-label>
-            <input [(ngModel)]="Detail.Giagoc[$index].dvt" [ngModelOptions]="{standalone: true}" type="text" matInput
+            <input [(ngModel)]="Detail.Bienthe[$index].dvt" [ngModelOptions]="{standalone: true}" type="text" matInput
               class="w-full px-3 py-2 border border-gray-200 rounded" [placeholder]="'Đơn Vị Tính'">
           </mat-form-field>
           }

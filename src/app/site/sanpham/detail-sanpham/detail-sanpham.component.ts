@@ -94,7 +94,7 @@ export class DetailSanphamComponent implements OnInit {
      this._SanphamService.sanpham$.subscribe(async (data)=>{
       if(data){ 
         this.Detail = data
-        this.Giachon = this.Detail.Giagoc[0]
+        this.Giachon = this.Detail.Bienthe[0]
         this.Tonkho =  await this._TonkhoAdminService.getTonkhoByidSP(this.Detail.id)
         console.log(data);
         
