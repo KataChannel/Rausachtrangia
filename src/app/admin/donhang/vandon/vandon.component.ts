@@ -182,7 +182,16 @@ export class VandonComponent {
     const query = event.target.value.toLowerCase();
     this.FilterColumns = this.Columns.filter(v => v.value.toLowerCase().includes(query));    
   }
-
+  onBatdauChange(event: any): void {
+    if(event.value){
+      this.loadData();
+    }
+  }
+  onKetthucChange(event: any): void {
+    if(event.value){
+      this.loadData();
+    }
+  }
   toggleColumn(item: any): void {
     const column = this.FilterColumns.find(v => v.key === item.key);
     if (column) {

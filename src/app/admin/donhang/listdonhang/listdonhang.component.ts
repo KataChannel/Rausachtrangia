@@ -112,6 +112,16 @@ export class ListdonhangComponent {
   ApplyDate(): void {
     this.loadData();
   }
+  onBatdauChange(event: any): void {
+    if(event.value){
+      this.loadData();
+    }
+  }
+  onKetthucChange(event: any): void {
+    if(event.value){
+      this.loadData();
+    }
+  }
   private async loadData(): Promise<void> {
     await this._DonhangsService.SearchDonhang(this.SearchParams);
     this.ListDonhang = this._DonhangsService.ListDonhang;

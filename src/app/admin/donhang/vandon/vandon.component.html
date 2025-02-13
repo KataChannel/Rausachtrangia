@@ -64,34 +64,17 @@
             </mat-form-field>
             <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
               <mat-label>Bắt Đầu</mat-label>
-              <input matInput [matDatepicker]="pickerBatdau" [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}">
+              <input matInput (dateChange)="onBatdauChange($event)"  [matDatepicker]="pickerBatdau" [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}">
               <mat-datepicker-toggle matIconSuffix [for]="pickerBatdau"></mat-datepicker-toggle>
               <mat-datepicker #pickerBatdau></mat-datepicker>
             </mat-form-field>
   
             <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
               <mat-label>Kết Thúc</mat-label>
-              <input matInput [matDatepicker]="pickerKetthuc" [(ngModel)]="SearchParams.Ketthuc" [ngModelOptions]="{standalone: true}">
+              <input matInput (dateChange)="onKetthucChange($event)" [matDatepicker]="pickerKetthuc" [(ngModel)]="SearchParams.Ketthuc" [ngModelOptions]="{standalone: true}">
               <mat-datepicker-toggle matIconSuffix [for]="pickerKetthuc"></mat-datepicker-toggle>
               <mat-datepicker #pickerKetthuc></mat-datepicker>
             </mat-form-field>
-
-            <!-- <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
-              <mat-label>Khoảng Thời Gian</mat-label>
-              <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate [(ngModel)]="SearchParams.Batdau" [ngModelOptions]="{standalone: true}"
-                  placeholder="Start date">
-                <input matEndDate [(ngModel)]="SearchParams.Ketthuc" [ngModelOptions]="{standalone: true}"
-                  placeholder="End date">
-              </mat-date-range-input>
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-date-range-picker touchUi #picker>
-                <mat-date-range-picker-actions>
-                  <button mat-stroked-button color="warn" matDateRangePickerCancel>Huỷ Bỏ</button>
-                  <button mat-stroked-button color="primary" matDateRangePickerApply (click)="ApplyDate()">Đồng Ý</button>
-                </mat-date-range-picker-actions>
-              </mat-date-range-picker>
-            </mat-form-field> -->
           </div>
        
         </div>
