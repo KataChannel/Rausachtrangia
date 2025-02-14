@@ -305,7 +305,7 @@ export class GiohangcommonComponent implements OnInit {
     this.FilterSanphams = this.Sanphams.filter(
       (v) =>
         v?.Title?.toLowerCase().includes(filterValue.toLowerCase()) ||
-        v?.Giagoc[0]?.MaSP?.toLowerCase().includes(filterValue.toLowerCase())
+        v?.MaSP?.toLowerCase().includes(filterValue.toLowerCase())
     );
     console.log(this.FilterSanphams);
   }
