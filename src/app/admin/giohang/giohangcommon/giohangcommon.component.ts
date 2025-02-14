@@ -302,12 +302,12 @@ export class GiohangcommonComponent implements OnInit {
   }
   DoSearchSanpham(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.FilterSanphams = this.Sanphams.filter(
+    this.FilterSanphamsBansi = this.Sanphams.filter(
       (v) =>
         v?.Title?.toLowerCase().includes(filterValue.toLowerCase()) ||
         v?.MaSP?.toLowerCase().includes(filterValue.toLowerCase())
     );
-    console.log(this.FilterSanphams);
+    console.log(this.FilterSanphamsBansi);
   }
 
   Chonsanpham(data: any, giagoc: any) {
