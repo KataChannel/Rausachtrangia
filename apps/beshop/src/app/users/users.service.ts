@@ -54,7 +54,7 @@ export class UsersService {
   }
   async findAdmin() {
     const admin = await this.usersRepository.find(
-      {where: { Role: 'admin' }}
+      // {where: { Role: 'admin' }}
       );
     return admin
   }
@@ -105,7 +105,9 @@ export class UsersService {
       }
       else
       {
-      const doLogin = {access_token: this.jwtService.sign({SDT: data.SDT,email: data.email}),data}
+      const doLogin = {access_token: this.jwtService.sign(
+        {SDT: data.SDT,email: data.email,roles: data.roles}
+      ),data}
       return [true,doLogin]
       }
     }
@@ -136,6 +138,7 @@ export class UsersService {
         SDT: user.SDT,
         email: user.email,
         gid: user.gid,
+        roles: user.roles,
       });
       return [true, { access_token: token, user }];
     }

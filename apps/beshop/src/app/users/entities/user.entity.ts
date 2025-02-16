@@ -5,8 +5,28 @@
    CreateDateColumn,
    UpdateDateColumn,
    DeleteDateColumn,
+   JoinTable,
+   ManyToMany,
  } from 'typeorm';
-import { Role } from '../dto/create-user.dto';
+import { RoleEntity } from './role.entity';
+ export enum Role {
+  Admin = 'admin',
+  Manager = 'manager',
+  User = 'user',
+  Dev = 'dev',
+  Iso = 'iso',
+  Customer = 'customer',
+  Nhanvienkho = 'nhanvienkho',
+  Nhanvienbanhang = 'nhanvienbanhang',
+  Nhanvienketoan = 'nhanvienketoan'
+}
+export enum Action {
+  Manage = 'manage',
+  Create = 'create',
+  Read = 'read',
+  Update = 'update',
+  Delete = 'delete',
+}
  @Entity('users', {orderBy: { CreateAt: 'DESC' } })
  export class UsersEntity {
   @PrimaryGeneratedColumn("uuid")
@@ -37,8 +57,8 @@ import { Role } from '../dto/create-user.dto';
   password: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
   Profile: string;
-  @Column({type: 'enum', enum: Role, default: Role.User})
-  Role: string;
+  @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
+  roles: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
   Phanquyen: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
