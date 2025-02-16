@@ -8,11 +8,9 @@ import { LocalStrategy } from './entities/local.strategy';
 import { UsergroupModule } from '../usergroup/usergroup.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { RoleEntity } from './entities/role.entity';
-import { PermissionEntity } from './entities/permission.entity';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UsersEntity,RoleEntity,PermissionEntity]),
+    TypeOrmModule.forFeature([UsersEntity]),
     UsergroupModule,
     PassportModule,
     JwtModule.register({

@@ -8,7 +8,6 @@
    JoinTable,
    ManyToMany,
  } from 'typeorm';
-import { RoleEntity } from './role.entity';
  export enum Role {
   Admin = 'admin',
   Manager = 'manager',

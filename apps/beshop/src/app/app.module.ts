@@ -22,6 +22,8 @@ import { DanhmucbaivietModule } from './danhmucbaiviet/danhmucbaiviet.module';
 import { SlideModule } from './slide/slide.module';
 import { VisitorModule } from './visitor/visitor.module';
 import { BanggiaModule } from './banggia/banggia.module';
+import { RoleModule } from './role/role.module';
+import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
@@ -67,7 +69,9 @@ import { BanggiaModule } from './banggia/banggia.module';
      DanhmucbaivietModule,
      SlideModule,
      VisitorModule,
-     BanggiaModule
+     BanggiaModule,
+     RoleModule,
+     PermissionModule
   ],
   controllers: [AppController],
   providers: [AppService],

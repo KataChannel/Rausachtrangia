@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@katachanneloffical/kata-snippets": "^1.0.7",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.2.0",
