@@ -370,10 +370,10 @@ import { MatMenuModule } from '@angular/material/menu';
       return match ? { ...v, ...match } : v;
       });
     this.Detail().ListSP = updatePromises;
-       console.log(this.Detail().ListSP);
-       
     this.dataSource = new MatTableDataSource( this.Detail().ListSP);
-    this._snackBar.open('Upload Thành Công!', '', { duration: 1000, panelClass: ['snackbar-success'] });
+    this._BanggiasService.updateOneBanggia(this.Detail()).then((data:any)=>{
+      this._snackBar.open('Upload Thành Công!', '', { duration: 1000, panelClass: ['snackbar-success'] });
+    })
   }
 
   writeExcelFile() {
