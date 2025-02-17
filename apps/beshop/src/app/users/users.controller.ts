@@ -50,6 +50,10 @@ export class UsersController {
   {
     return this.usersService.changepass(data);
   }
+  @Post('randompass')
+  async randompass(@Body() dulieu: any) {
+    return await this.randompass(dulieu);
+  }
   @Delete(':id')
   @UseGuards(AuthGuard('rausachtrangia'))
   remove(@Param('id') id: string) {

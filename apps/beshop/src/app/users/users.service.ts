@@ -81,6 +81,18 @@ export class UsersService {
     await this.usersRepository.update(user.id, user);
     return await this.usersRepository.save(user);
   }
+
+  async randompass(data: any): Promise<any> {
+    const user = await this.findbySDT(data) || await this.findbyEmail(data);
+    if (!user) {
+      throw new ConflictException('User not found');
+    }
+    const random = Math.random().toString(36).slice(-8);
+    user.password = await bcrypt.hash(random, 10);
+    const result = await this.update(user.id, user);
+    return [true, random];
+  }
+
   async validateUser(user:any): Promise<any> {
     const data = await this.findbySDT(user);
     const compare = await bcrypt.compare(user.password, data.password);
