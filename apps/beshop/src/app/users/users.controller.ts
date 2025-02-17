@@ -52,7 +52,7 @@ export class UsersController {
   }
   @Post('randompass')
   async randompass(@Body() dulieu: any) {
-    return await this.randompass(dulieu);
+    return await this.usersService.randompass(dulieu);
   }
   @Delete(':id')
   @UseGuards(AuthGuard('rausachtrangia'))
