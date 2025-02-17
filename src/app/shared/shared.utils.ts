@@ -1,5 +1,29 @@
 import { environment } from "../../environments/environment";
 
+export function converNumberDrive(str:any) {
+  // Nếu số có cả dấu ',' và '.', kiểm tra dạng số
+  if (str.includes(",") && str.includes(".")) {
+      // Nếu dấu ',' đứng trước dấu '.', ta giả định nó theo chuẩn tiếng Anh (1,000.00)
+      if (str.indexOf(",") < str.indexOf(".")) {
+          str = str.replace(/,/g, ''); // Xóa dấu ','
+      } else {
+          // Nếu dấu '.' đứng trước ',', giả định theo chuẩn châu Âu (1.000,00)
+          str = str.replace(/\./g, '').replace(/,/g, '.'); // Đổi '.' thành '' và ',' thành '.'
+      }
+  } else {
+      // Nếu chỉ có ',' và không có '.', giả định là dấu phân cách nghìn -> Xóa ','
+      if (str.includes(",")) {
+          str = str.replace(/,/g, '');
+      }
+      // Nếu chỉ có '.', giả định là dấu phân cách nghìn -> Xóa '.'
+      else if (str.includes(".")) {
+          str = str.replace(/\./g, '');
+      }
+  }
+  
+  return parseInt(str, 10); // Trả về số nguyên
+}
+
 export function GetImage(data:any) {
   if(data)
   {   

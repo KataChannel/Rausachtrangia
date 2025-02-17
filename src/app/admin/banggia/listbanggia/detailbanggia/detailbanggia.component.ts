@@ -18,7 +18,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule, MatDateRangeInput } from '@angular/material/datepicker';
 import moment from 'moment';
 import { CommonModule } from '@angular/common';
-import { ConvertDriveData } from '../../../../shared/shared.utils';
+import { converNumberDrive, ConvertDriveData } from '../../../../shared/shared.utils';
 import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.service';
 import { KhachhangsService } from '../../../khachhang/listkhachhang/listkhachhang.service';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
@@ -293,7 +293,7 @@ import { MatMenuModule } from '@angular/material/menu';
       const data = ConvertDriveData(result.values);
       const transformedData = data.map((v: any) => ({
       MaSP: v.MaSP.trim(),
-      giaban: Number(v?.giaban)||0,
+      giaban: Number(converNumberDrive(v?.giaban))||0,
       }));
 
       if (typeof Worker !== 'undefined') {
@@ -363,7 +363,7 @@ import { MatMenuModule } from '@angular/material/menu';
     
     const transformedData = jsonData.map((v: any) => ({
       MaSP: v.MaSP.trim(),
-      giaban: Number(v.giaban),
+      giaban: Number(converNumberDrive(v?.giaban))||0,
     }));
     const updatePromises = this.Detail().ListSP.map((v:any) => {
       const match = transformedData.find((v1:any) => v1.MaSP === v.MaSP);
@@ -379,7 +379,7 @@ import { MatMenuModule } from '@angular/material/menu';
   writeExcelFile() {
     const data = this.Detail().ListSP.map((v: any) => ({
       MaSP: v.MaSP,
-      giaban: v.giaban,
+      giaban: Number(converNumberDrive(v?.giaban))||0,
     }));
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };
