@@ -35,14 +35,28 @@
     </div>
   }
   @else {
-    @for (item of Detail?.Forms; track item.id; let idx = $index) {
+    @defer(){
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>{{item.Title}}</mat-label>
-        <input matInput [(ngModel)]="Detail?.Data[item.value]" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" [placeholder]="item.Title">
+        <mat-label>Họ Tên</mat-label>
+        <input matInput [(ngModel)]="Detail.Hoten" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Họ Tên">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="Detail.email" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Email">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Số Điện Thoại</mat-label>
+        <input matInput [(ngModel)]="Detail.SDT" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Số Điện Thoại">
+      </mat-form-field>
+      <mat-form-field *ngIf="idUsers=='0'" appearance="outline" class="w-full">
+        <mat-label>Mật Khẩu</mat-label>
+        <input matInput [(ngModel)]="Detail.password" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Mật Khẩu">
+      </mat-form-field>
+      <mat-form-field *ngIf="idUsers!=0" appearance="outline" class="w-full">
+        <mat-label>Mật Khẩu Mới</mat-label>
+        <input matInput [(ngModel)]="newPass" [disabled]="true" [ngModelOptions]="{standalone: true}" placeholder="Mật Khẩu">
+        <button mat-icon-button matSuffix color="primary" (click)="ResetPass()"><mat-icon>restart_alt</mat-icon></button>
       </mat-form-field>
     }
-    @empty {
-      <span class="p-2 text-center">There are no items.</span>
-     }
   }
 </div>

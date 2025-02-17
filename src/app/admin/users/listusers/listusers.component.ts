@@ -68,7 +68,7 @@ export class ListUsersComponent implements AfterViewInit {
   async ngOnInit(): Promise<void> {
     await this._userssService.getAllUsers();
     this.Listusers = this._userssService.ListUsers();
-    console.log(this.Listusers);
+    this.CountItem = this.Listusers.length;
     this.initializeColumns();
     this.setupDataSource();
     this.setupDrawer();
@@ -146,8 +146,7 @@ export class ListUsersComponent implements AfterViewInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
-    
+    this.CountItem = this.dataSource.filteredData.length;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -155,6 +154,6 @@ export class ListUsersComponent implements AfterViewInit {
 
   create(): void {
     this.drawer.open();
-    this._router.navigate(['admin/users', 0]);
+    this._router.navigate(['admin/user', 0]);
   }
 }

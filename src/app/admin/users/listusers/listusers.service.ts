@@ -136,7 +136,7 @@ export class UserssService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/users/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/users/findid/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -157,6 +157,7 @@ export class UserssService {
       }
       const data = await response.json();
       this.Users.set(data)
+      return data
     } catch (error) {
       return console.error(error);
     }

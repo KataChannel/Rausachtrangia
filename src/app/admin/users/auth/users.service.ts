@@ -84,7 +84,7 @@ export class UsersService {
         },
         body: JSON.stringify(user),
       };
-      const response = await fetch(`${environment.APIURL}/users/register`, options);
+      const response = await fetch(`${environment.APIURL}/users/dangky`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -117,7 +117,7 @@ export class UsersService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/users/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/users/findid/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -137,6 +137,7 @@ export class UsersService {
       }
       const data = await response.json();
       this.User.set(data)
+      return data
     } catch (error) {
       return console.error(error);
     }
@@ -147,6 +148,7 @@ export class UsersService {
           method:'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+this._StorageService.getItem('token')
           },
           body: JSON.stringify(dulieu),
         };
@@ -179,20 +181,20 @@ export class UsersService {
       return console.error(error);
     }
   }
-  async Randompass(data: any){
+  async Randompass(user: any){
     try {
       const options = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(user),
       };
-      const response = await fetch(`${environment.APIURL}/auth/randompass`, options);
+      const response = await fetch(`${environment.APIURL}/users/randompass`, options);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      // const data = await response.json();
+      const data = await response.json();
       console.log(data);
       return data
     } catch (error) {
