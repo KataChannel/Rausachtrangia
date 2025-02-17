@@ -4,7 +4,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Forms, ListSanpham } from './listsanpham';
+import { Forms } from './listsanpham';
 import { MatMenuModule } from '@angular/material/menu';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
@@ -80,11 +80,12 @@ export class ListsanphamComponent {
     this.setupDataSource();
   }
     private initializeColumns(): void {
-      this.Columns = Object.keys(ListSanpham[0]).map(key => ({
+      this.Columns = Object.keys(this.ColumnName).map(key => ({
         key,
-        value: ListSanpham[0][key],
+        value: this.ColumnName[key],
         isShow: true
       }));
+      console.log(this.Columns);
       if (this.FilterColumns.length === 0) {
         this.FilterColumns = this.Columns;
       } else {

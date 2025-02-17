@@ -59,8 +59,8 @@ export class MainAdminComponent implements OnInit {
     // },
 
     {id:3,pid:0,Title:"User" ,Slug:"user"},
-    {id:3,pid:0,Title:"Usergroup" ,Slug:"usergroup"},
-    {id:3,pid:0,Title:"Cấu hình" ,Slug:"cauhinh"},
+    // {id:3,pid:0,Title:"Usergroup" ,Slug:"usergroup"},
+    // {id:3,pid:0,Title:"Cấu hình" ,Slug:"cauhinh"},
   ]
   Today:any=new Date()
   
@@ -116,6 +116,7 @@ export class MainAdminComponent implements OnInit {
     this._LocalStorageService.removeItem('KhachHang_FilterColumns')
     this._LocalStorageService.removeItem('Sanpham_FilterColumns')
     this._LocalStorageService.removeItem('Vandon_FilterColumns')
+    this._LocalStorageService.removeItem('users_FilterColumns')
   }
   ChoosenMenu()
   {

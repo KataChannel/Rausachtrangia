@@ -29,6 +29,7 @@ import { SlideadminComponent } from './slide/slideadmin/slideadmin.component';
 import { SlideadminChitietComponent } from './slide/slideadmin/slideadmindetail/slideadmindetail.component';
 import { UsergroupadminComponent } from './usergroup/usergroupadmin/usergroupadmin.component';
 import { UsergroupChitietComponent } from './usergroup/usergroupadmin/usergroupadmindetail/usergroupadmindetail.component';
+import { ListUsersComponent } from './admin/users/listusers/listusers.component';
 export const appRoutes: Route[] = [
     // { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
     {
@@ -251,6 +252,16 @@ export const appRoutes: Route[] = [
                 path: 'vandon',
                 loadComponent: () => import('./admin/donhang/vandon/vandon.component').then(c => c.VandonComponent),
             },
+            {
+                path: 'user',
+                loadComponent: () => import('./admin/users/listusers/listusers.component').then(c => c.ListUsersComponent),
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/users/listusers/detailusers/detailusers.component').then(c => c.DetailUsersComponent),
+                    }
+                ]
+            },
             // {
             //     path: 'giohang',
             //     component: DonhangAdminComponent,
@@ -291,17 +302,6 @@ export const appRoutes: Route[] = [
                     },
                 ]
             },
-
-            {
-                path: 'baiviet',
-                loadComponent: () => import('./baiviet/baivietadmin/baivietadmin.component').then(c => c.BaivietAdminComponent),
-                children: [
-                    {
-                        path: ':id',
-                        loadComponent: () => import('./baiviet/baivietadmin/baivietadminchitiet/baivietadminchitiet.component').then(c => c.BaivietadminChitietComponent),
-                    }
-                ]
-            },
             {
                 path: 'lienhe',
                 component: AdminLienheComponent,
@@ -318,11 +318,11 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'user',
-                component: AdminuserComponent,
+                loadComponent: () => import('./baiviet/baivietadmin/baivietadmin.component').then(c => c.BaivietAdminComponent),
                 children: [
                     {
                         path: ':id',
-                        component: AdminuserDetailComponent
+                        loadComponent: () => import('./baiviet/baivietadmin/baivietadminchitiet/baivietadminchitiet.component').then(c => c.BaivietadminChitietComponent),
                     }
                 ]
             },
