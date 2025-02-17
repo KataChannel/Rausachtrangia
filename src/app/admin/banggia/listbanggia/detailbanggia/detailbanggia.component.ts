@@ -365,6 +365,9 @@ import { MatMenuModule } from '@angular/material/menu';
       MaSP: v.MaSP.trim(),
       giaban: Number(v.giaban),
     }));
+    this.Detail().ListSP.forech((v:any)=>{
+        v.giaban = 0; 
+    })
     const updatePromises = this.Detail().ListSP.map((v:any) => {
       const match = transformedData.find((v1:any) => v1.MaSP === v.MaSP);
       return match ? { ...v, ...match } : v;
