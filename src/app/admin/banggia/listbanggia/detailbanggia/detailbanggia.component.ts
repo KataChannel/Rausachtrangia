@@ -293,7 +293,7 @@ import { MatMenuModule } from '@angular/material/menu';
       const data = ConvertDriveData(result.values);
       const transformedData = data.map((v: any) => ({
       MaSP: v.MaSP.trim(),
-      giaban: Number(v.giaban),
+      giaban: Number(v?.giaban)||0,
       }));
 
       if (typeof Worker !== 'undefined') {
