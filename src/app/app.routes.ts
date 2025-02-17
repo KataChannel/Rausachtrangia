@@ -253,6 +253,26 @@ export const appRoutes: Route[] = [
                 loadComponent: () => import('./admin/donhang/vandon/vandon.component').then(c => c.VandonComponent),
             },
             {
+                path: 'tonkho',
+                loadComponent: () => import('./admin/tonkho/listtonkho/listtonkho.component').then(c => c.ListTonkhoComponent),
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/tonkho/listtonkho/detailtonkho/detailtonkho.component').then(c => c.DetailTonkhoComponent),
+                    }
+                ]
+            },
+            {
+                path: 'dathangncc',
+                loadComponent: () => import('./admin/dathangncc/listdathangncc/listdathangncc.component').then(c => c.ListDathangnccComponent),
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/dathangncc/listdathangncc/detaildathangncc/detaildathangncc.component').then(c => c.DetailDathangnccComponent),
+                    }
+                ]
+            },
+            {
                 path: 'user',
                 loadComponent: () => import('./admin/users/listusers/listusers.component').then(c => c.ListUsersComponent),
                 children: [
@@ -344,13 +364,6 @@ export const appRoutes: Route[] = [
                         path: ':id',
                         component: DemoadmindetailComponent
                     }
-                ]
-            },
-            {
-                path: 'tonkho',
-                component: AdminTonkhoComponent,
-                children: [
-                    { path: ':id', component: AdminTonkhoChitietComponent }
                 ]
             },
             {

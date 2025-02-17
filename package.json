@@ -25,7 +25,7 @@
     "@angular/router": "^19.0.0",
     "@angular/service-worker": "^19.0.0",
     "@angular/ssr": "^19.0.6",
-    "@katachanneloffical/kata-snippets": "^1.0.0",
+    "@katachanneloffical/kata-snippets": "^1.0.7",
     "@tinymce/tinymce-angular": "^8.0.1",
     "angular-notifier": "^14.0.0",
     "chart.js": "^4.4.7",
