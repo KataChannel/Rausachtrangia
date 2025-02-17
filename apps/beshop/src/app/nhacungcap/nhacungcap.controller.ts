@@ -1,40 +1,40 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-  import {PermissionService } from './permission.service';
-  @Controller('permission')
-  export class PermissionController {
-    constructor(private readonly PermissionService:PermissionService) {}
+  import {NhacungcapService } from './nhacungcap.service';
+  @Controller('nhacungcap')
+  export class NhacungcapController {
+    constructor(private readonly NhacungcapService:NhacungcapService) {}
   
     @Post()
     create(@Body() data: any) {
-      return this.PermissionService.create(data);
+      return this.NhacungcapService.create(data);
     }
     @Get()
     async findAll() {
-      return await this.PermissionService.findAll();
+      return await this.NhacungcapService.findAll();
     }
     @Get('findid/:id')
     async findOne(@Param('id') id: string) {
-      return await this.PermissionService.findid(id);
+      return await this.NhacungcapService.findid(id);
     }
     @Get('findslug/:slug')
     async findslug(@Param('slug') slug: string) {
-      return await this.PermissionService.findslug(slug);
+      return await this.NhacungcapService.findslug(slug);
     }
     @Get('pagination')
     async findPagination(@Query('page') page: number,@Query('perPage') perPage: number){
-         return await this.PermissionService.findPagination(page,perPage);
+         return await this.NhacungcapService.findPagination(page,perPage);
       }
     @Post('search')
       async findQuery(@Body() SearchParams: any){
-        return await this.PermissionService.findQuery(SearchParams);
+        return await this.NhacungcapService.findQuery(SearchParams);
     }
     @Patch(':id')
     update(@Param('id') id: string, @Body() data: any) {
-      return this.PermissionService.update(id, data);
+      return this.NhacungcapService.update(id, data);
     }
   
     @Delete(':id')
     remove(@Param('id') id: string) {
-      return this.PermissionService.remove(id);
+      return this.NhacungcapService.remove(id);
     }
   }

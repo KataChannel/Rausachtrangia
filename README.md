@@ -12,3 +12,6 @@ npx nx g @nx/nest:app be_ketoan
 git add .
 git commit -m "update"
 git push
+
+npx katacreate --type nestjs --name nhacungcap --outputDir nhacungcap
+npx katacreate --type nestjs --name phieugiaodich --outputDir phieugiaodich

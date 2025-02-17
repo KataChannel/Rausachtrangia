@@ -24,6 +24,8 @@ import { VisitorModule } from './visitor/visitor.module';
 import { BanggiaModule } from './banggia/banggia.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
+import { NhacungcapModule } from './nhacungcap/nhacungcap.module';
+import { PhieugiaodichModule } from './phieugiaodich/phieugiaodich.module';
 
 @Module({
   imports: [
@@ -39,18 +41,6 @@ import { PermissionModule } from './permission/permission.module';
       synchronize: true,
       charset: "utf8mb4",
     }), 
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: '103.221.221.14',
-    //   port: 3306,
-    //   username: 'jtnkwfpz_chikiet88',
-    //   password: '@Hikiet1988',
-    //   database: 'jtnkwfpz_shop',
-    //   entities: [],
-    //   autoLoadEntities: true,
-    //   synchronize: true,
-    //   charset: "utf8mb4",
-    // }), 
      DanhmucModule,
      SanphamModule,
      BaivietModule,
@@ -71,7 +61,9 @@ import { PermissionModule } from './permission/permission.module';
      VisitorModule,
      BanggiaModule,
      RoleModule,
-     PermissionModule
+     PermissionModule,
+     NhacungcapModule,
+     PhieugiaodichModule,
   ],
   controllers: [AppController],
   providers: [AppService],

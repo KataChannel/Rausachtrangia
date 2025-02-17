@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
   import {RoleService } from './role.service';
-  @Controller('Role')
+  @Controller('role')
   export class RoleController {
     constructor(private readonly RoleService:RoleService) {}
   
