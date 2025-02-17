@@ -34,7 +34,7 @@ export enum Action {
   gid: string;
   @Column({ nullable: true,default:'0'})
   ref_id: string;
-  @Column({unique:true})
+  @Column()
   SDT: string;
   @Column({collation: "utf8_general_ci"})
   idGroup: string;
@@ -42,7 +42,7 @@ export enum Action {
   Code: string;
   @Column({collation: "utf8_general_ci"})
   Hoten: string;
-  @Column({unique:true,collation: "utf8_general_ci"})
+  @Column({collation: "utf8_general_ci"})
   email: string;
   @Column({ type: "text", collation: "utf8_general_ci" })
   Gioitinh: string;
