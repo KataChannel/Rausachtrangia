@@ -82,6 +82,8 @@ import { MatMenuModule } from '@angular/material/menu';
           await this._BanggiasService.getBanggiaByid(this.idBanggia).then(async (data:any)=>{ 
             if(data){
               this.Detail = this._BanggiasService.Banggia;
+              console.log(this.Detail());
+              
              await this._KhachhangsService.getAllKhachhang()
              this.ExistsKhachhang = this._KhachhangsService.ListKhachhang().filter(v => v.idBanggia === this.idBanggia);
              this.FilterKhachhang =  this.ListKhachhang = this._KhachhangsService.ListKhachhang().filter(v => !this.ExistsKhachhang.some(v1 => v1.id === v.id));             
@@ -109,7 +111,7 @@ import { MatMenuModule } from '@angular/material/menu';
           MaSP: item.MaSP,
           giagoc: item.giagoc,
           dvt: item.dvt,
-          giaban: existingItem && existingItem.giaban > 0 ? existingItem.giaban : item.giagoc,
+          giaban: existingItem && existingItem.giaban > 0 ? existingItem.giaban : 0,
         };
       });
 
@@ -368,13 +370,17 @@ import { MatMenuModule } from '@angular/material/menu';
     this.Detail().ListSP.forEach((v:any)=>{
       v.giaban = 0; 
     })
-    console.log(this.Detail().ListSP);
     const updatePromises = this.Detail().ListSP.map((v:any) => {
       const match = transformedData.find((v1:any) => v1.MaSP === v.MaSP);
       return match ? { ...v, ...match } : v;
       });
-    this.Detail().ListSP = updatePromises;
-    this.dataSource = new MatTableDataSource( this.Detail().ListSP);
+    this.Detail().ListSP = updatePromises.map((v: any) => ({
+      MaSP: v.MaSP.trim(),
+      giaban: Number(v.giaban),
+    }));
+
+    console.log(this.Detail().ListSP)
+    this.dataSource = new MatTableDataSource(updatePromises);
     this._BanggiasService.updateOneBanggia(this.Detail()).then((data:any)=>{
       this._snackBar.open('Upload Thành Công!', '', { duration: 1000, panelClass: ['snackbar-success'] });
     })
