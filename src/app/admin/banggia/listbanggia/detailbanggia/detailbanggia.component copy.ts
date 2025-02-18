@@ -123,8 +123,10 @@ import * as XLSX from 'xlsx';
     }
     updateGiaBan( item: any,event: any) {
       console.log(item); 
+      console.log(event.target.value);
+      
       // item.giaban = event.target.value;
-      const index = this.Detail().ListSP.findIndex((v: any) => v.id === item.id);
+      const index = this.Detail().ListSP.findIndex((v: any) => v.MaSP === item.MaSP);
       this.Detail().ListSP[index] = item;
      }
      ApplyDate()
@@ -185,7 +187,7 @@ import * as XLSX from 'xlsx';
     applyFilter(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
-      console.log(this.dataSource);
+      console.log(this.dataSource.data);
       this.CountItem = this.dataSource.filteredData.length;
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();

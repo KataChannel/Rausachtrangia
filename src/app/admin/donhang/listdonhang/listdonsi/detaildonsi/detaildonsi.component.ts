@@ -62,9 +62,6 @@ export class DetaildonsiComponent {
     FilterKhachhang:any[]=[]
     ListBanggia:any[]=[]
     FilterBanggia:any[]=[]
-    onChildDataChange() {
-     this.UpdateBangia();
-    }
     ngOnInit(): void {
       this._router.paramMap.subscribe(async (data: any) => {
         this.paramId = data.get('id')
@@ -74,20 +71,7 @@ export class DetaildonsiComponent {
           })
           this._BanggiasService.getAllBanggia().then((data:any)=>{
             this.ListBanggia = this.FilterBanggia =data
-          })
-          this._SanphamsService.getAllSanpham().then((data:any)=>{
-            this.ListSanpham = data.filter((v: any) => v.Status == 1).map((v: any) => ({
-              id: v.id,
-              Title: v.Title,
-              Slug: v.Slug,
-              MaSP: v.MaSP,
-              giagoc: Number(v.giagoc),
-              dvt: v.dvt,
-              Image: v.Image,
-              Soluong: 1,
-            }));
-            console.log(this.ListSanpham);   
-          })          
+          })        
           if(this.paramId === '0') {
             this.isEdit = this.paramId === '0'; 
             this._ListdonhangComponent.drawer.open();   
@@ -95,9 +79,8 @@ export class DetaildonsiComponent {
           else {
             this._DonhangsService.getDonhangByid(this.paramId).then((data:any)=>{
               if(data){
-                this.Detail = data
-                console.log(this.Detail);   
-                this.UpdateListSanpham()     
+                this.Detail = data  
+                this.UpdateListSanpham()
                 this._ListdonhangComponent.drawer.open();   
               }
             })  
@@ -144,34 +127,52 @@ export class DetaildonsiComponent {
       const query = event.target.value.toLowerCase();
        this.FilterBanggia = this.ListBanggia.filter(v => v.Title.toLowerCase().includes(query));      
     }
-    UpdateListSanpham(){
-      const Banggia = this.ListBanggia.find(v => v.id === this.Detail.idBanggia) 
-      if(Banggia){
-        this.ListSanpham.forEach((v:any) => {
-          const Sanpham = Banggia.ListSP.find((sp:any) => sp.id === v.id);
-          if (Sanpham) {
-            v.giagoc = Sanpham.giaban;
-          }
-        })
+   async UpdateListSanpham() {
+     await this._SanphamsService.getAllSanpham().then((data: any) => {
+        console.log(data);
+      this.ListSanpham = data.filter((v: any) => v.Status === 1).map((v: any) => ({
+        id: v.id,
+        Title: v.Title,
+        Slug: v.Slug,
+        MaSP: v.MaSP,
+        giagoc: Number(v.giagoc),
+        dvt: v.dvt,
+        Image: v.Image,
+        Soluong: 1,
+        }));
+      });    
+      console.log(this.ListSanpham);
+   
+      const Banggia = this.ListBanggia.find((v) => v.id === this.Detail.idBanggia);
+      console.log(this.Detail);
+      
+      if (Banggia) {
+      this.ListSanpham.forEach((v: any) => {
+        const Sanpham = Banggia.ListSP.find((sp: any) => sp.MaSP === v.MaSP);
+        if (Sanpham) {
+        v.giagoc = Number(Sanpham.giaban);
+        }       
+      });
+      } else {
+      this.ListSanpham.forEach((v: any) => {
+        v.giagoc = 0;
+      });
       }
-      else{
-        this.ListSanpham.forEach((v:any) => {
-          v.giagoc = 0;
-        })
-      }
+      console.log(Banggia);
+      console.log(this.ListSanpham);
     }
     UpdateBangia(){
       const Banggia = this.ListBanggia.find(v => v.id === this.Detail.idBanggia) 
-      const valueMap = new Map(Banggia.ListSP.map(({ id, giaban }:any) => [id, giaban]));
+      const valueMap = new Map(Banggia.ListSP.map(({ MaSP, giaban }:any) => [MaSP, giaban]));
       this.Detail.Giohangs = this.Detail.Giohangs
-          .filter(({ id }:any) => valueMap.has(id)) // Chỉ giữ lại phần tử có trong data2
+          .filter(({ MaSP }:any) => valueMap.has(MaSP)) // Chỉ giữ lại phần tử có trong data2
           .map((item:any) => ({
               ...item,  // Giữ lại tất cả các thuộc tính từ data1
-              gia: valueMap.get(item.id)?? item.gia, // Cập nhật giá trị value từ data2
-              Tongtien: valueMap.get(item.id)?? item.gia // Cập nhật giá trị value từ data2
+              gia: valueMap.get(item.MaSP)?? item.gia, // Cập nhật giá trị value từ data2
+              Tongtien: valueMap.get(item.MaSP)?? item.gia // Cập nhật giá trị value từ data2
           }));
+          this.UpdateListSanpham()
       console.log(this.Detail.Giohangs);
-      this.UpdateListSanpham()
     }
     SelectBanggia(event:any){
       console.log(event.value);  

@@ -104,7 +104,7 @@ import { MatMenuModule } from '@angular/material/menu';
       await this._SanphamsService.getAllSanpham();
       this.ListSanpham = this._SanphamsService.ListSanpham();
       this.Detail().ListSP = this.ListSanpham.map((item: any) => {
-        const existingItem = this.Detail()?.ListSP?.find((v: any) => v.id === item.id);
+        const existingItem = this.Detail()?.ListSP?.find((v: any) => v.MaSP === item.MaSP);
         return {
           id: item.id,
           Title: item.Title,
@@ -114,10 +114,13 @@ import { MatMenuModule } from '@angular/material/menu';
           giaban: existingItem && existingItem.giaban > 0 ? existingItem.giaban : 0,
         };
       });
+    console.log(this.Detail().ListSP);
 
       this.dataSource = new MatTableDataSource(this.Detail().ListSP);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      console.log(this.dataSource.data);
+       this.dataSource.data
       this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
       this.paginator._intl.nextPageLabel = 'Tiếp Theo';
       this.paginator._intl.previousPageLabel = 'Về Trước';
@@ -134,9 +137,8 @@ import { MatMenuModule } from '@angular/material/menu';
       
     }
     updateGiaBan( item: any,event: any) {
-      console.log(item); 
       // item.giaban = event.target.value;
-      const index = this.Detail().ListSP.findIndex((v: any) => v.id === item.id);
+      const index = this.Detail().ListSP.findIndex((v: any) => v.MaSP === item.MaSP);
       this.Detail().ListSP[index] = item;
      }
      ApplyDate()
@@ -200,7 +202,7 @@ import { MatMenuModule } from '@angular/material/menu';
         if(this.idBanggia=='0')
           {
             this.Detail().ListSP = this.Detail().ListSP.map((item: any) => ({
-              id: item.id,
+              MaSP: item.MaSP,
               giaban: item.giaban,
             }));
             this._BanggiasService.CreateBanggia(this.Detail()).then(()=>
@@ -217,7 +219,7 @@ import { MatMenuModule } from '@angular/material/menu';
           else
           {
             this.Detail().ListSP = this.Detail().ListSP.map((item: any) => ({
-              id: item.id,
+              MaSP: item.MaSP,
               giaban: item.giaban,
             }));
             this._BanggiasService.updateOneBanggia(this.Detail()).then((data:any)=>{
@@ -235,7 +237,8 @@ import { MatMenuModule } from '@angular/material/menu';
     applyFilter(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
-      console.log(this.dataSource);
+      console.log(this.dataSource.filteredData);
+      
       this.CountItem = this.dataSource.filteredData.length;
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
@@ -250,7 +253,7 @@ import { MatMenuModule } from '@angular/material/menu';
         panelClass: ['snackbar-warning'], 
       });
       this.Detail().ListSP = this.Detail().ListSP.map((item: any) => ({
-        id: item.id,
+        MaSP: item.MaSP,
         giaban: item.giaban,
       }));
       delete this.Detail().id
@@ -297,7 +300,8 @@ import { MatMenuModule } from '@angular/material/menu';
       MaSP: v.MaSP.trim(),
       giaban: Number(v?.giaban)||0,
       }));
-
+      console.log(transformedData);
+      
       if (typeof Worker !== 'undefined') {
       const worker = new Worker(new URL('../../workers/drive-worker.ts', import.meta.url), { type: 'module' });
 
@@ -369,16 +373,21 @@ import { MatMenuModule } from '@angular/material/menu';
     this.Detail().ListSP.forEach((v:any)=>{
       v.giaban = 0; 
     })
-    const updatePromises = this.Detail().ListSP.map((v:any) => {
+    const updatePromises = this.ListSanpham.map((v:any) => {
       const match = transformedData.find((v1:any) => v1.MaSP === v.MaSP);
+      console.log({ ...v, ...match });
+      
       return match ? { ...v, ...match } : v;
       });
     this.Detail().ListSP = updatePromises.map((v: any) => ({
       MaSP: v.MaSP.trim(),
-      giaban: Number(v.giaban),
+      giaban: Number(v.giaban)||0,
     }));
+  console.log(this.ListSanpham);
+  console.log(updatePromises.find((v:any)=>v.MaSP=='I100002'));
 
     console.log(this.Detail().ListSP)
+    console.log(this.Detail().ListSP.find((v:any)=>v.MaSP=='I100002'));
     this.dataSource = new MatTableDataSource(updatePromises);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
@@ -52,7 +53,7 @@ import moment from 'moment';
   ],
   templateUrl: './giohangcommon.component.html',
   styleUrl: './giohangcommon.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GiohangcommonComponent implements OnInit {
   @Input() Donhang: any = { Giohangs: [] };
@@ -64,11 +65,7 @@ export class GiohangcommonComponent implements OnInit {
   @Input() Sanphams: any[] = [];
   @Output() TongcongEmit = new EventEmitter();
   @Output() GiohangsEmit = new EventEmitter();
-  @Output() dataChanged = new EventEmitter<void>();
-
-updateData() {
-  this.dataChanged.emit();
-}
+  @Output() UpdateValue = new EventEmitter();
   // FilterSanphams: any[] = [];
   // SanphamsBansi: any[] = [];
   FilterSanphamsBansi: any[] = [];
@@ -107,10 +104,12 @@ updateData() {
   _DonhangsService: DonhangsService = inject(DonhangsService);
   _UsersService: UsersService = inject(UsersService);
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar) {}
+  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
+  ) {}
   async ngOnInit() {
     console.log(this.Sanphams);
-    
+    this.cdr.markForCheck();
     this.displayedColumns = this.displayedColumns.filter(
       (col) => !this.HideColumns.includes(col)
     );
@@ -188,6 +187,7 @@ updateData() {
     }));
     console.log(this.Sanphams);
     console.log(this.FilterSanphamsBansi);
+    console.log(this.Donhang.Giohangs);
   }
   ngAfterViewInit() {}
   applyFilter(event: Event) {
@@ -301,6 +301,7 @@ updateData() {
     this.GiohangsEmit.emit(this.Donhang.Giohangs);
   }
   AddSanpham() {
+
     this.dialogRef = this.dialog.open(this.ChonSanphamDialog);
     this.dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'true') {

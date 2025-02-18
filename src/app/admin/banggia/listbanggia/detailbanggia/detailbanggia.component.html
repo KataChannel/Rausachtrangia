@@ -142,9 +142,9 @@
                           </span>
                           }
                      @case ('giaban') {
-                      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                        <mat-form-field appearance="outline" subscriptSizing="dynamic">
                         <mat-label>Giá Bán</mat-label>
-                        <input matInput [(ngModel)]="Detail()!.ListSP[idx].giaban" type="number" (ngModelChange)="updateGiaBan(row, $event)" [ngModelOptions]="{ standalone: true }"
+                        <input matInput [(ngModel)]="row[column]" type="number" (change)="updateGiaBan(row, $event)" [ngModelOptions]="{ standalone: true }"
                           placeholder="Vui lòng Nhập Tiêu Đề" />
                       </mat-form-field>
                       }    
