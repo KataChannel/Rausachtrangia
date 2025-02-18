@@ -3,7 +3,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
   @Controller('donncc')
   export class DonnccController {
     constructor(private readonly DonnccService:DonnccService) {}
-  
     @Post()
     create(@Body() data: any) {
       return this.DonnccService.create(data);

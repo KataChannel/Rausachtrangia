@@ -12,9 +12,17 @@ import { DonnccitemEntity } from './entities/donnccitem.entity';
       private DonnccitemRepository: Repository<DonnccitemEntity> 
     ) { }
     async create(data: any) {
-        this.DonnccRepository.create(data);
-        return await this.DonnccRepository.save(data);  
-    }
+      const item = data.Sanpham.map((v:any)=>({
+        idDonncc:data.id,
+        idSP:v.id,
+        Soluong:v.Soluong
+      }))
+      delete data.Sanpham
+      this.DonnccRepository.create(data);
+      this.DonnccitemRepository.create(item);
+      await this.DonnccitemRepository.save(item);
+      return await this.DonnccRepository.save(data);  
+  }
   
     async findAll() {
       return await this.DonnccRepository.find();
