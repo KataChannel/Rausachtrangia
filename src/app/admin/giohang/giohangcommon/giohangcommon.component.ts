@@ -86,6 +86,7 @@ updateData() {
     'TongtienG',
     'SLTN',
     'TongtienN',
+    'Ghichu',
   ];
   ColumnName: any = {
     STT: 'STT',
@@ -99,6 +100,7 @@ updateData() {
     TongtienG: 'TT Giao',
     SLTN: 'SL Nhận',
     TongtienN: 'TT Nhận',
+    Ghichu: 'Ghi Chú',
   };
   @ViewChild('ChonSanphamDialog') ChonSanphamDialog!: TemplateRef<any>;
   _SanphamService: SanphamService = inject(SanphamService);
