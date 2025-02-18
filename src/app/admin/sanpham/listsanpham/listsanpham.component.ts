@@ -43,8 +43,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ListsanphamComponent {
   Detail: any = {};
   dataSource!: MatTableDataSource<any>;
-  displayedColumns: string[] = ['STT','Title', 'giagoc', 'dvt', 'Actions'];
-  ColumnName: any = {'STT':'STT','Title': 'Tên Sản Phẩm', 'giagoc': 'Giá Gốc', 'dvt': 'Đơn Vị Tính' };
+  displayedColumns: string[] = ['STT','Title','MaSP', 'giagoc', 'dvt', 'Actions'];
+  ColumnName: any = {'STT':'STT','Title': 'Tên Sản Phẩm','MaSP':'Mã Sản Phẩm', 'giagoc': 'Giá Gốc', 'dvt': 'Đơn Vị Tính' };
   Forms: any[] = Forms;
   FilterColumns: any[] = JSON.parse(localStorage.getItem('Sanpham_FilterColumns') || '[]');
   Columns: any[] = [];
@@ -74,8 +74,6 @@ export class ListsanphamComponent {
     });
     await this._SanphamsService.getAllSanpham();
     this.ListSanpham = this._SanphamsService.ListSanpham();
-    console.log(this.ListSanpham);
-    // console.log(this._SanphamsService.ListSanpham());
     this.initializeColumns();
     this.setupDataSource();
   }
@@ -85,7 +83,6 @@ export class ListsanphamComponent {
         value: this.ColumnName[key],
         isShow: true
       }));
-      console.log(this.Columns);
       if (this.FilterColumns.length === 0) {
         this.FilterColumns = this.Columns;
       } else {
@@ -136,7 +133,6 @@ export class ListsanphamComponent {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
     this.CountItem = this.dataSource.filteredData.length;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
@@ -161,7 +157,7 @@ export class ListsanphamComponent {
       {
             const DriveInfo ={
               IdSheet:'15npo25qyH5FmfcEjl1uyqqyFMS_vdFnmxM_kt0KYmZk',
-              SheetName:'Sanpham',
+              SheetName:'SanphamImport',
               ApiKey:'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao'
             }
           const result:any =  await this._DonhangsService.getDrive(DriveInfo) 
@@ -171,30 +167,47 @@ export class ListsanphamComponent {
             MaSP: v?.MaSP?.trim(),
             giagoc: Number(v?.giagoc),
             dvt: v?.dvt,
-          }));          
-          const updatePromises = transformedData.map(async (v:any,k:any) => {
-            const item = this._SanphamsService.ListSanpham().find((v1) => v1.MaSP === v.MaSP);
-            console.log(item);
-            
-            if (item) {
-            item.Title = v.Title;
-            item.giagoc = v.giagoc;
-            item.dvt = v.dvt;
-            setTimeout(async () => {
-              await this._SanphamsService.updateOneSanpham(item);
-            }, k*100);
-            }
-          });
-          Promise.all(updatePromises).then(() => {
-            this._snackBar.open('Cập Nhật Thành Công', '', {
-            duration: 1000,
+          }));         
+          const loadingSnackBarRef = this._snackBar.open('Đang Tải', '', {
+            duration: 0,
             horizontalPosition: "end",
             verticalPosition: "top",
-            panelClass: ['snackbar-success'],
-            });
-            window.location.reload();
+            panelClass: ['snackbar-warning'],
           });
-    }
+          let Sodem =0;
+          // Tạo mảng các promise cho quá trình cập nhật sản phẩm
+          const updatePromises = this._SanphamsService.ListSanpham().map((v: any, k: number) => {
+            return new Promise<void>((resolve) => {
+              setTimeout(async () => {
+                const item = transformedData.find((v1: any) => v1.MaSP === v.MaSP);
+                if (item && Number(item.giagoc) !== Number(v.giagoc)) {
+                  console.log(item);
+                  Sodem++;
+                  v.Title = item.Title.trim();
+                  v.giagoc = Number(item.giagoc);
+                  v.dvt = item.dvt;
+                  await this._SanphamsService.updateOneSanpham(v);
+                }
+                resolve();
+              }, k * 10);
+            });
+          });
+          
+          // Chờ đợi tất cả các promise hoàn thành
+          Promise.all(updatePromises).then(() => {
+            console.log(Sodem);
+            
+            // Tắt snackbar "Đang Tải"
+            loadingSnackBarRef.dismiss();
+            // Mở snackbar thông báo thành công
+            this._snackBar.open('Cập Nhật Thành Công', '', {
+              duration: 1000,
+              horizontalPosition: "end",
+              verticalPosition: "top",
+              panelClass: ['snackbar-success'],
+            });
+    });
+ }
 
   readExcelFile(event: any) {
     const file = event.target.files[0];
