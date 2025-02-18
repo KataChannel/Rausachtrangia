@@ -11,9 +11,13 @@ import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { DathangnccsService } from './listdathangncc.service';
+import { NhacungcapsService } from './listnhacungcap.service';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import * as XLSX from 'xlsx';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-listdathangncc',
   templateUrl: './listdathangncc.component.html',
@@ -30,52 +34,101 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatButtonModule,
     MatSelectModule,
-    CommonModule
+    CommonModule,
+    FormsModule,
+    MatTooltipModule
   ],
 })
-export class ListDathangnccComponent implements AfterViewInit {
+export class ListDathangnccComponent {
   Detail: any = {};
   dataSource!: MatTableDataSource<any>;
-  displayedColumns: string[] = ['STT', 'Title', 'email', 'SDT', 'Ghichu', 'Status', 'CreateAt'];
-  ColumnName: any = { 'STT': 'STT', 'Title': 'Title', 'email': 'email', 'SDT': 'SDT', 'Ghichu': 'Ghichu', 'Status': 'Status', 'CreateAt': 'CreateAt' };
+  displayedColumns: string[] = [
+    'STT',
+    'Title',
+    'email',
+    'SDT',
+    'Ghichu',
+    'Status',
+    'CreateAt',
+  ];
+  ColumnName: any = {
+    STT: 'STT',
+    Title: 'Title',
+    email: 'email',
+    SDT: 'SDT',
+    Ghichu: 'Ghichu',
+    Status: 'Status',
+    CreateAt: 'CreateAt',
+  };
   Forms: any[] = Forms;
-  FilterColumns: any[] = JSON.parse(localStorage.getItem('dathangncc_FilterColumns') || '[]');
+  FilterColumns: any[] = JSON.parse(
+    localStorage.getItem('dathangncc_FilterColumns') || '[]'
+  );
   Columns: any[] = [];
   Listdathangncc: any[] = ListDathangncc;
-
+  isFilter: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
-
-  private _dathangnccsService: DathangnccsService = inject(DathangnccsService);
+  filterValues: { [key: string]: string } = {};
+  private _nhacungcapsService: NhacungcapsService = inject(NhacungcapsService);
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
-    private _router: Router,
-  ) {}
+    private _router: Router
+  ) {
+    this.displayedColumns.forEach(column => {
+      this.filterValues[column] = '';
+    });
+  }
+  createFilter(): (data: any, filter: string) => boolean {    
+    return (data, filter) => {
+      const filterObject = JSON.parse(filter); // Chuyển đổi filter từ string sang object
+      let isMatch = true;
+      console.log(data, filter);
+      // Kiểm tra từng điều kiện lọc
+      this.displayedColumns.forEach(column => {
+        if (filterObject[column]) {
+          isMatch = isMatch && data[column].toString().toLowerCase().includes(filterObject[column].toLowerCase());
+        }
+      });
+      return isMatch;
+    };
+  }
+
+  // Hàm áp dụng bộ lọc
+  applyFilter() {
+    this.dataSource.filter = JSON.stringify(this.filterValues);
+  }
+
 
   async ngOnInit(): Promise<void> {
-    await this._dathangnccsService.getAllDathangncc();
-    this.Listdathangncc = this._dathangnccsService.ListDathangncc();
-    console.log(this._dathangnccsService.ListDathangncc());
+    await this._nhacungcapsService.getAllNhacungcap();
+    this.Listdathangncc = this._nhacungcapsService.ListNhacungcap();
+    console.log(this._nhacungcapsService.ListNhacungcap());
     this.initializeColumns();
     this.setupDataSource();
     this.setupDrawer();
   }
 
   private initializeColumns(): void {
-    this.Columns = Object.keys(this.ColumnName).map(key => ({
+    this.Columns = Object.keys(this.ColumnName).map((key) => ({
       key,
       value: this.ColumnName[key],
-      isShow: true
+      isShow: true,
     }));
     if (this.FilterColumns.length === 0) {
       this.FilterColumns = this.Columns;
     } else {
-      localStorage.setItem('dathangncc_FilterColumns', JSON.stringify(this.FilterColumns));
+      localStorage.setItem(
+        'dathangncc_FilterColumns',
+        JSON.stringify(this.FilterColumns)
+      );
     }
 
-    this.displayedColumns = this.FilterColumns.filter(v => v.isShow).map(item => item.key);
+    this.displayedColumns = this.FilterColumns.filter((v) => v.isShow).map(
+      (item) => item.key
+    );
     this.ColumnName = this.FilterColumns.reduce((obj, item) => {
       if (item.isShow) obj[item.key] = item.value;
       return obj;
@@ -86,45 +139,7 @@ export class ListDathangnccComponent implements AfterViewInit {
     this.dataSource = new MatTableDataSource(this.Listdathangncc);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  private setupDrawer(): void {
-    this._breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
-      if (result.matches) {
-        this.drawer.mode = 'over';
-        this.paginator.hidePageSize = true;
-      } else {
-        this.drawer.mode = 'side';
-      }
-    });
-  }
-
-  toggleColumn(item: any): void {
-    const column = this.FilterColumns.find(v => v.key === item.key);
-    if (column) {
-      column.isShow = !column.isShow;
-      this.updateDisplayedColumns();
-    }
-  }
-
-  private updateDisplayedColumns(): void {
-    this.displayedColumns = this.FilterColumns.filter(v => v.isShow).map(item => item.key);
-    this.ColumnName = this.FilterColumns.reduce((obj, item) => {
-      if (item.isShow) obj[item.key] = item.value;
-      return obj;
-    }, {} as Record<string, string>);
-    this.setupDataSource();
-    localStorage.setItem('dathangncc_FilterColumns', JSON.stringify(this.FilterColumns));
-  }
-
-  doFilterColumns(event: any): void {
-    const query = event.target.value.toLowerCase();
-    this.FilterColumns = this.Columns.filter(v => v.value.toLowerCase().includes(query));    
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = this.createFilter();
     this.paginator._intl.itemsPerPageLabel = 'Số lượng 1 trang';
     this.paginator._intl.nextPageLabel = 'Tiếp Theo';
     this.paginator._intl.previousPageLabel = 'Về Trước';
@@ -132,14 +147,47 @@ export class ListDathangnccComponent implements AfterViewInit {
     this.paginator._intl.lastPageLabel = 'Trang Cuối';
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
-    
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  private setupDrawer(): void {
+    this._breakpointObserver
+      .observe([Breakpoints.Handset])
+      .subscribe((result) => {
+        if (result.matches) {
+          this.drawer.mode = 'over';
+          this.paginator.hidePageSize = true;
+        } else {
+          this.drawer.mode = 'side';
+        }
+      });
+  }
+
+  toggleColumn(item: any): void {
+    const column = this.FilterColumns.find((v) => v.key === item.key);
+    if (column) {
+      column.isShow = !column.isShow;
+      this.updateDisplayedColumns();
     }
+  }
+
+  private updateDisplayedColumns(): void {
+    this.displayedColumns = this.FilterColumns.filter((v) => v.isShow).map(
+      (item) => item.key
+    );
+    this.ColumnName = this.FilterColumns.reduce((obj, item) => {
+      if (item.isShow) obj[item.key] = item.value;
+      return obj;
+    }, {} as Record<string, string>);
+    this.setupDataSource();
+    localStorage.setItem(
+      'dathangncc_FilterColumns',
+      JSON.stringify(this.FilterColumns)
+    );
+  }
+
+  doFilterColumns(event: any): void {
+    const query = event.target.value.toLowerCase();
+    this.FilterColumns = this.Columns.filter((v) =>
+      v.value.toLowerCase().includes(query)
+    );
   }
 
   create(): void {
@@ -151,5 +199,103 @@ export class ListDathangnccComponent implements AfterViewInit {
     this.drawer.open();
     this.Detail = item;
     this._router.navigate(['admin/dathangncc', item.id]);
+  }
+  _snackBar: MatSnackBar = inject(MatSnackBar);
+  CountItem: any = 0;
+  async LoadDrive() {
+    const DriveInfo = {
+      IdSheet: '15npo25qyH5FmfcEjl1uyqqyFMS_vdFnmxM_kt0KYmZk',
+      SheetName: 'Khachhangimport',
+      ApiKey: 'AIzaSyD33kgZJKdFpv1JrKHacjCQccL_O0a2Eao',
+    };
+    // const result: any = await this._DonhangsService.getDrive(DriveInfo);
+    // const data = ConvertDriveData(result.values);
+    // console.log(data);
+    // const updatePromises = data.map(async (v: any) => {
+    //   const item = this._KhachhangsService
+    //     .ListKhachhang()
+    //     .find((v1) => v1.MaKH === v.MaKH);
+    //   if (item) {
+    //     const item1 = { ...item, ...v };
+    //     console.log(item1);
+
+    //     await this._KhachhangsService.updateOneKhachhang(item1);
+    //   }
+    // });
+    // Promise.all(updatePromises).then(() => {
+    //   this._snackBar.open('Cập Nhật Thành Công', '', {
+    //     duration: 1000,
+    //     horizontalPosition: 'end',
+    //     verticalPosition: 'top',
+    //     panelClass: ['snackbar-success'],
+    //   });
+    //   //  window.location.reload();
+    // });
+  }
+  readExcelFile(event: any) {
+    const file = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      const data = new Uint8Array((e.target as any).result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      console.log(jsonData);
+      // const transformedData = jsonData.map((v: any) => ({
+      //   Title: v.Title.trim(),
+      //   MaSP: v.MaSP.trim(),
+      //   giagoc: Number(v.giagoc),
+      //   dvt: v.dvt,
+      // }));
+      // const updatePromises = jsonData.map(async (v: any) => {
+      //   const item = this._KhachhangsService
+      //     .ListKhachhang()
+      //     .find((v1) => v1.MaKH === v.MaKH);
+      //   if (item) {
+      //     const item1 = { ...item, ...v };
+      //     //await this._KhachhangsService.updateOneKhachhang(item1);
+      //   }
+      // });
+    //   Promise.all(updatePromises).then(() => {
+    //     this._snackBar.open('Cập Nhật Thành Công', '', {
+    //       duration: 1000,
+    //       horizontalPosition: 'end',
+    //       verticalPosition: 'top',
+    //       panelClass: ['snackbar-success'],
+    //     });
+    //     window.location.reload();
+    //   });
+    // };
+    // fileReader.readAsArrayBuffer(file);
+  }
+  }   
+  writeExcelFile() {
+    // this._KhachhangsService.ListKhachhang();
+    // const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+    //   this._KhachhangsService.ListKhachhang()
+    // );
+    // const workbook: XLSX.WorkBook = {
+    //   Sheets: { Sheet1: worksheet },
+    //   SheetNames: ['Sheet1'],
+    // };
+    // const excelBuffer: any = XLSX.write(workbook, {
+    //   bookType: 'xlsx',
+    //   type: 'array',
+    // });
+    // this.saveAsExcelFile(
+    //   excelBuffer,
+    //   'danhsachkhachhang_' + moment().format('DD_MM_YYYY')
+    // );
+  }
+  saveAsExcelFile(buffer: any, fileName: string) {
+    // const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });
+    // const url: string = window.URL.createObjectURL(data);
+    // const link: HTMLAnchorElement = document.createElement('a');
+    // link.href = url;
+    // link.download = `${fileName}.xlsx`;
+    // link.click();
+    // window.URL.revokeObjectURL(url);
+    // link.remove();
   }
 }

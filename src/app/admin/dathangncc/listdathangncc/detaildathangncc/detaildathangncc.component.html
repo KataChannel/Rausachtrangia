@@ -2,7 +2,7 @@
   <button mat-icon-button color="primary" (click)="_ListdathangnccComponent.drawer.close()">
       <mat-icon>arrow_back</mat-icon>
   </button>
-  <div class="font-bold">{{Detail?.Hoten||'Không có dữ liệu'}}</div>
+  <div class="font-bold">{{Detail?.MaDH||'Không có dữ liệu'}}</div>
   <div class="flex flex-row space-x-2 items-center">
     @if(isEdit==true){
       <button mat-icon-button color="primary" (click)="SaveData()">
@@ -36,19 +36,65 @@
   }
   @else {
     <div class="flex flex-col space-y-2">
-<mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-     <mat-label>Tên Nhà Cung Cấp</mat-label>
-    <input matInput [(ngModel)]="Detail.Title"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Tên Nhà Cung Cấp" />
-</mat-form-field> 
-<mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-     <mat-label>Email</mat-label>
-    <input matInput [(ngModel)]="Detail.email"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Email" />
-</mat-form-field> 
-<mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-     <mat-label>Số Điện Thoại</mat-label>
-    <input matInput [(ngModel)]="Detail.SDT"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Số Điện Thoại" />
-</mat-form-field> 
-</div>
+      
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Khách Hàng</mat-label>
+        <mat-select [(ngModel)]="Detail.idKH" [ngModelOptions]="{ standalone: true }"
+          (selectionChange)="SelectNhacungcap($event)">
+          <div class="w-full flex flex-col px-4">
+            <div class="flex flex-row space-x-2 items-center">
+              <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                <input matInput (input)="DoFindNhacungcap($event)" placeholder="Tìm Kiếm" />
+              </mat-form-field>
+              <button mat-icon-button color="primary">
+                <mat-icon>add_circle</mat-icon>
+              </button>
+            </div>
+            <div class="overflow-y-auto max-h-44">
+              @for (item of FilterNhacungcap; track item.id) {
+              <mat-option [value]="item.id">{{item.Title}}</mat-option>
+              }
+            </div>
+          </div>
+        </mat-select>
+      </mat-form-field>
+      <div class="grid grid-cols-2 gap-2">
+      @for (item of Detail.Sanpham; track item.id; let idx = $index) {
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Sản Phẩm</mat-label>
+          <mat-select [(ngModel)]="Detail.Sanpham[idx].idSP" [ngModelOptions]="{ standalone: true }"
+            (selectionChange)="SelectSanpham($event)">
+            <div class="w-full flex flex-col px-4">
+              <div class="flex flex-row space-x-2 items-center">
+                <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                  <input matInput (input)="DoFindSanpham($event)" placeholder="Tìm Kiếm" />
+                </mat-form-field>
+                <button mat-icon-button color="primary">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
+              </div>
+              <div class="overflow-y-auto max-h-44">
+                @for (item of FilterSanpham; track item.id) {
+                <mat-option [value]="item.id">{{item.Title}}</mat-option>
+                }
+              </div>
+            </div>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>Số Lượng</mat-label>
+          <input matInput [(ngModel)]="item.Soluong" (change)="onChangeSoluong(item,$event)"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Số Điện Thoại" />
+      </mat-form-field> 
+      }
+    </div>
+     <div>
+      <button mat-flat-button color="primary" (click)="Detail.Sanpham.push({idSP:'',Soluong:0})">
+        <span>Thêm</span>
+        <mat-icon>add</mat-icon>
+      </button>
+     </div>
+
+      </div>
 
     <!-- @for (item of Detail?.Forms; track item.id; let idx = $index) {
       <mat-form-field appearance="outline" class="w-full">

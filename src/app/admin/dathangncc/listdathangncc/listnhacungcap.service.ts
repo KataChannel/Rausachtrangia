@@ -6,7 +6,7 @@ import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class DonnccsService {
+export class NhacungcapsService {
   private isBrowser: boolean;
   constructor(
     private _StorageService: LocalStorageService,
@@ -15,9 +15,9 @@ export class DonnccsService {
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
-  ListDonncc = signal<any[]>([]);
-  Donncc = signal<any>({});
-  async CreateDonncc(dulieu: any) {
+  ListNhacungcap = signal<any[]>([]);
+  Nhacungcap = signal<any>({});
+  async CreateNhacungcap(dulieu: any) {
     try {
       const options = {
           method:'POST',
@@ -26,7 +26,7 @@ export class DonnccsService {
           },
           body: JSON.stringify(dulieu),
         };
-        const response = await fetch(`${environment.APIURL}/donncc`, options);
+        const response = await fetch(`${environment.APIURL}/nhacungcap`, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -49,14 +49,14 @@ export class DonnccsService {
             this.router.navigate(['/errorserver'], { queryParams: {data:result}});
           }
         }
-        this.getAllDonncc()
+        this.getAllNhacungcap()
         return data;
     } catch (error) {
         return console.error(error);
     }
   }
 
-  async getAllDonncc() {
+  async getAllNhacungcap() {
     try {
       const options = {
         method: 'GET',
@@ -65,7 +65,7 @@ export class DonnccsService {
           'Authorization': 'Bearer '+this._StorageService.getItem('token')
         },
       };
-      const response = await fetch(`${environment.APIURL}/donncc`, options);
+      const response = await fetch(`${environment.APIURL}/nhacungcap`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -84,13 +84,13 @@ export class DonnccsService {
         }
       }
       const data = await response.json();     
-      this.ListDonncc.set(data)
+      this.ListNhacungcap.set(data)
       return data;
     } catch (error) {
       return console.error(error);
     }
   }
-  async SearchDonncc(SearchParams:any) {
+  async SearchNhacungcap(SearchParams:any) {
     try {
       const options = {
         method:'POST',
@@ -119,13 +119,13 @@ export class DonnccsService {
             }
           }
           const data = await response.json();
-          this.Donncc.set(data.items)
+          this.Nhacungcap.set(data.items)
           return data;
       } catch (error) {
           return console.error(error);
       }
   }
-  async getDonnccByid(id: any) {
+  async getNhacungcapByid(id: any) {
     try {
       const options = {
         method: 'GET',
@@ -133,7 +133,7 @@ export class DonnccsService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/donncc/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/nhacungcap/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -153,12 +153,12 @@ export class DonnccsService {
         }
       }
       const data = await response.json();
-      this.Donncc.set(data)
+      this.Nhacungcap.set(data)
     } catch (error) {
       return console.error(error);
     }
   }
-  async updateOneDonncc(dulieu: any) {
+  async updateOneNhacungcap(dulieu: any) {
     try {
       const options = {
           method:'PATCH',
@@ -167,7 +167,7 @@ export class DonnccsService {
           },
           body: JSON.stringify(dulieu),
         };
-        const response = await fetch(`${environment.APIURL}/donncc/${dulieu.id}`, options);
+        const response = await fetch(`${environment.APIURL}/nhacungcap/${dulieu.id}`, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -190,13 +190,13 @@ export class DonnccsService {
             this.router.navigate(['/errorserver'], { queryParams: {data:result}});
           }
         }
-        this.getAllDonncc()
+        this.getAllNhacungcap()
         return data;
     } catch (error) {
         return console.error(error);
     }
   }
-  async DeleteDonncc(item:any) {    
+  async DeleteNhacungcap(item:any) {    
     try {
         const options = {
             method:'DELETE',
@@ -204,7 +204,7 @@ export class DonnccsService {
               'Content-Type': 'application/json',
             },
           };
-          const response = await fetch(`${environment.APIURL}/donncc/${item.id}`, options);
+          const response = await fetch(`${environment.APIURL}/nhacungcap/${item.id}`, options);
           if (!response.ok) {
             if (response.status === 401) {
               const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -220,7 +220,7 @@ export class DonnccsService {
               this.router.navigate(['/errorserver'], { queryParams: {data:result}});
             }
           }
-          this.getAllDonncc()
+          this.getAllNhacungcap()
           return await response.json();
       } catch (error) {
           return console.error(error);
