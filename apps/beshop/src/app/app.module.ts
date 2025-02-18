@@ -26,6 +26,7 @@ import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
 import { NhacungcapModule } from './nhacungcap/nhacungcap.module';
 import { PhieugiaodichModule } from './phieugiaodich/phieugiaodich.module';
+import { PhieukhoModule } from './phieukho/phieukho.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { PhieugiaodichModule } from './phieugiaodich/phieugiaodich.module';
      PermissionModule,
      NhacungcapModule,
      PhieugiaodichModule,
+     PhieukhoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
