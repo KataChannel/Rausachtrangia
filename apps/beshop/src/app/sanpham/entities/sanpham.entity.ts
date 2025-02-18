@@ -36,8 +36,6 @@ export class SanphamEntity {
   Bienthe: string;
   @Column({ type: 'bigint' })
   giagoc: number;
-  @Column({ type: 'bigint' })
-  giaban: number;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   dvt: string;
   @Column({ type: 'bigint' })

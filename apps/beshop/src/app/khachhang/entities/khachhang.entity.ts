@@ -30,6 +30,8 @@ export class KhachhangEntity {
   SDT: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   MST: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
+  Ghichu: string;
   @Column({ default: '' })
   Email: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('{}')" })
