@@ -47,7 +47,7 @@
               }
               @else if( column === 'Ghichu'){
                     @if(isEdit){
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" appearance="outline" subscriptSizing="dynamic">
       <mat-label>Ghi Chú</mat-label>
       <input matInput [(ngModel)]="Donhang.Giohangs[idx].Ghichu"  [ngModelOptions]="{standalone: true}" [placeholder]="'Ghi Chú'">
     </mat-form-field>
