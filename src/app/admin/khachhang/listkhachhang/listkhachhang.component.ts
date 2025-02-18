@@ -232,7 +232,7 @@ export class ListkhachhangComponent {
               const item1 = {...item, ...v}
               console.log(item1);
               
-              //await this._KhachhangsService.updateOneKhachhang(item1);
+              await this._KhachhangsService.updateOneKhachhang(item1);
               }
             });
             Promise.all(updatePromises).then(() => {

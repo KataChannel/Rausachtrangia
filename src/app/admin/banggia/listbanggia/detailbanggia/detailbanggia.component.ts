@@ -307,7 +307,6 @@ import { MatMenuModule } from '@angular/material/menu';
       });
 
       worker.onmessage = ({ data }) => {
-        console.log(data);
         if (data.status === 'success') {
         this.processData(data.data.transformedData);
         } else {
@@ -381,7 +380,9 @@ import { MatMenuModule } from '@angular/material/menu';
 
     console.log(this.Detail().ListSP)
     this.dataSource = new MatTableDataSource(updatePromises);
-    this._BanggiasService.updateOneBanggia(this.Detail()).then((data:any)=>{
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this._BanggiasService.updateOneBanggia(this.Detail()).then((data:any)=>{      
       this._snackBar.open('Upload Thành Công!', '', { duration: 1000, panelClass: ['snackbar-success'] });
     })
   }

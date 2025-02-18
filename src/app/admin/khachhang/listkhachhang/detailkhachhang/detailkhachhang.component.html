@@ -76,6 +76,10 @@
           }
         </mat-select>
      </mat-form-field>
+     <mat-form-field appearance="outline">
+      <mat-label>Ghi Chú</mat-label>
+      <textarea matInput [(ngModel)]="Detail().Ghichu"  [ngModelOptions]="{standalone: true}"></textarea>
+    </mat-form-field>
     </div>
 
   }

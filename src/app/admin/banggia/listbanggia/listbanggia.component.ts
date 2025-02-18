@@ -84,9 +84,7 @@ export class ListBanggiaComponent{
     }, {} as Record<string, string>);    
   }
 
-  private setupDataSource(): void {
-    console.log(this.Listbanggia);
-    
+  private setupDataSource(): void {    
     this.dataSource = new MatTableDataSource(this.Listbanggia.map(v =>
       this.FilterColumns.filter(item => item.isShow).reduce((obj, item) => {
         obj[item.key] = v[item.key];

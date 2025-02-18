@@ -64,8 +64,13 @@ export class GiohangcommonComponent implements OnInit {
   @Input() Sanphams: any[] = [];
   @Output() TongcongEmit = new EventEmitter();
   @Output() GiohangsEmit = new EventEmitter();
-  FilterSanphams: any[] = [];
-  SanphamsBansi: any[] = [];
+  @Output() dataChanged = new EventEmitter<void>();
+
+updateData() {
+  this.dataChanged.emit();
+}
+  // FilterSanphams: any[] = [];
+  // SanphamsBansi: any[] = [];
   FilterSanphamsBansi: any[] = [];
   dataSource!: MatTableDataSource<any>;
   dialogRef: any;
@@ -102,9 +107,8 @@ export class GiohangcommonComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(private dialog: MatDialog, private _snackBar: MatSnackBar) {}
   async ngOnInit() {
-    console.log(this.Donhang);
+    console.log(this.Sanphams);
     
-
     this.displayedColumns = this.displayedColumns.filter(
       (col) => !this.HideColumns.includes(col)
     );
@@ -180,6 +184,7 @@ export class GiohangcommonComponent implements OnInit {
       TongtienN: 0,
       Ghichu: '',
     }));
+    console.log(this.Sanphams);
     console.log(this.FilterSanphamsBansi);
   }
   ngAfterViewInit() {}
@@ -411,8 +416,6 @@ export class GiohangcommonComponent implements OnInit {
     return items?.reduce((sum: any, item: any) => sum + item[fieldTong], 0);
   }
   TinhTongSub(items: any, fieldTong: any) {
-    console.log(items);
-
     return (
       items?.reduce((sum: any, item: any) => sum + (item[fieldTong] || 0), 0) ||
       0

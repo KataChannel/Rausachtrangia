@@ -62,6 +62,9 @@ export class DetaildonsiComponent {
     FilterKhachhang:any[]=[]
     ListBanggia:any[]=[]
     FilterBanggia:any[]=[]
+    onChildDataChange() {
+      this.ListSanpham = [...this.ListSanpham]; // Đảm bảo thay đổi reference
+    }
     ngOnInit(): void {
       this._router.paramMap.subscribe(async (data: any) => {
         this.paramId = data.get('id')
@@ -83,8 +86,7 @@ export class DetaildonsiComponent {
               Image: v.Image,
               Soluong: 1,
             }));
-            console.log(this.ListSanpham);
-            
+            console.log(this.ListSanpham);   
           })          
           if(this.paramId === '0') {
             this.isEdit = this.paramId === '0'; 
@@ -94,7 +96,8 @@ export class DetaildonsiComponent {
             this._DonhangsService.getDonhangByid(this.paramId).then((data:any)=>{
               if(data){
                 this.Detail = data
-                console.log(this.Detail);        
+                console.log(this.Detail);   
+                this.UpdateListSanpham()     
                 this._ListdonhangComponent.drawer.open();   
               }
             })  
@@ -151,6 +154,11 @@ export class DetaildonsiComponent {
           }
         })
       }
+      else{
+        this.ListSanpham.forEach((v:any) => {
+          v.giagoc = 0;
+        })
+      }
     }
     UpdateBangia(){
       const Banggia = this.ListBanggia.find(v => v.id === this.Detail.idBanggia) 
@@ -163,6 +171,7 @@ export class DetaildonsiComponent {
               Tongtien: valueMap.get(item.id)?? item.gia // Cập nhật giá trị value từ data2
           }));
       console.log(this.Detail.Giohangs);
+      this.UpdateListSanpham()
     }
     SelectBanggia(event:any){
       console.log(event.value);  
