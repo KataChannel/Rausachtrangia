@@ -1,5 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   inject,
@@ -51,6 +52,7 @@ import moment from 'moment';
   ],
   templateUrl: './giohangcommon.component.html',
   styleUrl: './giohangcommon.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GiohangcommonComponent implements OnInit {
   @Input() Donhang: any = { Giohangs: [] };
@@ -59,9 +61,9 @@ export class GiohangcommonComponent implements OnInit {
   @Input() isShowCrease: boolean = true;
   @Input() Type: any = 'banle';
   @Input() HideColumns: any[] = [];
+  @Input() Sanphams: any[] = [];
   @Output() TongcongEmit = new EventEmitter();
   @Output() GiohangsEmit = new EventEmitter();
-  Sanphams: any[] = [];
   FilterSanphams: any[] = [];
   SanphamsBansi: any[] = [];
   FilterSanphamsBansi: any[] = [];
@@ -100,6 +102,9 @@ export class GiohangcommonComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(private dialog: MatDialog, private _snackBar: MatSnackBar) {}
   async ngOnInit() {
+    console.log(this.Donhang);
+    
+
     this.displayedColumns = this.displayedColumns.filter(
       (col) => !this.HideColumns.includes(col)
     );
@@ -134,23 +139,25 @@ export class GiohangcommonComponent implements OnInit {
       this.dataSource.sort = this.sort;
       console.log(this.dataSource.sort);
     }
-    await this._SanphamService.getAllSanpham();
-    this._SanphamService.sanphams$.subscribe((data: any) => {
-      if (data) {
-        this.FilterSanphams = this.Sanphams = data
-          .filter((v1: any) => v1.Status == 1)
-          .map((v: any) => ({
-            id: v.id,
-            Title: v.Title,
-            Slug: v.Slug,
-            MaSP: v.MaSP,
-            giagoc: Number(v.giagoc),
-            dvt: v.dvt,
-            Image: v.Image,
-            Soluong: 1,
-          }));
-      }
-    });
+    // await this._SanphamService.getAllSanpham();
+    // this._SanphamService.sanphams$.subscribe((data: any) => {
+    //   if (data) {
+    //     this.FilterSanphams = this.Sanphams = data
+    //       .filter((v1: any) => v1.Status == 1)
+    //       .map((v: any) => ({
+    //         id: v.id,
+    //         Title: v.Title,
+    //         Slug: v.Slug,
+    //         MaSP: v.MaSP,
+    //         giagoc: Number(v.giagoc),
+    //         giaban: Number(v.giaban),
+    //         dvt: v.dvt,
+    //         Image: v.Image,
+    //         Soluong: 1,
+    //       }));
+    //   }
+    // });
+    
     // this.FilterSanphams = this.Sanphams.filter(v =>
     //   !this.Donhang.Giohangs.some((v1: any) =>
     //       v1.MaSP === v.Giagoc.find((v2: any) => v2.khoiluong === 1)?.MaSP

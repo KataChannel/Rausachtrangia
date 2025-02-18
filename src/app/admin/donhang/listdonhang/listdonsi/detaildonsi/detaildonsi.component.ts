@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ListBanggiaComponent } from '../../../../banggia/listbanggia/listbanggia.component';
 import { BanggiasService } from '../../../../banggia/listbanggia/listbanggia.service';
 import { SanphamsService } from '../../../../sanpham/listsanpham/listsanpham.service';
 import { ListdonhangComponent } from '../../listdonhang.component';
@@ -73,6 +72,20 @@ export class DetaildonsiComponent {
           this._BanggiasService.getAllBanggia().then((data:any)=>{
             this.ListBanggia = this.FilterBanggia =data
           })
+          this._SanphamsService.getAllSanpham().then((data:any)=>{
+            this.ListSanpham = data.filter((v: any) => v.Status == 1).map((v: any) => ({
+              id: v.id,
+              Title: v.Title,
+              Slug: v.Slug,
+              MaSP: v.MaSP,
+              giagoc: Number(v.giagoc),
+              dvt: v.dvt,
+              Image: v.Image,
+              Soluong: 1,
+            }));
+            console.log(this.ListSanpham);
+            
+          })          
           if(this.paramId === '0') {
             this.isEdit = this.paramId === '0'; 
             this._ListdonhangComponent.drawer.open();   
@@ -127,6 +140,17 @@ export class DetaildonsiComponent {
     DoFindBanggia(event:any){
       const query = event.target.value.toLowerCase();
        this.FilterBanggia = this.ListBanggia.filter(v => v.Title.toLowerCase().includes(query));      
+    }
+    UpdateListSanpham(){
+      const Banggia = this.ListBanggia.find(v => v.id === this.Detail.idBanggia) 
+      if(Banggia){
+        this.ListSanpham.forEach((v:any) => {
+          const Sanpham = Banggia.ListSP.find((sp:any) => sp.id === v.id);
+          if (Sanpham) {
+            v.giagoc = Sanpham.giaban;
+          }
+        })
+      }
     }
     UpdateBangia(){
       const Banggia = this.ListBanggia.find(v => v.id === this.Detail.idBanggia) 

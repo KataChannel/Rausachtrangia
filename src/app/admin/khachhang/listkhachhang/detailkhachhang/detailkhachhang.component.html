@@ -53,6 +53,10 @@
         <mat-label>Số Điện Thoại</mat-label>
         <input matInput [(ngModel)]="Detail().SDT"  [ngModelOptions]="{standalone: true}" [placeholder]="'Số Điện Thoại'">
       </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Giờ Nhận Hàng</mat-label>
+        <input matInput [(ngModel)]="Detail().GioNhanhang"  [ngModelOptions]="{standalone: true}" [placeholder]="'Giờ Nhận Hàng'">
+      </mat-form-field>
       <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
         <mat-label>Loại Khách Hàng</mat-label>
         <mat-select [(ngModel)]="Detail().Type" [ngModelOptions]="{standalone: true}">
