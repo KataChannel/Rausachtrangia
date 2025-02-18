@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
   import {PhieukhoService } from './phieukho.service';
-  @Controller('Phieukho')
+  @Controller('phieukho')
   export class PhieukhoController {
     constructor(private readonly PhieukhoService:PhieukhoService) {}
   
