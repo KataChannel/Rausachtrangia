@@ -19,6 +19,8 @@ export class KhachhangEntity {
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   Khachhang: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
+  GioNhanhang: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
   Hoten: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   Diachi: string;
