@@ -86,7 +86,7 @@
         <div class="font-bold text-[18px] uppercase">Bảng Sao Kê Hàng Ngày</div>
       <div class="font-bold text-[18px] uppercase {{Detail?.Khachhang?.TenKH?'':'text-red-700 italic'}}">{{Detail?.Khachhang?.TenKH||"Chưa Chọn Khách Hàng"}}</div>
 
-      <div *ngIf="isEdit" class="flex flex-row items-center space-x-2">
+      <div *ngIf="isEdit" class="grid lg:grid-cols-4 grid-cols-2 gap-4">
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Khách Hàng</mat-label>
           <mat-select [(ngModel)]="Detail.idKH" [ngModelOptions]="{ standalone: true }"
@@ -132,12 +132,15 @@
               </mat-datepicker-actions>
             </mat-datepicker>
           </mat-form-field>
-
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Ghi Chú</mat-label>  
+            <input matInput [(ngModel)]="Detail.Ghichu"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú" />   
+        </mat-form-field>
 
       </div>
 
       <div class="w-full flex items-start"><strong>Địa Chỉ : </strong> {{Detail?.Khachhang?.Diachi}}</div>
-      <div class="w-full flex items-start"><strong>Ghi Chú : </strong> {{Detail?.Ghichu}}</div>
+      <div class="w-full flex items-start"><strong>Ghi Chú : </strong> {{Detail?.Ghichu}}</div> 
       <div class="w-full flex items-start"><strong>Số Điện Thoại : </strong> {{Detail?.Khachhang?.SDT}}</div>
       <div class="w-full flex items-start"><strong>Tổng khối lượng  : </strong> </div>
      
