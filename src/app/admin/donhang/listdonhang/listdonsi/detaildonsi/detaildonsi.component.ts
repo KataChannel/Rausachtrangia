@@ -63,7 +63,7 @@ export class DetaildonsiComponent {
     ListBanggia:any[]=[]
     FilterBanggia:any[]=[]
     onChildDataChange() {
-      this.ListSanpham = [...this.ListSanpham]; // Đảm bảo thay đổi reference
+     this.UpdateBangia();
     }
     ngOnInit(): void {
       this._router.paramMap.subscribe(async (data: any) => {
