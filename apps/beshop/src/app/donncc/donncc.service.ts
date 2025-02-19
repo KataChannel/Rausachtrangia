@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
   import { Like, Repository } from 'typeorm';
   import { DonnccEntity } from './entities/donncc.entity';
+import { NhacungcapService } from '../nhacungcap/nhacungcap.service';
   @Injectable()
   export class DonnccService {
     constructor(
       @InjectRepository(DonnccEntity)
       private DonnccRepository: Repository<DonnccEntity>,
+      private _NhacungcapService:NhacungcapService
     ) { }
 
     async create(data: any) {
@@ -19,7 +21,12 @@ import { Injectable } from '@nestjs/common';
     }
   
     async findAll() {
-      return await this.DonnccRepository.find();
+      const ListDon:any = await this.DonnccRepository.find();
+      ListDon.forEach(async (v:any) => {
+        const NCC = await this._NhacungcapService.findid(v.idNCC);
+        v.Nhacungcap = {Title:NCC.Title,email:NCC.email,SDT:NCC.SDT};
+      });
+      return ListDon;
     }
     async findid(id: string) {
       return await this.DonnccRepository.findOne({ where: { id: id } });
