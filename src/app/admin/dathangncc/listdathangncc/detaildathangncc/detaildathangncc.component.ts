@@ -15,6 +15,7 @@ import { GenId, genMaDonhang } from '../../../../shared/shared.utils';
 import { MatSelectModule } from '@angular/material/select';
 import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
   @Component({
     selector: 'app-detaildathangncc',
     imports: [
@@ -24,7 +25,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
       MatIconModule,
       MatButtonModule,
       MatSelectModule,
-      MatDialogModule
+      MatDialogModule,
+      CommonModule
     ],
     templateUrl: './detaildathangncc.component.html',
     styleUrl: './detaildathangncc.component.scss'
@@ -66,6 +68,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
             this._DonnccsService.getDonnccByid(this.idDathangncc).then((data:any)=>{
               if(data){
                 this.Detail = data
+                this.Detail.Nhacungcap = this.ListNhacungcap.find(v => v.id === this.Detail.idNCC)
                 console.log(data);
                 
               }
@@ -171,5 +174,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
         this.dialogRef.close();
         window.location.reload();
       });
+    }
+    GetInfoSanpham(id:any){
+      console.log(id);
+      
+      return this.ListSanpham.find(v => v.id ===id)
     }
   }
