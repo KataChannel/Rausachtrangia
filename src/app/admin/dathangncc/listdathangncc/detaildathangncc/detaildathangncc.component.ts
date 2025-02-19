@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, TemplateRef } from '@angular/core';
   import { FormsModule } from '@angular/forms';
   import { MatFormFieldModule } from '@angular/material/form-field';
   import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import { randomUUID } from 'crypto';
 import { GenId, genMaDonhang } from '../../../../shared/shared.utils';
 import { MatSelectModule } from '@angular/material/select';
 import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   @Component({
     selector: 'app-detaildathangncc',
     imports: [
@@ -22,7 +23,8 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
       FormsModule,
       MatIconModule,
       MatButtonModule,
-      MatSelectModule
+      MatSelectModule,
+      MatDialogModule
     ],
     templateUrl: './detaildathangncc.component.html',
     styleUrl: './detaildathangncc.component.scss'
@@ -37,6 +39,7 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
     _snackBar:MatSnackBar = inject(MatSnackBar)
     constructor(){}
     Detail:any={Sanpham:[]}
+    Nhacungcap:any={}
     isEdit:boolean=false
     isDelete:boolean=false
     idDathangncc:any
@@ -152,4 +155,21 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
         this.Detail.Soluong = event.target.value
         this.Detail.Thanhtien = this.Detail.Soluong * this.Detail.Dongia
       }
+    dialog = inject(MatDialog);
+    dialogRef:any
+    OpenDialogAddNhacungcap(TemplateRef:TemplateRef<any>) {
+     this.dialogRef = this.dialog.open(TemplateRef);
+    }
+    CreateNCC(){
+      this._NhacungcapsService.CreateNhacungcap(this.Nhacungcap).then((data:any)=>{
+        this._snackBar.open('Tạo Mới Thành Công', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-success'],
+        });
+        this.dialogRef.close();
+        window.location.reload();
+      });
+    }
   }
