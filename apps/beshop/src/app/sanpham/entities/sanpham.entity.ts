@@ -54,6 +54,8 @@ export class SanphamEntity {
   Tags: string;
   @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
   ListImage: string;
+  @Column({ type: 'text', collation: 'utf8_general_ci' })
+  Ghichu: string;
   @Column({ default: '' })
   Type: string;
   @Column({ default: 1 })
