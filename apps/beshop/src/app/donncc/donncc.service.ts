@@ -21,15 +21,7 @@ import { NhacungcapService } from '../nhacungcap/nhacungcap.service';
     }
   
     async findAll() {
-      const ListDon:any = await this.DonnccRepository.find();
-      const newItem = await Promise.all(ListDon.map(async (v:any) => {
-        const NCC = await this._NhacungcapService.findid(v.idNCC);
-        if(NCC){
-          v.Nhacungcap = {Title:NCC.Title,email:NCC.email,SDT:NCC.SDT};
-        }
-          return v;
-      }));
-      return newItem;
+      return await this.DonnccRepository.find();
     }
     async findid(id: string) {
       return await this.DonnccRepository.findOne({ where: { id: id } });
