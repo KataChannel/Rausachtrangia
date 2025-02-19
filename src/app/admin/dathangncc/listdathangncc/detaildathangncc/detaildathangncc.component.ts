@@ -121,6 +121,7 @@ import { CommonModule } from '@angular/common';
     }
     goBack(){
       this._route.navigate(['/admin/dathangncc'])
+      this._ListdathangnccComponent.drawer.close();
     }
     DoFindNhacungcap(event:any){
         const query = event.target.value.toLowerCase();
@@ -175,9 +176,7 @@ import { CommonModule } from '@angular/common';
         window.location.reload();
       });
     }
-    GetInfoSanpham(id:any){
-      console.log(id);
-      
+    GetInfoSanpham(id:any){      
       return this.ListSanpham.find(v => v.id ===id)
     }
   }
