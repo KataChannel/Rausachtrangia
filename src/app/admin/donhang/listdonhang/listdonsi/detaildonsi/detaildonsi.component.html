@@ -85,7 +85,7 @@
         </div>
         <div class="font-bold text-[18px] uppercase">Bảng Sao Kê Hàng Ngày</div>
       <div class="font-bold text-[18px] uppercase {{Detail?.Khachhang?.TenKH?'':'text-red-700 italic'}}">{{Detail?.Khachhang?.TenKH||"Chưa Chọn Khách Hàng"}}</div>
-
+      <div *ngIf="isEdit" class="p-2 rounded-lg border text-red-600" [innerHTML]="Detail.Khachhang.Ghichu"></div>
       <div *ngIf="isEdit" class="grid lg:grid-cols-3 grid-cols-1 gap-4">
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Khách Hàng</mat-label>
@@ -120,6 +120,7 @@
             </div>
           </mat-select>
         </mat-form-field>
+
         <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
           <mat-label>Ngày Giao Hàng</mat-label>
           <input matInput [matDatepicker]="datepicker" [(ngModel)]="Detail.Ngaygiao" [ngModelOptions]="{ standalone: true }" />
@@ -131,17 +132,10 @@
             </mat-datepicker-actions>
           </mat-datepicker>
         </mat-form-field>
-      </div>
-        <div *ngIf="isEdit" class="grid lg:grid-cols-2 grid-cols-1 gap-4">
-          <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-            <mat-label>Chú Ý Khách Hàng</mat-label>  
-            <textarea matInput [(ngModel)]="Detail.Khachhang.Ghichu" disabled="true"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú"></textarea>   
-         </mat-form-field>
-          <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-            <mat-label>Ghi Chú Đơn Hàng</mat-label>  
-            <textarea matInput [(ngModel)]="Detail.Ghichu" [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú"></textarea>   
-         </mat-form-field>
-
+        <mat-form-field appearance="outline" class="w-full lg:col-span-3" subscriptSizing="dynamic">
+          <mat-label>Ghi Chú Đơn Hàng</mat-label>  
+          <textarea matInput [(ngModel)]="Detail.Ghichu" [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú"></textarea>   
+       </mat-form-field>
       </div>
 
       <div class="w-full flex items-start"><strong>Địa Chỉ : </strong> {{Detail?.Khachhang?.Diachi}}</div>
