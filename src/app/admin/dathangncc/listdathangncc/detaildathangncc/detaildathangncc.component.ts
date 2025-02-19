@@ -97,6 +97,7 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
             verticalPosition: "top",
             panelClass: ['snackbar-success'],
           });
+         this.isEdit = false
         })
       } 
     }
@@ -135,9 +136,7 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
         const query = event.target.value.toLowerCase();
         this.FilterSanpham = this.ListSanpham.filter(v => v.Title.toLowerCase().includes(query));      
       }
-    SelectSanpham(event:any){     
-      console.log(event);
-      
+    SelectSanpham(event:any){           
         // const selectedSanpham = this.ListSanpham.find(v => v.id === event.value);      
         // if (selectedSanpham) {
         //   this.Detail.Nhacungcap = {

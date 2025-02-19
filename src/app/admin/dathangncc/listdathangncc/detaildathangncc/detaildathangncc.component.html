@@ -39,7 +39,7 @@
       
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Khách Hàng</mat-label>
-        <mat-select [(ngModel)]="Detail.idNCC" [ngModelOptions]="{ standalone: true }"
+        <mat-select [disabled]="!isEdit" [(ngModel)]="Detail.idNCC" [ngModelOptions]="{ standalone: true }"
           (selectionChange)="SelectNhacungcap($event)">
           <div class="w-full flex flex-col px-4">
             <div class="flex flex-row space-x-2 items-center">
@@ -62,7 +62,7 @@
       @for (item of Detail.Sanpham; track item.id; let idx = $index) {
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Sản Phẩm</mat-label>
-          <mat-select [(ngModel)]="Detail.Sanpham[idx].idSP" [ngModelOptions]="{ standalone: true }"
+          <mat-select [disabled]="!isEdit"  [(ngModel)]="Detail.Sanpham[idx].idSP" [ngModelOptions]="{ standalone: true }"
             (selectionChange)="SelectSanpham($event)">
             <div class="w-full flex flex-col px-4">
               <div class="flex flex-row space-x-2 items-center">
@@ -75,7 +75,7 @@
               </div>
               <div class="overflow-y-auto max-h-44">
                 @for (item of FilterSanpham; track item.id) {
-                <mat-option [value]="item.id">{{item.Title}}</mat-option>
+                <mat-option [value]="item.id">{{item.Title}} [Tồn : {{item.Soluong}}]</mat-option>
                 }
               </div>
             </div>
@@ -83,12 +83,12 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
           <mat-label>Số Lượng</mat-label>
-          <input matInput [(ngModel)]="item.Soluong" (change)="onChangeSoluong(item,$event)"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Số Điện Thoại" />
+          <input matInput [disabled]="!isEdit" [(ngModel)]="item.Soluong" (change)="onChangeSoluong(item,$event)"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Số Điện Thoại" />
       </mat-form-field> 
       }
     </div>
      <div>
-      <button mat-flat-button color="primary" (click)="Detail.Sanpham.push({idSP:'',Soluong:0})">
+      <button [disabled]="!isEdit" mat-flat-button color="primary" (click)="Detail.Sanpham.push({idSP:'',Soluong:0})">
         <span>Thêm</span>
         <mat-icon>add</mat-icon>
       </button>
