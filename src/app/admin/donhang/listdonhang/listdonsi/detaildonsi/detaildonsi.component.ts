@@ -81,6 +81,7 @@ export class DetaildonsiComponent {
             this._DonhangsService.getDonhangByid(this.paramId).then((data:any)=>{
               if(data){
                 this.Detail = data  
+                this.InitKhachhang(this.Detail.idKH)
                 this.UpdateListSanpham()
                 this._ListdonhangComponent.drawer.open();   
               }
@@ -111,8 +112,8 @@ export class DetaildonsiComponent {
       const query = event.target.value.toLowerCase();
        this.FilterKhachhang = this.ListKhachhang.filter(v => v.TenKH.toLowerCase().includes(query));      
     }
-    SelectKhachhang(event:any){     
-      const selectedKhachhang = this.ListKhachhang.find(v => v.id === event.value);      
+    InitKhachhang(idKH:any){
+      const selectedKhachhang = this.ListKhachhang.find(v => v.id === idKH);      
       if (selectedKhachhang) {
         this.Detail.Khachhang = {
           ...this.Detail.Khachhang,
@@ -123,6 +124,9 @@ export class DetaildonsiComponent {
         };
         this.Detail.idBanggia = selectedKhachhang.idBanggia
       }
+    }
+    SelectKhachhang(event:any){     
+      this.InitKhachhang(event.value)
     }
 
     DoFindBanggia(event:any){
