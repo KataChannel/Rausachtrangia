@@ -29,14 +29,13 @@ import { Injectable } from '@nestjs/common';
     async findSHD(data: any) {
       return await this.PhieukhoRepository.findOne({
         where: {
-          Title: data.Title,
           Type: data.Type
         },
       });
     }
     async findslug(Title: any) {
       return await this.PhieukhoRepository.findOne({
-        where: { Title: Title },
+
       });
     }
     async findPagination(page: number, perPage: number) {
