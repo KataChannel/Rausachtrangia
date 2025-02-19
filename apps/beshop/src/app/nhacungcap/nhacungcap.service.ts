@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
-  import { Like, Repository } from 'typeorm';
+  import { In, Like, Repository } from 'typeorm';
   import { NhacungcapEntity } from './entities/nhacungcap.entity';
   @Injectable()
   export class NhacungcapService {
@@ -25,6 +25,9 @@ import { Injectable } from '@nestjs/common';
     }
     async findid(id: string) {
       return await this.NhacungcapRepository.findOne({ where: { id: id } });
+    }
+    async findlistid(ids: any) {
+      return await this.NhacungcapRepository.findBy({ id: In(ids) })
     }
     async findSHD(data: any) {
       return await this.NhacungcapRepository.findOne({

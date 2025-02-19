@@ -28,6 +28,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
       async findQuery(@Body() SearchParams: any){
         return await this.NhacungcapService.findQuery(SearchParams);
     }
+    @Post('findlistid')
+      async findlistid(@Body() ids: any){
+        return await this.NhacungcapService.findlistid(ids);
+    }
     @Patch(':id')
     update(@Param('id') id: string, @Body() data: any) {
       return this.NhacungcapService.update(id, data);
