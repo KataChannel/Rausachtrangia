@@ -22,11 +22,14 @@ import { NhacungcapService } from '../nhacungcap/nhacungcap.service';
   
     async findAll() {
       const ListDon:any = await this.DonnccRepository.find();
-      ListDon.forEach(async (v:any) => {
+      const newItem = await Promise.all(ListDon.map(async (v:any) => {
         const NCC = await this._NhacungcapService.findid(v.idNCC);
-        v.Nhacungcap = {Title:NCC.Title,email:NCC.email,SDT:NCC.SDT};
-      });
-      return ListDon;
+        if(NCC){
+          v.Nhacungcap = {Title:NCC.Title,email:NCC.email,SDT:NCC.SDT};
+        }
+          return v;
+      }));
+      return newItem;
     }
     async findid(id: string) {
       return await this.DonnccRepository.findOne({ where: { id: id } });
