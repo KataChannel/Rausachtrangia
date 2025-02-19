@@ -15,6 +15,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
     async findOne(@Param('id') id: string) {
       return await this.DonnccService.findid(id);
     }
+    @Post('findlistid')
+    async findlistid(@Body() ids: any){
+        return await this.DonnccService.findlistid(ids);
+    }
     @Get('pagination')
     async findPagination(@Query('page') page: number,@Query('perPage') perPage: number){
          return await this.DonnccService.findPagination(page,perPage);

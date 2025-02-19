@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
-  import { Like, Repository } from 'typeorm';
+  import { In, Like, Repository } from 'typeorm';
   import { DonnccEntity } from './entities/donncc.entity';
 import { NhacungcapService } from '../nhacungcap/nhacungcap.service';
   @Injectable()
@@ -25,6 +25,9 @@ import { NhacungcapService } from '../nhacungcap/nhacungcap.service';
     }
     async findid(id: string) {
       return await this.DonnccRepository.findOne({ where: { id: id } });
+    }
+    async findlistid(ids: any) {
+      return await this.DonnccRepository.findBy({ id: In(ids) })
     }
     async findPagination(page: number, perPage: number) {
       const skip = (page - 1) * perPage;
