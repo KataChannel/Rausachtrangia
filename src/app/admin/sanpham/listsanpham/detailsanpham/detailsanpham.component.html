@@ -33,22 +33,31 @@
     </div>
   }
   @else {
-    <div class="flex flex-row space-x-2 items-center">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Tên Sản Phẩm</mat-label>
-        <input matInput [(ngModel)]="Detail().Title"  [ngModelOptions]="{standalone: true}" [placeholder]="'Tên Sản Phẩm'">
-      </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Tên Sản Phẩm</mat-label>
+      <input matInput [(ngModel)]="Detail().Title" [disabled]="!isEdit"  [ngModelOptions]="{standalone: true}" [placeholder]="'Tên Sản Phẩm'">
+    </mat-form-field>
+
+    <div class="grid grid-cols-3 gap-4">
       <mat-form-field appearance="outline">
         <mat-label>Mã Sản Phẩm</mat-label>
-        <input matInput [(ngModel)]="Detail().MaSP"  [ngModelOptions]="{standalone: true}" [placeholder]="'Mã Sản Phẩm'">
+        <input matInput [(ngModel)]="Detail().MaSP"  [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" [placeholder]="'Mã Sản Phẩm'">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Giá Gốc</mat-label>
-        <input matInput [(ngModel)]="Detail().giagoc" type="number" [ngModelOptions]="{standalone: true}" [placeholder]="'Giá Gốc'">
+        <input matInput [(ngModel)]="Detail().giagoc" type="number" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" [placeholder]="'Giá Gốc'">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Đơn Vị Tính</mat-label>
-        <input matInput [(ngModel)]="Detail().dvt" [ngModelOptions]="{standalone: true}" [placeholder]="'Đơn Vị Tính'">
+        <input matInput [(ngModel)]="Detail().dvt" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" [placeholder]="'Đơn Vị Tính'">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Số Lượng Tồn</mat-label>
+        <input matInput [(ngModel)]="Detail().Soluong" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" [placeholder]="'Số Lượng Tồn'">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Ghi Chú</mat-label>
+        <input matInput [(ngModel)]="Detail().Ghichu" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" [placeholder]="'Ghi Chú'">
       </mat-form-field>
     </div>
 

@@ -34,20 +34,44 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     idSanpham:any
     ngOnInit(): void {
       this._router.paramMap.subscribe(async (data: any) => {
-        this.idSanpham = data.get('id')
-        this.isEdit = this.idSanpham === '0';   
-        if (this.idSanpham&&this.idSanpham !== '0') {
+        this.idSanpham = data.get('id')  
+        // if (this.idSanpham&&this.idSanpham !== '0') {
+        //   this._ListsanphamComponent.drawer.open();
+        //   await this._SanphamsService.getSanphamByid(this.idSanpham);     
+        //   this.Detail = this._SanphamsService.Sanpham
+        // } 
+        console.log(this.idSanpham);
+        
+       if(!this.idSanpham){
+          this._route.navigate(['/admin/sanpham'])
+          this._ListsanphamComponent.drawer.close();
+        }
+       else{
           this._ListsanphamComponent.drawer.open();
-          await this._SanphamsService.getSanphamByid(this.idSanpham);     
-          this.Detail = this._SanphamsService.Sanpham
-        } 
+          if(this.idSanpham !== '0'){
+            this._ListsanphamComponent.drawer.open();
+            await this._SanphamsService.getSanphamByid(this.idSanpham);     
+            this.Detail = this._SanphamsService.Sanpham
+          } else {
+            this.Detail= signal<any>({});
+          }
+        }
+
+
+
       });   
     }
     SaveData()
     {
       if(this.idSanpham=='0')
       {
-
+        this._SanphamsService.CreateSanpham(this.Detail())
+        this._snackBar.open('Thêm Mới Thành Công', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-success'],
+        });
       }
       else
       {
@@ -59,10 +83,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
           panelClass: ['snackbar-success'],
         });
       }
-     // this.isEdit=false  
+      this.isEdit=false  
     }
     goBack()
     {
       this._route.navigate(['/admin/sanpham'])
+      this._ListsanphamComponent.drawer.close();
     }
   }

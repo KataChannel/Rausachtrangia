@@ -120,23 +120,27 @@
             </div>
           </mat-select>
         </mat-form-field>
-
-          <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
-            <mat-label>Ngày Giao Hàng</mat-label>
-            <input matInput [matDatepicker]="datepicker" [(ngModel)]="Detail.Ngaygiao" [ngModelOptions]="{ standalone: true }" />
-            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-              <mat-datepicker-actions>
-                <button mat-button color="warn" matDatepickerCancel>Hủy</button>
-                <button mat-raised-button color="primary" matDatepickerApply>Đồng Ý</button>
-              </mat-datepicker-actions>
-            </mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field class="lg:col-span-3" appearance="outline" subscriptSizing="dynamic">
-            <mat-label>Ghi Chú</mat-label>  
-            <textarea matInput [(ngModel)]="Detail.Ghichu" disabled="true"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú"></textarea>   
+        <mat-form-field [appearance]="'outline'" [subscriptSizing]="'dynamic'">
+          <mat-label>Ngày Giao Hàng</mat-label>
+          <input matInput [matDatepicker]="datepicker" [(ngModel)]="Detail.Ngaygiao" [ngModelOptions]="{ standalone: true }" />
+          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-button color="warn" matDatepickerCancel>Hủy</button>
+              <button mat-raised-button color="primary" matDatepickerApply>Đồng Ý</button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
         </mat-form-field>
+      </div>
+        <div *ngIf="isEdit" class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+          <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+            <mat-label>Chú Ý Khách Hàng</mat-label>  
+            <textarea matInput [(ngModel)]="Detail.Khachhang.Ghichu" disabled="true"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú"></textarea>   
+         </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+            <mat-label>Ghi Chú Đơn Hàng</mat-label>  
+            <textarea matInput [(ngModel)]="Detail.Ghichu" [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú"></textarea>   
+         </mat-form-field>
 
       </div>
 

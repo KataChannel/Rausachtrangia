@@ -103,6 +103,7 @@ export class ListDathangnccComponent {
   async ngOnInit(): Promise<void> {
     await this._DonnccsService.getAllDonncc();
     this.Listdathangncc = this._DonnccsService.ListDonncc();
+    this.CountItem = this.Listdathangncc.length;
     const ids = this.Listdathangncc.map(v =>v.idNCC);
     console.log(ids);
     this._nhacungcapsService.Findlistid(ids).then((data:any)=>{

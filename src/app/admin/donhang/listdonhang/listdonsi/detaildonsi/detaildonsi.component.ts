@@ -118,7 +118,8 @@ export class DetaildonsiComponent {
           ...this.Detail.Khachhang,
           TenKH: selectedKhachhang.TenKH,
           SDT: selectedKhachhang.SDT,
-          Diachi: selectedKhachhang.Diachi
+          Diachi: selectedKhachhang.Diachi,
+          Ghichu: selectedKhachhang.Ghichu,
         };
         this.Detail.idBanggia = selectedKhachhang.idBanggia
       }
