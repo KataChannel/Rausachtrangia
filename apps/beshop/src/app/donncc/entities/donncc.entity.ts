@@ -14,6 +14,8 @@ import {
     MaDH: string;
     @Column({collation: "utf8_general_ci"})
     idNCC: string;
+    @Column({collation: "utf8_general_ci",type: 'simple-json',default: () => "('[]')"})
+    Sanpham: string;
     @Column({collation: "utf8_general_ci"})
     Type: string;
     @Column({ default: 1 })
