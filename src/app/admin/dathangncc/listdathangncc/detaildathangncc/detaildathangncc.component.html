@@ -106,7 +106,7 @@
               </div>
               <div class="overflow-y-auto max-h-44">
                 @for (item of FilterSanpham; track item.id) {
-                <mat-option [value]="item.id">{{item.Title}} [Tồn : {{item.Soluong}}]</mat-option>
+                <mat-option [value]="item.id">{{item.Title}} [Tồn : {{item.Soluong}}{{item.dvt}}]</mat-option>
                 }
               </div>
             </div>
