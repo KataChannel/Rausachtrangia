@@ -2,14 +2,11 @@ import { Injectable } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
   import { Like, Repository } from 'typeorm';
   import { DonnccEntity } from './entities/donncc.entity';
-import { DonnccitemEntity } from './entities/donnccitem.entity';
   @Injectable()
   export class DonnccService {
     constructor(
       @InjectRepository(DonnccEntity)
       private DonnccRepository: Repository<DonnccEntity>,
-      @InjectRepository(DonnccitemEntity)
-      private DonnccitemRepository: Repository<DonnccitemEntity> 
     ) { }
 
     async create(data: any) {
