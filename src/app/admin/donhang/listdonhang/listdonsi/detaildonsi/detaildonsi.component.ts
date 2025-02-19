@@ -62,6 +62,7 @@ export class DetaildonsiComponent {
     FilterKhachhang:any[]=[]
     ListBanggia:any[]=[]
     FilterBanggia:any[]=[]
+    Ngayin:any = new Date()
     ngOnInit(): void {
       this._router.paramMap.subscribe(async (data: any) => {
         this.paramId = data.get('id')

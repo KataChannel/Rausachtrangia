@@ -61,9 +61,39 @@
                         </span>
                     </th>
                     <td mat-cell *matCellDef="let row;let idx = index">
-                        <span class="max-w-40 line-clamp-4">
-                            {{ column === 'STT' ? idx + 1 : row[column] }}
-                        </span>
+                        @switch (column) {
+                            @case ('Sanpham') {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{ row[column].length }}
+                                </span>
+                            }
+                            @case ('idNCC') {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{ GetNhacungcap(row[column])?.Title }}
+                                    {{ GetNhacungcap(row[column])?.email }}
+                                    {{ GetNhacungcap(row[column])?.SDT }}
+                                </span>
+                            }
+                            @case ('STT') {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{ idx + 1}}
+                                </span>
+                            }
+                            @case ('CreateAt') {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{ row[column]|date:'dd/MM/yyyy' }}
+                                </span>
+                            }
+                            @default {
+                                <span class="max-w-40 line-clamp-4">
+                                    {{ row[column] }}
+                                </span>
+                            }
+                          }
+
+
+
+
                     </td>
                 </ng-container>
                 }

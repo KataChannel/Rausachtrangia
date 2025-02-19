@@ -1,5 +1,5 @@
 <div class="flex flex-row justify-between items-center space-x-2 p-2">
-  <button mat-icon-button color="primary" (click)="_ListdathangnccComponent.drawer.close()">
+  <button mat-icon-button color="primary" (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
   </button>
   <div class="font-bold">{{Detail?.MaDH||'Không có dữ liệu'}}</div>
@@ -39,7 +39,7 @@
       
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Khách Hàng</mat-label>
-        <mat-select [(ngModel)]="Detail.idKH" [ngModelOptions]="{ standalone: true }"
+        <mat-select [(ngModel)]="Detail.idNCC" [ngModelOptions]="{ standalone: true }"
           (selectionChange)="SelectNhacungcap($event)">
           <div class="w-full flex flex-col px-4">
             <div class="flex flex-row space-x-2 items-center">

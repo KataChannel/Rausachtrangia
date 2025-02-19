@@ -18,6 +18,7 @@ import * as XLSX from 'xlsx';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DonnccsService } from './listdathangncc.service';
 @Component({
   selector: 'app-listdathangncc',
   templateUrl: './listdathangncc.component.html',
@@ -44,34 +45,31 @@ export class ListDathangnccComponent {
   dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = [
     'STT',
-    'Title',
-    'email',
-    'SDT',
-    'Ghichu',
-    'Status',
+    'MaDH',
+    'idNCC',
+    'Sanpham',
     'CreateAt',
   ];
   ColumnName: any = {
     STT: 'STT',
-    Title: 'Title',
-    email: 'email',
-    SDT: 'SDT',
-    Ghichu: 'Ghichu',
-    Status: 'Status',
-    CreateAt: 'CreateAt',
+    MaDH: 'Mã Đơn hàng',
+    idNCC: 'Nhà Cung Cấp',
+    Sanpham: 'Sản Phẩm',
+    CreateAt: 'Ngày Tạo',
   };
-  Forms: any[] = Forms;
   FilterColumns: any[] = JSON.parse(
     localStorage.getItem('dathangncc_FilterColumns') || '[]'
   );
   Columns: any[] = [];
-  Listdathangncc: any[] = ListDathangncc;
+  Listdathangncc: any[] = [];
+  ListNhacungcap: any[] = [];
   isFilter: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
   filterValues: { [key: string]: string } = {};
   private _nhacungcapsService: NhacungcapsService = inject(NhacungcapsService);
+  private _DonnccsService: DonnccsService = inject(DonnccsService);
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
@@ -103,14 +101,21 @@ export class ListDathangnccComponent {
 
 
   async ngOnInit(): Promise<void> {
-    await this._nhacungcapsService.getAllNhacungcap();
-    this.Listdathangncc = this._nhacungcapsService.ListNhacungcap();
-    console.log(this._nhacungcapsService.ListNhacungcap());
+    await this._DonnccsService.getAllDonncc();
+    this.Listdathangncc = this._DonnccsService.ListDonncc();
+    const ids = this.Listdathangncc.map(v =>v.idNCC);
+    console.log(ids);
+    this._nhacungcapsService.Findlistid(ids).then((data:any)=>{
+      if(data){this.ListNhacungcap = data} 
+    })
+    console.log(this.Listdathangncc);
     this.initializeColumns();
     this.setupDataSource();
     this.setupDrawer();
   }
-
+  GetNhacungcap(id: any): any {
+    return this.ListNhacungcap.find((v) => v.id === id);
+  }
   private initializeColumns(): void {
     this.Columns = Object.keys(this.ColumnName).map((key) => ({
       key,

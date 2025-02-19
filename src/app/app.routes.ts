@@ -267,6 +267,10 @@ export const appRoutes: Route[] = [
                 loadComponent: () => import('./admin/dathangncc/listdathangncc/listdathangncc.component').then(c => c.ListDathangnccComponent),
                 children: [
                     {
+                        path: '',
+                        loadComponent: () => import('./admin/dathangncc/listdathangncc/listdathangncc.component').then(c => c.ListDathangnccComponent),
+                    },
+                    {
                         path: ':id',
                         loadComponent: () => import('./admin/dathangncc/listdathangncc/detaildathangncc/detaildathangncc.component').then(c => c.DetailDathangnccComponent),
                     }

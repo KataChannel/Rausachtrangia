@@ -133,7 +133,7 @@ export class DonnccsService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/donncc/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/donncc/findid/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -154,6 +154,7 @@ export class DonnccsService {
       }
       const data = await response.json();
       this.Donncc.set(data)
+      return data
     } catch (error) {
       return console.error(error);
     }

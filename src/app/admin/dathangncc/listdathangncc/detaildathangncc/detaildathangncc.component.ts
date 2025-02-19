@@ -63,9 +63,12 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
             this._DonnccsService.getDonnccByid(this.idDathangncc).then((data:any)=>{
               if(data){
                 this.Detail = data
+                console.log(data);
+                
               }
             })
           } else {
+            this.Detail={Sanpham:[]}
             this.Detail.MaDH = GenId(8,false) 
           }
         }
@@ -87,13 +90,30 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
       }
       else
       {
-        ListDathangncc[this.idDathangncc]=this.Detail.Data
-      }
-      this.isEdit=false  
+        this._DonnccsService.updateOneDonncc(this.Detail).then((data:any)=>{
+          this._snackBar.open('Cập Nhật Thành Công', '', {
+            duration: 1000,
+            horizontalPosition: "end",
+            verticalPosition: "top",
+            panelClass: ['snackbar-success'],
+          });
+        })
+      } 
     }
     DeleteData()
     {
-
+      this._DonnccsService.DeleteDonncc(this.Detail).then((data:any)=>{
+        this._snackBar.open('Xóa Thành Công', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-success'],
+        });
+        this._route.navigate(['/admin/dathangncc'])
+      })
+    }
+    goBack(){
+      this._route.navigate(['/admin/dathangncc'])
     }
     DoFindNhacungcap(event:any){
         const query = event.target.value.toLowerCase();
@@ -116,6 +136,8 @@ import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
         this.FilterSanpham = this.ListSanpham.filter(v => v.Title.toLowerCase().includes(query));      
       }
     SelectSanpham(event:any){     
+      console.log(event);
+      
         // const selectedSanpham = this.ListSanpham.find(v => v.id === event.value);      
         // if (selectedSanpham) {
         //   this.Detail.Nhacungcap = {
