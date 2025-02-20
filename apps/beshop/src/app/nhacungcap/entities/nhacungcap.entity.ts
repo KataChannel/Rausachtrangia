@@ -13,7 +13,11 @@ import {
     @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
     idDonhang: string;
     @Column({collation: "utf8_general_ci"})
+    MaNCC: string;
+    @Column({collation: "utf8_general_ci"})
     Title: string;
+    @Column({collation: "utf8_general_ci"})
+    Diachi: string;
     @Column({collation: "utf8_general_ci"})
     email: string;
     @Column({collation: "utf8_general_ci"})

@@ -15,3 +15,4 @@ git push
 
 npx katacreate --type nestjs --name nhacungcap --outputDir nhacungcap
 npx katacreate --type nestjs --name phieugiaodich --outputDir phieugiaodich
+npx katacreate --type nestjs --name donnccitem --outputDir donnccitem
