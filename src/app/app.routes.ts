@@ -277,6 +277,20 @@ export const appRoutes: Route[] = [
                 ]
             },
             {
+                path: 'nhacungcap',
+                loadComponent: () => import('./admin/nhacungcap/listnhacungcap/listnhacungcap.component').then(c => c.ListNhacungcapComponent),
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => import('./admin/nhacungcap/listnhacungcap/listnhacungcap.component').then(c => c.ListNhacungcapComponent),
+                    },
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/nhacungcap/listnhacungcap/detailnhacungcap/detailnhacungcap.component').then(c => c.DetailNhacungcapComponent),
+                    }
+                ]
+            },
+            {
                 path: 'user',
                 loadComponent: () => import('./admin/users/listusers/listusers.component').then(c => c.ListUsersComponent),
                 children: [

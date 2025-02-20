@@ -1,0 +1,66 @@
+<div class="flex flex-row justify-between items-center space-x-2 p-2">
+  <button mat-icon-button color="primary" (click)="_ListnhacungcapComponent.drawer.close()">
+      <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="font-bold">{{Detail?.Hoten||'Không có dữ liệu'}}</div>
+  <div class="flex flex-row space-x-2 items-center">
+    @if(isEdit==true){
+      <button mat-icon-button color="primary" (click)="SaveData()">
+          <mat-icon>save</mat-icon>
+      </button>
+    }
+    @else{
+      <button mat-icon-button color="primary" (click)="isEdit=true">
+          <mat-icon>edit</mat-icon>
+
+      </button>
+    }
+      <button mat-icon-button color="warn" (click)="isDelete=true">
+          <mat-icon>delete</mat-icon>
+      </button>
+  </div>
+</div>
+<div class="relative flex flex-col w-full p-4 overflow-auto">
+  @if(isDelete==true){
+    <div class="flex flex-col space-y-4 items-center justify-center">
+      <div class="font-bold text-2xl">Bạn chắc chắn muốn xoá không?</div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="primary" (click)="DeleteData()">
+          Đồng Ý
+        </button>
+        <button mat-flat-button color="warn" (click)="isDelete=false">
+          Huỷ Bỏ
+        </button>
+      </div>
+    </div>
+  }
+  @else {
+    <div class="flex flex-col space-y-2 justify-center items-center p-4 ">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="Detail.Title" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Tên Nhà Cung Cấp">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Mã Nhà Cung Cấp</mat-label>
+        <input matInput [(ngModel)]="Detail.MaNCC" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Mã Nhà Cung Cấp">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="Detail.email" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Email">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Số Điện Thoại</mat-label>
+        <input matInput [(ngModel)]="Detail.SDT" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="SDT">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Địa Chỉ</mat-label>
+        <input matInput [(ngModel)]="Detail.Diachi" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Địa Chỉ">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Ghi Chú</mat-label>
+        <textarea matInput [(ngModel)]="Detail.Ghichu" [disabled]="!isEdit" [ngModelOptions]="{standalone: true}" placeholder="Ghi Chú"></textarea>
+      </mat-form-field>
+    </div>
+
+  }
+</div>

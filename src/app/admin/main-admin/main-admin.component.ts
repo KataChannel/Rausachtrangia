@@ -44,6 +44,7 @@ export class MainAdminComponent implements OnInit {
     {id:4,pid:0,Title:"Bảng Giá" ,Slug:"banggia"},
     {id:3,pid:0,Title:"Khách Hàng" ,Slug:"khachhang"},
     {id:3,pid:0,Title:"Tồn Kho" ,Slug:"tonkho"},
+    {id:3,pid:0,Title:"Nhà Cung Cấp" ,Slug:"nhacungcap"},
     {id:3,pid:0,Title:"Đặt hàng NCC" ,Slug:"dathangncc"},
     // {id:3,pid:0,Title:"Liên Hệ" ,Slug:"lienhe"},
     // {id:3,pid:0,Title:"Chương Trình Khuyến Mãi" ,Slug:"khuyenmai"},

@@ -7,6 +7,8 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class NhacungcapsService {
+  private _authenticated: boolean = false;
+  private APIURL: string = environment.APIURL;
   private isBrowser: boolean;
   constructor(
     private _StorageService: LocalStorageService,
@@ -167,7 +169,7 @@ export class NhacungcapsService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/nhacungcap/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/nhacungcap/findid/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -188,6 +190,7 @@ export class NhacungcapsService {
       }
       const data = await response.json();
       this.Nhacungcap.set(data)
+      return data;
     } catch (error) {
       return console.error(error);
     }

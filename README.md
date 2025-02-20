@@ -14,7 +14,7 @@ npx ng add @angular/material
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init
 
-
+npx katacreate --type angular --name nhacungcap --outputDir nhacungcap
 
 npm install
 npm cache clean --force

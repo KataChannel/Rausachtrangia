@@ -77,13 +77,13 @@
               <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
                 <input matInput (input)="DoFindNhacungcap($event)" placeholder="Tìm Kiếm" />
               </mat-form-field>
-              <button mat-icon-button color="primary" (click)="OpenDialogAddNhacungcap(dialogTemplate)">
+              <button mat-icon-button color="primary" (click)="CreateNCC()">
                 <mat-icon>add_circle</mat-icon>
               </button>
             </div>
             <div class="overflow-y-auto max-h-44">
               @for (item of FilterNhacungcap; track item.id) {
-              <mat-option [value]="item.id">{{item.Title}}</mat-option>
+              <mat-option [value]="item.id">{{item.MaNCC}} - {{item.Title}}</mat-option>
               }
             </div>
           </div>
@@ -140,30 +140,3 @@
 
   }
 </div>
-
-<ng-template #dialogTemplate>
-    <h2 mat-dialog-title>Thêm Nhà Cung Cấp</h2>
-    <mat-dialog-content class="flex flex-col space-y-4 p-4">
-      <div class="flex flex-col space-y-4 p-4">
-        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-            <mat-label>Tên Nhà Cung Cấp</mat-label>
-            <input matInput [(ngModel)]="Nhacungcap.Title"  [ngModelOptions]="{ standalone: true }" 
-            placeholder="Vui lòng Nhập Tên Nhà Cung Cấp" />
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-            <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="Nhacungcap.email"  [ngModelOptions]="{ standalone: true }" 
-            placeholder="Vui lòng Nhập Email" />
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-            <mat-label>Số Điện Thoại</mat-label>
-            <input matInput [(ngModel)]="Nhacungcap.SDT"  [ngModelOptions]="{ standalone: true }" 
-            placeholder="Vui lòng Nhập Số Điện Thoại" />
-        </mat-form-field>
-      </div>
-    </mat-dialog-content>
-    <mat-dialog-actions [align]="'end'">
-      <button mat-flat-button color="warn" mat-dialog-close>Đóng</button>
-      <button mat-flat-button color="primary" (click)="CreateNCC()">Tạo Mới</button>
-    </mat-dialog-actions>
- </ng-template>

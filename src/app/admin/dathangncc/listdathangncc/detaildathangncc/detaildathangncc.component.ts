@@ -8,7 +8,6 @@ import { Component, inject, TemplateRef } from '@angular/core';
   import { Forms, ListDathangncc } from '../listdathangncc';
 import { ListDathangnccComponent } from '../listdathangncc.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NhacungcapsService } from '../listnhacungcap.service';
 import { DonnccsService } from '../listdathangncc.service';
 import { randomUUID } from 'crypto';
 import { GenId, genMaDonhang } from '../../../../shared/shared.utils';
@@ -16,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SanphamService } from '../../../main-admin/sanpham/sanpham.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { NhacungcapsService } from '../../../nhacungcap/listnhacungcap/listnhacungcap.service';
   @Component({
     selector: 'app-detaildathangncc',
     imports: [
@@ -125,7 +125,7 @@ import { CommonModule } from '@angular/common';
     }
     DoFindNhacungcap(event:any){
         const query = event.target.value.toLowerCase();
-        this.FilterNhacungcap = this.ListNhacungcap.filter(v => v.TenKH.toLowerCase().includes(query));      
+        this.FilterNhacungcap = this.ListNhacungcap.filter(v => v.Title.toLowerCase().includes(query)||v.MaNCC.toLowerCase().includes(query));      
       }
     SelectNhacungcap(event:any){     
         const selectedNhacungcap = this.ListNhacungcap.find(v => v.id === event.value);      
@@ -165,16 +165,7 @@ import { CommonModule } from '@angular/common';
      this.dialogRef = this.dialog.open(TemplateRef);
     }
     CreateNCC(){
-      this._NhacungcapsService.CreateNhacungcap(this.Nhacungcap).then((data:any)=>{
-        this._snackBar.open('Tạo Mới Thành Công', '', {
-          duration: 1000,
-          horizontalPosition: "end",
-          verticalPosition: "top",
-          panelClass: ['snackbar-success'],
-        });
-        this.dialogRef.close();
-        window.location.reload();
-      });
+      this._route.navigate(['admin/nhacungcap', 0]);
     }
     GetInfoSanpham(id:any){      
       return this.ListSanpham.find(v => v.id ===id)
