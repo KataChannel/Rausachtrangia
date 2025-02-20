@@ -69,7 +69,7 @@
     </div>
     <div *ngIf="isEdit" class="flex flex-col space-y-2">
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Khách Hàng</mat-label>
+        <mat-label>Nhà Cung Cấp</mat-label>
         <mat-select [disabled]="!isEdit" [(ngModel)]="Detail.idNCC" [ngModelOptions]="{ standalone: true }"
           (selectionChange)="SelectNhacungcap($event)">
           <div class="w-full flex flex-col px-4">

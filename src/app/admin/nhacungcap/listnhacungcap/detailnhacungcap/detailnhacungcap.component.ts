@@ -47,6 +47,10 @@ import { NhacungcapsService } from '../listnhacungcap.service';
                 this.Detail = data
                 console.log(data); 
               }
+              else{
+                this._ListnhacungcapComponent.drawer.close();
+                this._route.navigate(['/admin/dathangncc'])
+              }
             })
           } else {
             this.Detail={}
@@ -83,7 +87,16 @@ import { NhacungcapsService } from '../listnhacungcap.service';
     }
     DeleteData()
     {
-      ListNhacungcap.splice(this.idNhacungcap,1)
-      this.isDelete=false
+      this._NhacungcapsService.DeleteNhacungcap(this.Detail).then((data:any)=>{
+        this._snackBar.open('Xóa Thành Công', '', {
+          duration: 1000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          panelClass: ['snackbar-success'],
+        });
+        this._route.navigate(['/admin/nhacungcap']);
+        window.location.reload();
+        this._ListnhacungcapComponent.drawer.close();
+      })
     }
   }
