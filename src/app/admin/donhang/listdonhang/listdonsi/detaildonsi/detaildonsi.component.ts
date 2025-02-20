@@ -53,7 +53,12 @@ export class DetaildonsiComponent {
     _route:Router = inject(Router)
     _snackBar: MatSnackBar = inject(MatSnackBar)
     constructor() {}
-    Detail:any={Giohangs:[],Ngaygiao:moment().add(1, 'days').format('YYYY-MM-DD')}
+    Detail:any={Giohangs:[],Ngaygiao:moment().add(1, 'days').format('YYYY-MM-DD'),Khachang:{
+      TenKH:'',
+      SDT:'',
+      Diachi:'',
+      Ghichu:'',
+    }}
     isEdit:boolean=false
     isDelete:boolean=false
     paramId:any
