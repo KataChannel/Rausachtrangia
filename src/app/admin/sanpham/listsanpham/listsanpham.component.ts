@@ -167,6 +167,7 @@ export class ListsanphamComponent {
             MaSP: v?.MaSP?.trim(),
             giagoc: Number(v?.giagoc),
             dvt: v?.dvt,
+            Soluong: Number(v?.Soluong),
           }));         
           const loadingSnackBarRef = this._snackBar.open('Đang Tải', '', {
             duration: 0,
@@ -180,12 +181,12 @@ export class ListsanphamComponent {
             return new Promise<void>((resolve) => {
               setTimeout(async () => {
                 const item = transformedData.find((v1: any) => v1.MaSP === v.MaSP);
-                if (item && Number(item.giagoc) !== Number(v.giagoc)) {
-                  console.log(item);
+                if (item && Number(item.giagoc) !== Number(v.giagoc) || Number(item.Soluong) !== Number(v.Soluong)) {
                   Sodem++;
                   v.Title = item.Title.trim();
                   v.giagoc = Number(item.giagoc);
                   v.dvt = item.dvt;
+                  v.Soluong = Number(item.Soluong);                    
                   await this._SanphamsService.updateOneSanpham(v);
                 }
                 resolve();
@@ -196,6 +197,7 @@ export class ListsanphamComponent {
           // Chờ đợi tất cả các promise hoàn thành
           Promise.all(updatePromises).then(() => {
             console.log(Sodem);
+            console.log(transformedData);
             
             // Tắt snackbar "Đang Tải"
             loadingSnackBarRef.dismiss();
@@ -224,6 +226,7 @@ export class ListsanphamComponent {
         MaSP: v.MaSP.trim(),
         giagoc: Number(v.giagoc),
         dvt: v.dvt,
+        Soluong: Number(v.Soluong),
       }));
 
     const updatePromises = transformedData.map(async (v) => {
@@ -232,6 +235,7 @@ export class ListsanphamComponent {
       item.Title = v.Title;
       item.giagoc = v.giagoc;
       item.dvt = v.dvt;
+      item.Soluong = Number(v.Soluong);
       await this._SanphamsService.updateOneSanpham(item);
       }
     });
@@ -255,6 +259,7 @@ export class ListsanphamComponent {
       MaSP: v.MaSP,
       giagoc: Number(v.giagoc),
       dvt: v.dvt,
+      Soluong: Number(v.Soluong),
     }))
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };

@@ -160,8 +160,7 @@ export class SanphamsService {
       return console.error(error);
     }
   }
-  async updateOneSanpham(dulieu: any) {    
-    
+  async updateOneSanpham(dulieu: any) {        
     try {
       const options = {
           method:'PATCH',
@@ -192,7 +191,7 @@ export class SanphamsService {
             const result  = JSON.stringify({ code:response.status,title:'Lỗi không xác định' })
             this.router.navigate(['/errorserver'], { queryParams: {data:result}});
           }
-        }
+        }        
         this.getAllSanpham()
         return data;
     } catch (error) {

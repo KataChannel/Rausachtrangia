@@ -50,6 +50,9 @@
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Số Lượng
               </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Ghi Chú
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -62,6 +65,9 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{ item.Soluong }}   {{ GetInfoSanpham(item.idSP)?.dvt }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ item.Ghichu }}
               </td>
             </tr>
           </tbody>
@@ -89,7 +95,7 @@
           </div>
         </mat-select>
       </mat-form-field>
-      <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-3 gap-2">
       @for (item of Detail.Sanpham; track item.id; let idx = $index) {
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Sản Phẩm</mat-label>
@@ -116,10 +122,14 @@
           <mat-label>Số Lượng</mat-label>
           <input matInput [disabled]="!isEdit" [(ngModel)]="item.Soluong" (change)="onChangeSoluong(item,$event)"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Số Điện Thoại" />
       </mat-form-field> 
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>Ghi Chú</mat-label>
+          <input matInput [disabled]="!isEdit" [(ngModel)]="Detail.Sanpham[idx].Ghichu" (change)="onChangeSoluong(item,$event)"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú" />
+      </mat-form-field> 
       }
     </div>
      <div>
-      <button [disabled]="!isEdit" mat-flat-button color="primary" (click)="Detail.Sanpham.push({idSP:'',Soluong:0})">
+      <button [disabled]="!isEdit" mat-flat-button color="primary" (click)="Detail.Sanpham.push({idSP:'',Soluong:0,Ghichu:''})">
         <span>Thêm</span>
         <mat-icon>add</mat-icon>
       </button>
