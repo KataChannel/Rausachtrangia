@@ -11,6 +11,10 @@ import {
     @PrimaryGeneratedColumn("uuid")
     id: string;
     @Column({collation: "utf8_general_ci"})
+    Title: string;
+    @Column({collation: "utf8_general_ci"})
+    MaPhieu: string;
+    @Column({collation: "utf8_general_ci"})
     idSP: string;
     @Column({collation: "utf8_general_ci"})
     idDonhang: string;
@@ -18,6 +22,8 @@ import {
     Soluong: number;
     @Column()
     Ngaylapphieu: Date;
+    @Column({collation: "utf8_general_ci"})
+    Ghichu: string;
     @Column({ default: '' })
     Type: string;
     @Column({ default: 1 })

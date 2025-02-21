@@ -20,6 +20,8 @@ export class SanphamEntity {
   SKU: string;
   @Column({ type: 'bigint',default:0 })
   Soluong: number;
+  @Column({ type: 'bigint',default:0 })
+  SoluongTT: number;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
   Mota: string;
   @Column({ type: 'text', collation: 'utf8_general_ci' })
