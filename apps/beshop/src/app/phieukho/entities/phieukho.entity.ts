@@ -14,8 +14,10 @@ import {
     Title: string;
     @Column({collation: "utf8_general_ci"})
     MaPhieu: string;
-    @Column({collation: "utf8_general_ci"})
+    @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
     idSP: string;
+    @Column({collation: "utf8_general_ci",type:"simple-json",default: () => "('[]')" })
+    Sanpham: string;
     @Column({collation: "utf8_general_ci"})
     idDonhang: string;
     @Column({ type: 'int' })
