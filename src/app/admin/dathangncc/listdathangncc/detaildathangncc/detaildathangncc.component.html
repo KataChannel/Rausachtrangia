@@ -124,7 +124,7 @@
       </mat-form-field> 
         <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
           <mat-label>Ghi Chú</mat-label>
-          <input matInput [disabled]="!isEdit" [(ngModel)]="Detail.Sanpham[idx].Ghichu" (change)="onChangeSoluong(item,$event)"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú" />
+          <input matInput [disabled]="!isEdit" [(ngModel)]="Detail.Sanpham[idx].Ghichu"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú" />
       </mat-form-field> 
       }
     </div>

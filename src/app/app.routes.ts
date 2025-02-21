@@ -3,8 +3,6 @@ import { AdminChuongtrinhkhuyenmaiComponent } from './admin/main-admin/admin-chu
 import { AdminKhachhangComponent } from './admin/main-admin/admin-khachhang/admin-khachhang.component';
 import { AdminLienheChitietComponent } from './admin/main-admin/admin-lienhe/admin-lienhe-chitiet/admin-lienhe-chitiet.component';
 import { AdminLienheComponent } from './admin/main-admin/admin-lienhe/admin-lienhe.component';
-import { AdminTonkhoChitietComponent } from './admin/main-admin/admin-xnt/admin-tonkho/admin-tonkho-chitiet/admin-tonkho-chitiet.component';
-import { AdminTonkhoComponent } from './admin/main-admin/admin-xnt/admin-tonkho/admin-tonkho.component';
 import { DanhmucChitietComponent } from './admin/main-admin/danhmuc/danhmuc-chitiet/danhmuc-chitiet.component';
 import { DanhmucComponent } from './admin/main-admin/danhmuc/danhmuc.component';
 import { DashboardComponent } from './admin/main-admin/dashboard/dashboard.component';
@@ -253,12 +251,12 @@ export const appRoutes: Route[] = [
                 loadComponent: () => import('./admin/donhang/vandon/vandon.component').then(c => c.VandonComponent),
             },
             {
-                path: 'tonkho',
-                loadComponent: () => import('./admin/tonkho/listtonkho/listtonkho.component').then(c => c.ListTonkhoComponent),
+                path: 'xuatnhapton',
+                loadComponent: () => import('./admin/xuatnhapton/listxuatnhapton/listxuatnhapton.component').then(c => c.ListXuatnhaptonComponent),
                 children: [
                     {
                         path: ':id',
-                        loadComponent: () => import('./admin/tonkho/listtonkho/detailtonkho/detailtonkho.component').then(c => c.DetailTonkhoComponent),
+                        loadComponent: () => import('./admin/xuatnhapton/listxuatnhapton/detailxuatnhapton/detailxuatnhapton.component').then(c => c.DetailXuatnhaptonComponent),
                     }
                 ]
             },

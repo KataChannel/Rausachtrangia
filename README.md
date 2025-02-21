@@ -15,6 +15,7 @@ npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init
 
 npx katacreate --type angular --name nhacungcap --outputDir nhacungcap
+npx katacreate --type angular --name xuatnhapton --outputDir xuatnhapton
 
 npm install
 npm cache clean --force

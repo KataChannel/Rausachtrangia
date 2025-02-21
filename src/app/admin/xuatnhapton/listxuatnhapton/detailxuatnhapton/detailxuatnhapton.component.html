@@ -1,0 +1,135 @@
+<div class="flex flex-row justify-between items-center space-x-2 p-2">
+  <button mat-icon-button color="primary" (click)="_ListxuatnhaptonComponent.drawer.close()">
+      <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="font-bold">{{Detail?.MaPhieu||'Không có dữ liệu'}}</div>
+  <div class="flex flex-row space-x-2 items-center">
+    @if(isEdit==true){
+      <button mat-icon-button color="primary" (click)="SaveData()">
+          <mat-icon>save</mat-icon>
+      </button>
+    }
+    @else{
+      <button mat-icon-button color="primary" (click)="isEdit=true">
+          <mat-icon>edit</mat-icon>
+
+      </button>
+    }
+      <button mat-icon-button color="warn" (click)="isDelete=true">
+          <mat-icon>delete</mat-icon>
+      </button>
+  </div>
+</div>
+<div class="relative flex flex-col w-full p-4 overflow-auto">
+  @if(isDelete==true){
+    <div class="flex flex-col space-y-4 items-center justify-center">
+      <div class="font-bold text-2xl">Bạn chắc chắn muốn xoá không?</div>
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <button mat-flat-button color="primary" (click)="DeleteData()">
+          Đồng Ý
+        </button>
+        <button mat-flat-button color="warn" (click)="isDelete=false">
+          Huỷ Bỏ
+        </button>
+      </div>
+    </div>
+  }
+  @else {
+    <div *ngIf="isEdit" class="flex flex-col space-y-2">
+      <div class="w-full flex flex-row space-x-2 items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Loại Phiếu</mat-label>
+        <mat-select [disabled]="!isEdit" [(ngModel)]="Detail.Type" [ngModelOptions]="{ standalone: true }">
+          <div class="w-full flex flex-col px-4">
+            <div class="overflow-y-auto max-h-44">
+              @for (item of ListType; track item.id) {
+              <mat-option [value]="item.value">{{item.Title}}</mat-option>
+              }
+            </div>
+          </div>
+        </mat-select>
+      </mat-form-field>
+
+      
+      <mat-form-field *ngIf="Detail.Type=='NHAP'" appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Đơn Hàng Nhà Cung Cấp</mat-label>
+        <mat-select [disabled]="!isEdit" [(ngModel)]="Detail.idDonhang" [ngModelOptions]="{ standalone: true }">
+          <div class="w-full flex flex-col px-4">
+            <div class="flex flex-row space-x-2 items-center">
+              <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                <input matInput (input)="DoFindDonncc($event)" placeholder="Tìm Kiếm" />
+              </mat-form-field>
+            </div>
+            <div class="overflow-y-auto max-h-44">
+              @for (item of FilterDonncc; track item.id) {
+              <mat-option [value]="item.id" (click)="SelectDonncc(item)">{{item.MaDH}}</mat-option>
+              }
+            </div>
+          </div>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="Detail.Type=='XUAT'" appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Đơn Hàng Bán</mat-label>
+        <mat-select [disabled]="!isEdit" [(ngModel)]="Detail.idDonhang" [ngModelOptions]="{ standalone: true }">
+          <div class="w-full flex flex-col px-4">
+            <div class="flex flex-row space-x-2 items-center">
+              <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                <input matInput (input)="DoFindDonhang($event)" placeholder="Tìm Kiếm" />
+              </mat-form-field>
+            </div>
+            <div class="overflow-y-auto max-h-44">
+              @for (item of FilterDonHang; track item.id) {
+              <mat-option [value]="item.id" (click)="SelectDonhang(item)">{{item.MaDonHang}}</mat-option>
+              }
+            </div>
+          </div>
+        </mat-select>
+      </mat-form-field>
+      
+    </div>
+    
+      <div class="w-full flex flex-col space-y-2">
+      @for (item of Detail.Sanpham; track item.id; let idx = $index) {
+        <div class="w-full flex flex-row space-x-2 items-center">
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>Sản Phẩm</mat-label>
+          <mat-select [disabled]="!isEdit"  [(ngModel)]="Detail.Sanpham[idx].idSP" [ngModelOptions]="{ standalone: true }">
+            <div class="w-full flex flex-col px-4">
+              <div class="flex flex-row space-x-2 items-center">
+                <mat-form-field appearance="outline" class="w-full p-2" subscriptSizing="dynamic">
+                  <input matInput (input)="DoFindSanpham($event)" placeholder="Tìm Kiếm" />
+                </mat-form-field>
+                <button mat-icon-button color="primary">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
+              </div>
+              <div class="overflow-y-auto max-h-44">
+                @for (item of FilterSanpham; track item.id) {
+                <mat-option [value]="item.id">{{item.Title}} [Tồn : {{item.Soluong}}{{item.dvt}}]</mat-option>
+                }
+              </div>
+            </div>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-40" subscriptSizing="dynamic">
+          <mat-label>Số Lượng</mat-label>
+          <input matInput [disabled]="!isEdit" [(ngModel)]="item.Soluong" (change)="onChangeSoluong(item,$event)"  [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Số Điện Thoại" />
+      </mat-form-field> 
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>Ghi Chú</mat-label>
+          <input matInput [disabled]="!isEdit" [(ngModel)]="Detail.Sanpham[idx].Ghichu" [ngModelOptions]="{ standalone: true }" placeholder="Vui lòng Nhập Ghi Chú" />
+      </mat-form-field> 
+        </div>
+      }
+    </div>
+     <div>
+      <button [disabled]="!isEdit" mat-flat-button color="primary" (click)="Detail.Sanpham.push({idSP:'',Soluong:0,Ghichu:''})">
+        <span>Thêm</span>
+        <mat-icon>add</mat-icon>
+      </button>
+     </div>
+
+      </div>
+  }
+</div>
