@@ -5,6 +5,7 @@ import { DonhangEntity } from './entities/donhang.entity';
 import { GiohangService } from '../giohang/giohang.service';
 import { KhachhangService } from '../khachhang/khachhang.service';
 import { genMaDonhang } from '../shared.utils';
+import { SanphamService } from '../sanpham/sanpham.service';
 @Injectable()
 export class DonhangService {
   constructor(
@@ -12,6 +13,7 @@ export class DonhangService {
     private DonhangRepository: Repository<DonhangEntity>,
     private _GiohangService: GiohangService,
     private _KhachhangService: KhachhangService,
+    private _SanphamService: SanphamService,
   ) { }
   async create(data: any) {
     const Donhang:any=data
@@ -27,6 +29,14 @@ export class DonhangService {
     const newEntity = { ...Donhang, Ordering: maxPrice.maxOrdering+1}
     const result =   await this.DonhangRepository.save(newEntity);
     this.DonhangRepository.create(Donhang);
+    
+    result?.Giohangs?.forEach(async (v: any) => {
+      const SP = await this._SanphamService.findid(v.id);
+      if(SP){
+        SP.Soluong =  SP.Soluong - v.Soluong;
+        await this._SanphamService.update(v.id,SP);
+      }
+    });
     return result
   }
   async getHighestOrder(): Promise<number | null> {

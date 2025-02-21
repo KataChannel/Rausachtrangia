@@ -8,6 +8,7 @@ import { DanhmucModule } from '../danhmuc/danhmuc.module';
 @Module({
   imports: [TypeOrmModule.forFeature([SanphamEntity]),DanhmucModule],
   controllers: [SanphamController],
-  providers: [SanphamService]
+  providers: [SanphamService],
+  exports: [SanphamService]
 })
 export class SanphamModule {}

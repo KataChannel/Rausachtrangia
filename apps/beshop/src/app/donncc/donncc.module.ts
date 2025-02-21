@@ -4,10 +4,12 @@ import { DonnccController } from './donncc.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DonnccEntity } from './entities/donncc.entity';
 import { NhacungcapModule } from '../nhacungcap/nhacungcap.module';
+import { SanphamModule } from '../sanpham/sanpham.module';
   @Module({
     imports: [
       TypeOrmModule.forFeature([DonnccEntity]),
-      NhacungcapModule
+      NhacungcapModule,
+      SanphamModule
   ],
     controllers: [DonnccController],
     providers: [DonnccService],

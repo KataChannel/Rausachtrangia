@@ -5,11 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DonhangEntity } from './entities/donhang.entity';
 import { GiohangModule } from '../giohang/giohang.module';
 import { KhachhangModule } from '../khachhang/khachhang.module';
+import { SanphamModule } from '../sanpham/sanpham.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([DonhangEntity]),
     GiohangModule,
-    KhachhangModule
+    KhachhangModule,
+    SanphamModule
   ],
   controllers: [DonhangController],
   providers: [DonhangService]

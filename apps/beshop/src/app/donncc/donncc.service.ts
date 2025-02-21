@@ -3,18 +3,28 @@ import { Injectable } from '@nestjs/common';
   import { In, Like, Repository } from 'typeorm';
   import { DonnccEntity } from './entities/donncc.entity';
 import { NhacungcapService } from '../nhacungcap/nhacungcap.service';
+import { SanphamService } from '../sanpham/sanpham.service';
   @Injectable()
   export class DonnccService {
     constructor(
       @InjectRepository(DonnccEntity)
       private DonnccRepository: Repository<DonnccEntity>,
-      private _NhacungcapService:NhacungcapService
+      private _NhacungcapService:NhacungcapService,
+      private _SanphamService:SanphamService
     ) { }
 
     async create(data: any) {
       try {
       const newDonncc = this.DonnccRepository.create(data);
-      return await this.DonnccRepository.save(newDonncc);
+      const result:any = await this.DonnccRepository.save(newDonncc);
+      result?.Sanpham?.forEach(async (v: any) => {
+        const SP = await this._SanphamService.findid(v.id);
+        if(SP){
+          SP.Soluong =  SP.Soluong - v.Soluong;
+          await this._SanphamService.update(v.id,SP);
+        }
+      });
+      return result
       } catch (error) {
         return {code:error.code,message:error.errno}
       }
