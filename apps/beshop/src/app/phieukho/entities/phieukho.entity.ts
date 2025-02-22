@@ -20,6 +20,8 @@ import {
     Sanpham: string;
     @Column({collation: "utf8_general_ci"})
     idDonhang: string;
+    @Column({collation: "utf8_general_ci"})
+    idKho: string;
     @Column({ type: 'int' })
     Soluong: number;
     @Column()
