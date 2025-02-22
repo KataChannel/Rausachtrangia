@@ -47,7 +47,7 @@ import { SanphamService } from '../sanpham/sanpham.service';
     async findSHD(data: any) {
       return await this.PhieukhoRepository.findOne({
         where: {
-          Type: data.Type
+          MaPhieu: data.MaPhieu
         },
       });
     }
