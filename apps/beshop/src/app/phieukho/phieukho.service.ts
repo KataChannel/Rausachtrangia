@@ -2,17 +2,35 @@ import { Injectable } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
   import { Like, Repository } from 'typeorm';
   import { PhieukhoEntity } from './entities/phieukho.entity';
+import { SanphamService } from '../sanpham/sanpham.service';
   @Injectable()
   export class PhieukhoService {
     constructor(
       @InjectRepository(PhieukhoEntity)
-      private PhieukhoRepository: Repository<PhieukhoEntity>
+      private PhieukhoRepository: Repository<PhieukhoEntity>,
+      private _SanphamService: SanphamService
     ) { }
     async create(data: any) {
       const check = await this.findSHD(data)
       if(!check) {
         this.PhieukhoRepository.create(data);
-        return await this.PhieukhoRepository.save(data);
+        const result =  await this.PhieukhoRepository.save(data);
+        result?.Sanpham?.forEach(async (v: any) => {
+          const SP = await this._SanphamService.findid(v.id);
+          if(SP){
+            if(result.Type == "NHAP") {
+              SP.SoluongTT =  SP.SoluongTT + v.Soluong;
+              await this._SanphamService.update(v.id,SP);
+            }
+            else if(result.Type == "XUAT" && SP.SoluongTT < v.Soluong) {
+              return { error: 1001, data: "Số lượng tồn kho không đủ" }
+            }
+            else if(result.Type == "XUAT") {
+              SP.SoluongTT =  SP.SoluongTT - v.Soluong;
+              await this._SanphamService.update(v.id,SP);
+            }
+          }
+        });
       }
       else {
         return { error: 1001, data: "Trùng Dữ Liệu" }
