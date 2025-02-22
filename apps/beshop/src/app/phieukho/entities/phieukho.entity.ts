@@ -21,7 +21,7 @@ import {
     @Column({collation: "utf8_general_ci"})
     idDonhang: string;
     @Column({collation: "utf8_general_ci"})
-    idKho: string;
+    idKhohang: string;
     @Column({ type: 'int' })
     Soluong: number;
     @Column()
