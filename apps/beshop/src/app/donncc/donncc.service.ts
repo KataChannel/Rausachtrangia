@@ -12,7 +12,6 @@ import { SanphamService } from '../sanpham/sanpham.service';
       private _NhacungcapService:NhacungcapService,
       private _SanphamService:SanphamService
     ) { }
-
     async create(data: any) {
       try {
       const newDonncc = this.DonnccRepository.create(data);
@@ -88,9 +87,19 @@ import { SanphamService } from '../sanpham/sanpham.service';
       return { items, totalCount };
       }
     }
-    async update(id: string, UpdateDonnccDto: any) {
-      this.DonnccRepository.save(UpdateDonnccDto);
+    async update(id: string, data: any) {
+      this.DonnccRepository.save(data);
+
+      data?.Sanpham?.forEach(async (v: any) => {
+        const SP = await this._SanphamService.findid(v.id);
+        if(SP){
+          SP.Soluong =  SP.Soluong - data.Soluong;
+          await this._SanphamService.update(v.id,SP);
+        }
+      });
+
       return await this.DonnccRepository.findOne({ where: { id: id } });
+
     }
     async remove(id: string) {
       console.error(id)

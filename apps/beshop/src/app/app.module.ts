@@ -28,6 +28,7 @@ import { NhacungcapModule } from './nhacungcap/nhacungcap.module';
 import { PhieugiaodichModule } from './phieugiaodich/phieugiaodich.module';
 import { PhieukhoModule } from './phieukho/phieukho.module';
 import { DonnccModule } from './donncc/donncc.module';
+import { QuanlykhoModule } from './quanlykho/quanlykho.module';
 
 @Module({
   imports: [
@@ -67,7 +68,8 @@ import { DonnccModule } from './donncc/donncc.module';
      NhacungcapModule,
      PhieugiaodichModule,
      PhieukhoModule,
-     DonnccModule
+     DonnccModule,
+     QuanlykhoModule
   ],
   controllers: [AppController],
   providers: [AppService],
