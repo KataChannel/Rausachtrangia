@@ -13,6 +13,8 @@ import {
     @Column({collation: "utf8_general_ci"})
     Title: string;
     @Column({collation: "utf8_general_ci"})
+    SDT: string;
+    @Column({collation: "utf8_general_ci"})
     MaKho: string;
     @Column({collation: "utf8_general_ci"})
     Diachi: string;
