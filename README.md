@@ -16,6 +16,7 @@ npx tailwindcss init
 
 npx katacreate --type angular --name nhacungcap --outputDir nhacungcap
 npx katacreate --type angular --name xuatnhapton --outputDir xuatnhapton
+npx katacreate --type angular --name quanlykho --outputDir quanlykho
 
 npm install
 npm cache clean --force

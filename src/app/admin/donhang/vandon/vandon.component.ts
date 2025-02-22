@@ -98,8 +98,8 @@ export class VandonComponent {
   ListDonhang = signal<any[]>([]);
   ListVandon:any[] = [] 
   SearchParams: any = {
-    Batdau: moment().startOf('day').toDate(),
-    Ketthuc: moment().endOf('day').toDate(),
+    Batdau: moment().format('YYYY-MM-DD'),
+    Ketthuc: moment().add(1,'day').format('YYYY-MM-DD'),
     Type: 'donsi',
     pageSize: 9999,
     pageNumber: 0
@@ -226,22 +226,22 @@ export class VandonComponent {
 
   onSelectionChange(event: MatSelectChange): void {
     const timeFrames: { [key: string]: () => void } = {
-      'day': () => {
-        this.SearchParams.Batdau = moment().startOf('day').toDate();
-        this.SearchParams.Ketthuc = moment().endOf('day').toDate();
+      day: () => {
+        this.SearchParams.Batdau = moment().startOf('day').format('YYYY-MM-DD');
+        this.SearchParams.Ketthuc = moment().endOf('day').add(1,'day').format('YYYY-MM-DD');
       },
-      'week': () => {
-        this.SearchParams.Batdau = moment().startOf('week').toDate();
-        this.SearchParams.Ketthuc = moment().endOf('week').toDate();
+      week: () => {
+        this.SearchParams.Batdau = moment().startOf('week').format('YYYY-MM-DD');
+        this.SearchParams.Ketthuc = moment().endOf('week').format('YYYY-MM-DD');
       },
-      'month': () => {
-        this.SearchParams.Batdau = moment().startOf('month').toDate();
-        this.SearchParams.Ketthuc = moment().endOf('month').toDate();
+      month: () => {
+        this.SearchParams.Batdau = moment().startOf('month').format('YYYY-MM-DD');
+        this.SearchParams.Ketthuc = moment().endOf('month').format('YYYY-MM-DD');
       },
-      'year': () => {
-        this.SearchParams.Batdau = moment().startOf('year').toDate();
-        this.SearchParams.Ketthuc = moment().endOf('year').toDate();
-      }
+      year: () => {
+        this.SearchParams.Batdau = moment().startOf('year').format('YYYY-MM-DD');
+        this.SearchParams.Ketthuc = moment().endOf('year').format('YYYY-MM-DD');
+      },
     };
 
     timeFrames[event.value]?.();
