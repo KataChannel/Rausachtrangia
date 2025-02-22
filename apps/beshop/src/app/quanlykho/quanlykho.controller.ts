@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
   import {QuanlykhoService } from './quanlykho.service';
-  @Controller('Quanlykho')
+  @Controller('quanlykho')
   export class QuanlykhoController {
     constructor(private readonly QuanlykhoService:QuanlykhoService) {}
   
