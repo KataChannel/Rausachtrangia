@@ -6,7 +6,9 @@ import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class XuatnhaptonsService {
+export class QuanlykhosService {
+  private _authenticated: boolean = false;
+  private APIURL: string = environment.APIURL;
   private isBrowser: boolean;
   constructor(
     private _StorageService: LocalStorageService,
@@ -15,9 +17,9 @@ export class XuatnhaptonsService {
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
-  ListXuatnhapton = signal<any[]>([]);
-  Xuatnhapton = signal<any>({});
-  async CreateXuatnhapton(dulieu: any) {
+  ListQuanlykho = signal<any[]>([]);
+  Quanlykho = signal<any>({});
+  async CreateQuanlykho(dulieu: any) {
     try {
       const options = {
           method:'POST',
@@ -26,7 +28,7 @@ export class XuatnhaptonsService {
           },
           body: JSON.stringify(dulieu),
         };
-        const response = await fetch(`${environment.APIURL}/phieukho`, options);
+        const response = await fetch(`${environment.APIURL}/quanlykho`, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -49,14 +51,14 @@ export class XuatnhaptonsService {
             this.router.navigate(['/errorserver'], { queryParams: {data:result}});
           }
         }
-        this.getAllXuatnhapton()
+        this.getAllQuanlykho()
         return data;
     } catch (error) {
         return console.error(error);
     }
   }
 
-  async getAllXuatnhapton() {
+  async getAllQuanlykho() {
     try {
       const options = {
         method: 'GET',
@@ -65,7 +67,7 @@ export class XuatnhaptonsService {
           'Authorization': 'Bearer '+this._StorageService.getItem('token')
         },
       };
-      const response = await fetch(`${environment.APIURL}/phieukho`, options);
+      const response = await fetch(`${environment.APIURL}/quanlykho`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -84,13 +86,13 @@ export class XuatnhaptonsService {
         }
       }
       const data = await response.json();     
-      this.ListXuatnhapton.set(data)
+      this.ListQuanlykho.set(data)
       return data;
     } catch (error) {
       return console.error(error);
     }
   }
-  async SearchXuatnhapton(SearchParams:any) {
+  async SearchQuanlykho(SearchParams:any) {
     try {
       const options = {
         method:'POST',
@@ -119,13 +121,13 @@ export class XuatnhaptonsService {
             }
           }
           const data = await response.json();
-          this.Xuatnhapton.set(data.items)
+          this.Quanlykho.set(data.items)
           return data;
       } catch (error) {
           return console.error(error);
       }
   }
-  async getXuatnhaptonByid(id: any) {
+  async getQuanlykhoByid(id: any) {
     try {
       const options = {
         method: 'GET',
@@ -133,7 +135,7 @@ export class XuatnhaptonsService {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`${environment.APIURL}/phieukho/findid/${id}`, options);
+      const response = await fetch(`${environment.APIURL}/quanlykho/findid/${id}`, options);
       if (!response.ok) {
         if (response.status === 401) {
           const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -153,13 +155,13 @@ export class XuatnhaptonsService {
         }
       }
       const data = await response.json();
-      this.Xuatnhapton.set(data)
+      this.Quanlykho.set(data)
       return data;
     } catch (error) {
       return console.error(error);
     }
   }
-  async updateOneXuatnhapton(dulieu: any) {
+  async updateOneQuanlykho(dulieu: any) {
     try {
       const options = {
           method:'PATCH',
@@ -168,7 +170,7 @@ export class XuatnhaptonsService {
           },
           body: JSON.stringify(dulieu),
         };
-        const response = await fetch(`${environment.APIURL}/phieukho/${dulieu.id}`, options);
+        const response = await fetch(`${environment.APIURL}/quanlykho/${dulieu.id}`, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -191,13 +193,13 @@ export class XuatnhaptonsService {
             this.router.navigate(['/errorserver'], { queryParams: {data:result}});
           }
         }
-        this.getAllXuatnhapton()
+        this.getAllQuanlykho()
         return data;
     } catch (error) {
         return console.error(error);
     }
   }
-  async DeleteXuatnhapton(item:any) {    
+  async DeleteQuanlykho(item:any) {    
     try {
         const options = {
             method:'DELETE',
@@ -205,7 +207,7 @@ export class XuatnhaptonsService {
               'Content-Type': 'application/json',
             },
           };
-          const response = await fetch(`${environment.APIURL}/phieukho/${item.id}`, options);
+          const response = await fetch(`${environment.APIURL}/quanlykho/${item.id}`, options);
           if (!response.ok) {
             if (response.status === 401) {
               const result  = JSON.stringify({ code:response.status,title:'Vui lòng đăng nhập lại' })
@@ -221,7 +223,7 @@ export class XuatnhaptonsService {
               this.router.navigate(['/errorserver'], { queryParams: {data:result}});
             }
           }
-          this.getAllXuatnhapton()
+          this.getAllQuanlykho()
           return await response.json();
       } catch (error) {
           return console.error(error);

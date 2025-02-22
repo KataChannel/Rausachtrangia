@@ -255,8 +255,26 @@ export const appRoutes: Route[] = [
                 loadComponent: () => import('./admin/xuatnhapton/listxuatnhapton/listxuatnhapton.component').then(c => c.ListXuatnhaptonComponent),
                 children: [
                     {
+                        path: '',
+                        loadComponent: () => import('./admin/xuatnhapton/listxuatnhapton/listxuatnhapton.component').then(c => c.ListXuatnhaptonComponent),
+                    },
+                    {
                         path: ':id',
                         loadComponent: () => import('./admin/xuatnhapton/listxuatnhapton/detailxuatnhapton/detailxuatnhapton.component').then(c => c.DetailXuatnhaptonComponent),
+                    }
+                ]
+            },
+            {
+                path: 'quanlykho',
+                loadComponent: () => import('./admin/quanlykho/listquanlykho/listquanlykho.component').then(c => c.ListQuanlykhoComponent),
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => import('./admin/quanlykho/listquanlykho/listquanlykho.component').then(c => c.ListQuanlykhoComponent),
+                    },
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./admin/quanlykho/listquanlykho/detailquanlykho/detailquanlykho.component').then(c => c.DetailQuanlykhoComponent),
                     }
                 ]
             },

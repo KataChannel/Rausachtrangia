@@ -5,19 +5,17 @@ import { Component, inject } from '@angular/core';
   import { MatInputModule } from '@angular/material/input';
   import { MatButtonModule } from '@angular/material/button';
   import { ActivatedRoute, Router } from '@angular/router';
-  import { Forms, ListXuatnhapton } from '../listxuatnhapton';
-import { ListXuatnhaptonComponent } from '../listxuatnhapton.component';
+import { ListQuanlykhoComponent } from '../listquanlykho.component';
 import { SanphamsService } from '../../../sanpham/listsanpham/listsanpham.service';
-import { XuatnhaptonsService } from '../listxuatnhapton.service';
+import { QuanlykhosService } from '../listquanlykho.service';
 import { GenId } from '../../../../shared/shared.utils';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { DonnccsService } from '../../../dathangncc/listdathangncc/listdathangncc.service';
 import { DonhangsService } from '../../../donhang/listdonhang/listdonhang.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykho.service';
   @Component({
-    selector: 'app-detailxuatnhapton',
+    selector: 'app-detailquanlykho',
     imports: [
       MatFormFieldModule,
       MatInputModule,
@@ -27,16 +25,15 @@ import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykh
       CommonModule,
       MatSelectModule
     ],
-    templateUrl: './detailxuatnhapton.component.html',
-    styleUrl: './detailxuatnhapton.component.scss'
+    templateUrl: './detailquanlykho.component.html',
+    styleUrl: './detailquanlykho.component.scss'
   })
-  export class DetailXuatnhaptonComponent {
-    _ListxuatnhaptonComponent:ListXuatnhaptonComponent = inject(ListXuatnhaptonComponent)
+  export class DetailQuanlykhoComponent {
+    _ListquanlykhoComponent:ListQuanlykhoComponent = inject(ListQuanlykhoComponent)
     _SanphamService:SanphamsService = inject(SanphamsService)
-    _XuatnhaptonsService:XuatnhaptonsService = inject(XuatnhaptonsService)
+    _QuanlykhosService:QuanlykhosService = inject(QuanlykhosService)
     _DonnccsService:DonnccsService = inject(DonnccsService)
     _DonhangsService:DonhangsService = inject(DonhangsService)
-    _QuanlykhosService:QuanlykhosService = inject(QuanlykhosService)
     _router:ActivatedRoute = inject(ActivatedRoute)
     _route:Router = inject(Router)
     _snackBar:MatSnackBar = inject(MatSnackBar)
@@ -44,15 +41,13 @@ import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykh
     Detail:any={Sanpham:[]}
     isEdit:boolean=false
     isDelete:boolean=false
-    idXuatnhapton:any
+    idQuanlykho:any
     FilterDonncc:any[]=[]
     ListDonncc:any[]=[]
     FilterDonHang:any[]=[]
     ListDonHang:any[]=[]
     FilterSanpham:any[]=[]
     ListSanpham:any[]=[]
-    FilterKhohang:any[]=[]
-    ListKhohang:any[]=[]
     ListType:any[]=[
       {id:1,Title:'Nhập',value:"NHAP"},
       {id:2,Title:'Xuất',value:"XUAT"},
@@ -61,18 +56,15 @@ import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykh
     ]
     ngOnInit(): void {
       this._router.paramMap.subscribe(async (data: any) => {
-        this.idXuatnhapton = data.get('id')
-        this.isEdit = this.idXuatnhapton === '0';   
-        if(!this.idXuatnhapton){
-          this._route.navigate(['/admin/xuatnhapton'])
+        this.idQuanlykho = data.get('id')
+        this.isEdit = this.idQuanlykho === '0';   
+        if(!this.idQuanlykho){
+          this._route.navigate(['/admin/quanlykho'])
         }
         else{
-          this._ListxuatnhaptonComponent.drawer.open();
+          this._ListquanlykhoComponent.drawer.open();
           this._DonnccsService.getAllDonncc().then((data:any)=>{
             this.FilterDonncc = this.ListDonncc = data
-          })
-          this._QuanlykhosService.getAllQuanlykho().then((data:any)=>{
-            this.FilterKhohang = this.ListKhohang = data
           })
           this._DonhangsService.getAllDonhang().then((data:any)=>{
             this.FilterDonHang = this.ListDonHang = data
@@ -80,8 +72,8 @@ import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykh
           this._SanphamService.getAllSanpham().then((data:any)=>{
             this.FilterSanpham = this.ListSanpham = data
           })
-          if(this.idXuatnhapton !== '0'){
-            this._XuatnhaptonsService.getXuatnhaptonByid(this.idXuatnhapton).then((data:any)=>{
+          if(this.idQuanlykho !== '0'){
+            this._QuanlykhosService.getQuanlykhoByid(this.idQuanlykho).then((data:any)=>{
               if(data){
                 this.Detail = data
                 // this.Detail.Nhacungcap = this.ListNhacungcap.find(v => v.id === this.Detail.idNCC)
@@ -111,13 +103,6 @@ import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykh
     SelectDonncc(item:any){
       this.Detail.Sanpham = item.Sanpham
     }
-   DoFindKhohang(event:any){
-      const query = event.target.value.toLowerCase();
-      this.FilterDonHang = this.ListDonHang.filter(v => v.MaKho.toLowerCase().includes(query));      
-    }
-    SelectKhohang(item:any){
-      this.Detail.Sanpham = item.Sanpham
-    }
     DoFindDonHang(event:any){
       const query = event.target.value.toLowerCase();
       this.FilterDonHang = this.ListDonHang.filter(v => v.MaDH.toLowerCase().includes(query));      
@@ -137,21 +122,21 @@ import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykh
     }
     SaveData()
     {
-      if(this.idXuatnhapton=='0')
+      if(this.idQuanlykho=='0')
       {
-        this._XuatnhaptonsService.CreateXuatnhapton(this.Detail).then((data:any)=>{
+        this._QuanlykhosService.CreateQuanlykho(this.Detail).then((data:any)=>{
           this._snackBar.open('Tạo Mới Thành Công', '', {
             duration: 1000,
             horizontalPosition: "end",
             verticalPosition: "top",
             panelClass: ['snackbar-success'],
           });
-          this._route.navigate(['/admin/xuatnhapton', data.id]);
+          this._route.navigate(['/admin/quanlykho', data.id]);
         })
       }
       else
       {
-        this._XuatnhaptonsService.updateOneXuatnhapton(this.Detail).then((data:any)=>{
+        this._QuanlykhosService.updateOneQuanlykho(this.Detail).then((data:any)=>{
           this._snackBar.open('Cập Nhật Thành Công', '', {
             duration: 1000,
             horizontalPosition: "end",
@@ -164,14 +149,18 @@ import { QuanlykhosService } from '../../../quanlykho/listquanlykho/listquanlykh
     }
     DeleteData()
     {
-      this._XuatnhaptonsService.DeleteXuatnhapton(this.Detail).then((data:any)=>{
+      this._QuanlykhosService.DeleteQuanlykho(this.Detail).then((data:any)=>{
         this._snackBar.open('Xóa Thành Công', '', {
           duration: 1000,
           horizontalPosition: "end",
           verticalPosition: "top",
           panelClass: ['snackbar-success'],
         });
-        this._route.navigate(['/admin/xuatnhapton'])
+        this._route.navigate(['/admin/quanlykho'])
       })
+    }
+    goBack(){
+      this._route.navigate(['/admin/quanlykho'])
+      this._ListquanlykhoComponent.drawer.close()
     }
   }
